@@ -35,7 +35,7 @@ var flotIt = function() {
 	// The domain of the plot ends 2 seconds ago 
 	d2 -= 2000;
 	
-	if(openICE.tables) {
+	if(openICE && openICE.tables) {
 	
 		Object.keys(openICE.tables).forEach(function (tableKey) { 
 			var table = openICE.tables[tableKey];
