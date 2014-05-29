@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MD PnP</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href="assets/favicon.ico" rel="shortcut icon">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/custom-style.css" rel="stylesheet">
+		
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.flot.time.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.base64.js"></script>
+		<script language="javascript" type="text/javascript" src="js/openice.js"></script>
+		<script language="javascript" type="text/javascript" src="js/openice.flot.js"></script>
+		<script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
+		<script language="javascript" type="text/javascript" src="js/custom.js"></script>
+
+	</head>
+	<body>
+		<section id="splash">
+			<div id="logo" class="container">
+				<a class="col-xs-6 col-sm-4 col-md-4 col-lg-3 pull-left" href=".\index.html">
+					<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
+				</a>
+			</div>
+
+			<nav id="main-navbar" class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">MD PnP Lab</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div id="main-nav-collapse"class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="./about.html">About</a></li>
+							<li><a href="#">Lab Tour</a></li>
+							<li><a href="./demo.html">Demo</a></li>
+							<li><a href="#">Collaborators</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Intern Projects <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Project 1</a></li>
+									<li><a href="#">Project 2</a></li>
+									<li><a href="#">Project 3</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</li>
+						</ul>
+ 						<!--<form class="navbar-form navbar-left" role="search">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search">
+							</div>
+							<button type="submit" class="btn btn-default">Submit</button>
+						</form> -->
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">MD PnP Online Network<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Blog</a></li>
+									<li><a href="#">Discussion Board</a></li>
+									<li><a href="#">Something else here</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</section>
+
+		<section>
+			<div class="container-fluid">
+				<div id="lab-slide-show" class="carousel slide" data-ride="carousel">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#lab-slide-show" data-slide-to="0" class="active"></li>
+						<li data-target="#lab-slide-show" data-slide-to="1"></li>
+						<li data-target="#lab-slide-show" data-slide-to="2"></li>
+						<li data-target="#lab-slide-show" data-slide-to="3"></li>
+						<li data-target="#lab-slide-show" data-slide-to="4"></li>
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" style="max-height:500px">
+						<div class="item active" style="background-image:url(./assets/lab-slide-show/1.jpg); background-position: left center; background-repeat: no-repeat;background-size:100% auto;">
+							<img style="opacity:0" class="img-responsive" src="./assets/lab-slide-show/1.jpg" alt="">
+							<div class="carousel-caption">
+								<h3>...</h3>
+								<p>...</p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/2.jpg" alt="">
+							<div class="carousel-caption">
+								<h3>...</h3>
+								<p>...</p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/3.jpg" alt="">
+							<div class="carousel-caption">
+								<h3>...</h3>
+								<p>...</p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/4.jpg" alt="">
+							<div class="carousel-caption">
+								<h3>...</h3>
+								<p>...</p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/5.jpg" alt="">
+							<div class="carousel-caption">
+								<h3>...</h3>
+								<p>...</p>
+							</div>
+						</div>
+					</div>
+					
+					<!-- Controls -->
+					<a class="left carousel-control" href="#lab-slide-show" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#lab-slide-show" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>

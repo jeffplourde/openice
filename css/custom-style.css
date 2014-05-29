@@ -1,0 +1,105 @@
+table {
+	border-collapse: collapse;
+	border: 1px solid #000000;
+}
+
+table td {
+	border: 1px solid #000000;
+}
+
+.graph {
+	height: 150px;
+	margin: 0.5em auto 0.5em 0;
+/*	width: 500px;
+*/}
+
+#demo-header {
+	display: none;
+	
+}
+
+#demo-header {
+	margin-bottom: 10px;
+}
+
+
+#demo-container {
+	background-color:#000000;
+}
+
+.bigNumber {
+	font-size: 15px;
+	color: #FFF;
+	padding: 0;
+}
+
+.iconImg {
+	width: 63px;
+	height: 63px;
+}
+
+.labelit {
+	color:#FFF;
+}
+
+#logo {
+	padding: 15px 0px 5px 0px;
+}
+
+.carousel-pics {
+	vertical-align: middle;
+}
+
+
+
+/*Smart America CSS*/
+/***  Splash Home ***/
+/*#logo {
+	padding: 20px 0 10px; }
+
+#main-nav {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	display: block;
+	border: 0;
+	background: #f4f5f6; }
+	#main-nav ul {
+		margin: 0;
+		display: none;
+		width: 100%;
+		background: #f4f5f6; }
+		#main-nav ul li a {
+			border-right: 0;
+			padding: 10px;
+			border-bottom: 1px solid #eaeaea; }
+			#main-nav .mobile-menu {
+				display: block;
+				border: 1px solid #223447;
+				margin-top: 10px;
+				padding-right: 50px;
+				background: url(../images/menu-button.png) no-repeat 95% 50%;
+				color: #223447; }
+
+.fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 99;
+	-webkit-box-shadow: 1px 3px 5px #425770;
+	-moz-box-shadow: 1px 3px 5px #425770;
+	box-shadow: 1px 3px 5px #425770; }
+
+#jumbotron {
+	background: none;
+	margin-top: 95px;
+	opacity: 0;
+	padding: 50px 0 22px; }
+	#jumbotron h1 {
+		border-bottom: 2px solid #d2202e;
+		margin-right: 0;
+		color: #d2202e; }
+		#jumbotron p {
+			font-size: 16px;
+			color: #223447; }*/

@@ -1,0 +1,34 @@
+table {
+	border-collapse: collapse;
+	border: 1px solid #000000;
+}
+
+table td {
+	border: 1px solid #000000;
+}
+
+.graph {
+	height: 150px;
+	margin: 0.5em auto 0.5em 0;
+	width: 500px;
+}
+
+/*#gcs_navbar {
+
+	background-color: #000066;
+}
+
+#gcs_navbar .navbar-nav>li>a:hover {
+	color: #777;
+	background-color: #fff;
+}
+
+#gcs_navbar .navbar-header>li>a:hover {
+	color: #777;
+	background-color: #fff;
+}
+*/
+
+
+
+
