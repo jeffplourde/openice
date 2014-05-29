@@ -1,5 +1,4 @@
 var openICE;
-var dcpsPublication;
 var demopreferences;
 
 
@@ -37,7 +36,7 @@ var flotIt = function() {
 	// The domain of the plot ends 2 seconds ago 
 	d2.setSeconds(d2.getSeconds() - 2);
 	
-	if(openICE.tables) {
+	if(openICE && openICE.tables) {
 	
 		Object.keys(openICE.tables).forEach(function (tableKey) { 
 			var table = openICE.tables[tableKey];
@@ -117,83 +116,7 @@ if (typeof String.prototype.endsWith !== 'function') {
     };
 }
 
-function changeDomain() {
-	var domain = document.getElementById("domain").value;
-	if(dcpsPublication.domain != domain) {
-		//console.log("destorying:"+dcpsPublication.domain+" "+dcpsPublication.partition+" "+dcpsPublication.topic);
-		openICE.destroyTable(dcpsPublication);
-		//console.log("domain changed to " + domain);
-		dcpsPublication = openICE.createTable({domain:domain, partition:[], topic:'DCPSPublication'});
-	}
-	
-}
-
-function refreshTopics() {
-	// Builtin topics are special
-	var availableTopics = {'DCPSParticipant':'EXISTS', 'DCPSPublication':'EXISTS', 'DCPSSubscription':'EXISTS', 'DCPSTopic':'EXISTS'};
-
-	Object.keys(dcpsPublication.rows).forEach(function(rowKey) {
-		var row = dcpsPublication.rows[rowKey];
-		if(row.samples.length > 0) {
-			var mostRecentSample = row.samples[row.samples.length-1];
-			if(mostRecentSample.data && mostRecentSample.data.topic_name) {
-				availableTopics[mostRecentSample.data.topic_name] = 'EXISTS';
-			}
-		}
-	});
-	var topic = document.getElementById("topic");
-	if(Object.keys(availableTopics).length == 0) {
-		while (topic.hasChildNodes()) {
-		    topic.removeChild(topic.lastChild);
-		}
-		return;
-	}
-	var toRemove = [];
-	var options = topic.getElementsByTagName("option");
-	
-	for(var i = 0; i < options.length; i++) {
-		var node = options[i];
-		if(!node.text) {
-			//console.log(node);
-		}
-		if(availableTopics[node.text]) {
-			// Yes this node exists, needn't be added
-			delete availableTopics[node.text];
-		} else {
-			// Node does not exist
-			toRemove.push(node);
-		}
-	}
-	while(toRemove.length > 0) {
-		topic.removeChild(toRemove.shift());
-	}
-	var toAdd = Object.keys(availableTopics);
-	while(toAdd.length > 0) {
-		var add = toAdd.shift();
-		var opt = document.createElement("option");
-		opt.text = add;
-		opt.value = add;
-		topic.add(opt);
-	}
-	for(var i = 0; i < topic.childNodes.length; i++) {
-		var node = topic.childNodes[i];
-		if(node.text.endsWith("SampleArray")) {
-			topic.value = node.text;
-			return;
-		}
-	}
-}
-
 window.onload = function(e) {
-	var domainElement = document.getElementById("domain");
-	for(var i = 0; i <= 100; i++) {
-		var option = document.createElement("option");
-		option.text = i;
-		option.value = i;
-		option.selected = i==15;
-		domainElement.appendChild(option);
-	}
-	
 	
 //	openICE = new OpenICE('ws://'+window.location.hostname+':4848/DDS');
     openICE = new OpenICE('ws://'+'arvi.mgh.harvard.edu'+':4848/DDS');
@@ -220,13 +143,7 @@ window.onload = function(e) {
 			document.getElementById("flotit").removeChild(row.outerDiv);
 			delete row.outerDiv;
 		}
-		
-		
-		
-		if('DCPSPublication'==table.topic) {
-			//console.log('Removed '+row.samples[0].data.topic_name);
-			refreshTopics();
-		}
+
 	//	console.log("I see a deleted row " + row);
 	};
 	
@@ -319,9 +236,7 @@ window.onload = function(e) {
 	}
 	
 	openICE.onsample = function(openICE, table, row, sample) {
-		if("DCPSPublication"==table.topic) {
-			refreshTopics();
-	    }
+
 		
 		if(table.topic.endsWith('Numeric')) {
 
@@ -383,7 +298,6 @@ window.onload = function(e) {
 	openICE.open();
 	setTimeout(function() { 
 		var targetDomain = 15;
-		dcpsPublication = openICE.createTable({domain: targetDomain, partition:[],topic:'DCPSPublication'}); 
 		openICE.createTable({domain: targetDomain, partition: [], topic:'DeviceIdentity'});
 		openICE.createTable({domain: targetDomain, partition: [], topic:'ice::DeviceIdentity'});
 		openICE.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
@@ -395,21 +309,7 @@ window.onload = function(e) {
 }
 
 window.onbeforeunload = function(e) {
-	openICE.destroyTable(dcpsPublication);
-	dcpsPublication = null;
 	openICE.close();
 
 }
 
-function createreader() {
-	openICE.createTable({domain: document.getElementById("domain").value,
-			             partition: document.getElementById("partition").value.split(","),
-			             topic: document.getElementById("topic").value});
-	
-}
-
-function destroyreader() {
-	openICE.destroyTable({domain: document.getElementById("domain").value, 
-		                  partition: document.getElementById("partition").value.split(","), 
-		                  topic: document.getElementById("topic").value});
-}
