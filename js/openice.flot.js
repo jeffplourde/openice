@@ -72,9 +72,9 @@ var flotIt = function() {
 		});
 		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
 	}
-	setTimeout(flotIt, 500);
+	setTimeout(flotIt, 250);
 }
-setTimeout(flotIt, 500);
+
 
 if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function(suffix) {
@@ -83,9 +83,9 @@ if (typeof String.prototype.endsWith !== 'function') {
 }
 
 window.onload = function(e) {
-	
-//	openICE = new OpenICE('ws://'+window.location.hostname+':4848/DDS');
-    openICE = new OpenICE('ws://'+'arvi.mgh.harvard.edu'+':4848/DDS');
+	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
+	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : window.location.hostname) + '/DDS';
+    openICE = new OpenICE(url);
     
 	openICE.onafterremove = function(openICE, table, row) {
 		if(row.flotData) {
