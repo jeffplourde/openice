@@ -25,15 +25,15 @@ function metricValue(rows, metric_id) {
 
 // called periodically to update plot information
 var flotIt = function() {
-	// var startOfFlotIt = Date.now();
+	var startOfFlotIt = Date.now();
 
 	// TODO it would be bad if user's browser were badly out of clock sync wrt to server
-	var d = Date.now();
-	var d2 = Date.now();
+	var d = startOfFlotIt - 12000;
+	var d2 = startOfFlotIt - 2000;
 	// The domain of the plot begins 12 seconds ago
-	d -= 12000;
+	
 	// The domain of the plot ends 2 seconds ago 
-	d2 -= 2000;
+	
 	
 	if(openICE && openICE.tables) {
 	
@@ -41,38 +41,22 @@ var flotIt = function() {
 			var table = openICE.tables[tableKey];
 			Object.keys(table.rows).forEach(function(rowKey) {
 				var row = table.rows[rowKey];
-				var plotColor = getPlotColor(row.keyValues.metric_id);
 				
-				if(row.rowId && row.flotData) {
-					$.plot('#'+row.rowId, [row.flotData], options = {
-						series: {
-							lines: { show: true },
-							points: { show: false },
-							color: plotColor,
-						},
-						grid: {
-							show: false,
-							aboveData: true,
-							color: "#FFFFFF",
-							backgroundColor: "#000000"
-						},
-						xaxis: { show: false,
-							mode: "time",
-							min: d,
-							max: d2,
-							font: { color: "#FFF" }
-						},
-						yaxis: { show: false, font: { color: "#FFF" },
-						min: row.minValue,
-						max: row.maxValue }
-					});
+				if(row.rowId && row.flotData && row.flotPlot) {
+					row.flotPlot.getAxes().yaxis.options.min = row.minValue;
+					row.flotPlot.getAxes().yaxis.options.max = row.maxValue;
+					row.flotPlot.getAxes().xaxis.options.min = d;
+					row.flotPlot.getAxes().xaxis.options.max = d2;
+					row.flotPlot.setData(row.flotData);
+					row.flotPlot.setupGrid();
+					row.flotPlot.draw();
 			    }
 		    });
 		    // iteration code
 		});
 		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
 	}
-	setTimeout(flotIt, 250);
+	// setTimeout(flotIt, 250);
 }
 
 
@@ -103,21 +87,22 @@ window.onload = function(e) {
 	
 	openICE.onsample = function(openICE, table, row, sample) {
 		if(table.topic.endsWith('SampleArray')) {
-
 			// Track the observed range of values for the row through all time
-			for(var i = 0; i < sample.data.values.length; i++) {
-				var value = sample.data.values[i];
-				if(!row.maxValue || value > row.maxValue) {
-					row.maxValue = value;
-				}
-				if(!row.minValue || value < row.minValue) {
-					row.minValue = value;
+			if(sample.data.values) {
+				for(var i = 0; i < sample.data.values.length; i++) {
+					var value = sample.data.values[i];
+					if(!row.maxValue || value > row.maxValue) {
+						row.maxValue = value;
+					}
+					if(!row.minValue || value < row.minValue) {
+						row.minValue = value;
+					}
 				}
 			}
 
 			// These are SampleArray data
 			if(!row.flotData && row.maxValue > row.minValue) {				
-				row.flotData = [];
+				row.flotData = [[]];
 
 				var flotDiv = document.createElement("div");
 				var outerDiv = document.createElement("div");
@@ -135,19 +120,41 @@ window.onload = function(e) {
 				row.outerDiv = outerDiv;
 
 				labelit.setAttribute("class", "labelit")
-				labelit.setAttribute("id", sample.data.metric_id);
-				labelit.innerText = getCommonName(sample.data.metric_id);
+				labelit.setAttribute("id", row.keyValues.metric_id);
+				labelit.innerText = getCommonName(row.keyValues.metric_id);
+
+
+				row.flotPlot = $.plot('#'+row.rowId, row.flotData, options = {
+						series: {
+							lines: { show: true },
+							shadowSize: 0,
+							points: { show: false },
+							color: getPlotColor(row.keyValues.metric_id),
+						},
+						grid: {
+							show: true,
+							aboveData: true,
+							color: "#FFFFFF",
+							backgroundColor: "#000000"
+						},
+						xaxis: { show: true,
+							mode: "time",
+							font: { color: "#FFF" }
+						},
+						yaxis: { show: true, font: { color: "#FFF" }}
+					});
+
 		    }
 		    if(row.flotData) {
 				row.millisecondsPerSample = sample.data.millisecondsPerSample;
 				for(var i = 0; i < sample.data.values.length; i++) {
 					var value = sample.data.values[i];
-					row.flotData.push([sample.sourceTimestamp-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+					row.flotData[0].push([sample.sourceTimestamp-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
 				}
 				var maxAge = Date.now() - maxFlotAge;
 
-				while(row.flotData.length>0&&row.flotData[0][0]<maxAge) {
-					row.flotData.shift();
+				while(row.flotData[0].length>0&&row.flotData[0][0][0]<maxAge) {
+					row.flotData[0].shift();
 				}
 			}
 		}
@@ -158,7 +165,7 @@ window.onload = function(e) {
 		openICE.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 		openICE.createTable({domain: targetDomain, partition: [], topic:'ice::SampleArray'});
 	}, 500);
-	setTimeout(flotIt, 750);
+	setInterval(flotIt, 200);
 }
 
 window.onbeforeunload = function(e) {
