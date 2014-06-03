@@ -139,7 +139,8 @@ window.onload = function(e) {
 						},
 						xaxis: { show: true,
 							mode: "time",
-							font: { color: "#FFF" }
+							font: { color: "#FFF" },
+							timezone: "browser"
 						},
 						yaxis: { show: true, font: { color: "#FFF" }}
 					});
