@@ -43,63 +43,91 @@ table td {
 }
 
 #logo {
-	padding: 15px 0px 5px 0px;
+	padding-top: 15px;
+	width: 250px;
 }
 
 .carousel-pics {
 	vertical-align: middle;
 }
+/*
+#lab-slide-show {
+	visibility: hidden;
+}*/
 
+.navbar-header {
+	padding-left: 15px;
+}
 
+#slideshow {
+	max-width: 1500px;
+	margin-right: auto;
+	margin-left: auto;
+}
+@media (max-width: 1000px) {
+	#slideshow {
+		max-height: 200px;
+	}
+}
+@media (min-width: 1000px) {
+	#slideshow {
+		height: 450px;
+	}
+}
 
-/*Smart America CSS*/
-/***  Splash Home ***/
-/*#logo {
-	padding: 20px 0 10px; }
+#footer {
+	color: #777;
+	text-align: center;
+}
 
-#main-nav {
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-	display: block;
-	border: 0;
-	background: #f4f5f6; }
-	#main-nav ul {
-		margin: 0;
-		display: none;
-		width: 100%;
-		background: #f4f5f6; }
-		#main-nav ul li a {
-			border-right: 0;
-			padding: 10px;
-			border-bottom: 1px solid #eaeaea; }
-			#main-nav .mobile-menu {
-				display: block;
-				border: 1px solid #223447;
-				margin-top: 10px;
-				padding-right: 50px;
-				background: url(../images/menu-button.png) no-repeat 95% 50%;
-				color: #223447; }
+#readme-banner {
+	background-image: url('../assets/banner.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
 
-.fixed {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 99;
-	-webkit-box-shadow: 1px 3px 5px #425770;
-	-moz-box-shadow: 1px 3px 5px #425770;
-	box-shadow: 1px 3px 5px #425770; }
+@media (max-width: 1000px) {
+	#readme-banner {
+	height: 125px;
+	}
+}
 
-#jumbotron {
-	background: none;
-	margin-top: 95px;
-	opacity: 0;
-	padding: 50px 0 22px; }
-	#jumbotron h1 {
-		border-bottom: 2px solid #d2202e;
-		margin-right: 0;
-		color: #d2202e; }
-		#jumbotron p {
-			font-size: 16px;
-			color: #223447; }*/
+@media (min-width: 1000px) {
+	#readme-banner {
+	height: 225px;
+	}
+}
+
+#readme-banner-text {
+	color: #FFF;
+	text-shadow: 3px 3px #777;
+}
+
+.page-container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (min-width: 768px) {
+	.page-container {
+		padding-right: 15px;
+		padding-left: 15px;
+		width: 700px;
+	}
+}
+
+@media (min-width: 992px) {
+	.page-container {
+		padding-right: 15px;
+		padding-left: 15px;	
+		width: 700px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.page-container {
+		width: 920px;
+	}
+}

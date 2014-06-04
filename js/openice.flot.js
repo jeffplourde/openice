@@ -114,7 +114,7 @@ window.onload = function(e) {
 				outerDiv.setAttribute("class", "outerDiv col-md-6 col-xs-12");
 				
 				flotDiv.setAttribute("id", row.rowId);
-				flotDiv.setAttribute("class", "graph col-xs-10");
+				flotDiv.setAttribute("class", "graph col-xs-12");
 				document.getElementById("flotit").appendChild(outerDiv);
 				row.flotDiv = flotDiv;
 				row.outerDiv = outerDiv;

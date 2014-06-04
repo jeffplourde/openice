@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>MD PnP</title>
+		<title>MD PnP Smart America Demo</title>
 		
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,37 +12,32 @@
 		<link href="css/custom-style.css" rel="stylesheet">
 		
 		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
-<!-- 		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
-		<script language="javascript" type="text/javascript" src="js/jquery.flot.time.js"></script>
-		<script language="javascript" type="text/javascript" src="js/openice.js"></script>
-		<script language="javascript" type="text/javascript" src="js/openice.flot.js"></script> -->
 		<script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
-<!-- 		<script language="javascript" type="text/javascript" src="js/demopreferences.js"></script> -->
 	</head>
 	<body>
 		<section id="splash">
-			<div id="logo" class="container">
-				<a class="col-xs-6 col-sm-4 col-md-4 col-lg-3 pull-left" href="./index.html">
-					<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
-				</a>
+			<div class="container">
+				<header>
+					<a id="logo" href="./index.html" class="col-md-4 pull-left" style="padding: 0">
+						<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
+					</a>
+				</header>
 			</div>
-
 			<nav id="main-navbar" class="navbar navbar-default" role="navigation">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
+					<div class="navbar-header" style="padding:0">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="./index.html">README</a>
+						<a class="navbar-brand" href="./index.html">Documentation</a>
 					</div>
-
-					<div id="main-nav-collapse"class="collapse navbar-collapse">
+					<div id="main-nav-collapse" class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li><a href="./demo.html">Demo</a></li>
+							<li><a href="./demo.html">Demo App</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
@@ -58,18 +53,52 @@
 				</div>
 			</nav>
 		</section>
-
 		<section>
-			<div class="container">
-				<h1>Smart America Demo JS API</h1>
+			<div id="readme-banner" class="container-fluid">
+				<h1 id="readme-banner-text" class="pull-left">Smart America Demo JS API</h1>
+			</div>
+		</section>
+		<section id="readme">
+			<div class="page-container">
+				<h1>Javascript API Access to the MD PnP OpenICE Network</h1>
 				<p>This website utilizes an API to access the MD PnP medical device test bed. The purpose of this site is to visualize the vital sign data flowing from the OpenICE network in the lab in Cambridge, MA.</p>
+				<p>To start the sample application, please navigate to the <a href="./demo.html">demo</a> page.</p>
 				<br />
-				To start the demo application, please navigate to the <a href="./demo.html">demo</a> page.
-				<br />
-				&nbsp;
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="./demo.html" role="button">View the Demo</a></p>
 				<br />
 			</div>
-			<div class="container-fluid">
+			<div class="page-container">
+				<h1>Download the Javascript API and Sample App from GitHub</h1>
+				<p>The git repository for the MD PnP Lab javascript API, this website, the 'flot' data visularization script and supporting assets are available on GitHub. Please contribute to this project by forking this code and submitting a pull request.</p>
+				<br />
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/openice/" role="button" target="_blank">Download the Demo</a></p>
+				<br />
+			</div>
+			<div class="page-container">	
+				<h1>OpenICE.js Documentation</h1>
+				<p>The files used to visualize data on this webpage are listed below. The detailed documentation of OpenICE.js can be found by clicking the link below.</p>
+				<h3>Files in the Repository</h3>
+				<dl class="dl-horizontal">
+					<dt>openice.js</dt>
+					<dd>The javascript API developed at MD PnP used to access data flowing from the lab</dd>
+					<dt>openice.flot.js</dt>
+					<dd>The example script used in the demo webpage to pass data from OpenICE.js to a visualization library called flot.js</dd>
+					<dt>jquery.flot.js</dt>
+					<dd>The flot script used for plotting the vital signs data originating from the MD PnP lab</dd>
+					<dt>jquery.flot.time.js</dt>
+					<dd>The script used for creating 'flots' with a time-based axis</dd>
+					<dt>jquery.js</dt>
+					<dd>A dependency of several scripts</dd>
+					<dt>bootstrap.css</dt>
+					<dd>A front-end framework used to improve site layout and appearance</dd>
+				</dl>
+				<br />
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="./jsdocs/" role="button" target="_blank">View the Documentation</a></p>
+				<br /><br />
+			</div>
+		</section>
+		<section>
+			<div class="page-container">
 				<div id="lab-slide-show" class="carousel slide" data-ride="carousel">
 					<!-- Indicators -->
 					<ol class="carousel-indicators">
@@ -81,40 +110,40 @@
 					</ol>
 
 					<!-- Wrapper for slides -->
-					<div class="carousel-inner" style="max-height:500px">
+					<div id="slideshow" class="carousel-inner">
 						<div class="item active" style="background-image:url(./assets/lab-slide-show/1.jpg); background-position: left center; background-repeat: no-repeat;background-size:100% auto;">
 							<img style="opacity:0" class="img-responsive" src="./assets/lab-slide-show/1.jpg" alt="">
 							<div class="carousel-caption">
-								<h3>...</h3>
-								<p>...</p>
+								<h3></h3>
+								<p></p>
 							</div>
 						</div>
 						<div class="item">
 							<img class="img-responsive center-block" src="./assets/lab-slide-show/2.jpg" alt="">
 							<div class="carousel-caption">
-								<h3>...</h3>
-								<p>...</p>
+								<h3></h3>
+								<p></p>
 							</div>
 						</div>
 						<div class="item">
 							<img class="img-responsive center-block" src="./assets/lab-slide-show/3.jpg" alt="">
 							<div class="carousel-caption">
-								<h3>...</h3>
-								<p>...</p>
+								<h3></h3>
+								<p></p>
 							</div>
 						</div>
 						<div class="item">
 							<img class="img-responsive center-block" src="./assets/lab-slide-show/4.jpg" alt="">
 							<div class="carousel-caption">
-								<h3>...</h3>
-								<p>...</p>
+								<h3></h3>
+								<p></p>
 							</div>
 						</div>
 						<div class="item">
 							<img class="img-responsive center-block" src="./assets/lab-slide-show/5.jpg" alt="">
 							<div class="carousel-caption">
-								<h3>...</h3>
-								<p>...</p>
+								<h3></h3>
+								<p></p>
 							</div>
 						</div>
 					</div>
@@ -127,6 +156,13 @@
 						<span class="glyphicon glyphicon-chevron-right"></span>
 					</a>
 				</div>
+			</div>
+		</section>
+		<section  id="footer" class="center-block">
+			<div class="page-container">
+				<br /><br />
+				<p><small>Logos present on this page do not imply endorsement</small></p>
+				<br />
 			</div>
 		</section>
 	</body>
