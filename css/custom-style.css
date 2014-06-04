@@ -10,8 +10,7 @@ table td {
 .graph {
 	height: 150px;
 	margin: 0.5em auto 0.5em 0;
-/*	width: 500px;
-*/}
+}
 
 #demo-header {
 	display: none;
@@ -100,7 +99,8 @@ table td {
 
 #readme-banner-text {
 	color: #FFF;
-	text-shadow: 3px 3px #777;
+	/*text-shadow: 2px 2px #555;*/
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .page-container {
