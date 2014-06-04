@@ -1,54 +1,45 @@
 var openICE;
 var demopreferences;
 
-// in milliseconds
+/** maximum age for data stored for plotting (in milliseconds) */
 var maxFlotAge = 15000;
 
-function metricValue(rows, metric_id) {
-	var result = "";
-	
-	for(var i = 0; i < rows.length; i++) {
-		if(rows[i].keyValues) {
-			if(rows[i].keyValues.metric_id == metric_id) {
 
-				if(rows[i].samples.length > 0) {
-					result += " " + rows[i].samples[rows[i].samples.length-1].data.value;
-				}
-			}
-		} else {
-			console.log("No keyValues " + rows[i]);
-		}
-		
-	}
-	return result;
-}
-
-// called periodically to update plot information
+/** called periodically to update plot information */
 var flotIt = function() {
+	// fixed starting time 
 	var startOfFlotIt = Date.now();
 
 	// TODO it would be bad if user's browser were badly out of clock sync wrt to server
-	var d = startOfFlotIt - 12000;
-	var d2 = startOfFlotIt - 2000;
+
 	// The domain of the plot begins 12 seconds ago
-	
+	var d = startOfFlotIt - 12000;
+
 	// The domain of the plot ends 2 seconds ago 
-	
-	
+	var d2 = startOfFlotIt - 2000;
+
+	// Check that the openICE object has been initialized (and its tables property)
 	if(openICE && openICE.tables) {
-	
+		// Iterate over each table
 		Object.keys(openICE.tables).forEach(function (tableKey) { 
 			var table = openICE.tables[tableKey];
+			// Iterate over each row
 			Object.keys(table.rows).forEach(function(rowKey) {
 				var row = table.rows[rowKey];
 				
-				if(row.rowId && row.flotData && row.flotPlot) {
+				// Ensure that the row exists and has been decorated with plotting information
+				if(row && row.rowId && row.flotData && row.flotPlot) {
+					// Reset the range to the global data min/max
 					row.flotPlot.getAxes().yaxis.options.min = row.minValue;
 					row.flotPlot.getAxes().yaxis.options.max = row.maxValue;
+					// Reset the domain to the recent time interval
 					row.flotPlot.getAxes().xaxis.options.min = d;
 					row.flotPlot.getAxes().xaxis.options.max = d2;
+					// Reset the data .. is this necessary?
 					row.flotPlot.setData(row.flotData);
+					// Redraws the plot decorations, etc.
 					row.flotPlot.setupGrid();
+					// Draw the actual data!
 					row.flotPlot.draw();
 			    }
 		    });
@@ -56,29 +47,35 @@ var flotIt = function() {
 		});
 		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
 	}
-	// setTimeout(flotIt, 250);
 }
 
 
+// Adds an endsWith function to the String type
+// This is useful as the "ice::" prefix has recently been removed from topic names
 if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function(suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
 }
 
+// Initializes the connection to the OpenICE server system
 window.onload = function(e) {
 	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
+	// Otherwise communicate with whatever server is hosting this page
 	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : window.location.hostname) + '/DDS';
     openICE = new OpenICE(url);
     
 	openICE.onafterremove = function(openICE, table, row) {
+		// If the row is decorated with flot data, delete it
 		if(row.flotData) {
 			delete row.flotData;
 		}
+		// If the row is decorated with a flot DOM object, delete it
 		if(row.flotDiv) {
 			delete row.flotDiv;
 		}
 		
+		// If the containing div element exists, remove it from the DOM and delete it 
 		if(row.outerDiv) {
 			document.getElementById("flotit").removeChild(row.outerDiv);
 			delete row.outerDiv;
@@ -86,6 +83,7 @@ window.onload = function(e) {
 	};
 	
 	openICE.onsample = function(openICE, table, row, sample) {
+		// Currently the topic may be "ice::SampleArray" or merely "SampleArray"
 		if(table.topic.endsWith('SampleArray')) {
 			// Track the observed range of values for the row through all time
 			if(sample.data.values) {
@@ -100,12 +98,20 @@ window.onload = function(e) {
 				}
 			}
 
-			// These are SampleArray data
-			if(!row.flotData && row.maxValue > row.minValue) {				
+			// If flotData wasn't previously initialized AND
+			// we've seen a range of data greater than 0
+			// This filters out unattached sensors for convenience
+			if(!row.flotData && row.maxValue > row.minValue) {	
+				// The set of data series we will plot			
 				row.flotData = [[]];
 
+				// div onto which data will be plotted
 				var flotDiv = document.createElement("div");
+
+				// container div for plot information and labelling
 				var outerDiv = document.createElement("div");
+
+				// label element for this waveform
 				var labelit = document.createElement("h5");
 				
 
@@ -121,9 +127,10 @@ window.onload = function(e) {
 
 				labelit.setAttribute("class", "labelit")
 				labelit.setAttribute("id", row.keyValues.metric_id);
+				// Translate from 11073-10101 metric id to something more colloquial
 				labelit.innerText = getCommonName(row.keyValues.metric_id);
 
-
+				// Set up the actual plot
 				row.flotPlot = $.plot('#'+row.rowId, row.flotData, options = {
 						series: {
 							lines: { show: true },
@@ -146,6 +153,8 @@ window.onload = function(e) {
 					});
 
 		    }
+
+		    // For every new data sample add it to the data series to be plotted
 		    if(row.flotData) {
 				row.millisecondsPerSample = sample.data.millisecondsPerSample;
 				for(var i = 0; i < sample.data.values.length; i++) {
@@ -160,15 +169,26 @@ window.onload = function(e) {
 			}
 		}
 	};
+
+	// Initiate the connection to the OpenICE server
 	openICE.open();
+
+	// Separately request SampleArray table data
 	setTimeout(function() { 
+		// We primarily use domain 15 for physiological data in the lab
 		var targetDomain = 15;
+
+		// Unfortunately there are two incarnations of this as colons are not truly legal
+		// and are being phased out
 		openICE.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 		openICE.createTable({domain: targetDomain, partition: [], topic:'ice::SampleArray'});
 	}, 500);
+
+	// Plot five times per second
 	setInterval(flotIt, 200);
 }
 
 window.onbeforeunload = function(e) {
+	// Try to shut down the connection before the page unloads
 	openICE.close();
 }
