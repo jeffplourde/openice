@@ -62,7 +62,8 @@ if (typeof String.prototype.endsWith !== 'function') {
 window.onload = function(e) {
 	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
 	// Otherwise communicate with whatever server is hosting this page
-	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : window.location.hostname) + '/DDS';
+	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname)) + '/DDS';
+
     openICE = new OpenICE(url);
     
 	openICE.onafterremove = function(openICE, table, row) {
@@ -112,7 +113,7 @@ window.onload = function(e) {
 				var outerDiv = document.createElement("div");
 
 				// label element for this waveform
-				var labelit = document.createElement("h5");
+				var labelit = document.createElement("span");
 				
 
 				outerDiv.appendChild(labelit);
@@ -128,7 +129,7 @@ window.onload = function(e) {
 				labelit.setAttribute("class", "labelit")
 				labelit.setAttribute("id", row.keyValues.metric_id);
 				// Translate from 11073-10101 metric id to something more colloquial
-				labelit.innerText = getCommonName(row.keyValues.metric_id);
+				labelit.innerHTML = getCommonName(row.keyValues.metric_id);
 
 				// Set up the actual plot
 				row.flotPlot = $.plot('#'+row.rowId, row.flotData, options = {
