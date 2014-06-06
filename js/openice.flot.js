@@ -167,23 +167,26 @@ window.onload = function(e) {
 	};
 
 	openICE.onopen = function(openICE) {
-		document.getElementById("connectionStateText").innerHTML = "Disconnect";
+		document.getElementById("connectionStateText").innerHTML = "Connected";
 		document.getElementById("connectionStateLightning").style.display = 'inline';
+		document.getElementById("connectionStateRemove").style.display = 'none';
 		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-success");
 		// This example utilizes SampleArray (Waveform) data
 		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 	};
 
 	openICE.onclose = function(openICE) {
-		document.getElementById("connectionStateText").innerHTML = "Connect";
+		document.getElementById("connectionStateText").innerHTML = "Disconnected";
 		document.getElementById("connectionStateLightning").style.display = 'none';
+		document.getElementById("connectionStateRemove").style.display = 'inline';
 		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-danger");
 	};
 
 	openICE.onerror = function(openICE) {
-		document.getElementById("connectionStateText").innerHTML = "Connect";
+		document.getElementById("connectionStateText").innerHTML = "Connection Error";
 		document.getElementById("connectionStateLightning").style.display = 'none';
-		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-danger");
+		document.getElementById("connectionStateRemove").style.display = 'none';
+		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-warning");
 	};
 
 	document.getElementById("connectionStateButton").onclick = function(e) {
