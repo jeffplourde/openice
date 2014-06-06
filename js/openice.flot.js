@@ -49,20 +49,11 @@ var flotIt = function() {
 	}
 }
 
-
-// Adds an endsWith function to the String type
-// This is useful as the "ice::" prefix has recently been removed from topic names
-if (typeof String.prototype.endsWith !== 'function') {
-    String.prototype.endsWith = function(suffix) {
-        return this.indexOf(suffix, this.length - suffix.length) !== -1;
-    };
-}
-
 // Initializes the connection to the OpenICE server system
 window.onload = function(e) {
 	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
 	// Otherwise communicate with whatever server is hosting this page
-	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname)) + '/DDS';
+	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+':'+window.location.port)) + '/DDS';
 
     openICE = new OpenICE(url);
     
