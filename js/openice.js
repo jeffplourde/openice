@@ -186,12 +186,15 @@ function OpenICE(url) {
 		};
 		this.connection.onopen = function(e) {
 			console.log("Connection opened");
+			this.openICE.onopen(this);
 		};
 		this.connection.onerror = function(e) {
 			console.log("Connection error");
+			this.openICE.onerror(this);
 		};
 		this.connection.onclose = function(e) {
 			console.log("Connection closed");
+			this.openICE.onclose(this);
 		};
 	};
 	
@@ -349,6 +352,18 @@ function OpenICE(url) {
 	 * @param {Table} table - The table that has been removed.
 	 */	
 	this.onremovetable = function(openICE, table) {
+	};
+
+	this.onopen = function(openICE) {
+
+	};
+
+	this.onclose = function(openICE) {
+
+	};
+
+	this.onerror = function(openICE) {
+
 	};
 }
 

@@ -125,9 +125,10 @@ window.onload = function(e) {
 				document.getElementById("flotit").appendChild(outerDiv);
 				row.flotDiv = flotDiv;
 				row.outerDiv = outerDiv;
+				row.labelit = labelit;
 
 				labelit.setAttribute("class", "labelit")
-				labelit.setAttribute("id", row.keyValues.metric_id);
+
 				// Translate from 11073-10101 metric id to something more colloquial
 				labelit.innerHTML = getCommonName(row.keyValues.metric_id);
 
@@ -156,7 +157,7 @@ window.onload = function(e) {
 		    }
 
 		    // For every new data sample add it to the data series to be plotted
-		    if(row.flotData) {
+		    if(row.flotData && sample.data && sample.data.values && sample.data.millisecondsPerSample) {
 				row.millisecondsPerSample = sample.data.millisecondsPerSample;
 				for(var i = 0; i < sample.data.values.length; i++) {
 					var value = sample.data.values[i];
@@ -168,7 +169,25 @@ window.onload = function(e) {
 					row.flotData[0].shift();
 				}
 			}
+			if(row.labelit && (row.labelit.innerHTML=='' || row.labelit.innerHTML=='unknown waveform')) {
+				// Translate from 11073-10101 metric id to something more colloquial
+				console.log("Corrected from " + row.labelit.innerHTML);
+				row.labelit.innerHTML = getCommonName(row.keyValues.metric_id);
+				console.log("to " + row.labelit.innerHTML);
+			}
 		}
+	};
+
+	openICE.onopen = function(openICE) {
+		document.getElementById("connectionState").innerHTML = "Connection Active";
+	};
+
+	openICE.onclose = function(openICE) {
+		document.getElementById("connectionState").innerHTML = "Connection Broken";
+	};
+
+	openICE.onerror = function(openICE) {
+		document.getElementById("connectionState").innerHTML = "Connection Broken";
 	};
 
 	// Initiate the connection to the OpenICE server
