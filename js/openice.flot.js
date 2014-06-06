@@ -84,8 +84,8 @@ window.onload = function(e) {
 	};
 	
 	openICE.onsample = function(openICE, table, row, sample) {
-		// Currently the topic may be "ice::SampleArray" or merely "SampleArray"
-		if(table.topic.endsWith('SampleArray')) {
+
+		if(table.topic=='SampleArray') {
 			// Track the observed range of values for the row through all time
 			if(sample.data.values) {
 				for(var i = 0; i < sample.data.values.length; i++) {
@@ -182,7 +182,6 @@ window.onload = function(e) {
 		// Unfortunately there are two incarnations of this as colons are not truly legal
 		// and are being phased out
 		openICE.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
-		openICE.createTable({domain: targetDomain, partition: [], topic:'ice::SampleArray'});
 	}, 500);
 
 	// Plot five times per second
