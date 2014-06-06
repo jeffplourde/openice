@@ -31,12 +31,12 @@
 			<div class="container">
 				<header>
 					<row>
-						<a id="logo" href="./index.html" class="col-xs-6 col-sm-4 pull-left">
+						<a id="logo" href="./index.html" class="col-xs-7 col-sm-4 pull-left">
 							<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
 						</a>
-						<div class="col-xs-6 col-sm-4 pull-right">
+						<div class="col-xs-5 col-sm-4 pull-right">
 							<img id="qrcode" class="img-responsive" src="./assets/qrcode-sm.png" alt="QR Code" />
-							<p id="qrtext">Visit this website!</p>
+							<p id="qrtext">Share this page!</p>
 						</div>
 					</row>
 				</header>
@@ -51,19 +51,20 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="./index.html">API Documentation</a>
+						<a class="navbar-brand" href="./index.html" onclick="ga('send', 'event', 'button', 'click', 'nav-landing');">Demo Documentation</a>
 					</div>
 					<div id="main-nav-collapse" class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li><a href="./demo.html">Demo App</a></li>
+							<li><a href="http://www.smartamerica.org" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-sa');">SmartAmerica.org</a></li>
+							<li><a href="http://www.mdpnp.org/smartamerica.php" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-mdpnpsa');">MDPnP.org/SmartAmerica</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">MD PnP Online Network<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="http://www.mdpnp.org/" target="_blank">MD PnP Website</a></li>
-									<li><a href="http://mdpnp.sourceforge.net/" target="_blank">Sourceforge</a></li>
-									<li><a href="http://discussion.mdpnp.org/index.php" target="_blank">MD PnP Discussion Board</a></li>
+									<li><a href="http://www.mdpnp.org/" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-mdpnp');">MD PnP Website</a></li>
+									<li><a href="http://mdpnp.sourceforge.net/" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-sourceforge');">Sourceforge</a></li>
+									<li><a href="http://discussion.mdpnp.org/index.php" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-discussion');">MD PnP Discussion Board</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -73,14 +74,20 @@
 		</section>
 
 		<section id="web-demo">
-			<div class="container">
+			<div class="text-center container">
 				<h2>Live Data Streaming from the MD PnP Lab <small>arvi.mgh.harvard.edu/demo.html</small></h2>
-				<div id="connectionState"></div>
+				<div class="btn btn-info">
+					<span class="glyphicon glyphicon-flash"></span>
+					<span id="connectionState"></span>
+					<br />
+				</div>
 			</div>
+			<br />
 			<div id="demo-container" class="container-fluid">
 				<div id="flotit"></div>
 			</div>
 		</section>
 		<img alt="" src="http://arvi.mgh.harvard.edu:8080/ht/?SMARTAMERICADEMO" />
+		<p class="footer"><a href="http://caniuse.com/websockets"><small>Is your browser compatible?</small></a></p>
 	</body>
 </html>

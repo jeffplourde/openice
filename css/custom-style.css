@@ -42,11 +42,12 @@ table td {
 
 #logo {
 	padding-top: 5px;
+	padding-left: 0px;
 }
 
 #qrcode {
 	padding-top: 5px;
-	padding-right: 10px;
+	padding-right: 7px;
 	float: right;
 }
 
@@ -79,7 +80,7 @@ table td {
 	}
 }
 
-#footer {
+.footer {
 	color: #777;
 	text-align: center;
 }

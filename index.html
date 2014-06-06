@@ -13,7 +13,6 @@
 		
 		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
 		<script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
-		<script language="javascript" type="text/javascript" src="js/analytics-events.js"></script>
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -27,12 +26,12 @@
 			<div class="container">
 				<header>
 					<row>
-						<a id="logo" href="./index.html" class="col-xs-6 col-sm-4 pull-left">
+						<a id="logo" href="./index.html" class="col-xs-7 col-sm-4 pull-left">
 							<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
 						</a>
-						<div class="col-xs-6 col-sm-4 pull-right">
+						<div class="col-xs-5 col-sm-4 pull-right">
 							<img id="qrcode" class="img-responsive" src="./assets/qrcode-sm.png" alt="QR Code" />
-							<p id="qrtext">Visit this website!</p>
+							<p id="qrtext">Share this page!</p>
 						</div>
 					</row>
 				</header>
@@ -47,19 +46,20 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="./index.html">API Documentation</a>
+						<a class="navbar-brand" href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'nav-demo');">Demo App</a>
 					</div>
 					<div id="main-nav-collapse" class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li><a href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'nav-demo');">Demo App</a></li>
+							<li><a href="http://www.smartamerica.org" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-sa');">SmartAmerica.org</a></li>
+							<li><a href="http://www.mdpnp.org/smartamerica.php" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-mdpnpsa');">MDPnP.org/SmartAmerica</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">MD PnP Online Network<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="http://www.mdpnp.org/" target="_blank">MD PnP Website</a></li>
-									<li><a href="http://mdpnp.sourceforge.net/" target="_blank">Sourceforge</a></li>
-									<li><a href="http://discussion.mdpnp.org/index.php" target="_blank">MD PnP Discussion Board</a></li>
+									<li><a href="http://www.mdpnp.org/" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-mdpnp');">MD PnP Website</a></li>
+									<li><a href="http://mdpnp.sourceforge.net/" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-sourceforge');">Sourceforge</a></li>
+									<li><a href="http://discussion.mdpnp.org/index.php" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-discussion');">MD PnP Discussion Board</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -69,7 +69,7 @@
 		</section>
 		<section>
 			<div id="readme-banner" class="container-fluid">
-				<h1 id="readme-banner-text" class="container">Smart America Demo JS API</h1>
+				<h1 id="readme-banner-text" class="container">White House Smart America Demo App</h1>
 			</div>
 		</section>
 		<section id="readme">
@@ -83,7 +83,7 @@
 				<p>To start the sample application, please navigate to the <a href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'view-demo');">demo</a> page.</p>
 				<br />
 
-				<h1>Smart America MD PnP App Challenge for Healthcare</h1>
+				<h1>White House Smart America Healthcare App Challenge</h1>
 				<p>Have an idea for an innovative healthcare application but lack the data and resources necessary to develop it?</p>
 				<p>MD PnP is holding an app challenge to enable healthcare innovation outside the walls of hospitals and medical device manufacturers. Contestants will use websockets to access real-time streaming medical device data from the MD PnP test lab to their applications.</p>
 				<br />
@@ -180,7 +180,7 @@
 				</div>
 			</div>
 		</section>
-		<section  id="footer" class="center-block">
+		<section  class="footer" class="center-block">
 			<div class="page-container">
 				<br /><br />
 				<p><small>Logos present on this page do not imply endorsement</small></p>
