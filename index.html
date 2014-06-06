@@ -13,14 +13,28 @@
 		
 		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
 		<script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
+		<script language="javascript" type="text/javascript" src="js/analytics-events.js"></script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-51695046-1', 'harvard.edu');ga('send', 'pageview');
+		</script>
 	</head>
 	<body>
 		<section id="splash">
 			<div class="container">
 				<header>
-					<a id="logo" href="./index.html" class="col-md-4 pull-left" style="padding: 0">
-						<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
-					</a>
+					<row>
+						<a id="logo" href="./index.html" class="col-xs-6 col-sm-4 pull-left">
+							<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
+						</a>
+						<div class="col-xs-6 col-sm-4 pull-right">
+							<img id="qrcode" class="img-responsive" src="./assets/qrcode-sm.png" alt="QR Code" />
+							<p id="qrtext">Visit this website!</p>
+						</div>
+					</row>
 				</header>
 			</div>
 			<nav id="main-navbar" class="navbar navbar-default" role="navigation">
@@ -33,11 +47,11 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="./index.html">Documentation</a>
+						<a class="navbar-brand" href="./index.html">API Documentation</a>
 					</div>
 					<div id="main-nav-collapse" class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li><a href="./demo.html">Demo App</a></li>
+							<li><a href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'nav-demo');">Demo App</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
@@ -60,27 +74,35 @@
 		</section>
 		<section id="readme">
 			<div class="page-container">
-				<h1>Javascript API Access to the MD PnP OpenICE Network</h1>
-				<p>This website utilizes an API to access the MD PnP medical device test bed. The purpose of this site is to visualize the vital sign data flowing from the OpenICE network in the lab in Cambridge, MA.</p>
-				<p>To start the sample application, please navigate to the <a href="./demo.html">demo</a> page.</p>
+				<br /><br />
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="./demo.html" role="button" onclick="ga('send', 'event', 'button', 'click', 'view-demo');">View the Demo</a></p>
 				<br />
-				<p class="text-center"><a class="btn btn-lg btn-primary" href="./demo.html" role="button">View the Demo</a></p>
+
+				<h1>API Access to the MD PnP OpenICE Network</h1>
+				<p>This website utilizes a JavaScript API to access the MD PnP medical device test bed. The purpose of this site is to visualize the vital sign data flowing from the OpenICE network in the MD PnP lab in Cambridge, MA.</p>
+				<p>To start the sample application, please navigate to the <a href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'view-demo');">demo</a> page.</p>
 				<br />
-			</div>
-			<div class="page-container">
-				<h1>Download the Javascript API and Sample App from GitHub</h1>
-				<p>The git repository for the MD PnP Lab javascript API, this website, the 'flot' data visularization script and supporting assets are available on GitHub. Please contribute to this project by forking this code and submitting a pull request.</p>
+
+				<h1>Smart America MD PnP App Challenge for Healthcare</h1>
+				<p>Have an idea for an innovative healthcare application but lack the data and resources necessary to develop it?</p>
+				<p>MD PnP is holding an app challenge to enable healthcare innovation outside the walls of hospitals and medical device manufacturers. Contestants will use websockets to access real-time streaming medical device data from the MD PnP test lab to their applications.</p>
 				<br />
-				<p class="text-center"><a class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/openice/" role="button" target="_blank">Download the Demo</a></p>
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="https://docs.google.com/forms/d/1JMyL9IPAXtPv7xesnzC1KB4yGtjMsQA7CaV4lYsJRXo/viewform" role="button" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'sign-up');">Sign Up!</a></p>
 				<br />
-			</div>
-			<div class="page-container">	
+
+
+				<h1>Download the JavaScript API and Sample App from GitHub</h1>
+				<p>The git repository for the MD PnP Lab JavaScript API, this website, the 'flot' data visualization script and supporting assets are available on GitHub. Please contribute to this project by forking this code and submitting a pull request.</p>
+				<br />
+				<p class="text-center"><a id="download" class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/openice/" role="button" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'download');">Download the Demo</a></p>
+				<br />
+	
 				<h1>OpenICE.js Documentation</h1>
 				<p>The files used to visualize data on this webpage are listed below. The detailed documentation of OpenICE.js can be found by clicking the link below.</p>
 				<h3>Files in the Repository</h3>
 				<dl class="dl-horizontal">
 					<dt>openice.js</dt>
-					<dd>The javascript API developed at MD PnP used to access data flowing from the lab</dd>
+					<dd>The JavaScript API developed at MD PnP used to access data flowing from the lab</dd>
 					<dt>openice.flot.js</dt>
 					<dd>The example script used in the demo webpage to pass data from OpenICE.js to a visualization library called flot.js</dd>
 					<dt>jquery.flot.js</dt>
@@ -93,7 +115,7 @@
 					<dd>A front-end framework used to improve site layout and appearance</dd>
 				</dl>
 				<br />
-				<p class="text-center"><a class="btn btn-lg btn-primary" href="./jsdocs/" role="button" target="_blank">View the Documentation</a></p>
+				<p class="text-center"><a id="documentation" class="btn btn-lg btn-primary" href="./jsdocs/" role="button" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'documentation');">View the Documentation</a></p>
 				<br /><br />
 			</div>
 		</section>

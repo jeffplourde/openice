@@ -18,14 +18,27 @@
 		<script language="javascript" type="text/javascript" src="js/openice.flot.js"></script>
 		<script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
 		<script language="javascript" type="text/javascript" src="js/demopreferences.js"></script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-51695046-1', 'harvard.edu');ga('send', 'pageview');
+		</script>
 	</head>
 	<body>
 		<section id="splash">
 			<div class="container">
 				<header>
-					<a id="logo" href="./index.html" class="col-md-4 pull-left" style="padding: 0">
-						<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
-					</a>
+					<row>
+						<a id="logo" href="./index.html" class="col-xs-6 col-sm-4 pull-left">
+							<img class="img-responsive" src="assets/logo-lrg.jpg" alt="MD PnP Logo">
+						</a>
+						<div class="col-xs-6 col-sm-4 pull-right">
+							<img id="qrcode" class="img-responsive" src="./assets/qrcode-sm.png" alt="QR Code" />
+							<p id="qrtext">Visit this website!</p>
+						</div>
+					</row>
 				</header>
 			</div>
 			<nav id="main-navbar" class="navbar navbar-default" role="navigation">
@@ -38,7 +51,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="./index.html">Documentation</a>
+						<a class="navbar-brand" href="./index.html">API Documentation</a>
 					</div>
 					<div id="main-nav-collapse" class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
