@@ -191,10 +191,14 @@ function OpenICE(url) {
 		this.connection.onerror = function(e) {
 			console.log("Connection error");
 			this.openICE.onerror(this);
+			this.connection = null;
+			this.openICE.destroyAllTables();
 		};
 		this.connection.onclose = function(e) {
 			console.log("Connection closed");
 			this.openICE.onclose(this);
+			this.connection = null;
+			this.openICE.destroyAllTables();
 		};
 	};
 	
@@ -228,11 +232,22 @@ function OpenICE(url) {
 			table = new Table(this, args.domain, args.partition, args.topic);
 			this.tables[tableKey] = table;
 			this.onaddtable(this, table);
-			this.connection.send(JSON.stringify(message));
+			if(this.connection!=null && (this.connection.readyState == WebSocket.OPEN || this.connection.readyState == WebSocket.CONNECTING)) {
+				this.connection.send(JSON.stringify(message));
+			}
 		}
 		return table;
 	};
 	
+	this.destroyAllTables = function() {
+		for(tableKey in this.tables) {
+			if(this.tables.hasOwnProperty(tableKey)) {
+				var table = this.tables[tableKey];
+				this.destroyTable(table);
+			}
+		}
+	};
+
 	/**
 	 * Destroys a table with identifying information (or no op if it does not exist)
 	 * and requests that the server stop sending information about the table.
@@ -245,8 +260,10 @@ function OpenICE(url) {
 		message.domain = args.domain;
 		message.topic = args.topic;
 		message.partition = args.partition;
-		//console.log('destroy '+args.domain+" "+args.topic+" "+args.partition);
-		this.connection.send(JSON.stringify(message));
+		// console.log('destroy '+args.domain+" "+args.topic+" "+args.partition);
+		if(this.connection!=null && (this.connection.readyState == WebSocket.OPEN || this.connection.readyState == WebSocket.CONNECTING)) {
+			this.connection.send(JSON.stringify(message));
+		}
 		
 		var tableKey = calcTableKey(message);
 		var table = this.tables[tableKey];

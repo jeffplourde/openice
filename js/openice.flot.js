@@ -4,6 +4,9 @@ var demopreferences;
 /** maximum age for data stored for plotting (in milliseconds) */
 var maxFlotAge = 15000;
 
+// We primarily use domain 15 for physiological data in the lab
+var targetDomain = 15;
+
 
 /** called periodically to update plot information */
 var flotIt = function() {
@@ -160,39 +163,39 @@ window.onload = function(e) {
 					row.flotData[0].shift();
 				}
 			}
-			if(row.labelit && (row.labelit.innerHTML=='' || row.labelit.innerHTML=='unknown waveform')) {
-				// Translate from 11073-10101 metric id to something more colloquial
-				console.log("Corrected from " + row.labelit.innerHTML);
-				row.labelit.innerHTML = getCommonName(row.keyValues.metric_id);
-				console.log("to " + row.labelit.innerHTML);
-			}
 		}
 	};
 
 	openICE.onopen = function(openICE) {
-		document.getElementById("connectionState").innerHTML = "Connection Active";
+		document.getElementById("connectionStateText").innerHTML = "Disconnect";
+		document.getElementById("connectionStateLightning").style.display = 'inline';
+		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-success");
+		// This example utilizes SampleArray (Waveform) data
+		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 	};
 
 	openICE.onclose = function(openICE) {
-		document.getElementById("connectionState").innerHTML = "Connection Broken";
+		document.getElementById("connectionStateText").innerHTML = "Connect";
+		document.getElementById("connectionStateLightning").style.display = 'none';
+		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-danger");
 	};
 
 	openICE.onerror = function(openICE) {
-		document.getElementById("connectionState").innerHTML = "Connection Broken";
+		document.getElementById("connectionStateText").innerHTML = "Connect";
+		document.getElementById("connectionStateLightning").style.display = 'none';
+		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-danger");
+	};
+
+	document.getElementById("connectionStateButton").onclick = function(e) {
+		if(openICE.connection.readyState==WebSocket.OPEN) {
+			openICE.close();
+		} else if(openICE.connection.readyState==WebSocket.CLOSED) {
+			openICE.open();
+		}
 	};
 
 	// Initiate the connection to the OpenICE server
 	openICE.open();
-
-	// Separately request SampleArray table data
-	setTimeout(function() { 
-		// We primarily use domain 15 for physiological data in the lab
-		var targetDomain = 15;
-
-		// Unfortunately there are two incarnations of this as colons are not truly legal
-		// and are being phased out
-		openICE.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
-	}, 500);
 
 	// Plot five times per second
 	setInterval(flotIt, 200);
