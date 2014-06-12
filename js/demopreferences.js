@@ -9,6 +9,10 @@ function getPlotColor(metric_id) {
 		plotColor = "#FFFF00";
 	} else if("MDC_ECG_AMPL_ST_I" == metric_id) {
 		plotColor = "#00FF00";
+	} else if("MDC_ECG_AMPL_ST_II" == metric_id) {
+		plotColor = "#00FF00";
+	} else if("MDC_ECG_AMPL_ST_III" == metric_id) {
+		plotColor = "#00FF00";
 	} else if("MDC_PULS_OXIM_PLETH" == metric_id) {
 		plotColor = "#FF9900";
 	} else if("MDC_FLOW_AWAY" == metric_id) {
@@ -33,6 +37,10 @@ function getCommonName (metric_id) {
 		name = "Capnogram";
 	} else if("MDC_ECG_AMPL_ST_I" == metric_id) {
 		name = "ECG - I";
+	} else if("MDC_ECG_AMPL_ST_II" == metric_id) {
+		name = "ECG - II";
+	} else if("MDC_ECG_AMPL_ST_III" == metric_id) {
+		name = "ECG - III";
 	} else if("MDC_PULS_OXIM_PLETH" == metric_id) {
 		name = "Pleth";
 	} else if("MDC_FLOW_AWAY" == metric_id) {
@@ -43,10 +51,6 @@ function getCommonName (metric_id) {
 		name = "ECG - V2";
 	} else if("MDC_PRESS_BLD_ART_ABP" == metric_id) {
 		name = "ABP";
-	} else if("MDC_ECG_AMPL_ST_II" == metric_id) {
-		name = "ECG - II";
-	} else if("MDC_ECG_AMPL_ST_III" == metric_id) {
-		name = "ECG - III";
 	} else if("MDC_ECG_AMPL_ST_AVR" == metric_id) {
 		name = "ECG - aVR";
 	} else if("MDC_PRESS_BLD_ART" == metric_id) {
