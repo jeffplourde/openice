@@ -59,7 +59,7 @@ window.onload = function(e) {
 	var port = window.location.port;
 	// Internet Explorer does not populate port for default port 80
 	port = port == '' ? '' : (':'+port);
-	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+window.location.port)) + '/DDS';
+	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/DDS';
 
     openICE = new OpenICE(url);
     
