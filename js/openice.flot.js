@@ -56,7 +56,10 @@ var flotIt = function() {
 window.onload = function(e) {
 	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
 	// Otherwise communicate with whatever server is hosting this page
-	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+':'+window.location.port)) + '/DDS';
+	var port = window.location.port;
+	// Internet Explorer does not populate port for default port 80
+	port = port == '' ? '' : (':'+port);
+	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+window.location.port)) + '/DDS';
 
     openICE = new OpenICE(url);
     

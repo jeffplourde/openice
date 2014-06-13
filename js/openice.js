@@ -288,7 +288,9 @@ function OpenICE(url) {
 	 * @public
 	 */
 	this.close = function() {
-		this.connection.close();
+		if(this.connection && this.connection != null) {
+			this.connection.close();
+		}
 	};
 
 	/**
