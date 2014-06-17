@@ -32,12 +32,63 @@ var flotIt = function() {
 				
 				// Ensure that the row exists and has been decorated with plotting information
 				if(row && row.rowId && row.flotData && row.flotPlot) {
+					// Adjustment factor in the case where data time is wildly out of sync with
+					// the local clock
+					var adjustTime = 0;
+					// Are there available data samples
+					if(row.flotData[0].length > 0) {
+						// Timestamp of the most recent data
+						var mostRecentData = row.flotData[0][row.flotData[0].length-1][0];
+						adjustTime = mostRecentData - startOfFlotIt;
+
+						// Gross tolerance for latency / bad clock sync is +/- 2 seconds
+						// When in excess of that adjust
+						if(adjustTime >= 2000) {
+							adjustTime -= 2000;
+						} else if(adjustTime <= -2000) {
+							adjustTime += 2000;
+						} else {
+							adjustTime = 0;
+						}
+
+						// This adjustment needs some hysteresis or else it makes continuous adjustments
+						// as data ages between samples
+						// If there's a previous adjustment time and it's within 2s of the newly computed
+						// adjustment then keep the previous
+						if(row.adjustTime && Math.abs(adjustTime-row.adjustTime)<2000) {
+							adjustTime = row.adjustTime;
+						}
+
+					}
+
+					row.adjustTime = adjustTime;
+
+					if(row.messageIt) {
+						if(row.adjustTime < 0) {
+							// local clock is in the future
+							row.messageIt.innerHTML = "Consider moving your clock back ~" + Math.round(-row.adjustTime/1000.0) + "s";
+						} else if(row.adjustTime > 0) {
+							// local clock is in the past
+							row.messageIt.innerHTML = "Consider moving your clock forward ~" + Math.round(row.adjustTime/1000.0) + "s";
+						} else {
+							row.messageIt.innerHTML = "";
+						}
+					}
+
+
+					// Expire samples based upon an adjusted clock
+					var maxAge = startOfFlotIt + row.adjustTime - maxFlotAge;
+
+					while(row.flotData[0].length>0&&row.flotData[0][0][0]<maxAge) {
+						row.flotData[0].shift();
+					}
+
 					// Reset the range to the global data min/max
 					row.flotPlot.getAxes().yaxis.options.min = row.minValue;
 					row.flotPlot.getAxes().yaxis.options.max = row.maxValue;
 					// Reset the domain to the recent time interval
-					row.flotPlot.getAxes().xaxis.options.min = d;
-					row.flotPlot.getAxes().xaxis.options.max = d2;
+					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
+					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
 					// Reset the data .. is this necessary?
 					row.flotPlot.setData(row.flotData);
 					// Redraws the plot decorations, etc.
@@ -111,10 +162,14 @@ window.onload = function(e) {
 
 				// label element for this waveform
 				var labelit = document.createElement("span");
+
+				// message element for this waveform
+				var messageIt = document.createElement("span");
 				
 
 				outerDiv.appendChild(labelit);
 				outerDiv.appendChild(flotDiv);
+				outerDiv.appendChild(messageIt);
 				outerDiv.setAttribute("class", "outerDiv col-md-6 col-xs-12");
 				
 				flotDiv.setAttribute("id", row.rowId);
@@ -123,8 +178,10 @@ window.onload = function(e) {
 				row.flotDiv = flotDiv;
 				row.outerDiv = outerDiv;
 				row.labelit = labelit;
+				row.messageIt = messageIt;
 
-				labelit.setAttribute("class", "labelit")
+				labelit.setAttribute("class", "labelit");
+				messageIt.setAttribute("class", "messageIt");
 
 				// Translate from 11073-10101 metric id to something more colloquial
 				labelit.innerHTML = getCommonName(row.keyValues.metric_id);
@@ -160,11 +217,13 @@ window.onload = function(e) {
 					var value = sample.data.values[i];
 					row.flotData[0].push([sample.sourceTimestamp-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
 				}
-				var maxAge = Date.now() - maxFlotAge;
 
-				while(row.flotData[0].length>0&&row.flotData[0][0][0]<maxAge) {
-					row.flotData[0].shift();
-				}
+				// If local clock is in the future this won't work as expected... expire samples elsewhere
+				// var maxAge = Date.now() - maxFlotAge;
+
+				// while(row.flotData[0].length>0&&row.flotData[0][0][0]<maxAge) {
+					// row.flotData[0].shift();
+				// }
 			}
 		}
 	};

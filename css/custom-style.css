@@ -37,7 +37,12 @@ table td {
 }
 
 .labelit {
-	color:#FFF;
+	color:#FFFFFF;
+	display:block;
+}
+
+.messageIt {
+	color:#FF0000;
 }
 
 #logo {
