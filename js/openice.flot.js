@@ -252,9 +252,9 @@ window.onload = function(e) {
 	};
 
 	document.getElementById("connectionStateButton").onclick = function(e) {
-		if(openICE.connection.readyState==WebSocket.OPEN) {
+		if(openICE.isOpen()) {
 			openICE.close();
-		} else if(openICE.connection.readyState==WebSocket.CLOSED) {
+		} else {
 			openICE.open();
 		}
 	};
