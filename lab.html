@@ -31,7 +31,7 @@
 		var port = window.location.port;
 		// Internet Explorer does not populate port for default port 80
 		port = port == '' ? '' : (':'+port);
-		var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/mpeg';
+		var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/mpeg/1';
 
 		// Setup the WebSocket connection and start the player
 		var client = new WebSocket( url);
