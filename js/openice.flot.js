@@ -7,6 +7,9 @@ var maxFlotAge = 15000;
 // We primarily use domain 15 for physiological data in the lab
 var targetDomain = 15;
 
+var expectedDelay = 1000;
+var timeDomain = 10000;
+var acceptableOutOfSync = 2000;
 
 /** called periodically to update plot information */
 var flotIt = function() {
@@ -15,11 +18,12 @@ var flotIt = function() {
 
 	// TODO it would be bad if user's browser were badly out of clock sync wrt to server
 
+
 	// The domain of the plot begins 12 seconds ago
-	var d = startOfFlotIt - 12000;
+	var d = startOfFlotIt - timeDomain - expectedDelay;
 
 	// The domain of the plot ends 2 seconds ago 
-	var d2 = startOfFlotIt - 2000;
+	var d2 = startOfFlotIt - expectedDelay;
 
 	// Check that the openICE object has been initialized (and its tables property)
 	if(openICE && openICE.tables) {
@@ -43,10 +47,10 @@ var flotIt = function() {
 
 						// Gross tolerance for latency / bad clock sync is +/- 2 seconds
 						// When in excess of that adjust
-						if(adjustTime >= 2000) {
-							adjustTime -= 2000;
-						} else if(adjustTime <= -2000) {
-							adjustTime += 2000;
+						if(adjustTime >= acceptableOutOfSync) {
+							adjustTime -= acceptableOutOfSync;
+						} else if(adjustTime <= -acceptableOutOfSync) {
+							adjustTime += acceptableOutOfSync;
 						} else {
 							adjustTime = 0;
 						}
@@ -110,9 +114,20 @@ window.onload = function(e) {
 	var port = window.location.port;
 	// Internet Explorer does not populate port for default port 80
 	port = port == '' ? '' : (':'+port);
-	var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/DDS';
+	var baseURL = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/';
 
-    openICE = new OpenICE(url);
+			// Show loading notice
+		var canvas = document.getElementById('videoCanvas');
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle = '#444';
+		ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+
+		// Setup the WebSocket connection and start the player
+		var client = new WebSocket(baseURL+'mpeg');
+
+		var player = new jsmpeg(client, {canvas:canvas});
+
+    openICE = new OpenICE(baseURL+'DDS');
     
 	openICE.onafterremove = function(openICE, table, row) {
 		// If the row is decorated with flot data, delete it
