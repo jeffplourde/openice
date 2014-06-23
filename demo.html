@@ -3,7 +3,7 @@
 	<head>
 		<title>MD PnP OpenICE Smart America Demo</title>
 
-		 <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
+		<meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
   		<meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
   		<meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
 		
@@ -89,15 +89,18 @@
 				</div>
 			</div>
 			<br />
-			<div id="demo-container" class="container-fluid">
+			<div id="webcam" class="col-md-6 container-fluid text-center">
+				<h3 style="color: #FFF">Live Video of the Signals' Sources</h3>
 				<canvas id="videoCanvas" width="320" height="240">
-				<p>
-					Please use a browser that supports the Canvas Element, like
-						<a href="http://www.google.com/chrome">Chrome</a>,
-						<a href="http://www.mozilla.com/firefox/">Firefox</a>,
-						<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
-				</p>
-			</canvas>
+					<p>
+						Please use a browser that supports the Canvas Element, like
+							<a href="http://www.google.com/chrome">Chrome</a>,
+							<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+							<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+					</p>
+				</canvas>
+			</div>
+			<div id="demo-container" class="container-fluid">
 				<div id="flotit"></div>
 			</div>
 		</section>
