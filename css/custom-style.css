@@ -49,9 +49,22 @@ table td {
 	color:#FF0000;
 }
 
-#logo {
-	padding-top: 5px;
+#logo-img {
 	padding-left: 0px;
+}
+
+@media (min-width: 768px) {
+	#logo-img {
+		margin-top: 15px;
+		margin-bottom: 10px;
+		height: 115px;
+	}
+}
+
+@media (max-width: 768px) {
+	#logo-img {
+		height: 75px;
+	}
 }
 
 #qrcode {
