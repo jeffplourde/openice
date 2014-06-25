@@ -12,7 +12,31 @@
 	</style>
 </head>
 <body>		
-	<canvas id="videoCanvas" width="320" height="240">
+	<canvas id="videoCanvas0" width="320" height="240">
+		<p>
+			Please use a browser that supports the Canvas Element, like
+			<a href="http://www.google.com/chrome">Chrome</a>,
+			<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+			<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+		</p>
+	</canvas>
+		<canvas id="videoCanvas1" width="320" height="240">
+		<p>
+			Please use a browser that supports the Canvas Element, like
+			<a href="http://www.google.com/chrome">Chrome</a>,
+			<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+			<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+		</p>
+	</canvas>
+		<canvas id="videoCanvas2" width="320" height="240">
+		<p>
+			Please use a browser that supports the Canvas Element, like
+			<a href="http://www.google.com/chrome">Chrome</a>,
+			<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+			<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+		</p>
+	</canvas>
+		<canvas id="videoCanvas3" width="320" height="240">
 		<p>
 			Please use a browser that supports the Canvas Element, like
 			<a href="http://www.google.com/chrome">Chrome</a>,
@@ -22,8 +46,10 @@
 	</canvas>
 	<script type="text/javascript" src="js/jsmpg.js"></script>
 	<script type="text/javascript">
+		function start(e) {
+
 		// Show loading notice
-		var canvas = document.getElementById('videoCanvas');
+		var canvas = document.getElementById('videoCanvas'+e);
 		var ctx = canvas.getContext('2d');
 		ctx.fillStyle = '#444';
 		ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
@@ -31,12 +57,17 @@
 		var port = window.location.port;
 		// Internet Explorer does not populate port for default port 80
 		port = port == '' ? '' : (':'+port);
-		var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/mpeg/1';
+		var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/mpeg/'+e;
 
 		// Setup the WebSocket connection and start the player
 		var client = new WebSocket( url);
 
 		var player = new jsmpeg(client, {canvas:canvas});
+}
+	start('0');
+	start('1');
+	start('2');
+	start('3');
 	</script>
 </body>
 </html>
