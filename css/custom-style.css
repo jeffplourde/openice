@@ -158,3 +158,95 @@ table td {
 		width: 920px;
 	}
 }
+
+#arrow{
+	position: absolute;
+	z-index: 10;
+	width: 354px;
+	height: 250px;
+	margin-left: 100px;
+	left: 50%;
+	margin-top: -250px;
+
+	animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s; /*name duration delay*/
+	-webkit-animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s;
+	-moz-animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s;
+	-o-animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s;
+	animation-iteration-count: 1, 1, infinite;
+	-webkit-animation-iteration-count: 1, 1, infinite;
+	-moz-animation-iteration-count: 1, 1, infinite;  
+	-o-animation-iteration-count: 1, 1, infinite;
+}
+
+@keyframes blank {
+0%   {opacity:0;}
+100% {opacity:0;}
+}
+
+@-webkit-keyframes blank {
+0%   {opacity:0;}
+100% {opacity:0;}
+}
+
+@-moz-keyframes blank {
+0%   {opacity:0;}
+100% {opacity:0;}
+}
+
+@-o-keyframes blank {
+0%   {opacity:0;}
+100% {opacity:0;}
+}
+
+@keyframes fade {
+0%   {opacity:1;}
+50%   {opacity:0;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fade {
+0%   {opacity:1;}
+50%   {opacity:0;}
+100% {opacity:1;}
+}
+
+@-moz-keyframes fade {
+0%   {opacity:1;}
+50%   {opacity:0;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fade {
+0%   {opacity:1;}
+50%   {opacity:0;}
+100% {opacity:1;}
+}
+
+/*Thanks to github.com/daneden/animate.css !!!!!!*/
+@-webkit-keyframes slideInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(500px);
+    transform: translateX(500px);
+  }
+
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(500px);
+    -ms-transform: translateX(500px);
+    transform: translateX(500px);
+  }
+
+  100% {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
