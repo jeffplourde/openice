@@ -250,3 +250,14 @@ table td {
     transform: translateX(0);
   }
 }
+
+/*#fancy-button {
+	-webkit-box-shadow: 0px 0px 25px 25px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0px 0px 25px 25px rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 25px 20px rgba(0,0,0,0.2);
+
+	animation: blank 6.5s, fade 2s 6.5s;
+	animation-iteration-count: 1, infinite;
+	-webkit-animation-iteration-count: 1, infinite;
+	-moz-animation-iteration-count: 1, infinite;  
+}*/
