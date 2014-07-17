@@ -109,5 +109,14 @@
 				Thanks to the <a href="https://github.com/phoboslab/jsmpeg">jsmpeg</a> project for mpeg decoding.
 			</p></small>
 		</div>
+		<script type="text/javascript">
+			$(document).ready(function checkWebSocket () {
+				if (window.WebSocket){
+	     			console.log("BROWSER SUPPORTS WEBSOCKETS");
+				} else {
+	 			    console.log("BROWSER DOES NOT SUPPORT WEBSOCKETS");
+	     			// cool stuff goes here
+				}});
+		</script>
 	</body>
 </html>
