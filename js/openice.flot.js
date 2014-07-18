@@ -118,14 +118,16 @@ window.onload = function(e) {
 
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
-		var ctx = canvas.getContext('2d');
-		ctx.fillStyle = '#444';
-		ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+		if(canvas) {
+			var ctx = canvas.getContext('2d');
+			ctx.fillStyle = '#444';
+			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
-		// Setup the WebSocket connection and start the player
-		var client = new WebSocket(baseURL+'mpeg/0');
+			// Setup the WebSocket connection and start the player
+			var client = new WebSocket(baseURL+'mpeg/0');
 
-		var player = new jsmpeg(client, {canvas:canvas});
+			var player = new jsmpeg(client, {canvas:canvas});
+		}
 
     openICE = new OpenICE(baseURL+'DDS');
     
@@ -283,5 +285,7 @@ window.onload = function(e) {
 
 window.onbeforeunload = function(e) {
 	// Try to shut down the connection before the page unloads
-	openICE.close();
+	if(openICE) {
+		openICE.close();
+	}
 }
