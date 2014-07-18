@@ -118,7 +118,7 @@ window.onload = function(e) {
 
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
-		if(canvas) {
+		if(canvas && canvas.getContext) {
 			var ctx = canvas.getContext('2d');
 			ctx.fillStyle = '#444';
 			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
@@ -277,10 +277,14 @@ window.onload = function(e) {
 	};
 
 	// Initiate the connection to the OpenICE server
-	openICE.open();
+	if(openICE.open) {
+		openICE.open();
 
-	// Plot five times per second
-	setInterval(flotIt, 200);
+		// Plot five times per second
+		setInterval(flotIt, 200);
+	}
+
+
 }
 
 window.onbeforeunload = function(e) {

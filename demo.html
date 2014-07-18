@@ -144,9 +144,13 @@
 		<script type="text/javascript">
 			$(document).ready(function checkWebSocket () {
 				if (window.WebSocket){
-					console.log("BROWSER SUPPORTS WEBSOCKETS");
+					if(window.console) {
+						console.log("BROWSER SUPPORTS WEBSOCKETS");
+					}
 				} else {
-					console.log("BROWSER DOES NOT SUPPORT WEBSOCKETS");
+					if(window.console) {
+						console.log("BROWSER DOES NOT SUPPORT WEBSOCKETS");
+					}
 					$('#websocket-support-modal').modal('show');
 				}});
 		</script>

@@ -124,6 +124,11 @@ function OpenICE(url) {
 	this.url = url;
 	/** @property {int} maxSamples - Max samples preserved for each row. */
 	this.maxSamples = 100;
+
+	if(!window.WebSocket) {
+		// WebSockets are not supported
+		return;
+	}
 	
 	this.toString = function() {
 		return this.url;
