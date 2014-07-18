@@ -4,16 +4,18 @@
 		<title>MD PnP OpenICE Smart America Demo</title>
 
 		<meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
-  		<meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
-  		<meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
+		<meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
+		<meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
 		
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<link href="assets/favicon.ico" rel="shortcut icon">
+
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/custom-style.css" rel="stylesheet">
+		<script language="javascript" type="text/javascript" src="js/respond.min.js"></script>
 		
 		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
 		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
@@ -37,7 +39,7 @@
 				<header>
 					<row>
 						<a id="logo" href="./index.html" class="col-xs-7 col-sm-5 pull-left">
-							<img id="logo-img"  src="assets/logo-lrg.jpg" alt="MD PnP Logo">
+							<img id="logo-img"  src="assets/logo-149px.png" alt="MD PnP Logo">
 						</a>
 						<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
 					</row>
@@ -101,6 +103,36 @@
 				<div id="flotit"></div>
 			</div>
 		</section>
+
+		<div id="websocket-support-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="modalLabel">Error: Your Browser is Not Supported</h4>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<p>We're sorry but your browser is too old and does not support WebSockets - the underlying technology of the demo.</p>
+							<p>Please upgrade to a modern browser.</p>
+						</div>
+						<div class="container-fluid">
+							<hr />
+							<h4>Vimeo Demonstration</h4>
+							<p>This screen capture shows what the OpenICE demo app looks like with a modern browser.</p>
+							<div id="vimeo" class="videowrapper well">
+								<iframe src="http://player.vimeo.com/video/99546813" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 		<div class="footer">
 			<img alt="" src="http://arvi.mgh.harvard.edu:8080/ht/?SMARTAMERICADEMO" />
 			<small><p>
@@ -112,10 +144,10 @@
 		<script type="text/javascript">
 			$(document).ready(function checkWebSocket () {
 				if (window.WebSocket){
-	     			console.log("BROWSER SUPPORTS WEBSOCKETS");
+					console.log("BROWSER SUPPORTS WEBSOCKETS");
 				} else {
-	 			    console.log("BROWSER DOES NOT SUPPORT WEBSOCKETS");
-	     			// cool stuff goes here
+					console.log("BROWSER DOES NOT SUPPORT WEBSOCKETS");
+					$('#websocket-support-modal').modal('show');
 				}});
 		</script>
 	</body>
