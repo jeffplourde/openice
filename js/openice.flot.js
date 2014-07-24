@@ -1,4 +1,5 @@
 var openICE;
+var mpegClient;
 var demopreferences;
 
 /** maximum age for data stored for plotting (in milliseconds) */
@@ -124,12 +125,12 @@ window.onload = function(e) {
 			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
 			// Setup the WebSocket connection and start the player
-			var client = new WebSocket(baseURL+'mpeg/0');
+			mpegClient = new WebSocket(baseURL+'mpeg/mpeg/0');
 
-			var player = new jsmpeg(client, {canvas:canvas});
+			var player = new jsmpeg(mpegClient, {canvas:canvas});
 		}
 
-    openICE = new OpenICE(baseURL+'DDS');
+    openICE = new OpenICE(baseURL+'DDS/DDS');
     
 	openICE.onafterremove = function(openICE, table, row) {
 		// If the row is decorated with flot data, delete it
@@ -291,5 +292,8 @@ window.onbeforeunload = function(e) {
 	// Try to shut down the connection before the page unloads
 	if(openICE) {
 		openICE.close();
+	}
+	if(mpegClient) {
+		mpegClient.close();
 	}
 }
