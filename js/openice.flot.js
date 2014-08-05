@@ -89,8 +89,9 @@ var flotIt = function() {
 					}
 
 					// Reset the range to the global data min/max
-					row.flotPlot.getAxes().yaxis.options.min = row.minValue;
-					row.flotPlot.getAxes().yaxis.options.max = row.maxValue;
+					var cushion = 0.1 * (row.maxValue - row.minValue);
+					row.flotPlot.getAxes().yaxis.options.min = row.minValue - cushion;
+					row.flotPlot.getAxes().yaxis.options.max = row.maxValue + cushion;
 					// Reset the domain to the recent time interval
 					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
 					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
@@ -115,7 +116,9 @@ window.onload = function(e) {
 	var port = window.location.port;
 	// Internet Explorer does not populate port for default port 80
 	port = port == '' ? '' : (':'+port);
-	var baseURL = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/';
+	// Pages served over https can only utilize wss protocol
+	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
+	var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
 
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
