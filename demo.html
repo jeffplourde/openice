@@ -154,7 +154,7 @@
 					$('#websocket-support-modal').modal('show');
 					var player = $('#player');
 					var url = player.attr('src').split('?')[0];
-    				player.contentWindow.postMessage({method: play}, url);
+    				player[0].contentWindow.postMessage("{\"method\": \"play\"}", url);
 				}});
 		</script>
 	</body>
