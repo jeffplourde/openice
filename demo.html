@@ -121,7 +121,7 @@
 							<h4>Vimeo Demonstration (Requires Latest Flash Player)</h4>
 							<p>This <a href="http://vimeo.com/99546813">screen capture</a> shows what the OpenICE demo app looks like with a modern browser.</p>
 							<div id="vimeo" class="videowrapper well">
-								<iframe id="player" src="https://player.vimeo.com/video/99546813?loop=1?api=1" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+								<!-- <iframe id="player" src="https://player.vimeo.com/video/99546813?autoplay=1&amp;loop=1" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe> -->
 							</div>
 						</div>
 					</div>
@@ -152,9 +152,17 @@
 						console.log("BROWSER DOES NOT SUPPORT WEBSOCKETS");
 					}
 					$('#websocket-support-modal').modal('show');
-					var player = $('#player');
-					var url = player.attr('src').split('?')[0];
-    				player[0].contentWindow.postMessage("{\"method\": \"play\"}", url);
+					var child = document.createElement('iframe');
+					child.src = 'https://player.vimeo.com/video/99546813?autoplay=1&loop=1';
+					child.id = "player";
+					child.height = 300;
+					child.frameborder = 0;
+					$('#vimeo').appendChild(child);
+
+					 // height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""
+					// var player = $('#player');
+					// var url = player.attr('src').split('?')[0];
+    	// 			player[0].contentWindow.postMessage("{\"method\": \"play\"}", url);
 				}});
 		</script>
 	</body>
