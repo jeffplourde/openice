@@ -116,7 +116,9 @@ window.onload = function(e) {
 	var port = window.location.port;
 	// Internet Explorer does not populate port for default port 80
 	port = port == '' ? '' : (':'+port);
-	var baseURL = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/';
+	// Pages served over https can only utilize wss protocol
+	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
+	var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
 
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
