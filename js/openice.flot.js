@@ -89,8 +89,9 @@ var flotIt = function() {
 					}
 
 					// Reset the range to the global data min/max
-					row.flotPlot.getAxes().yaxis.options.min = row.minValue;
-					row.flotPlot.getAxes().yaxis.options.max = row.maxValue;
+					var cushion = 0.1 * (row.maxValue - row.minValue);
+					row.flotPlot.getAxes().yaxis.options.min = row.minValue - cushion;
+					row.flotPlot.getAxes().yaxis.options.max = row.maxValue + cushion;
 					// Reset the domain to the recent time interval
 					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
 					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
