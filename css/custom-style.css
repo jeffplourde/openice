@@ -49,6 +49,27 @@ table td {
 	color:#FF0000;
 }
 
+dt, dd {
+	padding-top: 8px;
+}
+
+#logo-img {
+	padding-left: 0px;
+}
+
+#logo-banner-holder {
+	padding-left: 0px;
+	padding-right: 0px;
+	height: 150px;
+}
+
+#logo-banner {
+	width: auto;
+	height: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
 #logo-img {
 	padding-left: 0px;
 }
