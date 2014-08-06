@@ -61,6 +61,7 @@ dt, dd {
 	padding-left: 0px;
 	padding-right: 0px;
 	height: 150px;
+	overflow: hidden;
 }
 
 #logo-banner {

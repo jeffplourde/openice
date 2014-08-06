@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>MD PnP OpenICE Smart America Demo</title>
+		<title>MD PnP OpenICE</title>
 
 		<meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
   		<meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
@@ -30,9 +30,9 @@
 	<body>
 		<section id="splash">
 			<div id="logo-banner-holder" class="container-fluid hidden-xs">
-				<img id="logo-banner" src="./assets/logo-banner.png"/ height="175">
+				<img id="logo-banner" src="./assets/logo-banner.png" height="175" />
 			</div>
-				<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
+			<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
 			<nav id="main-navbar" class="navbar navbar-default" role="navigation">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -79,13 +79,13 @@
 					</div>
 
 					<p>
-						This guide will assist you in setting up a Beaglebone Black (BBB) as a device adapter for integrating supported medical devices into an OpenICE environment. OpenICE is an open source, prototype implementation of the FDA recongized reference architecture <a href="http://www.astm.org/Standards/F2761.htm">ASTM F2761</a> - the Integrated Clinical Environment. The device adapters function as means of converting the proprietary data output from exisiting medical devices into the common data fabric used in OpenICE. OpenICE is built on Object Managment Group <a href="http://www.omg.org/hot-topics/dds.htm">Data Distribution Service</a> (DDS) and uses the terminology from <a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=61897">ISO/IEEE 11073</a>.
+						This guide will assist you in setting up a Beaglebone Black (BBB) as a device adapter for integrating supported medical devices into an OpenICE environment. OpenICE is an open source, prototype implementation of the FDA recognized reference architecture <a href="http://www.astm.org/Standards/F2761.htm">ASTM F2761</a> - the Integrated Clinical Environment. The device adapters function as means of converting the proprietary data output from existing medical devices into the common data fabric used in OpenICE. OpenICE is built on Object Management Group <a href="http://www.omg.org/hot-topics/dds.htm">Data Distribution Service</a> (DDS) and uses the terminology from <a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=61897">ISO/IEEE 11073</a>.
 					</p>
 					<p>
-						OpenICE device adapters can be used for acquistion of waveform and numeric medical data, research and prototyping of interoperable enviroments, and for research and development of a new class of data-aware medical applicaitons.
+						OpenICE device adapters can be used for acquisition of waveform and numeric medical data, research and prototyping of interoperable environments, and for research and development of a new class of data-aware medical applications.
 					</p> 
 					<p>
-						Beaglebone Black is a single board, linux-driven computing platform. It was choosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
+						Beaglebone Black is a single board, Linux-driven computing platform. It was chosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
 					</p>
 
 					<div class="container-fluid">
@@ -110,9 +110,9 @@
 							<div class="col-sm-6">
 								<h5>Included Device Simulators</h5>
 								<ul>
-									<li>Multiparameter Patient Monitor</li>
+									<li>Multi-Parameter Patient Monitor</li>
 									<li>Non-Invasive Blood Pressure</li>
-									<li>Electrocardigram</li>
+									<li>Electrocardiogram</li>
 									<li>End Tidal CO2</li>
 									<li>Temperature</li>
 									<li>Infusion Pump</li>
@@ -126,7 +126,7 @@
 					<h3>Process Overview</h3>
 					<div class="clearfix">
 						<img src="./assets/adapters.png" class="hidden-xs pull-right" style="height:250px; padding:10px" />
-						<p>To create an OpenICE device adapter, we are going to take a stock BBB and flash the onboard eMMC memory with a new disk image to replace the current filesystem. The disk image contains the preinstalled software necessary for running the device adapter.</p>
+						<p>To create an OpenICE device adapter, we are going to take a stock BBB and flash the on-board eMMC memory with a new disk image to replace the current filesystem. The disk image contains the pre-installed software necessary for running the device adapter.</p>
 						<p>We are going to:</p>
 						<ol>
 							<li>Gather the Required Hardware</li>
@@ -153,7 +153,7 @@
 						<dt><a href="#">Disk Image</a></dt>
 						<dd>Download the MD PnP Beaglebone Black disk image. Details about the software installed in disk image can be found below. This image will replace the memory of the BBB.</dd>
 						<dt><a href="https://s3.amazonaws.com/beagle/beagleboneblack-save-emmc.zip">eMMC Flashing Tool</a></dt>
-						<dd>Download the beaglebone eMMC memory flashing micro-kernel. The flashing tool will sit on the MicroSD card next to the disk image. When the BBB boots, the kernel will overwrite the disk image on the internal eMMC memory of the BBB, replacing the currently installed filesystem. This is accomplished using a startup shell script that runs the <kbd>dd</kbd> command. More information about the tool can be found <a href="http://elinux.org/BeagleBone_Black_Extracting_eMMC_contents">here</a>.</dd>
+						<dd>Download the Beaglebone eMMC memory flashing micro-kernel. The flashing tool will sit on the MicroSD card next to the disk image. When the BBB boots, the kernel will overwrite the disk image on the internal eMMC memory of the BBB, replacing the currently installed filesystem. This is accomplished using a startup shell script that runs the <kbd>dd</kbd> command. More information about the tool can be found <a href="http://elinux.org/BeagleBone_Black_Extracting_eMMC_contents">here</a>.</dd>
 					</dl>
 
 					<h5 id="inc-sw" style="padding-top:10px">Software Installed in the Disk Image:</h5>
@@ -161,11 +161,11 @@
 						<dt>Ubuntu 14.04 LTS</dt>
 						<dd>The disk image contains an Ubuntu filesystem from <a href="http://www.armhf.com/boards/beaglebone-black/">ARMhf</a>. The exact kernel installed is ubuntu-trusty-14.04-rootfs-3.14.4.1-bone-armhf.com. The included Ubuntu kernel is headless for embedded development with minimal meta package and features hard float support.</dd>
 						<dt>Oracle SE JDK</dt>
-						<dd>The Java Standard Edition Development Kit 7 is installed for ease of debugging onboard applications. The JDK version is 7u60 (jdk-7u60-linux-arm-vfp-hflt). You can find it <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-arm-downloads-2187468.html">here</a>.</dd>
+						<dd>The Java Standard Edition Development Kit 7 is installed for ease of debugging on-board applications. The JDK version is 7u60 (jdk-7u60-linux-arm-vfp-hflt). You can find it <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-arm-downloads-2187468.html">here</a>.</dd>
 						<dt>MD PnP OpenICE</dt>
 						<dd>MD PnP provides a <a href="http://mdpnp.sourceforge.net/">demo application</a> for both serving as the medical device adapter and for viewing and interacting with the OpenICE network on a computer. Later in the tutorial, we will configure the installed demo application to function as a device adapter. To view and interact with the data on your personal computer, simply install the software by clicking the big green download button on the linked page.</dd>
 						<dt>NTP Daemon</dt>
-						<dd>The Network Time Protocol daemon (NTPd) package is installed on the disk image. The OpenICE enviroment requires all nodes to sync to a NTP clock for data accuarcy and alignment. The time zone of the BBB image has been set to eastern.</dd>
+						<dd>The Network Time Protocol daemon (NTPd) package is installed on the disk image. The OpenICE environment requires all nodes to sync to a NTP clock for data accuracy and alignment. The time zone of the BBB image has been set to eastern.</dd>
 					</dl>
 
 					<h3 id="prepare-sd">Prepare the MircoSD Card</h3>
@@ -238,11 +238,11 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 						<dt>RS232 Cape</dt>
 						<dd>To connect the Beaglebone and the MP70, we will use a Beaglebone Black serial cape and a special cable described below.</dd>
 						<dt>RJ45 to DB-9</dt>
-						<dd>To connect to the RJ45 port on the MP70 to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. The MP70 Data Export Program Guide depicts the pinout of the port. A "cisco-style" RJ45 to DB-9 cable contains the proper pinouts and should allow the devices to connect.</dd>
+						<dd>To connect to the RJ45 port on the MP70 to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. The MP70 Data Export Program Guide depicts the pinout of the port. A "Cisco-style" RJ45 to DB-9 cable contains the proper pinouts and should allow the devices to connect.</dd>
 						<dt>Computer w/ OpenICE</dt>
-						<dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="mdpnp.sourceforge.com">sourceforge</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
+						<dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="mdpnp.sourceforge.com">Sourceforge</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
 						<dt>A Network</dt>
-						<dd>You will need a network to connect the devices to that is capable of DHCP. A standard home wifi router is sufficient.</dd>
+						<dd>You will need a network to connect the devices to that is capable of DHCP. A standard home WiFi router is sufficient.</dd>
 						<dt>Monitor and Keyboard</dt>
 						<dd>You will need a means of configuring the Beaglebone software. The most obvious means of accomplishing this is a monitor with HDMI connection to the BBB and a keyboard. It is advised to setup SSH for using the device adapter.</dd>
 					</dl>
@@ -259,10 +259,10 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					</div>
 
 					<h3 id="network">Setup a Network</h3>
-					<p>Now, connect the device adapter and your computer to the same DHCP-capable network. For this example, a standard home wifi router is used.</p>
+					<p>Now, connect the device adapter and your computer to the same DHCP-capable network. For this example, a standard home WiFi router is used.</p>
 					<ol>
-						<li>Connect your computer to the network via wifi or ethernet cable.</li>
-						<li>Use an ethernet cable to connect the BBB to the router.</li>
+						<li>Connect your computer to the network via WiFi or Ethernet cable.</li>
+						<li>Use an Ethernet cable to connect the BBB to the router.</li>
 						<li>Type <kbd>ifconfig</kbd> in the BBB to ensure an IP address is being assigned.</li>
 					</ol>
 
@@ -280,7 +280,7 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					<p>Use the MD PnP OpenICE demo app to view the MP70 data.</p>
 					On your computer:
 					<ol>
-						<li>Open the OpenICE Demo Application you download from <a href="http://mdpnp.sourceforge.net">sourceforge</a>.</li>
+						<li>Open the OpenICE Demo Application you download from <a href="http://mdpnp.sourceforge.net">Sourceforge</a>.</li>
 						<li>Start an ICE_Supervisor on Domain 15.</li>
 						<img src="./assets/demoapp.png" class="hidden-xs" style="height:200px; padding:10px" />
 						<li>Once the device has finished negotiating, click on the MP70 icon to view the waveform and numeric data in the OpenICE network. You have now integrated an MP70 into the OpenICE!</li>
