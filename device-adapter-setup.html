@@ -151,8 +151,8 @@
 
 					<h3 id="required-software">Required software:</h3>
 					<dl class="dl-horizontal">
-						<dt><a href="#">Disk Image</a></dt>
-						<dd>Download the MD PnP Beaglebone Black disk image. Details about the software installed in disk image can be found below. This image will replace the memory of the BBB.</dd>
+						<dt><a href="/files/beaglebone-ubuntu14LTS-mdpnp-v1.img.tar.xz">Disk Image</a></dt>
+						<dd>Download the MD PnP Beaglebone Black disk image. Details about the software installed in disk image can be found below. This image will replace the memory of the BBB. To decompress the disk image, type:<br /><kbd>tar -xJf beaglebone-ubuntu14LTS-mdpnp-v1.img.tar.xz</kbd></dd>
 						<dt><a href="https://s3.amazonaws.com/beagle/beagleboneblack-save-emmc.zip">eMMC Flashing Tool</a></dt>
 						<dd>Download the Beaglebone eMMC memory flashing micro-kernel. The flashing tool will sit on the MicroSD card next to the disk image. When the BBB boots, the kernel will overwrite the disk image on the internal eMMC memory of the BBB, replacing the currently installed filesystem. This is accomplished using a startup shell script that runs the <kbd>dd</kbd> command. More information about the tool can be found <a href="http://elinux.org/BeagleBone_Black_Extracting_eMMC_contents">here</a>.</dd>
 					</dl>
