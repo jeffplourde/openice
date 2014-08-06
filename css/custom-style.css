@@ -61,12 +61,13 @@ dt, dd {
 
 #logo-banner {
 	width: auto;
-	height: 100%;
+	height: 150px;
 	display: block;
 	margin: 0 auto;
 }
 
-#logo-img {
+#logo {
+	height: 100px;
 	padding-left: 0px;
 }
 
