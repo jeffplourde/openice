@@ -1,65 +1,35 @@
-function getPlotColor(metric_id) {
-	var plotColor = null;
+var plotColors = {
+	"MDC_PRESS_AWAY": "#00FFFF",
+	"MDC_PRESS_BLD": "#FF0000",
+	"MDC_CONC_AWAY_CO2_ET": "#FFFF00",
+	"MDC_ECG_AMPL_ST_I": "#00FF00",
+	"MDC_ECG_AMPL_ST_II": "#00FF00",
+	"MDC_ECG_AMPL_ST_III": "#00FF00",
+	"MDC_PULS_OXIM_PLETH": "#FF9900",
+	"MDC_FLOW_AWAY": "#0000FF",
+	"MDC_CAPNOGRAPH": "#FF00FF"
+};
 
-	if("MDC_PRESS_AWAY" == metric_id) {
-		plotColor = "#00FFFF";
-	} else if("MDC_PRESS_BLD" == metric_id) {
-		plotColor = "#FF0000";
-	} else if("MDC_CONC_AWAY_CO2_ET" == metric_id) {
-		plotColor = "#FFFF00";
-	} else if("MDC_ECG_AMPL_ST_I" == metric_id) {
-		plotColor = "#00FF00";
-	} else if("MDC_ECG_AMPL_ST_II" == metric_id) {
-		plotColor = "#00FF00";
-	} else if("MDC_ECG_AMPL_ST_III" == metric_id) {
-		plotColor = "#00FF00";
-	} else if("MDC_PULS_OXIM_PLETH" == metric_id) {
-		plotColor = "#FF9900";
-	} else if("MDC_FLOW_AWAY" == metric_id) {
-		plotColor = "#0000FF";
-	} else if("MDC_CAPNOGRAPH" == metric_id) {
-		plotColor = "#FF00FF";
-	} else {
-		plotColor = "#FFFFFF";
-	}
-	
-	return plotColor
+var commonNames = {
+	"MDC_PRESS_AWAY": "Airway Pressure",
+	"MDC_PRESS_BLD": "Invasive BP",
+	"MDC_CONC_AWAY_CO2_ET": "Capnogram",
+	"MDC_ECG_AMPL_ST_I": "ECG - I",
+	"MDC_ECG_AMPL_ST_II": "ECG - II",
+	"MDC_ECG_AMPL_ST_III": "ECG - III",
+	"MDC_PULS_OXIM_PLETH": "Pulse Oximetry",
+	"MDC_FLOW_AWAY": "Airway Flow",
+	"MDC_CAPNOGRAPH": "Capnogram",
+	"MDC_ECG_AMPL_ST_V2": "ECG - V2",
+	"MDC_PRESS_BLD_ART_ABP": "Arterial BP",
+	"MDC_ECG_AMPL_ST_AVR": "ECG - aVR",
+	"MDC_PRESS_BLD_ART": "ART"
+};
+
+function getPlotColor(metric_id) {
+	return plotColors[metric_id] || "#FFFFFF";
 }
 
 function getCommonName (metric_id) {
-	var name = null;
-
-	if("MDC_PRESS_AWAY" == metric_id) {
-		name = "Airway Pressure";
-	} else if("MDC_PRESS_BLD" == metric_id) {
-		name = "IBP";
-	} else if("MDC_CONC_AWAY_CO2_ET" == metric_id) {
-		name = "Capnogram";
-	} else if("MDC_ECG_AMPL_ST_I" == metric_id) {
-		name = "ECG - I";
-	} else if("MDC_ECG_AMPL_ST_II" == metric_id) {
-		name = "ECG - II";
-	} else if("MDC_ECG_AMPL_ST_III" == metric_id) {
-		name = "ECG - III";
-	} else if("MDC_PULS_OXIM_PLETH" == metric_id) {
-		name = "Pleth";
-	} else if("MDC_FLOW_AWAY" == metric_id) {
-		name = "Airway Flow";
-	} else if("MDC_CAPNOGRAPH" == metric_id) {
-		name = "Capnogram";
-	} else if("MDC_ECG_AMPL_ST_V2" == metric_id) {
-		name = "ECG - V2";
-	} else if("MDC_PRESS_BLD_ART_ABP" == metric_id) {
-		name = "ABP";
-	} else if("MDC_ECG_AMPL_ST_AVR" == metric_id) {
-		name = "ECG - aVR";
-	} else if("MDC_PRESS_BLD_ART" == metric_id) {
-		name = "ART";
-	} else {
-		name = "unknown waveform";
-	}
-	
-	return name
+	return commonNames[metric_id] || "";
 }
-
-
