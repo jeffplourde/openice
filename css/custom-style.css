@@ -53,14 +53,9 @@ dt, dd {
 	padding-top: 8px;
 }
 
-#logo-img {
-	padding-left: 0px;
-}
-
 #logo-banner-holder {
 	padding-left: 0px;
 	padding-right: 0px;
-	height: 150px;
 	overflow: hidden;
 }
 
@@ -184,8 +179,8 @@ dt, dd {
 #arrow{
 	position: absolute;
 	z-index: 10;
-	width: 354px;
-	height: 250px;
+	width: 237px;
+	height: 238px;
 	margin-left: 100px;
 	left: 50%;
 	margin-top: -250px;
