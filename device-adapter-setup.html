@@ -86,7 +86,10 @@
 						OpenICE device adapters can be used for acquisition of waveform and numeric medical data, research and prototyping of interoperable environments, and for research and development of a new class of data-aware medical applications.
 					</p> 
 					<p>
-						Beaglebone Black is a single board, Linux-driven computing platform. It was chosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
+						The OpenICE device-adapter service is the core software that functions as the intermediary between the medical device and the OpenICE DDS network. The device-adapter service is a Java application that can theoretically run on any Java friendly hardware platform, including embedded systems, laptops, servers, Raspberry Pis, Intel Galileos, Beagleboards, etc. This device-adapter is not intended to be a permanent solution. Ideally, the functionality of the device-adapter would be available natively from a medical device.
+					</p>
+					<p>
+						This tutorial uses Beaglebone Black as the hardware platform. BBB is a single board, Linux-driven computing platform. It was chosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
 					</p>
 
 					<div class="container-fluid">
@@ -99,8 +102,8 @@
 									<li>Masimo Radical 7</li>
 									<li>Dräger Apollo</li>
 									<li>Dräger Evita XL</li>
-									<li>Dräger V500</li>
 									<li>Dräger Evita 4</li>
+									<li>Dräger V500</li>
 									<li>Ivy 450C</li>
 									<li>Nonin</li>
 									<li>Capnostream 20</li>
@@ -130,29 +133,29 @@
 						<p>To create an OpenICE device adapter, we are going to take a stock BBB and flash the on-board eMMC memory with a new disk image to replace the current filesystem. The disk image contains the pre-installed software necessary for running the device adapter.</p>
 						<p>We are going to:</p>
 						<ol>
-							<li>Gather the Required Hardware</li>
-							<li>Download the Required Software</li>
-							<li>Prepare the MicroSD Card</li>
-							<li>Flash the Beaglebone Memory</li>
+							<li><a href="#required-hardware">Gather the Required Hardware</a></li>
+							<li><a href="#required-software">Download the Required Software</a></li>
+							<li><a href="#prepare-sd">Prepare the MicroSD Card</a></li>
+							<li><a href="#flash-memory">Flash the Beaglebone Memory</a></li>
 						</ol>
 					</div>
 
-					<h3 id="required-hardware">Required hardware:</h3>
+					<h3 id="required-hardware">Required Hardware</h3>
 					<dl class="dl-horizontal">
 						<dt>Beaglebone Black</dt>
 						<dd>This process was tested with a BBB revision B board. Other Beaglebone revisions may (and should) work. This procedure was tested with the Beaglebone's existing OS running Stock Angstrom and Ubuntu 12.04.</dd>
 						<dt>5V Power Supply</dt>
-						<dd>Please use a dedicated 5V 1A power supply for your BBB during this process. The flashing process may use more than the 500mA allowed by some USB 2.0 laptop and computer ports.</dd>
+						<dd>Please use a dedicated 5V 1A power supply for your BBB during this process. The flashing process may use more than the 500mA allowed by some USB 2.0 laptop and computer ports. Exceeding this limit could disable the power and corrupt the memory on the BBB.</dd>
 						<dt>MicroSD Card</dt>
-						<dd>At least 2GB of space is required. This process was tested with an 8GB card, formatted as fat16.</dd>
+						<dd>At least 2GB of space is required. This process was tested with an 8GB card, formatted as fat16. You will also need some method of connecting the MicroSD card to your computer. A simple USB adapter is recommended.</dd>
 						<dt>A Computer</dt>
-						<dd>Needed for preparing the MicroSD card.</dd>
+						<dd>Needed for preparing the MicroSD card. This process should be possible on any operating system. Windows users will have to ensure that they have the tools needed for decompressing .tar.xz images. This will be easiest on either Linux or OS X.</dd>
 					</dl>
 
-					<h3 id="required-software">Required software:</h3>
+					<h3 id="required-software">Required Software</h3>
 					<dl class="dl-horizontal">
 						<dt><a href="/files/beaglebone-ubuntu14LTS-mdpnp-v1.img.tar.xz">Disk Image</a></dt>
-						<dd>Download the MD PnP Beaglebone Black disk image. Details about the software installed in disk image can be found below. This image will replace the memory of the BBB. To decompress the disk image, type:<br /><kbd>tar -xJf beaglebone-ubuntu14LTS-mdpnp-v1.img.tar.xz</kbd></dd>
+						<dd>Download the MD PnP Beaglebone Black disk image. Details about the software installed in disk image can be found below. This image will replace the memory of the BBB. To decompress the disk image, navigate to the directory where you downloaded the disk image and type:<br /><kbd>tar -xJf beaglebone-ubuntu14LTS-mdpnp-v1.img.tar.xz</kbd><br />Windows users should investigate the XZ Utils binary distribution for xz tar ball decompression.</dd>
 						<dt><a href="https://s3.amazonaws.com/beagle/beagleboneblack-save-emmc.zip">eMMC Flashing Tool</a></dt>
 						<dd>Download the Beaglebone eMMC memory flashing micro-kernel. The flashing tool will sit on the MicroSD card next to the disk image. When the BBB boots, the kernel will overwrite the disk image on the internal eMMC memory of the BBB, replacing the currently installed filesystem. This is accomplished using a startup shell script that runs the <kbd>dd</kbd> command. More information about the tool can be found <a href="http://elinux.org/BeagleBone_Black_Extracting_eMMC_contents">here</a>.</dd>
 					</dl>
@@ -193,21 +196,21 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					<p>That's it. Your MicroSD card is ready.</p>
 
 					<h3 id="flash-memory">Flashing the Memory</h3>
-					<div class="alert alert-warning">
-						WARNING: Do not use the USB power during the flashing process. eLinux reports that this process may exceed 500mA and trigger a PC or laptop to disable USB power.
-					</div>
 					<div class="alert alert-info">
-						NOTE: This will obviously overwrite the contents of your BBB's internal memory. Backup any content you wish to preserve.
+						NOTE: This process will obviously overwrite the contents of your BBB's internal memory. Backup any content you wish to preserve.
 					</div>
 					<ol>
 						<li>Insert the MicroSD card into the BBB</li>
 						<li>Plug in the BBB power supply (No need to hold S2 button used to boot directly to MicroSD)</li>
+						<div class="alert alert-warning">
+							WARNING: Do not use the USB power during the flashing process. eLinux reports that this process may exceed 500mA and trigger a PC or laptop to disable USB power. Please you a dedicated 5V 1A power supply as detailed above.
+						</div>
 						<li>When the image starts copying onto the BBB, USR0 LED (the outside most blue LED near button S1) will blink slowly - compared to the usual heartbeat blink pattern.</li>
 						<li>When the USR0 light goes solid, remove the power and MicroSD card</li>
 						<li>Your beagle is now running Ubuntu 14.04.1 LTS and has the OpenICE device adapter software installed. It can now be configured to run as a device adapter for any of the supported devices. In the next section we will configure the adapter to communicate with a Philips MP70.</li>
 					</ol>
 					<div class="alert alert-info">
-						NOTE: The beagle will take up to 5 minutes to boot without a network cable attached.
+						NOTE: The BBB with Ubuntu will take up to 3 minutes to boot without a network cable attached.
 					</div>
 
 
@@ -216,16 +219,19 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					<br />
 					<h1 id="mp70-adapter">Example MP70 OpenICE Adapter</h1>
 					<div class="clearfix">
-						<img src="./assets/adapter-case.png" class="hidden-xs pull-right" style="height:250px; padding:10px" />
-						<p>In this section we will configure the newly imaged Beaglebone from the previous section to communicate with a Philips MP70. We'll also setup the OpenICE demo application on a computer and use it to view the MP70 data on the OpenICE network.</p>
+						<img src="./assets/adapter-case.jpg" class="hidden-xs pull-right" style="height:250px; padding:10px" />
+						<p>
+							In this section we will configure the newly imaged Beaglebone from the previous section to communicate with a Philips MP70. We'll also setup the OpenICE demo application on a computer and use it to view the MP70 data on the OpenICE network. This same process can be used to connect to any supported device.
+						</p>
+
 						<h3>Process Overview</h3>
 						<p>We are going to:</p>
 						<ol>
-							<li>Gather the Required Hardware</li>
-							<li>Connect the Devices</li>
-							<li>Configure the Device Adapter Software on the Beaglebone</li>
-							<li>Start the OpenICE Demo App on Our Computer</li>
-							<li>View the MP70 Data in the OpenICE Network</li>
+							<li><a href="#required-hardware-mp70">Gather the Required Hardware</a></li>
+							<li><a href="#connect-devices">Connect the Devices</a></li>
+							<li><a href="#network">Setup a Network</a></li>
+							<li><a href="#configure">Configure the Device Adapter Software on the Beaglebone</a></li>
+							<li><a href="#view-the-data">View the MP70 Data in the OpenICE Network</a></li>
 						</ol>
 					</div>
 
@@ -233,13 +239,13 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					<h3 id="required-hardware-mp70">Required Hardware</h3>
 					<dl class="dl-horizontal">
 						<dt>Philips MP70</dt>
-						<dd>The device adapter software was developed using a MP70 rev.J. I'm guessing that revisions G through K should work but this is untested.</dd>
+						<dd>The device adapter software was developed using a MP70 rev.J. Software revisions G through K are expected to be compatible with the OpenICE device adapter software but this claim has not been tested.</dd>
 						<dt>OpenICE Beaglebone</dt>
-						<dd>Your newly imaged Beaglebone Black from above. The MD PnP Beaglebone image contains the software necessary to run the OpenICE device adapter we will configure.</dd>
+						<dd>This is your newly imaged Beaglebone Black as configured in previous section. The MD PnP Beaglebone image contains the software necessary to run the OpenICE device adapter we will configure to communicate with the MP70.</dd>
 						<dt>RS232 Cape</dt>
 						<dd>To connect the Beaglebone and the MP70, we will use a Beaglebone Black serial cape and a special cable described below.</dd>
 						<dt>RJ45 to DB-9</dt>
-						<dd>To connect to the RJ45 port on the MP70 to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. The MP70 Data Export Program Guide depicts the pinout of the port. A "Cisco-style" RJ45 to DB-9 cable contains the proper pinouts and should allow the devices to connect.</dd>
+						<dd>To connect to the RJ45 port on the MP70 to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. If you wish to make the cable, the MP70 'Data Export Program Guide' depicts the pinout of the RJ45 port. However, we have observed that this pinout matches the common RJ45 to DB-9 "Cisco console cable". This cable is available from many distributors and should allow the devices to connect.</dd>
 						<dt>Computer w/ OpenICE</dt>
 						<dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="mdpnp.sourceforge.com">Sourceforge</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
 						<dt>A Network</dt>
@@ -264,17 +270,28 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					<ol>
 						<li>Connect your computer to the network via WiFi or Ethernet cable.</li>
 						<li>Use an Ethernet cable to connect the BBB to the router.</li>
-						<li>Type <kbd>ifconfig</kbd> in the BBB to ensure an IP address is being assigned.</li>
+						<li>Type <kbd>ifconfig</kbd> in the BBB terminal and ensure the output shows an assigned IP addressed.</li>
 					</ol>
 
+					<div class="alert alert-info">
+						NOTE: You will need to ensure your BBB has a means of establishing time. Either set the time manually or connect your network to the internet for NTP communication.
+					</div>
+
 					<h3 id="configure">Configure the Device-Adapter</h3>
-					<p>With our system connected, we finally need to specify what type of device is connected in the configuration file of the device adapter application on the Beaglebone.</p>
+					<p>With our system connected, we finally need to specify what type of medical device is connected to the Beaglebone device adapter. This is specified in the configuration file of the device adapter application on the Beaglebone. The device configuration file is called "device.this" and is located in the home directory of the default Ubuntu user. All terminal entries are relative to the default home directory.</p>
 
 					<ol>
-						<li>To display the available options for the device adapter application, enter: <br /><kbd>demo-apps-0.2.2/bin/demo-apps —-help</kbd></li>
-						<li>To configure the Beaglebone to function as a device adapter for the MP70, enter:<br />
-						<kbd>echo 15 IntellivueSerial=ttyO1 > device.this</kbd> (Note: Letter O not number 0)</li>
+						<li>To configure the Beaglebone to function as a device adapter for the MP70, in the terminal enter:<br />
+						<kbd>echo 15 IntellivueSerial=ttyO1 > device.this</kbd> (Note: Letter O not number 0)<br />This entry will write "15 IntellivueSerial=ttyO1" to the file "device.this". "15 IntellivueSerial=ttyO1" indicates that the device adapter is for a Philips Intellivue device, using the serial version of the driver, communicating over BBB serial port interface ttyO1, and that device adapter will publish to OpenICE DDS domain 15.</li>
 						<li>Restart the Beaglebone. The device adapter software will automatically start.</li>
+					</ol>
+					<p>
+						If you are trying to connect to a device that is not a MP70, the previous steps will be different.
+					</p>
+					<ol>
+						<li>To display a list of available options for different device adapters and simulators, enter: <br /><kbd>demo-apps-0.2.2/bin/demo-apps —-help</kbd></li>
+						<li>If you wanted to start a simulated electrocardiogram monitor on domain 5, for example, the entry in "device.this" would have "ECG_Simulator" as the device name preceded by "5". The BBB terminal input would be:<br /><kbd>echo 5 ECG_Simulator > device.this</kbd>
+						</li>
 					</ol>
 
 					<h3 id="view-the-data">View the Data</h3>
@@ -290,14 +307,19 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 
 					<h3 id="troubleshooting">Troubleshooting</h3>
 					<p>If you experience issues with the device adapter setup, please try the following:</p>
-					<li>Restart the demo-app on your computer</li>
-					<li>Restart OpenICE device-adapter service on the Beaglebone with:
-						<ol>
-							<li><kbd>sudo service device-adapter stop</kbd></li>
-							<li><kbd>sudo service device-adapter start</kbd></li>
-						</ol>
-					</li>
-					<li>If you change networks while using the demo-app, please restart the demo-app after you have connected to the desired network.</li>
+					<ul>
+						<li>Restart the demo-app on your computer</li>
+						<li>Restart OpenICE device-adapter service on the Beaglebone with:
+							<ol>
+								<li><kbd>sudo service device-adapter stop</kbd></li>
+								<li><kbd>sudo service device-adapter start</kbd></li>
+							</ol>
+						</li>
+						<li>If you change networks while using the demo-app, please restart the demo-app after you have connected to the desired network.</li>
+						<li>Ensure that you spelled the contents of device.this correctly, e.g. "15 IntellivueSerial=ttyO1".</li>
+						<li>In the Demo Apps on your computer, if you see numeric vital signs but no waveforms, check the time on the BBB and ensure that NTP is running syncing.</li>
+						<li>If your BBB is not syncing the time properly, ensure the network you're using has internet access in order to communicate with NTP server.</li>
+					</ul>
 
 
 				</div>
