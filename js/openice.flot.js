@@ -138,9 +138,11 @@ window.onload = function(e) {
 			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
 			// Setup the WebSocket connection and start the player
-			mpegClient = new WebSocket(baseURL+'mpeg/mpeg/0');
+			if(window.WebSocket) {
+				mpegClient = new WebSocket(baseURL+'mpeg/mpeg/0');
 
-			var player = new jsmpeg(mpegClient, {canvas:canvas});
+				var player = new jsmpeg(mpegClient, {canvas:canvas});
+			}
 		}
 
     openICE = new OpenICE(baseURL);
