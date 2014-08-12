@@ -317,6 +317,8 @@ dt, dd {
 
 #connectionStateAlert {
 	width: 120px;
-	float:right;
-	display:none;
+	float: right;
+	display: none;
+	position: absolute;
+	z-index: 2;
 }
