@@ -182,7 +182,7 @@ function OpenICE(url) {
 		}
 	});
 	this.connection.on('connect', function(socket) {
-		console.log('connect '+socket.transport);
+		console.log('connect '+JSON.stringify(socket));
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
