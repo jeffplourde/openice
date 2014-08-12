@@ -322,22 +322,22 @@ window.onload = function(e) {
 			}
 		}
 	};
-	$("#connectionStateAlert").fadeIn();
+	$("#connectionStateAlert").fadeIn(1200);
 	openICE.onopen = function(openICE) {
 		connect_btn("Connected", "success");
-		$("#connectionStateAlert").fadeOut();
+		$("#connectionStateAlert").fadeOut(1200);
 		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 	};
 
 	openICE.onclose = function(openICE) {
 
 		connect_btn("Connecting...", "danger");
-		$("#connectionStateAlert").fadeIn();
+		$("#connectionStateAlert").fadeIn(1200);
 	};
 
 	openICE.onerror = function(openICE) {
 		connect_btn("Connecting...", "danger");
-		$("#connectionStateAlert").fadeIn();
+		$("#connectionStateAlert").fadeIn(1200);
 	};
 
 	// Plot five times per second
