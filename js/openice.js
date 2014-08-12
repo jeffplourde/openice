@@ -120,7 +120,7 @@ function OpenICE(url) {
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
 
-	this.connection = io(this.url);
+	this.connection = io(this.url, {"heartbeat timeout": 2, "heartbeat interval": 1, "close timeout":2});
 	/** @property {object} tables - Tables hashed by table key string. */
 	this.tables = {};
 	
@@ -182,32 +182,33 @@ function OpenICE(url) {
 		}
 	});
 	this.connection.on('connect', function() {
-		console.log('connect '+JSON.stringify(this));
+		// console.log(this);
+		// console.log('connect');
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
-		console.log('reconnect');
+		// console.log('reconnect');
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect_attempt', function() {
-		console.log('reconnect_attempt');
+		// console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnecting', function(attemptNumber) {
-		console.log('reconnect_attempt');
+		// console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnect_error', function(err) {
-		console.log('reconnect_attempt');
+		// console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnect_failed', function() {
-		console.log('reconnect_attempt');
+		// console.log('reconnect_attempt');
 	});
 	this.connection.on('error', function(err) {
-		console.log('error');
+		// console.log('error');
 		this.openICE.onerror(this);
 		this.openICE.destroyAllTables();
 	});
 	this.connection.on('disconnect', function() {
-		console.log('disconnect');
+		// console.log('disconnect');
 		this.openICE.onclose(this);
 		this.openICE.destroyAllTables();
 	});
