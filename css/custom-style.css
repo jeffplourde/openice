@@ -314,3 +314,9 @@ dt, dd {
 	-webkit-animation-iteration-count: 1, infinite;
 	-moz-animation-iteration-count: 1, infinite;  
 }*/
+
+#connectionStateAlert {
+	width: 120px;
+	float:right;
+	display:none;
+}
