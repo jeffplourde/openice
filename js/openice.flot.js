@@ -11,6 +11,7 @@ var targetDomain = 15;
 var expectedDelay = 1000;
 var timeDomain = 10000;
 var acceptableOutOfSync = 2000;
+var FLOT_INTERVAL = 200;
 
 /** called periodically to update plot information */
 var flotIt = function() {
@@ -32,8 +33,11 @@ var flotIt = function() {
 		$. each (openICE.tables, function (tableKey, tableValue) {
 		// Object.keys(openICE.tables).forEach(function (tableKey) { 
 			var table = openICE.tables[tableKey];
+			var count = 0;
+
 			// Iterate over each row
 			$. each (table.rows, function(rowKey, rowValue) {
+				count++;
 			// Object.keys(table.rows).forEach(function(rowKey) {
 				var row = table.rows[rowKey];
 				
@@ -98,7 +102,7 @@ var flotIt = function() {
 					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
 					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
 					//row.reflot();
-					setTimeout(function() { row.reflot(); }, 25);
+					
 					// Reset the data .. is this necessary?
 					// row.flotPlot.setData(row.flotData);
 					// Redraws the plot decorations, etc.
@@ -107,6 +111,15 @@ var flotIt = function() {
 					// row.flotPlot.draw();
 			    }
 		    });
+			var plotInterval = FLOT_INTERVAL / (count+1);
+			var x = 0;
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.reflot) {
+					setTimeout(function() { row.reflot(); }, (x * plotInterval));
+				}
+				x++;
+			});
 		    // iteration code
 		});
 		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
@@ -139,7 +152,7 @@ window.onload = function(e) {
 
 			// Setup the WebSocket connection and start the player
 			if(window.WebSocket) {
-				mpegClient = new WebSocket(baseURL+'mpeg/mpeg/0');
+				mpegClient = new WebSocket(baseURL + "mpeg/evita/");
 
 				var player = new jsmpeg(mpegClient, {canvas:canvas});
 			}
@@ -287,7 +300,7 @@ window.onload = function(e) {
 
 
 	// Plot five times per second
-	setInterval(flotIt, 200);
+	setInterval(flotIt, FLOT_INTERVAL);
 }
 
 window.onbeforeunload = function(e) {
