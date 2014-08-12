@@ -294,11 +294,6 @@ window.onload = function(e) {
 		connect_btn("Connecting...", "none", "inline", "danger");
 	};
 
-	document.getElementById("connectionStateButton").onclick = function(e) {
-		openICE.close();
-	};
-
-
 	// Plot five times per second
 	setInterval(flotIt, FLOT_INTERVAL);
 }
