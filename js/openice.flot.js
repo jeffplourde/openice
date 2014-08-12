@@ -13,6 +13,50 @@ var timeDomain = 10000;
 var acceptableOutOfSync = 2000;
 var FLOT_INTERVAL = 200;
 
+var flotDraw = function() {
+	if(openICE && openICE.tables) {
+		$. each (openICE.tables, function (tableKey, tableValue) {
+			var table = openICE.tables[tableKey];
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.flotPlot) {
+					row.flotPlot.draw();
+				}
+			};
+		};
+	}
+}
+
+var flotSetupGrid = function() { 
+	if(openICE && openICE.tables) {
+		$. each (openICE.tables, function (tableKey, tableValue) {
+			var table = openICE.tables[tableKey];
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.flotPlot) {
+					row.flotPlot.setupGrid();
+				}
+			};
+		};
+	}
+	setTimeout(flotDraw, 0);
+}
+
+var flotSetData = function() {
+	if(openICE && openICE.tables) {
+		$. each (openICE.tables, function (tableKey, tableValue) {
+			var table = openICE.tables[tableKey];
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.flotPlot) {
+					row.flotPlot.setData(row.flotData);
+				}
+			};
+		};
+	}
+	setTimeout(flotSetupGrid, 0);
+}
+
 /** called periodically to update plot information */
 var flotIt = function() {
 	// fixed starting time 
@@ -102,7 +146,7 @@ var flotIt = function() {
 					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
 					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
 					//row.reflot();
-					
+
 					// Reset the data .. is this necessary?
 					// row.flotPlot.setData(row.flotData);
 					// Redraws the plot decorations, etc.
@@ -111,19 +155,20 @@ var flotIt = function() {
 					// row.flotPlot.draw();
 			    }
 		    });
-			var plotInterval = FLOT_INTERVAL / (count+1);
-			var x = 0;
-			$. each (table.rows, function(rowKey, rowValue) {
-				var row = table.rows[rowKey];
-				if(row.flotData && row.reflot) {
-					setTimeout(function() { row.reflot(); }, (x * plotInterval));
-				}
-				x++;
-			});
+			// var plotInterval = FLOT_INTERVAL / (count+1);
+			// var x = 0;
+			// $. each (table.rows, function(rowKey, rowValue) {
+			// 	var row = table.rows[rowKey];
+			// 	if(row.flotData && row.reflot) {
+			// 		setTimeout(function() { row.reflot(); }, (x * plotInterval));
+			// 	}
+			// 	x++;
+			// });
 		    // iteration code
 		});
 		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
 	}
+	setTimeout(flotSetData, 0);
 }
 
 function connect_btn(text, lightning, remove, button) {
