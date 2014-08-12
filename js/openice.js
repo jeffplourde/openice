@@ -188,16 +188,16 @@ function OpenICE(url) {
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect_attempt', function() {
-
+		console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnecting', function(attemptNumber) {
-
+		console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnect_error', function(err) {
-
+		console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnect_failed', function() {
-
+		console.log('reconnect_attempt');
 	});
 	this.connection.on('error', function(err) {
 		this.openICE.onerror(this);
