@@ -182,9 +182,11 @@ function OpenICE(url) {
 		}
 	});
 	this.connection.on('connect', function() {
+		console.log('connect');
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
+		console.log('reconnect');
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect_attempt', function() {
@@ -200,10 +202,12 @@ function OpenICE(url) {
 		console.log('reconnect_attempt');
 	});
 	this.connection.on('error', function(err) {
+		console.log('error');
 		this.openICE.onerror(this);
 		this.openICE.destroyAllTables();
 	});
 	this.connection.on('disconnect', function() {
+		console.log('disconnect');
 		this.openICE.onclose(this);
 		this.openICE.destroyAllTables();
 	});
