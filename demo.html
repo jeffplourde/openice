@@ -16,13 +16,8 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/custom-style.css" rel="stylesheet">
 		<script>
-			var log;
-		    if(window.console) {
-		    	window.log = window.console.log;
-		    	log = window.console.log;
-		    } else {
-		    	window.log = function(e) {};
-		    	log = window.log;
+		    if(!window.console) {
+		    	window.console = {log: function(e) {} };
 		    }
 		    Date.now = Date.now || function() { return +new Date; }; 
 
