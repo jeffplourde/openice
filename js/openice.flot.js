@@ -171,11 +171,9 @@ var flotIt = function() {
 	setTimeout(flotSetData, 0);
 }
 
-function connect_btn(text, lightning, remove, button) {
+function connect_btn(text, button) {
 	document.getElementById("connectionStateText").innerHTML = text;
-	document.getElementById("connectionStateLightning").style.display = lightning;
-	document.getElementById("connectionStateRemove").style.display = remove;
-	document.getElementById("connectionStateButton").setAttribute("class", "btn btn-"+button);
+	document.getElementById("connectionStateAlert").setAttribute("class", "alert alert-"+button);
 }
 
 // Initializes the connection to the OpenICE server system
@@ -324,19 +322,22 @@ window.onload = function(e) {
 			}
 		}
 	};
-	connect_btn("Connecting...", "none", "inline", "danger");
-
+	$("#connectionStateAlert").fadeIn();
 	openICE.onopen = function(openICE) {
-		connect_btn("Connected", "inline", "none", "success");
+		connect_btn("Connected", "success");
+		$("#connectionStateAlert").fadeOut();
 		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 	};
 
 	openICE.onclose = function(openICE) {
-		connect_btn("Connecting...", "none", "inline", "danger");
+
+		connect_btn("Connecting...", "danger");
+		$("#connectionStateAlert").fadeIn();
 	};
 
 	openICE.onerror = function(openICE) {
-		connect_btn("Connecting...", "none", "inline", "danger");
+		connect_btn("Connecting...", "danger");
+		$("#connectionStateAlert").fadeIn();
 	};
 
 	// Plot five times per second
