@@ -316,9 +316,9 @@ dt, dd {
 }*/
 
 #connectionStateAlert {
-	width: 120px;
-	float: right;
+	width: 125px;
 	display: none;
 	position: absolute;
+	right: 45px;
 	z-index: 2;
 }
