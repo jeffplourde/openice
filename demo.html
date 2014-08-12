@@ -16,6 +16,9 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/custom-style.css" rel="stylesheet">
 		<script>
+			if(!window.Uint8Array) {
+				window.Uint8Array = function(e) {};
+			}
 		    if(!window.console) {
 		    	window.console = {log: function(e) {} };
 		    }
