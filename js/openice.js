@@ -181,8 +181,8 @@ function OpenICE(url) {
 			console.log("Unknown message:" + e.data);
 		}
 	});
-	this.connection.on('connect', function() {
-		console.log('connect');
+	this.connection.on('connect', function(socket) {
+		console.log('connect '+socket.transport);
 		this.openICE.onopen(this);
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
