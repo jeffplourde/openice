@@ -152,7 +152,7 @@ window.onload = function(e) {
 
 			// Setup the WebSocket connection and start the player
 			if(window.WebSocket) {
-				mpegClient = new WebSocket(baseURL + "mpeg/evita/");
+				mpegClient = new WebSocket(baseURL + "mpeg/evita");
 
 				var player = new jsmpeg(mpegClient, {canvas:canvas});
 			}
