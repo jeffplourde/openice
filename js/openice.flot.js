@@ -22,8 +22,8 @@ var flotDraw = function() {
 				if(row.flotData && row.flotPlot) {
 					row.flotPlot.draw();
 				}
-			};
-		};
+			});
+		});
 	}
 }
 
@@ -36,8 +36,8 @@ var flotSetupGrid = function() {
 				if(row.flotData && row.flotPlot) {
 					row.flotPlot.setupGrid();
 				}
-			};
-		};
+			});
+		});
 	}
 	setTimeout(flotDraw, 0);
 }
@@ -51,8 +51,8 @@ var flotSetData = function() {
 				if(row.flotData && row.flotPlot) {
 					row.flotPlot.setData(row.flotData);
 				}
-			};
-		};
+			});
+		});
 	}
 	setTimeout(flotSetupGrid, 0);
 }
