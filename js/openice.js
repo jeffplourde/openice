@@ -287,7 +287,11 @@ function OpenICE(url) {
 		}
 		this.onremovetable(this, table);
 		return table;
-	}
+	};
+
+	this.close = function() {
+		this.connection.disconnect();
+	};
 
 	/**
 	 * Called when a schema definition arrives.

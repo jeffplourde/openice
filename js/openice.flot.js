@@ -143,7 +143,7 @@ window.onload = function(e) {
 			var player = new jsmpeg(mpegClient, {canvas:canvas});
 		}
 
-    openICE = new OpenICE(baseURL+"DDS2/");
+    openICE = new OpenICE(baseURL);
     
 	openICE.onafterremove = function(openICE, table, row) {
 		// If the row is decorated with flot data, delete it
@@ -252,7 +252,7 @@ window.onload = function(e) {
 				row.millisecondsPerSample = sample.data.millisecondsPerSample;
 				for(var i = 0; i < sample.data.values.length; i++) {
 					var value = sample.data.values[i];
-					row.flotData[0].push([new Date(sample.sourceTimestamp).getTime()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+					row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
 				}
 
 				// If local clock is in the future this won't work as expected... expire samples elsewhere
@@ -279,6 +279,11 @@ window.onload = function(e) {
 		connect_btn("Connecting...", "none", "inline", "danger");
 	};
 
+	document.getElementById("connectionStateButton").onclick = function(e) {
+		openICE.close();
+	};
+
+
 	// Plot five times per second
 	setInterval(flotIt, 200);
 }
@@ -286,7 +291,7 @@ window.onload = function(e) {
 window.onbeforeunload = function(e) {
 	// Try to shut down the connection before the page unloads
 	if(openICE) {
-		openICE.disconnect();
+		openICE.close();
 	}
 	if(mpegClient) {
 		mpegClient.close();
