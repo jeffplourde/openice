@@ -11,6 +11,51 @@ var targetDomain = 15;
 var expectedDelay = 1000;
 var timeDomain = 10000;
 var acceptableOutOfSync = 2000;
+var FLOT_INTERVAL = 200;
+
+var flotDraw = function() {
+	if(openICE && openICE.tables) {
+		$. each (openICE.tables, function (tableKey, tableValue) {
+			var table = openICE.tables[tableKey];
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.flotPlot) {
+					row.flotPlot.draw();
+				}
+			});
+		});
+	}
+}
+
+var flotSetupGrid = function() { 
+	if(openICE && openICE.tables) {
+		$. each (openICE.tables, function (tableKey, tableValue) {
+			var table = openICE.tables[tableKey];
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.flotPlot) {
+					row.flotPlot.setupGrid();
+				}
+			});
+		});
+	}
+	setTimeout(flotDraw, 0);
+}
+
+var flotSetData = function() {
+	if(openICE && openICE.tables) {
+		$. each (openICE.tables, function (tableKey, tableValue) {
+			var table = openICE.tables[tableKey];
+			$. each (table.rows, function(rowKey, rowValue) {
+				var row = table.rows[rowKey];
+				if(row.flotData && row.flotPlot) {
+					row.flotPlot.setData(row.flotData);
+				}
+			});
+		});
+	}
+	setTimeout(flotSetupGrid, 0);
+}
 
 /** called periodically to update plot information */
 var flotIt = function() {
@@ -29,10 +74,15 @@ var flotIt = function() {
 	// Check that the openICE object has been initialized (and its tables property)
 	if(openICE && openICE.tables) {
 		// Iterate over each table
-		Object.keys(openICE.tables).forEach(function (tableKey) { 
+		$. each (openICE.tables, function (tableKey, tableValue) {
+		// Object.keys(openICE.tables).forEach(function (tableKey) { 
 			var table = openICE.tables[tableKey];
+			var count = 0;
+
 			// Iterate over each row
-			Object.keys(table.rows).forEach(function(rowKey) {
+			$. each (table.rows, function(rowKey, rowValue) {
+				count++;
+			// Object.keys(table.rows).forEach(function(rowKey) {
 				var row = table.rows[rowKey];
 				
 				// Ensure that the row exists and has been decorated with plotting information
@@ -95,18 +145,35 @@ var flotIt = function() {
 					// Reset the domain to the recent time interval
 					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
 					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
+					//row.reflot();
+
 					// Reset the data .. is this necessary?
-					row.flotPlot.setData(row.flotData);
+					// row.flotPlot.setData(row.flotData);
 					// Redraws the plot decorations, etc.
-					row.flotPlot.setupGrid();
+					// row.flotPlot.setupGrid();
 					// Draw the actual data!
-					row.flotPlot.draw();
+					// row.flotPlot.draw();
 			    }
 		    });
+			// var plotInterval = FLOT_INTERVAL / (count+1);
+			// var x = 0;
+			// $. each (table.rows, function(rowKey, rowValue) {
+			// 	var row = table.rows[rowKey];
+			// 	if(row.flotData && row.reflot) {
+			// 		setTimeout(function() { row.reflot(); }, (x * plotInterval));
+			// 	}
+			// 	x++;
+			// });
 		    // iteration code
 		});
 		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
 	}
+	setTimeout(flotSetData, 0);
+}
+
+function connect_btn(text, button) {
+	document.getElementById("connectionStateText").innerHTML = text;
+	document.getElementById("connectionStateAlert").setAttribute("class", "alert alert-"+button);
 }
 
 // Initializes the connection to the OpenICE server system
@@ -119,7 +186,6 @@ window.onload = function(e) {
 	// Pages served over https can only utilize wss protocol
 	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
 	var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
-
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
 		if(canvas && canvas.getContext) {
@@ -128,12 +194,14 @@ window.onload = function(e) {
 			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
 			// Setup the WebSocket connection and start the player
-			mpegClient = new WebSocket(baseURL+'mpeg/mpeg/0');
+			if(window.WebSocket) {
+				mpegClient = new WebSocket(baseURL + "mpeg/evita");
 
-			var player = new jsmpeg(mpegClient, {canvas:canvas});
+				var player = new jsmpeg(mpegClient, {canvas:canvas});
+			}
 		}
 
-    openICE = new OpenICE(baseURL+'DDS/DDS');
+    openICE = new OpenICE(baseURL);
     
 	openICE.onafterremove = function(openICE, table, row) {
 		// If the row is decorated with flot data, delete it
@@ -217,7 +285,7 @@ window.onload = function(e) {
 						},
 						grid: {
 							show: true,
-							aboveData: true,
+							aboveData: false,
 							color: "#FFFFFF",
 							backgroundColor: "#000000"
 						},
@@ -228,7 +296,13 @@ window.onload = function(e) {
 						},
 						yaxis: { show: true, font: { color: "#FFF" }}
 					});
-
+				row.reflot = function() {
+					this.flotPlot.setData(this.flotData);
+					// Redraws the plot decorations, etc.
+					 this.flotPlot.setupGrid();
+					// Draw the actual data!
+					this.flotPlot.draw();
+				};
 		    }
 
 		    // For every new data sample add it to the data series to be plotted
@@ -236,7 +310,7 @@ window.onload = function(e) {
 				row.millisecondsPerSample = sample.data.millisecondsPerSample;
 				for(var i = 0; i < sample.data.values.length; i++) {
 					var value = sample.data.values[i];
-					row.flotData[0].push([sample.sourceTimestamp-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+					row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
 				}
 
 				// If local clock is in the future this won't work as expected... expire samples elsewhere
@@ -248,47 +322,26 @@ window.onload = function(e) {
 			}
 		}
 	};
-
+	$("#connectionStateAlert").fadeIn(1200);
 	openICE.onopen = function(openICE) {
-		document.getElementById("connectionStateText").innerHTML = "Connected";
-		document.getElementById("connectionStateLightning").style.display = 'inline';
-		document.getElementById("connectionStateRemove").style.display = 'none';
-		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-success");
-		// This example utilizes SampleArray (Waveform) data
+		connect_btn("Connected", "success");
+		$("#connectionStateAlert").fadeOut(1200);
 		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 	};
 
 	openICE.onclose = function(openICE) {
-		document.getElementById("connectionStateText").innerHTML = "Disconnected";
-		document.getElementById("connectionStateLightning").style.display = 'none';
-		document.getElementById("connectionStateRemove").style.display = 'inline';
-		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-danger");
+
+		connect_btn("Connecting...", "danger");
+		$("#connectionStateAlert").fadeIn(1200);
 	};
 
 	openICE.onerror = function(openICE) {
-		document.getElementById("connectionStateText").innerHTML = "Connection Error";
-		document.getElementById("connectionStateLightning").style.display = 'none';
-		document.getElementById("connectionStateRemove").style.display = 'none';
-		document.getElementById("connectionStateButton").setAttribute("class", "btn btn-warning");
+		connect_btn("Connecting...", "danger");
+		$("#connectionStateAlert").fadeIn(1200);
 	};
 
-	document.getElementById("connectionStateButton").onclick = function(e) {
-		if(openICE.isOpen()) {
-			openICE.close();
-		} else {
-			openICE.open();
-		}
-	};
-
-	// Initiate the connection to the OpenICE server
-	if(openICE.open) {
-		openICE.open();
-
-		// Plot five times per second
-		setInterval(flotIt, 200);
-	}
-
-
+	// Plot five times per second
+	setInterval(flotIt, FLOT_INTERVAL);
 }
 
 window.onbeforeunload = function(e) {

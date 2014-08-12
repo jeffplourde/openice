@@ -117,114 +117,102 @@ function Table(openICE, domain, partition, topic) {
  */
 function OpenICE(url) {
 	this.type = 'OpenICE';
-	this.connection = null;
-	/** @property {object} tables - Tables hashed by table key string. */
-	this.tables = {};
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
+
+	this.connection = io(this.url, {"heartbeat timeout": 2, "heartbeat interval": 1, "close timeout":2});
+	/** @property {object} tables - Tables hashed by table key string. */
+	this.tables = {};
+	
 	/** @property {int} maxSamples - Max samples preserved for each row. */
 	this.maxSamples = 100;
 
-	if(!window.WebSocket) {
-		// WebSockets are not supported
-		return;
-	}
-	
 	this.toString = function() {
 		return this.url;
 	};
 
-	this.resolveOpenState = function() {
-		if(!this.connection || this.connection == null) {
-			this.connection = new WebSocket(this.url);
-			this.connection.openICE = this;
-			this.connection.onmessage = function(e) {
-				var data = JSON.parse(e.data);
+	this.connection.openICE = this;
 
-				// Find the appropriate reader
-				var tableKey = calcTableKey(data);
+	this.connection.on('dds', function(e) {
+				
+		var data = JSON.parse(e);
 
-				var table = this.openICE.tables[tableKey];
-				if (null == table) {
-					console.log("Nonfatal unknown Table (tableKey="+tableKey+")");
-					return;
-				}
+		// Find the appropriate reader
+		var tableKey = calcTableKey(data);
 
-				if ("Schema" == data.messageType) {
-					table.schema = data.sample;
-					this.openICE.onschema(this.openICE, table);
-				} else if ("Add" == data.messageType) {
-					var row = table.rows[data.identifier];
-					if (null == row) {
-						row = new Row(table, data.identifier);
-					}
-					row.keyValues = data.sample;
-					this.openICE.onbeforeadd(this.openICE, table, row);
-					table.rows[data.identifier] = row;
-					this.openICE.onafteradd(this.openICE, table, row);
-				} else if ("Remove" == data.messageType) {
-					var row = table.rows[data.identifier];
-					if (null != row) {
-						this.openICE.onbeforeremove(this.openICE, table, row);
-						delete table.rows[data.identifier];
-						this.openICE.onafterremove(this.openICE, table, row);
-					}
-				} else if ("Sample" == data.messageType) {
-					var row = table.rows[data.identifier];
-					if (null == row) {
-						console.log("No such row for sample");
-						return;
-					}
-					var sample = new Sample(row, data);
-					row.samples.push(sample);
-					while(row.samples.length>=this.openICE.maxSamples) {
-						this.openICE.onexpire(this.openICE, table, row, row.samples.shift());
-					}
-					this.openICE.onsample(this.openICE, table, row, sample);
-				} else {
-					console.log("Unknown message:" + e.data);
-				}
-			}
-		};
-		this.connection.onopen = function(e) {
-			console.log("Connection opened");
-			this.openICE.onopen(this);
-		};
-		this.connection.onerror = function(e) {
-			console.log("Connection error");
-			this.openICE.onerror(this);
-			if(this.openICE.connection) {
-				delete this.openICE.connection;
-			}
-			this.openICE.destroyAllTables();
-		};
-		this.connection.onclose = function(e) {
-			console.log("Connection closed");
-			this.openICE.onclose(this);
-			if(this.openICE.connection) {
-				delete this.openICE.connection;
-			}
-			this.openICE.destroyAllTables();
-		};
-	};
-
-	/**
-	 * Opens a WebSocket connection to the OpenICE server.
-	 * @public
-	 *
-	 */
-	this.open = function(e) {
-		// the presence of the openInterval member is a sentinel indicating
-		// this this OpenICE instance is attempting to be connected to the server
-		if(!this.openInterval || this.openInterval == null) {
-			var self = this;
-			// Try to ensure connection every 3 seconds
-			this.openInterval = setInterval(function() { self.resolveOpenState(); }, 3000);
-			// Also ensure connection *now*; should this happen before the interval is set?  maybe
-			// but we'd need a separate sentinel value to ensure consistency
-			self.resolveOpenState();
+		var table = this.openICE.tables[tableKey];
+		if (null == table) {
+			console.log("Nonfatal unknown Table (tableKey="+tableKey+")");
+			return;
 		}
-	}
+
+		if ("Schema" == data.messageType) {
+			table.schema = data.sample;
+			this.openICE.onschema(this.openICE, table);
+		} else if ("Add" == data.messageType) {
+			var row = table.rows[data.identifier];
+			if (null == row) {
+				row = new Row(table, data.identifier);
+			}
+			row.keyValues = data.sample;
+			this.openICE.onbeforeadd(this.openICE, table, row);
+			table.rows[data.identifier] = row;
+			this.openICE.onafteradd(this.openICE, table, row);
+		} else if ("Remove" == data.messageType) {
+			var row = table.rows[data.identifier];
+			if (null != row) {
+				this.openICE.onbeforeremove(this.openICE, table, row);
+				delete table.rows[data.identifier];
+				this.openICE.onafterremove(this.openICE, table, row);
+			}
+		} else if ("Sample" == data.messageType) {
+			var row = table.rows[data.identifier];
+			if (null == row) {
+				console.log("No such row for sample");
+				return;
+			}
+			var sample = new Sample(row, data);
+			row.samples.push(sample);
+			while(row.samples.length>=this.openICE.maxSamples) {
+				this.openICE.onexpire(this.openICE, table, row, row.samples.shift());
+			}
+			this.openICE.onsample(this.openICE, table, row, sample);
+		} else {
+			console.log("Unknown message:" + e.data);
+		}
+	});
+	this.connection.on('connect', function() {
+		// console.log(this);
+		// console.log('connect');
+		this.openICE.onopen(this);
+	});
+	this.connection.on('reconnect', function(attemptNumber) {
+		// console.log('reconnect');
+		this.openICE.onopen(this);
+	});
+	this.connection.on('reconnect_attempt', function() {
+		// console.log('reconnect_attempt');
+	});
+	this.connection.on('reconnecting', function(attemptNumber) {
+		// console.log('reconnect_attempt');
+	});
+	this.connection.on('reconnect_error', function(err) {
+		// console.log('reconnect_attempt');
+	});
+	this.connection.on('reconnect_failed', function() {
+		// console.log('reconnect_attempt');
+	});
+	this.connection.on('error', function(err) {
+		// console.log('error');
+		this.openICE.onerror(this);
+		this.openICE.destroyAllTables();
+	});
+	this.connection.on('disconnect', function() {
+		// console.log('disconnect');
+		this.openICE.onclose(this);
+		this.openICE.destroyAllTables();
+	});
+
 	
 	/**
 	 * Retrieves a table by identifying information.
@@ -249,15 +237,14 @@ function OpenICE(url) {
 		message.domain = args.domain;
 		message.topic = args.topic;
 		message.partition = args.partition;
-		//console.log('create '+args.domain+" "+args.topic+" "+args.partition);
 		var tableKey = calcTableKey(message);
 		var table = this.tables[tableKey];
 		if (null == table) {
 			table = new Table(this, args.domain, args.partition, args.topic);
 			this.tables[tableKey] = table;
 			this.onaddtable(this, table);
-			if(this.connection!=null && (this.connection.readyState == WebSocket.OPEN || this.connection.readyState == WebSocket.CONNECTING)) {
-				this.connection.send(JSON.stringify(message));
+			if(this.connection!=null) {
+				this.connection.emit('dds',JSON.stringify(message));
 			}
 		}
 		return table;
@@ -284,8 +271,8 @@ function OpenICE(url) {
 		message.domain = args.domain;
 		message.topic = args.topic;
 		message.partition = args.partition;
-		// console.log('destroy '+args.domain+" "+args.topic+" "+args.partition);
-		if(this.connection!=null && (this.connection.readyState == WebSocket.OPEN || this.connection.readyState == WebSocket.CONNECTING)) {
+		// console.console.log('destroy '+args.domain+" "+args.topic+" "+args.partition);
+		if(this.connection!=null) { //  && (this.connection.readyState == WebSocket.OPEN || this.connection.readyState == WebSocket.CONNECTING)) {
 			this.connection.send(JSON.stringify(message));
 		}
 		
@@ -305,29 +292,11 @@ function OpenICE(url) {
 		}
 		this.onremovetable(this, table);
 		return table;
-	}
-
-	/**
-	 * Close the connection to the remote server.
-	 * @public
-	 */
-	this.close = function() {
-		if(this.openInterval && null != this.openInterval) {
-			clearInterval(this.openInterval);
-			delete this.openInterval;
-		}
-		if(this.connection && this.connection != null) {
-			this.connection.close();
-		}
 	};
 
-	this.isOpen = function() {
-		if(this.openInterval && null != this.openInterval) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	this.close = function() {
+		this.connection.disconnect();
+	};
 
 	/**
 	 * Called when a schema definition arrives.
