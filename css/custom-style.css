@@ -7,6 +7,28 @@ table td {
 	border: 1px solid #000000;
 }
 
+.navbar-default .navbar-nav>li>a {
+	color: #333;
+}
+
+.navbar-default .navbar-brand {
+	color: #333;
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus {
+	color: #6CF;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+	color: #6CF;
+}
+
+.navbar-brand {
+	font-size: 27px;
+}
+
 .graph {
 	height: 150px;
 	margin: 0.5em auto 0.5em 0;
@@ -98,10 +120,6 @@ dt, dd {
 
 .carousel-pics {
 	vertical-align: middle;
-}
-
-.navbar-header {
-	padding-left: 15px;
 }
 
 #slideshow {
@@ -244,8 +262,8 @@ dt, dd {
 @-webkit-keyframes slideInRight {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(500px);
-    transform: translateX(500px);
+    -webkit-transform: translateX(200px);
+    transform: translateX(200px);
   }
 
   100% {
@@ -257,9 +275,9 @@ dt, dd {
 @keyframes slideInRight {
   0% {
     opacity: 0;
-    -webkit-transform: translateX(500px);
-    -ms-transform: translateX(500px);
-    transform: translateX(500px);
+    -webkit-transform: translateX(200px);
+    -ms-transform: translateX(200px);
+    transform: translateX(200px);
   }
 
   100% {

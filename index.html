@@ -30,36 +30,47 @@
 	<body>
 		<section id="splash">
 			<div id="logo-banner-holder" class="container-fluid">
-				<img id="logo-banner" class="hidden-xs" src="./assets/logo-banner.png" />
+				<a href="./index.html">
+					<img id="logo-banner" class="hidden-xs" src="./assets/logo-banner.png" />
+				</a>
 				<img id="logo" class="visible-xs" src="./assets/logo.png" />
+				<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
 			</div>
-			<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
-			<nav id="main-navbar" class="navbar navbar-default" role="navigation">
+			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header" style="padding:0">
+					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
+							<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'nav-demo');">Demo App</a>
+						<a class="navbar-brand" href="./index.html" >OpenICE</a>
 					</div>
 					<div id="main-nav-collapse" class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li><a href="http://www.smartamerica.org" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-sa');">SmartAmerica.org</a></li>
-							<li><a href="http://www.mdpnp.org/smartamerica.php" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-mdpnpsa');">MDPnP.org/SmartAmerica</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">MD PnP Network<b class="caret"></b></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Explore<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="http://www.mdpnp.org/" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-mdpnp');">MD PnP Website</a></li>
-									<li><a href="http://mdpnp.sourceforge.net/" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-sourceforge');">Sourceforge</a></li>
-									<li><a href="http://discussion.mdpnp.org/index.php" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'nav-discussion');">MD PnP Discussion Board</a></li>
+									<li><a href="./demo.html">OpenICE Web Demo</a></li>
+									<li><a href="http://mdpnp.sourceforge.net/">OpenICE Demo App Suite</a></li>
+									<li><a href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/">OpenICE IDL</a></li>
+									<li><a href="https://play.google.com/store/apps/details?id=org.mdpnp.rtbb&amp;hl=en">Blue Button Android App</a></li>
 								</ul>
 							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Learn<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="./device-adapter-setup.html">Device Adapter Tutorial</a></li>
+									<li class="divider"></li>
+									<li><a href="http://discussion.mdpnp.org/index.php" target="_blank" >MD PnP Discussion Board</a></li>
+									<li><a href="https://sourceforge.net/p/mdpnp/wiki/Medical%20Device%20Plug-and-Play%20Interoperability%20Lab/" target="_blank" >Sourceforge Wiki</a></li>
+									<li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw" target="_blank" >Architecture Description</a></li>
+									<li><a href="http://www.mdpnp.org/uploads/F2761_completed_committee_draft.pdf" target="_blank">ICE Standard F2761</a></li>
+									<li><a href="http://portals.omg.org/dds/" target="_blank" >OMG DDS Portal</a></li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="http://www.mdpnp.org" target="_blank">MD PnP Home</a></li>
 						</ul>
 					</div>
 				</div>
