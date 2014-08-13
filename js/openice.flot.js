@@ -202,9 +202,7 @@ window.onload = function(e) {
 				mpegClient = io(baseURL + "/evita", opts);
 				var player = new jsmpeg(mpegClient, {canvas:canvas});
 			} else {
-                                ctx.fillText('Your browser does', 5, 30);
-                                ctx.fillText('not support the', 5, 60);
-                                ctx.fillText('video stream', 5, 90);
+                                document.getElementById('webcam').style.display='none';
                         }
 
 		}
