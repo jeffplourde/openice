@@ -35,7 +35,8 @@ table td {
 }
 
 .waveform {
-	padding: 0px;
+	padding-right: 5px;
+	padding-left: 5px;
 }
 
 #demo-header {
