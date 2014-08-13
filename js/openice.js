@@ -120,7 +120,7 @@ function OpenICE(url) {
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
 
-	this.connection = io(this.url, {"heartbeat timeout": 2, "heartbeat interval": 1, "close timeout":2});
+	this.connection = io(this.url);
 	/** @property {object} tables - Tables hashed by table key string. */
 	this.tables = {};
 	
