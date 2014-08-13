@@ -1,5 +1,5 @@
 var openICE;
-var mpegClient;
+var mpegClients = [];
 var demopreferences;
 
 /** maximum age for data stored for plotting (in milliseconds) */
@@ -166,6 +166,25 @@ function connect_btn(text, button) {
 	document.getElementById("connectionStateAlert").setAttribute("class", "alert alert-"+button);
 }
 
+function startCam(id, containerId, url, opts) {
+	var canvas = document.getElementById(id);
+	if(canvas && canvas.getContext) {
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle = '#444';
+        ctx.font = "30px Arial";
+
+		// Setup the connection and start the player
+		if(window.jsmpeg) {
+            ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+			var client = io(url, opts);
+			var player = new jsmpeg(client, {canvas:canvas});
+			mpegClients.push(client);
+		} else {
+            document.getElementById(containerId).style.display='none';
+        }
+	}
+}
+
 // Initializes the connection to the OpenICE server system
 window.onload = function(e) {
 	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
@@ -177,25 +196,9 @@ window.onload = function(e) {
 	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
 	var baseURL = wsProtocol + '//www.openice.info';
 	var opts = window.WebSocket ? {transports:["websocket","polling"]} : {transports:["polling","websocket"]};
-	//var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
-	//var camsURL = wsProtocol + '//cams.openice.info/';
-			// Show loading notice
-		var canvas = document.getElementById('videoCanvas');
-		if(canvas && canvas.getContext) {
-			var ctx = canvas.getContext('2d');
-			ctx.fillStyle = '#444';
-                        ctx.font = "30px Arial";
 
-			// Setup the connection and start the player
-			if(window.jsmpeg) {
-                                ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
-				mpegClient = io(baseURL + "/evita", opts);
-				var player = new jsmpeg(mpegClient, {canvas:canvas});
-			} else {
-                                document.getElementById('webcam').style.display='none';
-                        }
-
-		}
+	startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita', opts);
+	startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy', opts);
 
     openICE = new OpenICE(baseURL, opts);
     
@@ -211,7 +214,7 @@ window.onload = function(e) {
 		
 		// If the containing div element exists, remove it from the DOM and delete it 
 		if(row.outerDiv) {
-			document.getElementById("flotit").removeChild(row.outerDiv);
+			document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)).removeChild(row.outerDiv);
 			delete row.outerDiv;
 		}
 	};
@@ -255,11 +258,11 @@ window.onload = function(e) {
 				outerDiv.appendChild(labelit);
 				outerDiv.appendChild(flotDiv);
 				outerDiv.appendChild(messageIt);
-				outerDiv.setAttribute("class", "outerDiv col-md-6 col-xs-12");
+				outerDiv.setAttribute("class", "outerDiv");
 				
 				flotDiv.setAttribute("id", row.rowId);
-				flotDiv.setAttribute("class", "graph col-xs-12");
-				document.getElementById("flotit").appendChild(outerDiv);
+				flotDiv.setAttribute("class", "graph");
+				document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)).appendChild(outerDiv);
 				row.flotDiv = flotDiv;
 				row.outerDiv = outerDiv;
 				row.labelit = labelit;
@@ -341,7 +344,9 @@ window.onbeforeunload = function(e) {
 	if(openICE) {
 		openICE.close();
 	}
-	if(mpegClient) {
-		mpegClient.close();
+	for(var i = 0; i < mpegClients.length; i++) {
+		if(mpegClients[i]) {
+			mpegClients[i].disconnect();
+		}
 	}
 }

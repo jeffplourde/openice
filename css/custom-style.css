@@ -34,6 +34,10 @@ table td {
 	margin: 0.5em auto 0.5em 0;
 }
 
+.waveform {
+	padding: 0px;
+}
+
 #demo-header {
 	display: none;
 	
@@ -43,8 +47,12 @@ table td {
 	margin-bottom: 10px;
 }
 
-#demo-container {
+.demo-container {
 	background-color:#000000;
+	border-radius: 5px;
+	margin: 1px;
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
 #webcam {
