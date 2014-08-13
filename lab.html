@@ -44,7 +44,8 @@
 			<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
 		</p>
 	</canvas>
-	<script type="text/javascript" src="js/jsmpg.min.js"></script>
+	<script type="text/javascript" src="js/socket.io.js"></script>
+	<script type="text/javascript" src="js/jsmpg.js"></script>
 	<script type="text/javascript">
 		function start(e) {
 
@@ -57,17 +58,18 @@
 		var port = window.location.port;
 		// Internet Explorer does not populate port for default port 80
 		port = port == '' ? '' : (':'+port);
-		var url = 'ws://' + (window.location.protocol == 'file:' ? 'arvi.mgh.harvard.edu' : (window.location.hostname+port)) + '/mpeg/'+e;
+		var url = 'ws://cams.openice.info/'+e;
 
 		// Setup the WebSocket connection and start the player
-		var client = new WebSocket( url);
+		// var client = new WebSocket( url);
+		var client = new io(url);
 
 		var player = new jsmpeg(client, {canvas:canvas});
 }
-	start('0');
-	start('1');
-	start('2');
-	start('3');
+	start('evita');
+	start('ivy');
+	start('eye');
+//	start('3');
 	</script>
 </body>
 </html>
