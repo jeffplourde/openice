@@ -193,12 +193,12 @@ window.onload = function(e) {
 			ctx.fillStyle = '#444';
 			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
-			// Setup the WebSocket connection and start the player
-			if(window.WebSocket) {
-				mpegClient = new WebSocket(baseURL + "mpeg/evita");
+			// Setup the connection and start the player
 
-				var player = new jsmpeg(mpegClient, {canvas:canvas});
-			}
+			mpegClient = new io(baseURL + "mpeg/evita");
+
+			var player = new jsmpeg(mpegClient, {canvas:canvas});
+
 		}
 
     openICE = new OpenICE(baseURL);

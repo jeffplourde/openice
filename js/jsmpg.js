@@ -44,6 +44,10 @@ var jsmpeg = window.jsmpeg = function( url, opts ) {
 	if( url instanceof WebSocket ) {
 		this.client = url;
 		this.client.onopen = this.initSocketClient.bind(this);
+	}
+	else if ( url instanceof io.Socket ) {
+		this.client = url;
+		this.client.on('connect', this.initSocketClient.bind(this));
 	} 
 	else {
 		this.load(url);
@@ -67,8 +71,13 @@ jsmpeg.prototype.initSocketClient = function( client ) {
 	this.nextPictureBuffer.chunkBegin = 0;
 	this.nextPictureBuffer.lastWriteBeforeWrap = 0;
 
-	this.client.binaryType = 'arraybuffer';
-	this.client.onmessage = this.receiveSocketMessage.bind(this);
+	if(this.client instanceof WebSocket) {
+		this.client.binaryType = 'arraybuffer';
+		this.client.onmessage = this.receiveSocketMessage.bind(this);
+	} else if(this.client instanceof io.Socket) {
+		this.client.on('mpeg', this.receiveSocketMessage.bind(this));	
+	}
+	
 };
 
 jsmpeg.prototype.decodeSocketHeader = function( data ) {
@@ -88,7 +97,12 @@ jsmpeg.prototype.decodeSocketHeader = function( data ) {
 };
 
 jsmpeg.prototype.receiveSocketMessage = function( event ) {
-	var messageData = new Uint8Array(event.data);
+	var messageData;
+	if(event instanceof ArrayBuffer) {
+		messageData = new Uint8Array(event);
+	} else {
+	 	messageData = new Uint8Array(event.data);
+	}
 
 	if( !this.sequenceStarted ) {
 		this.decodeSocketHeader(messageData);
