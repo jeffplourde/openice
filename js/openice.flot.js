@@ -15,9 +15,9 @@ var FLOT_INTERVAL = 200;
 
 var flotDraw = function() {
 	if(openICE && openICE.tables) {
-		$. each (openICE.tables, function (tableKey, tableValue) {
+		iterate(openICE.tables, function (tableKey, tableValue) {
 			var table = openICE.tables[tableKey];
-			$. each (table.rows, function(rowKey, rowValue) {
+			iterate(table.rows, function(rowKey, rowValue) {
 				var row = table.rows[rowKey];
 				if(row.flotData && row.flotPlot) {
 					row.flotPlot.draw();
@@ -27,11 +27,18 @@ var flotDraw = function() {
 	}
 }
 
+function iterate(obj, cb) {
+	var keys = Object.keys(obj);
+	for(var i = 0; i < keys.length; i++) {
+		cb(keys[i], obj[keys[i]]);
+	}
+};
+
 var flotSetupGrid = function() { 
 	if(openICE && openICE.tables) {
-		$. each (openICE.tables, function (tableKey, tableValue) {
+		iterate(openICE.tables, function (tableKey, tableValue) {
 			var table = openICE.tables[tableKey];
-			$. each (table.rows, function(rowKey, rowValue) {
+			iterate(table.rows, function(rowKey, rowValue) {
 				var row = table.rows[rowKey];
 				if(row.flotData && row.flotPlot) {
 					row.flotPlot.setupGrid();
@@ -44,9 +51,9 @@ var flotSetupGrid = function() {
 
 var flotSetData = function() {
 	if(openICE && openICE.tables) {
-		$. each (openICE.tables, function (tableKey, tableValue) {
+		iterate(openICE.tables, function (tableKey, tableValue) {
 			var table = openICE.tables[tableKey];
-			$. each (table.rows, function(rowKey, rowValue) {
+			iterate(table.rows, function(rowKey, rowValue) {
 				var row = table.rows[rowKey];
 				if(row.flotData && row.flotPlot) {
 					row.flotPlot.setData(row.flotData);
@@ -71,16 +78,18 @@ var flotIt = function() {
 	// The domain of the plot ends 2 seconds ago 
 	var d2 = startOfFlotIt - expectedDelay;
 
+	var midd = d+timeDomain/2;
+
 	// Check that the openICE object has been initialized (and its tables property)
 	if(openICE && openICE.tables) {
 		// Iterate over each table
-		$. each (openICE.tables, function (tableKey, tableValue) {
+		iterate(openICE.tables, function (tableKey, tableValue) {
 		// Object.keys(openICE.tables).forEach(function (tableKey) { 
 			var table = openICE.tables[tableKey];
 			var count = 0;
 
 			// Iterate over each row
-			$. each (table.rows, function(rowKey, rowValue) {
+			iterate(table.rows, function(rowKey, rowValue) {
 				count++;
 			// Object.keys(table.rows).forEach(function(rowKey) {
 				var row = table.rows[rowKey];
@@ -138,35 +147,16 @@ var flotIt = function() {
 						row.flotData[0].shift();
 					}
 
-					// Reset the range to the global data min/max
-					var cushion = 0.1 * (row.maxValue - row.minValue);
-					row.flotPlot.getAxes().yaxis.options.min = row.minValue - cushion;
-					row.flotPlot.getAxes().yaxis.options.max = row.maxValue + cushion;
-					// Reset the domain to the recent time interval
 					row.flotPlot.getAxes().xaxis.options.min = d + row.adjustTime;
 					row.flotPlot.getAxes().xaxis.options.max = d2 + row.adjustTime;
-					//row.reflot();
 
-					// Reset the data .. is this necessary?
-					// row.flotPlot.setData(row.flotData);
-					// Redraws the plot decorations, etc.
-					// row.flotPlot.setupGrid();
-					// Draw the actual data!
-					// row.flotPlot.draw();
+					row.flotPlot.getAxes().xaxis.options.ticks = 
+						[[d+row.adjustTime, moment(d+row.adjustTime).format('HH:mm:ss')],
+						[midd+row.adjustTime, moment(midd+row.adjustTime).format('HH:mm:ss')],
+						[d2+row.adjustTime, moment(d2+row.adjustTime).format('HH:mm:ss')]];
 			    }
 		    });
-			// var plotInterval = FLOT_INTERVAL / (count+1);
-			// var x = 0;
-			// $. each (table.rows, function(rowKey, rowValue) {
-			// 	var row = table.rows[rowKey];
-			// 	if(row.flotData && row.reflot) {
-			// 		setTimeout(function() { row.reflot(); }, (x * plotInterval));
-			// 	}
-			// 	x++;
-			// });
-		    // iteration code
 		});
-		// console.log("Took " + (Date.now()-startOfFlotIt) + "ms to flot");
 	}
 	setTimeout(flotSetData, 0);
 }
@@ -300,7 +290,7 @@ window.onload = function(e) {
 							font: { color: "#FFF" },
 							timezone: "browser"
 						},
-						yaxis: { show: true, font: { color: "#FFF" }}
+						yaxis: { show: false, font: { color: "#FFF" }}
 					});
 				row.reflot = function() {
 					this.flotPlot.setData(this.flotData);
@@ -316,15 +306,11 @@ window.onload = function(e) {
 				row.millisecondsPerSample = sample.data.millisecondsPerSample;
 				for(var i = 0; i < sample.data.values.length; i++) {
 					var value = sample.data.values[i];
-					row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+					// This could be some downsampling if it becomes necessary
+					// if(0==(i%1)) {
+						row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+					// }
 				}
-
-				// If local clock is in the future this won't work as expected... expire samples elsewhere
-				// var maxAge = Date.now() - maxFlotAge;
-
-				// while(row.flotData[0].length>0&&row.flotData[0][0][0]<maxAge) {
-					// row.flotData[0].shift();
-				// }
 			}
 		}
 	};
