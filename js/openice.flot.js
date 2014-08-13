@@ -1,3 +1,27 @@
+if(window.Uint8Array) {
+	document.write("\x3Cscript language=\"javascript\" type=\"text/javascript\" src=\"js/jsmpg.js\">\x3C/script>");
+}
+if(!window.console) {
+	window.console = {log: function(e) {} };
+}
+Date.now = Date.now || function() { return +new Date; }; 
+
+if (typeof Array.prototype.forEach != 'function') {
+	Array.prototype.forEach = function(callback){
+		 for (var i = 0; i < this.length; i++){
+		   callback.apply(this, [this[i], i, this]);
+			}
+	};
+}
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-51695046-1', 'auto');ga('send', 'pageview');
+
+
+
+
 var openICE;
 var mpegClients = [];
 var demopreferences;
