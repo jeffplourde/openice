@@ -195,10 +195,11 @@ window.onload = function(e) {
 			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
 
 			// Setup the connection and start the player
+			if(window.jsmpeg) {
+				mpegClient = new io(camsURL + "evita");
 
-			mpegClient = new io(camsURL + "evita");
-
-			var player = new jsmpeg(mpegClient, {canvas:canvas});
+				var player = new jsmpeg(mpegClient, {canvas:canvas});
+			}
 
 		}
 
