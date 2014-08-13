@@ -1,13 +1,13 @@
 var plotColors = {
 	"MDC_PRESS_AWAY": "#00FFFF",
 	"MDC_PRESS_BLD": "#FF0000",
-	"MDC_CONC_AWAY_CO2_ET": "#FFFF00",
+	"MDC_CONC_AWAY_CO2_ET": "#FF00FF",
 	"MDC_ECG_AMPL_ST_I": "#00FF00",
 	"MDC_ECG_AMPL_ST_II": "#00FF00",
 	"MDC_ECG_AMPL_ST_III": "#00FF00",
 	"MDC_PULS_OXIM_PLETH": "#CC00FF",
 	"MDC_FLOW_AWAY": "#0000FF",
-	"MDC_CAPNOGRAPH": "#FF00FF"
+	"MDC_CAPNOGRAPH": "#FFFF00"
 };
 
 var commonNames = {
@@ -19,7 +19,7 @@ var commonNames = {
 	"MDC_ECG_AMPL_ST_III": "ECG - III",
 	"MDC_PULS_OXIM_PLETH": "Pulse Oximetry",
 	"MDC_FLOW_AWAY": "Airway Flow",
-	"MDC_CAPNOGRAPH": "Capnogram",
+	"MDC_CAPNOGRAPH": "Respiration",
 	"MDC_ECG_AMPL_ST_V2": "ECG - V2",
 	"MDC_PRESS_BLD_ART_ABP": "Arterial BP",
 	"MDC_ECG_AMPL_ST_AVR": "ECG - aVR",
@@ -35,7 +35,7 @@ var flotNames = {
 	"MDC_ECG_AMPL_ST_III": "ivy",
 	"MDC_PULS_OXIM_PLETH": "ivy-1",
 	"MDC_FLOW_AWAY": "evita-1",
-	"MDC_CAPNOGRAPH": "ivy",
+	"MDC_CAPNOGRAPH": "ivy-3",
 	"MDC_ECG_AMPL_ST_V2": "ivy",
 	"MDC_PRESS_BLD_ART_ABP": "ivy",
 	"MDC_ECG_AMPL_ST_AVR": "ivy",
