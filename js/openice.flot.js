@@ -186,6 +186,7 @@ window.onload = function(e) {
 	// Pages served over https can only utilize wss protocol
 	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
 	var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
+	var camsURL = wsProtocol + '//cams.openice.info/';
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
 		if(canvas && canvas.getContext) {
@@ -195,7 +196,7 @@ window.onload = function(e) {
 
 			// Setup the connection and start the player
 
-			mpegClient = new io(baseURL + "mpeg/evita");
+			mpegClient = new io(camsURL + "evita");
 
 			var player = new jsmpeg(mpegClient, {canvas:canvas});
 
