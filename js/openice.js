@@ -115,12 +115,12 @@ function Table(openICE, domain, partition, topic) {
  * @constructor
  * @param {string} url - The URL to connect to the OpenICE system.
  */
-function OpenICE(url) {
+function OpenICE(url, opts) {
 	this.type = 'OpenICE';
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
-
-	this.connection = io(this.url, {"heartbeat timeout": 2, "heartbeat interval": 1, "close timeout":2});
+        opts = opts || {};
+	this.connection = io(this.url, opts);
 	/** @property {object} tables - Tables hashed by table key string. */
 	this.tables = {};
 	

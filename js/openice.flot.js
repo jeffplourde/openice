@@ -185,23 +185,31 @@ window.onload = function(e) {
 	port = port == '' ? '' : (':'+port);
 	// Pages served over https can only utilize wss protocol
 	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
-	var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
+	var baseURL = wsProtocol + '//www.openice.info';
+	var opts = window.WebSocket ? {transports:["websocket","polling"]} : {transports:["polling","websocket"]};
+	//var baseURL = wsProtocol + '//' + (window.location.protocol == 'file:' ? 'www.openice.info' : (window.location.hostname+port)) + '/';
+	//var camsURL = wsProtocol + '//cams.openice.info/';
 			// Show loading notice
 		var canvas = document.getElementById('videoCanvas');
 		if(canvas && canvas.getContext) {
 			var ctx = canvas.getContext('2d');
 			ctx.fillStyle = '#444';
-			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+                        ctx.font = "30px Arial";
 
-			// Setup the WebSocket connection and start the player
-			if(window.WebSocket) {
-				mpegClient = new WebSocket(baseURL + "mpeg/evita");
-
+			// Setup the connection and start the player
+			if(window.jsmpeg) {
+                                ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+				mpegClient = io(baseURL + "/evita", opts);
 				var player = new jsmpeg(mpegClient, {canvas:canvas});
-			}
+			} else {
+                                ctx.fillText('Your browser does', 5, 30);
+                                ctx.fillText('not support the', 5, 60);
+                                ctx.fillText('video stream', 5, 90);
+                        }
+
 		}
 
-    openICE = new OpenICE(baseURL);
+    openICE = new OpenICE(baseURL, opts);
     
 	openICE.onafterremove = function(openICE, table, row) {
 		// If the row is decorated with flot data, delete it
