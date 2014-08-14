@@ -115,12 +115,13 @@ function Table(openICE, domain, partition, topic) {
  * @constructor
  * @param {string} url - The URL to connect to the OpenICE system.
  */
-function OpenICE(url, opts) {
+function OpenICE(url) {
 	this.type = 'OpenICE';
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
-        opts = opts || {};
-	this.connection = io(this.url, opts);
+
+	this.connection = io(this.url);
+	
 	/** @property {object} tables - Tables hashed by table key string. */
 	this.tables = {};
 	
@@ -243,19 +244,17 @@ function OpenICE(url, opts) {
 			table = new Table(this, args.domain, args.partition, args.topic);
 			this.tables[tableKey] = table;
 			this.onaddtable(this, table);
-			if(this.connection!=null) {
-				this.connection.emit('dds',JSON.stringify(message));
-			}
+			this.connection.emit('dds',message);
 		}
 		return table;
 	};
 	
 	this.destroyAllTables = function() {
-		for(tableKey in this.tables) {
-			if(this.tables.hasOwnProperty(tableKey)) {
-				var table = this.tables[tableKey];
-				this.destroyTable(table);
-			}
+		var keys = Object.keys(this.tables);
+		for(i = 0; i < keys.length; i++) {
+			var tableKey = keys[i];
+			var table = this.tables[tableKey];
+			this.destroyTable(table);
 		}
 	};
 
@@ -271,22 +270,19 @@ function OpenICE(url, opts) {
 		message.domain = args.domain;
 		message.topic = args.topic;
 		message.partition = args.partition;
-		// console.console.log('destroy '+args.domain+" "+args.topic+" "+args.partition);
-		if(this.connection!=null) { //  && (this.connection.readyState == WebSocket.OPEN || this.connection.readyState == WebSocket.CONNECTING)) {
-			this.connection.send(JSON.stringify(message));
-		}
+
+		this.connection.emit('dds', message);
 		
 		var tableKey = calcTableKey(message);
 		var table = this.tables[tableKey];
 		if (null != table) {
-			for (rowKey in table.rows) {
-		        if (table.rows.hasOwnProperty(rowKey)) {
-//			Object.keys(table.rows).forEach(function(rowKey) {
-		        	var row = table.rows[rowKey];
-					this.onbeforeremove(this, table, row);
-					delete table.rows[rowKey];
-					this.onafterremove(this, table, row);
-		        }
+			var keys = Object.keys(table.rows);
+			for(i = 0; i < keys.length; i++) {
+				var rowKey = keys[i];
+	        	var row = table.rows[rowKey];
+				this.onbeforeremove(this, table, row);
+				delete table.rows[rowKey];
+				this.onafterremove(this, table, row);
 			}
 			delete this.tables[tableKey];
 		}
@@ -295,6 +291,7 @@ function OpenICE(url, opts) {
 	};
 
 	this.close = function() {
+		destroyAllTables();
 		this.connection.disconnect();
 	};
 
