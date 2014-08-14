@@ -1,9 +1,3 @@
-if(window.Uint8Array) {
-	document.write("\x3Cscript language=\"javascript\" type=\"text/javascript\" src=\"js/jsmpg.js\">\x3C/script>");
-}
-if(!window.console) {
-	window.console = {log: function(e) {} };
-}
 Date.now = Date.now || function() { return +new Date; }; 
 
 if (typeof Array.prototype.forEach != 'function') {
