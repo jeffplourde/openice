@@ -212,8 +212,8 @@ window.onload = function(e) {
 	// Internet Explorer does not populate port for default port 80
 	port = port == '' ? '' : (':'+port);
 	// Pages served over https can only utilize wss protocol
-	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
-	var baseURL = wsProtocol + '//www.openice.info';
+	var wsProtocol = window.location.protocol == 'https://' ? 'wss://' : 'ws://';
+	var baseURL = wsProtocol + window.location.host;
 	//var opts = window.WebSocket ? {transports:["websocket","polling"]} : {transports:["polling","websocket"]};
 
 	startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
