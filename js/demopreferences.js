@@ -42,6 +42,22 @@ var flotNames = {
 	"MDC_PRESS_BLD_ART": "ivy"
 };
 
+var relatedNumeric = {
+	"MDC_PRESS_AWAY": ["MDC_RESP_RATE"],
+	"MDC_PRESS_BLD": ["MDC_PRESS_BLD_SYS","MDC_PRESS_BLD_DIA"],
+	"MDC_CONC_AWAY_CO2_ET": ["MDC_AWAY_CO2_EXP"],
+	"MDC_ECG_AMPL_ST_I": ["MDC_ECG_CARD_BEAT_RATE"],
+	"MDC_ECG_AMPL_ST_II": ["MDC_ECG_CARD_BEAT_RATE"],
+	"MDC_ECG_AMPL_ST_III": ["MDC_ECG_CARD_BEAT_RATE"],
+	"MDC_PULS_OXIM_PLETH": ["MDC_PULS_OXIM_SAT_O2", "MDC_PULS_OXIM_PULS_RATE"],
+	"MDC_FLOW_AWAY": [],
+	"MDC_CAPNOGRAPH": ["MDC_RESP_RATE"],
+	"MDC_ECG_AMPL_ST_V2": ["MDC_ECG_CARD_BEAT_RATE"],
+	"MDC_PRESS_BLD_ART_ABP": [],
+	"MDC_ECG_AMPL_ST_AVR": [],
+	"MDC_PRESS_BLD_ART": []
+};
+
 
 function getPlotColor(metric_id) {
 	return plotColors[metric_id] || "#FFFFFF";
@@ -53,4 +69,8 @@ function getCommonName (metric_id) {
 
 function getFlotName(metric_id) {
 	return flotNames[metric_id] || "";
+}
+
+function getRelatedNumeric(metric_id) {
+	return relatedNumeric[metric_id] || [];
 }

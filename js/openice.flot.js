@@ -249,7 +249,11 @@ window.onload = function(e) {
 	};
 	
 	openICE.onsample = function(openICE, table, row, sample) {
-
+    if(table.topic=='Numeric') {
+      var cssClass = "."+row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
+      console.log("Numeric sample for " + cssClass + " = " + sample.data.value);
+      $(cssClass).html(sample.data.value);
+    } else
 		if(table.topic=='SampleArray') {
 			// Track the observed range of values for the row through all time
 			if(sample.data.values) {
@@ -274,22 +278,31 @@ window.onload = function(e) {
 				// div onto which data will be plotted
 				var flotDiv = document.createElement("div");
 
-				// container div for plot information and labelling
-				var outerDiv = document.createElement("div");
-
 				// label element for this waveform
 				var labelit = document.createElement("span");
+        
+        var enclosingDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id));
+
+        var relatedNumerics = getRelatedNumeric(row.keyValues.metric_id);
+        for(i = 0; i < relatedNumerics.length; i++) {
+          var bigNumber = document.createElement("div");
+          bigNumber.style.color = getPlotColor(row.keyValues.metric_id);
+          bigNumber.innerHTML = "  ";
+          var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i];
+          bigNumber.setAttribute("class", "bigNumber "+cssClass);
+          enclosingDiv.appendChild(bigNumber);
+        }
+
 				
-				outerDiv.appendChild(labelit);
-				outerDiv.appendChild(flotDiv);
-				outerDiv.setAttribute("class", "outerDiv");
+				enclosingDiv.appendChild(labelit);
+				enclosingDiv.appendChild(flotDiv);
 				
 				flotDiv.setAttribute("id", row.rowId);
 				flotDiv.setAttribute("class", "graph");
-				document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)).appendChild(outerDiv);
 				row.flotDiv = flotDiv;
-				row.outerDiv = outerDiv;
+				row.enclosingDiv = enclosingDiv;
 				row.labelit = labelit;
+        row.bigNumber = bigNumber;
 
 				labelit.setAttribute("class", "labelit");
 
@@ -343,6 +356,7 @@ window.onload = function(e) {
 		connect_btn("Connected", "success");
 		$("#connectionStateAlert").fadeOut(1500);
 		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
+    this.createTable({domain: targetDomain, partition: [], topic:'Numeric'});
 	};
 
 	openICE.onclose = function(openICE) {
