@@ -120,7 +120,7 @@ function OpenICE(url) {
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
 
-	this.connection = io(this.url);
+	this.connection = new io(this.url);
 
 	/** @property {object} tables - Tables hashed by table key string. */
 	this.tables = {};
@@ -203,12 +203,12 @@ function OpenICE(url) {
 	this.connection.on('error', function(err) {
 		// console.log('error');
 		this.openICE.onerror(this);
-		this.openICE.destroyAllTables();
+		this.openICE.destroyAllTables(false);
 	});
 	this.connection.on('disconnect', function() {
 		// console.log('disconnect');
 		this.openICE.onclose(this);
-		this.openICE.destroyAllTables();
+		this.openICE.destroyAllTables(false);
 	});
 
 	
@@ -246,12 +246,12 @@ function OpenICE(url) {
 		return table;
 	};
 	
-	this.destroyAllTables = function() {
+	this.destroyAllTables = function(unsubscribe) {
 		var keys = Object.keys(this.tables);
 		for(i = 0; i < keys.length; i++) {
 			var tableKey = keys[i];
 			var table = this.tables[tableKey];
-			this.destroyTable(table);
+			this.destroyTable(table, unsubscribe);
 		}
 	};
 
@@ -261,14 +261,16 @@ function OpenICE(url) {
 	 * @public
 	 * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
 	 */
-	this.destroyTable = function(args) {
+	this.destroyTable = function(args, unsubscribe) {
 		var message = new Object();
 		message.messageType = "Unsubscribe";
 		message.domain = args.domain;
 		message.topic = args.topic;
 		message.partition = args.partition;
 
-		this.connection.emit('dds', message);
+		if(typeof unsubscribe != 'undefined' && unsubscribe) {
+			this.connection.emit('dds', message);
+		}
 		
 		var tableKey = calcTableKey(message);
 		var table = this.tables[tableKey];
@@ -288,7 +290,6 @@ function OpenICE(url) {
 	};
 
 	this.close = function() {
-		destroyAllTables();
 		this.connection.disconnect();
 	};
 
