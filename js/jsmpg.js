@@ -20,7 +20,7 @@ var requestAnimFrame = (function(){
 		window.webkitRequestAnimationFrame ||
 		window.mozRequestAnimationFrame ||
 		function( callback ){
-			window.setTimeout(callback, 1000 / 60);
+			window.setTimeout(callback, 1000 / 15);
 		};
 })();
 		
@@ -60,8 +60,8 @@ var jsmpeg = window.jsmpeg = function( url, opts ) {
 // ----------------------------------------------------------------------------
 // Streaming over WebSockets
 
-jsmpeg.prototype.waitForIntraFrame = true;
-jsmpeg.prototype.socketBufferSize = 64 * 1024; // 64kb each
+jsmpeg.prototype.waitForIntraFrame = false;
+jsmpeg.prototype.socketBufferSize = 32 * 1024; // 32kb each
 
 jsmpeg.prototype.onlostconnection = null;
 
