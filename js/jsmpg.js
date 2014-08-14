@@ -72,6 +72,7 @@ jsmpeg.prototype.initSocketClient = function( ) {
 	this.nextPictureBuffer.writePos = 0;
 	this.nextPictureBuffer.chunkBegin = 0;
 	this.nextPictureBuffer.lastWriteBeforeWrap = 0;
+	this.sequenceStarted = false;
 
 	if(window.WebSocket && this.client instanceof WebSocket) {
 		this.client.binaryType = 'arraybuffer';
