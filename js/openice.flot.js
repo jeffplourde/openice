@@ -206,6 +206,17 @@ function startCam(id, containerId, url, opts) {
 
 // Initializes the connection to the OpenICE server system
 window.onload = function(e) {
+	 // Cache selectors outside callback for performance. 
+	 // http://stackoverflow.com/questions/2907367/have-a-div-cling-to-top-of-screen-if-scrolled-down-past-it
+	var $window = $(window),
+	   $stickyEl = $('#connectionStateAlert'),
+	   elTop = $stickyEl.offset().top;
+
+	$window.scroll(function() {
+	    $stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);
+	});
+	setTimeout(function() {$stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);}, 100);
+
 	// If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
 	// Otherwise communicate with whatever server is hosting this page
 	var port = window.location.port;
@@ -336,22 +347,21 @@ window.onload = function(e) {
 			}
 		}
 	};
-	$("#connectionStateAlert").fadeIn(1200);
 	openICE.onopen = function(openICE) {
 		connect_btn("Connected", "success");
-		$("#connectionStateAlert").fadeOut(1200);
+		$("#connectionStateAlert").fadeOut(1500);
 		this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
 	};
 
 	openICE.onclose = function(openICE) {
 
 		connect_btn("Connecting...", "danger");
-		$("#connectionStateAlert").fadeIn(1200);
+		$("#connectionStateAlert").fadeIn(1);
 	};
 
 	openICE.onerror = function(openICE) {
 		connect_btn("Connecting...", "danger");
-		$("#connectionStateAlert").fadeIn(1200);
+		$("#connectionStateAlert").fadeIn(1);
 	};
 
 	// Plot five times per second

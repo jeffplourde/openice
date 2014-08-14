@@ -326,8 +326,14 @@ dt, dd {
 
 #connectionStateAlert {
 	width: 125px;
-	display: none;
+	display: inline;
 	position: absolute;
-	right: 45px;
+	right: 30px;
 	z-index: 2;
+}
+
+#connectionStateAlert.sticky {
+    position: fixed;
+    opacity: 0.75;
+    top: 30px;
 }
