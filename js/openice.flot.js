@@ -195,7 +195,7 @@ function startCam(id, containerId, url, opts) {
 		// Setup the connection and start the player
 		if(window.jsmpeg) {
             ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
-			var client = io(url, opts);
+			var client = new io(url, opts);
 			var player = new jsmpeg(client, {canvas:canvas});
 			mpegClients.push(client);
 		} else {
@@ -214,12 +214,12 @@ window.onload = function(e) {
 	// Pages served over https can only utilize wss protocol
 	var wsProtocol = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
 	var baseURL = wsProtocol + '//www.openice.info';
-	var opts = window.WebSocket ? {transports:["websocket","polling"]} : {transports:["polling","websocket"]};
+	//var opts = window.WebSocket ? {transports:["websocket","polling"]} : {transports:["polling","websocket"]};
 
-	startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita', opts);
-	startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy', opts);
+	startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
+	startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');
 
-    openICE = new OpenICE(baseURL, opts);
+    openICE = new OpenICE(baseURL);
     
 	openICE.onafterremove = function(openICE, table, row) {
 		// If the row is decorated with flot data, delete it
