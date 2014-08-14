@@ -41,7 +41,7 @@ var jsmpeg = window.jsmpeg = function( url, opts ) {
 
 	this.canvasContext = this.canvas.getContext('2d');
 
-	if( url instanceof WebSocket ) {
+	if( window.WebSocket && url instanceof WebSocket ) {
 		this.client = url;
 		this.client.onopen = this.initSocketClient.bind(this);
 	}
@@ -71,7 +71,7 @@ jsmpeg.prototype.initSocketClient = function( client ) {
 	this.nextPictureBuffer.chunkBegin = 0;
 	this.nextPictureBuffer.lastWriteBeforeWrap = 0;
 
-	if(this.client instanceof WebSocket) {
+	if(window.WebSocket && this.client instanceof WebSocket) {
 		this.client.binaryType = 'arraybuffer';
 		this.client.onmessage = this.receiveSocketMessage.bind(this);
 	} else if(this.client instanceof io.Socket) {
