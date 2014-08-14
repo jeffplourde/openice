@@ -60,7 +60,7 @@ var jsmpeg = window.jsmpeg = function( url, opts ) {
 // ----------------------------------------------------------------------------
 // Streaming over WebSockets
 
-jsmpeg.prototype.waitForIntraFrame = false;
+jsmpeg.prototype.waitForIntraFrame = true;
 jsmpeg.prototype.socketBufferSize = 32 * 1024; // 32kb each
 
 jsmpeg.prototype.onlostconnection = null;
