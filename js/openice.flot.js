@@ -286,10 +286,20 @@ window.onload = function(e) {
         var relatedNumerics = getRelatedNumeric(row.keyValues.metric_id);
         for(i = 0; i < relatedNumerics.length; i++) {
           var bigNumber = document.createElement("div");
-          bigNumber.style.color = getPlotColor(row.keyValues.metric_id);
-          bigNumber.innerHTML = "  ";
-          var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i];
-          bigNumber.setAttribute("class", "bigNumber "+cssClass);
+          var labelSpan = document.createElement("span");
+          var valueSpan = document.createElement("span");
+
+          labelSpan.style.color = getPlotColor(row.keyValues.metric_id);
+          valueSpan.style.color = getPlotColor(row.keyValues.metric_id);
+
+          labelSpan.innerText = relatedNumerics[i].name+"=";
+
+          
+          var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
+          valueSpan.setAttribute("class", "bigNumber "+cssClass);
+
+          bigNumber.appendChild(labelSpan);
+          bigNumber.appendChild(valueSpan);
           enclosingDiv.appendChild(bigNumber);
         }
 
