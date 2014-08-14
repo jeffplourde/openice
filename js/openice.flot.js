@@ -145,16 +145,15 @@ var flotIt = function() {
 
 					row.adjustTime = adjustTime;
 
-					if(row.messageIt) {
-						if(row.adjustTime < 0) {
-							// local clock is in the future
-							row.messageIt.innerHTML = "Consider moving your clock back ~" + Math.round(-row.adjustTime/1000.0) + "s";
-						} else if(row.adjustTime > 0) {
-							// local clock is in the past
-							row.messageIt.innerHTML = "Consider moving your clock forward ~" + Math.round(row.adjustTime/1000.0) + "s";
-						} else {
-							row.messageIt.innerHTML = "";
-						}
+					// TODO something slick with this information
+					if(row.adjustTime < 0) {
+						// local clock is in the future
+						//row.messageIt.innerHTML = "Consider moving your clock back ~" + Math.round(-row.adjustTime/1000.0) + "s";
+					} else if(row.adjustTime > 0) {
+						// local clock is in the past
+						//row.messageIt.innerHTML = "Consider moving your clock forward ~" + Math.round(row.adjustTime/1000.0) + "s";
+					} else {
+						//row.messageIt.innerHTML = "";
 					}
 
 
@@ -280,14 +279,9 @@ window.onload = function(e) {
 
 				// label element for this waveform
 				var labelit = document.createElement("span");
-
-				// message element for this waveform
-				var messageIt = document.createElement("span");
 				
-
 				outerDiv.appendChild(labelit);
 				outerDiv.appendChild(flotDiv);
-				outerDiv.appendChild(messageIt);
 				outerDiv.setAttribute("class", "outerDiv");
 				
 				flotDiv.setAttribute("id", row.rowId);
@@ -296,10 +290,8 @@ window.onload = function(e) {
 				row.flotDiv = flotDiv;
 				row.outerDiv = outerDiv;
 				row.labelit = labelit;
-				row.messageIt = messageIt;
 
 				labelit.setAttribute("class", "labelit");
-				messageIt.setAttribute("class", "messageIt");
 
 				// Translate from 11073-10101 metric id to something more colloquial
 				labelit.innerHTML = getCommonName(row.keyValues.metric_id);
@@ -342,7 +334,7 @@ window.onload = function(e) {
 					// This could be some downsampling if it becomes necessary
 					// if(0==(i%1)) {
 						row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
-					// }
+					//}
 				}
 			}
 		}
