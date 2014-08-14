@@ -212,7 +212,7 @@ window.onload = function(e) {
 	// Internet Explorer does not populate port for default port 80
 	port = port == '' ? '' : (':'+port);
 	// Pages served over https can only utilize wss protocol
-	var wsProtocol = window.location.protocol == 'https://' ? 'wss://' : 'ws://';
+	var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
 	var baseURL = wsProtocol + window.location.host;
 	//var opts = window.WebSocket ? {transports:["websocket","polling"]} : {transports:["polling","websocket"]};
 
