@@ -177,6 +177,7 @@ var flotIt = function() {
 		});
 	}
 	setTimeout(flotSetData, 0);
+	setTimeout(flotIt, FLOT_INTERVAL);
 }
 
 function connect_btn(text, button) {
@@ -354,7 +355,7 @@ window.onload = function(e) {
 	};
 
 	// Plot five times per second
-	setInterval(flotIt, FLOT_INTERVAL);
+	setTimeout(flotIt, FLOT_INTERVAL);
 }
 
 window.onbeforeunload = function(e) {
