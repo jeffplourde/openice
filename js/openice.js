@@ -121,7 +121,7 @@ function OpenICE(url) {
 	this.url = url;
 
 	this.connection = io(this.url);
-	
+
 	/** @property {object} tables - Tables hashed by table key string. */
 	this.tables = {};
 	
@@ -134,10 +134,7 @@ function OpenICE(url) {
 
 	this.connection.openICE = this;
 
-	this.connection.on('dds', function(e) {
-				
-		var data = JSON.parse(e);
-
+	this.connection.on('dds', function(data) {
 		// Find the appropriate reader
 		var tableKey = calcTableKey(data);
 
