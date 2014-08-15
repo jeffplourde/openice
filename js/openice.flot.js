@@ -197,7 +197,7 @@ function startCam(id, containerId, url, opts) {
       var player = new jsmpeg(client, {canvas:canvas});
       mpegClients.push(client);
     } else {
-      document.getElementById(containerId).style.display='none';
+      document.getElementById(id).style.display='none';
     }
   }
 }
