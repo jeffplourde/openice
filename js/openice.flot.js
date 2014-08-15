@@ -236,14 +236,15 @@ window.onload = function(e) {
       delete row.flotData;
     }
     // If the row is decorated with a flot DOM object, delete it
-    if(row.flotDiv) {
-      delete row.flotDiv;
-    }
 
     // If the containing div element exists, remove it from the DOM and delete it 
-    if(row.outerDiv) {
-      document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)).removeChild(row.outerDiv);
-      delete row.outerDiv;
+    if(row.enclosingDiv) {
+      row.enclosingDiv.removeChild(row.labelit);
+      row.enclosingDiv.removeChild(row.bigNumber);
+      row.enclosingDiv.removeChild(row.flotDiv);
+      delete row.labelit;
+      delete row.bigNumber;
+      delete row.flotDiv;
     }
   };
 
@@ -283,8 +284,8 @@ window.onload = function(e) {
         var enclosingDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id));
 
         var relatedNumerics = getRelatedNumeric(row.keyValues.metric_id);
+        var bigNumber = document.createElement("div");
         for(i = 0; i < relatedNumerics.length; i++) {
-          var bigNumber = document.createElement("div");
           var labelSpan = document.createElement("span");
           var valueSpan = document.createElement("span");
 
@@ -299,9 +300,8 @@ window.onload = function(e) {
 
           bigNumber.appendChild(labelSpan);
           bigNumber.appendChild(valueSpan);
-          enclosingDiv.appendChild(bigNumber);
         }
-
+        enclosingDiv.appendChild(bigNumber);
         enclosingDiv.appendChild(labelit);
         enclosingDiv.appendChild(flotDiv);
 
@@ -309,8 +309,8 @@ window.onload = function(e) {
         flotDiv.setAttribute("class", "graph");
         row.flotDiv = flotDiv;
         row.enclosingDiv = enclosingDiv;
-        row.labelit = labelit;
         row.bigNumber = bigNumber;
+        row.labelit = labelit;
 
         labelit.setAttribute("class", "labelit");
 
