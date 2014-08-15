@@ -383,13 +383,4 @@ setTimeout(flotIt, FLOT_INTERVAL);
 }
 
 window.onbeforeunload = function(e) {
-  // Try to shut down the connection before the page unloads
-  if(openICE) {
-    openICE.close();
-  }
-  for(var i = 0; i < mpegClients.length; i++) {
-    if(mpegClients[i]) {
-      mpegClients[i].disconnect();
-    }
-  }
 }
