@@ -250,7 +250,7 @@ window.onload = function(e) {
   openICE.onsample = function(openICE, table, row, sample) {
     if(table.topic=='Numeric') {
       var cssClass = "."+row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
-      console.log("Numeric sample for " + cssClass + " = " + sample.data.value);
+      // console.log("Numeric sample for " + cssClass + " = " + sample.data.value);
       $(cssClass).html(sample.data.value);
     } else
     if(table.topic=='SampleArray') {
