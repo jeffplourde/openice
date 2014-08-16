@@ -27,19 +27,19 @@ var commonNames = {
 };
 
 var flotNames = {
-	"MDC_PRESS_AWAY": "evita-0",
-	"MDC_PRESS_BLD": "ivy-2",
-	"MDC_CONC_AWAY_CO2_ET": "ivy",
-	"MDC_ECG_AMPL_ST_I": "ivy",
-	"MDC_ECG_AMPL_ST_II": "ivy-0",
-	"MDC_ECG_AMPL_ST_III": "ivy",
-	"MDC_PULS_OXIM_PLETH": "ivy-1",
-	"MDC_FLOW_AWAY": "evita-1",
-	"MDC_CAPNOGRAPH": "ivy-3",
-	"MDC_ECG_AMPL_ST_V2": "ivy",
-	"MDC_PRESS_BLD_ART_ABP": "ivy",
-	"MDC_ECG_AMPL_ST_AVR": "ivy",
-	"MDC_PRESS_BLD_ART": "ivy"
+	"MDC_PRESS_AWAY": "vent-PEEP",
+	"MDC_PRESS_BLD": "monitor-press",
+	"MDC_CONC_AWAY_CO2_ET": "monitor",
+	"MDC_ECG_AMPL_ST_I": "monitor-HR",
+	"MDC_ECG_AMPL_ST_II": "monitor-HR",
+	"MDC_ECG_AMPL_ST_III": "monitor-HR",
+	"MDC_PULS_OXIM_PLETH": "monitor-spo2",
+	"MDC_FLOW_AWAY": "vent-RR",
+	"MDC_CAPNOGRAPH": "monitor-RR",
+	"MDC_ECG_AMPL_ST_V2": "monitor",
+	"MDC_PRESS_BLD_ART_ABP": "monitor",
+	"MDC_ECG_AMPL_ST_AVR": "monitor",
+	"MDC_PRESS_BLD_ART": "monitor"
 };
 
 var relatedNumeric = {
@@ -68,7 +68,7 @@ function getCommonName (metric_id) {
 }
 
 function getFlotName(metric_id) {
-	return flotNames[metric_id] || "";
+	return flotNames[metric_id] || "monitor";
 }
 
 function getRelatedNumeric(metric_id) {

@@ -80,7 +80,7 @@
 		</section>
 
 		<section id="web-demo">
-			<div class="text-center container">
+			<div id="header-demo" class="text-center container">
 				<div id="connectionStateAlert" class="alert alert-danger">
 					<span id="connectionStateText">Connecting...</span>
 					<br />
@@ -89,10 +89,9 @@
 					<h1 style="margin-top:0px">Live Medical Device Data <br /><small class="hidden-xs">Streaming from the MD PnP Lab in Cambridge, MA</small></h1>
 				</div>
 			</div>
-			<br />
 			<div id="ivy-container" class="container-fluid demo-container">
 				<div id="webcam-ivy" class="col-md-6 text-center">
-					<h3 style="color: #FFF">Ivy Vital-Guard</h3>
+					<h3 style="color: #FFF">Ivy Vital-Guard 450C</h3>
 					<canvas id="videoCanvas-ivy" width="320" height="240">
 						<p>
 							Please use a browser that supports the Canvas Element, like
@@ -103,12 +102,25 @@
 					</canvas>
 				</div>
 
-				<div>
-					<div id="flotit-ivy-0" class="col-xs-12 col-md-6 waveform"></div>
-					<div id="flotit-ivy-1" class="col-xs-12 col-md-6 waveform"></div>
-					<div id="flotit-ivy-2" class="col-xs-12 col-md-6 waveform"></div>
-					<div id="flotit-ivy-3" class="col-xs-12 col-md-6 waveform"></div>
-					<div id="flotit-ivy" class="col-xs-12 col-md-6 waveform"></div>
+				<div id="flotit-monitor-HR" class="col-md-6 waveform">
+					<div id="flotit-monitor-HR-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-monitor-HR-numeric" class="col-md-3 numeric"></div>
+				</div>
+				<div id="flotit-monitor-spo2" class="col-md-6 waveform">
+					<div id="flotit-monitor-spo2-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-monitor-spo2-numeric" class="col-md-3 numeric"></div>
+				</div>
+				<div id="flotit-monitor-press" class="col-md-6 waveform">
+					<div id="flotit-monitor-press-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-monitor-press-numeric" class="col-md-3 numeric"></div>
+				</div>
+				<div id="flotit-monitor-RR" class="col-md-6 waveform">
+					<div id="flotit-monitor-RR-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-monitor-RR-numeric" class="col-md-3 numeric"></div>
+				</div>
+				<div id="flotit-monitor" class="col-md-6 waveform">
+					<div id="flotit-monitor-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-monitor-numeric" class="col-md-3 numeric"></div>
 				</div>
 			</div>
 
@@ -125,10 +137,17 @@
 					</canvas>
 				</div>
 
-				<div>
-					<div id="flotit-evita-0" class="col-xs-12 col-md-6 waveform"></div>
-					<div id="flotit-evita-1" class="col-xs-12 col-md-6 waveform"></div>
-					<div id="flotit-evita" class="col-xs-12 col-md-6 waveform"></div>
+				<div id="flotit-vent-PEEP" class="col-xs-12 col-md-6 waveform">
+					<div id="flotit-vent-PEEP-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-vent-PEEP-numeric" class="col-md-3 waveform"></div>
+				</div>
+				<div id="flotit-vent-RR" class="col-xs-12 col-md-6 waveform">
+					<div id="flotit-vent-RR-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-vent-RR-numeric" class="col-md-3 waveform"></div>
+				</div>
+				<div id="flotit-vent" class="col-xs-12 col-md-6 waveform">
+					<div id="flotit-vent-wave" class="col-md-9 waveform"></div>
+					<div id="flotit-vent-numeric" class="col-md-3 waveform"></div>
 				</div>
 			</div>
 

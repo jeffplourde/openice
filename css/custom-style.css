@@ -29,51 +29,64 @@ table td {
 	font-size: 27px;
 }
 
-.graph {
-	height: 150px;
-	margin: 0.5em auto 0.5em 0;
-}
-
-.waveform {
-	padding-right: 5px;
-	padding-left: 5px;
-}
-
-#demo-header {
-	display: none;
-	
-}
-
-#demo-header {
-	margin-bottom: 10px;
-}
-
+/******     DEMO CSS     ******/
 .demo-container {
 	background-color:#000000;
 	border-radius: 5px;
 	margin: 1px;
 	padding-right: 10px;
 	padding-left: 10px;
+	line-height: 1.15;
+}
+
+.waveform {
+	padding-right: 5px;
+	padding-left: 5px;
+	color: #FFF;
+}
+
+.waveLabelSpan {
+	display: block;
+	font-size: 20px;
+}
+
+.graph {
+	height: 150px;
+	margin: 5px auto 5px 0;
+}
+
+.numeric {
+	padding-right: 5px;
+	padding-left: 5px;
+	color: #FFF;
+}
+
+.numericLabelSpan {
+	display: block;
+	font-size: 20px;
+}
+
+.valueSpan {
+	display: block;
+	font-size: 100px;
+}
+
+#header-demo {
+	margin-bottom: 10px;
 }
 
 #webcam {
 	background-color:#000000;
 }
+/******     END DEMO CSS     ******/
 
-.bigNumber {
-	font-size: 15px;
-	color: #FFF;
-	padding: 0;
+#demo-header {
+	display: none;	
 }
 
 .iconImg {
 	width: 63px;
 	height: 63px;
-}
-
-.labelit {
-	color:#FFFFFF;
-	display:block;
 }
 
 dt, dd {

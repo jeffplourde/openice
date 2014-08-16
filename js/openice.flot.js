@@ -197,7 +197,7 @@ function startCam(id, containerId, url, opts) {
       var player = new jsmpeg(client, {canvas:canvas});
       mpegClients.push(client);
     } else {
-      document.getElementById(id).style.display='none';
+      document.getElementById(containerId).style.display='none';
     }
   }
 }
@@ -232,26 +232,32 @@ window.onload = function(e) {
 
   openICE.onafterremove = function(openICE, table, row) {
     // If the row is decorated with flot data, delete it
+
     if(row.flotData) {
       delete row.flotData;
     }
     // If the row is decorated with a flot DOM object, delete it
 
-    // If the containing div element exists, remove it from the DOM and delete it 
-    if(row.enclosingDiv) {
-      row.enclosingDiv.removeChild(row.labelit);
-      row.enclosingDiv.removeChild(row.bigNumber);
-      row.enclosingDiv.removeChild(row.flotDiv);
-      delete row.labelit;
-      delete row.bigNumber;
-      delete row.flotDiv;
+    if(row.waveDiv && row.waveDivAdds) {
+      while(row.waveDivAdds.length > 0) {
+        row.waveDiv.removeChild(row.waveDivAdds.shift());
+      }
+      delete row.waveDiv;
+      delete row.waveDivAdds;
+    }
+
+    if(row.numericDiv && row.numericDivAdds) {
+      while(row.numericDivAdds.length > 0) {
+        row.numericDiv.removeChild(row.numericDivAdds.shift());
+      }
+      delete row.numericDiv;
+      delete row.numericDivAdds;
     }
   };
 
   openICE.onsample = function(openICE, table, row, sample) {
     if(table.topic=='Numeric') {
       var cssClass = "."+row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
-      // console.log("Numeric sample for " + cssClass + " = " + sample.data.value);
       $(cssClass).html(sample.data.value);
     } else
     if(table.topic=='SampleArray') {
@@ -275,47 +281,54 @@ window.onload = function(e) {
         // The set of data series we will plot
         row.flotData = [[]];
 
+        // Fixed DIV declared in the HTML (don't add it or remove it)
+        row.waveDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)+"-wave");
+        row.numericDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)+"-numeric");
+
+        // Record all the elements we add for easy removal later
+        row.waveDivAdds = [];
+        row.numericDivAdds = [];
+
+        row.waveLabelSpan = document.createElement("span");
+
+        // Translate from 11073-10101 metric id to something more colloquial
+        row.waveLabelSpan.innerHTML = getCommonName(row.keyValues.metric_id);
+        row.waveLabelSpan.setAttribute("class", "waveLabelSpan");
+        row.waveLabelSpan.style.color = getPlotColor(row.keyValues.metric_id);
+        row.waveDiv.appendChild(row.waveLabelSpan);
+        row.waveDivAdds.push(row.waveLabelSpan);
+
         // div onto which data will be plotted
-        var flotDiv = document.createElement("div");
+        row.wavePlotDiv = document.createElement("div");
+        row.wavePlotDiv.setAttribute("id", row.rowId);
+        row.wavePlotDiv.setAttribute("class", "graph");
+        row.waveDiv.appendChild(row.wavePlotDiv);
+        row.waveDivAdds.push(row.wavePlotDiv);
 
-        // label element for this waveform
-        var labelit = document.createElement("span");
-
-        var enclosingDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id));
+        row.numericDivAdds = [];
 
         var relatedNumerics = getRelatedNumeric(row.keyValues.metric_id);
-        var bigNumber = document.createElement("div");
         for(i = 0; i < relatedNumerics.length; i++) {
           var labelSpan = document.createElement("span");
           var valueSpan = document.createElement("span");
 
+          labelSpan.setAttribute("class", "numericLabelSpan");
+
           labelSpan.style.color = getPlotColor(row.keyValues.metric_id);
           valueSpan.style.color = getPlotColor(row.keyValues.metric_id);
 
-          labelSpan.innerText = relatedNumerics[i].name+"=";
-
+          labelSpan.innerText = relatedNumerics[i].name;
 
           var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
-          valueSpan.setAttribute("class", "bigNumber "+cssClass);
+          valueSpan.setAttribute("class", cssClass+" valueSpan");
+          var fontHeight = 115 / relatedNumerics.length;
+          valueSpan.style.fontSize = fontHeight+"px";
 
-          bigNumber.appendChild(labelSpan);
-          bigNumber.appendChild(valueSpan);
+          row.numericDiv.appendChild(labelSpan);
+          row.numericDivAdds.push(labelSpan);
+          row.numericDiv.appendChild(valueSpan);
+          row.numericDivAdds.push(valueSpan);
         }
-        enclosingDiv.appendChild(bigNumber);
-        enclosingDiv.appendChild(labelit);
-        enclosingDiv.appendChild(flotDiv);
-
-        flotDiv.setAttribute("id", row.rowId);
-        flotDiv.setAttribute("class", "graph");
-        row.flotDiv = flotDiv;
-        row.enclosingDiv = enclosingDiv;
-        row.bigNumber = bigNumber;
-        row.labelit = labelit;
-
-        labelit.setAttribute("class", "labelit");
-
-        // Translate from 11073-10101 metric id to something more colloquial
-        labelit.innerHTML = getCommonName(row.keyValues.metric_id);
 
         // Set up the actual plot
         row.flotPlot = $.plot('#'+row.rowId, row.flotData, options = {
@@ -340,11 +353,11 @@ window.onload = function(e) {
           yaxis: { show: false, font: { color: "#FFF" }}
         });
         row.reflot = function() {
-        this.flotPlot.setData(this.flotData);
-        // Redraws the plot decorations, etc.
-        this.flotPlot.setupGrid();
-        // Draw the actual data!
-        this.flotPlot.draw();
+          this.flotPlot.setData(this.flotData);
+          // Redraws the plot decorations, etc.
+          this.flotPlot.setupGrid();
+          // Draw the actual data!
+          this.flotPlot.draw();
         };
       }
 
