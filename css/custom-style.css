@@ -69,6 +69,7 @@ table td {
 .valueSpan {
 	display: block;
 	font-size: 100px;
+	text-align: center;
 }
 
 #header-demo {
