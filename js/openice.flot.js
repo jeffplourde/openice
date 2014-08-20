@@ -317,7 +317,7 @@ window.onload = function(e) {
           labelSpan.style.color = getPlotColor(row.keyValues.metric_id);
           valueSpan.style.color = getPlotColor(row.keyValues.metric_id);
 
-          labelSpan.innerText = relatedNumerics[i].name;
+          labelSpan.innerHTML = relatedNumerics[i].name;
 
           var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
           valueSpan.setAttribute("class", cssClass+" valueSpan");
