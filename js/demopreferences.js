@@ -49,7 +49,7 @@ var relatedNumeric = {
 	"MDC_ECG_AMPL_ST_I": [{code:"MDC_ECG_CARD_BEAT_RATE",name:"HR"}],
 	"MDC_ECG_AMPL_ST_II": [{code:"MDC_ECG_CARD_BEAT_RATE",name:"HR"}],
 	"MDC_ECG_AMPL_ST_III": [{code:"MDC_ECG_CARD_BEAT_RATE",name:"HR"}],
-	"MDC_PULS_OXIM_PLETH": [{code:"MDC_PULS_OXIM_SAT_O2", name:"SpO\u2082"}, {code:"MDC_PULS_OXIM_PULS_RATE",name:"PR"}],
+	"MDC_PULS_OXIM_PLETH": [{code:"MDC_PULS_OXIM_SAT_O2", name:"SpO\u2082%"}, {code:"MDC_PULS_OXIM_PULS_RATE",name:"PR"}],
 	"MDC_FLOW_AWAY": [{code:"MDC_RESP_RATE",name:"RR"}],
 	"MDC_CAPNOGRAPH": [{code:"MDC_RESP_RATE",name:"RR"}],
 	"MDC_ECG_AMPL_ST_V2": [],

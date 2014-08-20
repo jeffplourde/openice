@@ -321,7 +321,7 @@ window.onload = function(e) {
 
           var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
           valueSpan.setAttribute("class", cssClass+" valueSpan");
-          var fontHeight = 115 / relatedNumerics.length;
+          var fontHeight = 85 / relatedNumerics.length;
           valueSpan.style.fontSize = fontHeight+"px";
 
           row.numericDiv.appendChild(labelSpan);
