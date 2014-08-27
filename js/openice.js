@@ -133,12 +133,13 @@ function OpenICE(url) {
 	};
 
 	this.connection.openICE = this;
+	var self = this;
 
 	this.connection.on('dds', function(data) {
 		// Find the appropriate reader
 		var tableKey = calcTableKey(data);
 
-		var table = this.openICE.tables[tableKey];
+		var table = self.tables[tableKey];
 		if (null == table) {
 			console.log("Nonfatal unknown Table (tableKey="+tableKey+")");
 			return;
@@ -146,22 +147,22 @@ function OpenICE(url) {
 
 		if ("Schema" == data.messageType) {
 			table.schema = data.sample;
-			this.openICE.onschema(this.openICE, table);
+			self.onschema(self, table);
 		} else if ("Add" == data.messageType) {
 			var row = table.rows[data.identifier];
 			if (null == row) {
 				row = new Row(table, data.identifier);
 			}
 			row.keyValues = data.sample;
-			this.openICE.onbeforeadd(this.openICE, table, row);
+			self.onbeforeadd(self, table, row);
 			table.rows[data.identifier] = row;
-			this.openICE.onafteradd(this.openICE, table, row);
+			self.onafteradd(self, table, row);
 		} else if ("Remove" == data.messageType) {
 			var row = table.rows[data.identifier];
 			if (null != row) {
-				this.openICE.onbeforeremove(this.openICE, table, row);
+				self.onbeforeremove(self, table, row);
 				delete table.rows[data.identifier];
-				this.openICE.onafterremove(this.openICE, table, row);
+				self.onafterremove(self, table, row);
 			}
 		} else if ("Sample" == data.messageType) {
 			var row = table.rows[data.identifier];
@@ -171,44 +172,35 @@ function OpenICE(url) {
 			}
 			var sample = new Sample(row, data);
 			row.samples.push(sample);
-			while(row.samples.length>=this.openICE.maxSamples) {
-				this.openICE.onexpire(this.openICE, table, row, row.samples.shift());
+			while(row.samples.length>=self.maxSamples) {
+				self.onexpire(self, table, row, row.samples.shift());
 			}
-			this.openICE.onsample(this.openICE, table, row, sample);
+			self.onsample(self, table, row, sample);
 		} else {
 			console.log("Unknown message:" + e.data);
 		}
 	});
 	this.connection.on('connect', function() {
-		// console.log(this);
-		// console.log('connect');
-		this.openICE.onopen(this.openICE);
+		self.onopen(self);
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
-		// console.log('reconnect');
-		this.openICE.onopen(this.openICE);
+		self.onopen(self);
 	});
 	this.connection.on('reconnect_attempt', function() {
-		// console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnecting', function(attemptNumber) {
-		// console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnect_error', function(err) {
-		// console.log('reconnect_attempt');
 	});
 	this.connection.on('reconnect_failed', function() {
-		// console.log('reconnect_attempt');
 	});
 	this.connection.on('error', function(err) {
-		// console.log('error');
-		this.openICE.onerror(this.openICE);
-		this.openICE.destroyAllTables(false);
+		self.onerror(self);
+		self.destroyAllTables(false);
 	});
 	this.connection.on('disconnect', function() {
-		// console.log('disconnect');
-		this.openICE.onclose(this.openICE);
-		this.openICE.destroyAllTables(false);
+		self.onclose(self);
+		self.destroyAllTables(false);
 	});
 
 	
