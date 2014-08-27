@@ -5,6 +5,7 @@ var plotColors = {
 	"MDC_ECG_AMPL_ST_I": "#00FF00",
 	"MDC_ECG_AMPL_ST_II": "#00FF00",
 	"MDC_ECG_AMPL_ST_III": "#00FF00",
+	"MDC_ECG_AMPL_ST_V": "#00FF00",
 	"MDC_PULS_OXIM_PLETH": "#CC00FF",
 	"MDC_FLOW_AWAY": "#0000FF",
 	"MDC_CAPNOGRAPH": "#FFFF00"
@@ -17,6 +18,7 @@ var commonNames = {
 	"MDC_ECG_AMPL_ST_I": "ECG - I",
 	"MDC_ECG_AMPL_ST_II": "ECG - II",
 	"MDC_ECG_AMPL_ST_III": "ECG - III",
+	"MDC_ECG_AMPL_ST_V": "ECG - V",
 	"MDC_PULS_OXIM_PLETH": "Pulse Oximetry",
 	"MDC_FLOW_AWAY": "Airway Flow",
 	"MDC_CAPNOGRAPH": "Respiration",
@@ -64,7 +66,7 @@ function getPlotColor(metric_id) {
 }
 
 function getCommonName (metric_id) {
-	return commonNames[metric_id] || "";
+	return commonNames[metric_id] || metric_id;
 }
 
 function getFlotName(metric_id) {
