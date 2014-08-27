@@ -31,6 +31,8 @@ var timeDomain = 10000;
 var acceptableOutOfSync = 2000;
 var FLOT_INTERVAL = 200;
 
+var cssIllegal = /[^_a-zA-Z0-9-]/g;
+
 var flotDraw = function() {
   if(openICE && openICE.tables) {
     iterate(openICE.tables, function (tableKey, tableValue) {
@@ -257,8 +259,9 @@ window.onload = function(e) {
 
   openICE.onsample = function(openICE, table, row, sample) {
     if(table.topic=='Numeric') {
-      var cssClass = "."+row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
-      $(cssClass).html(sample.data.value);
+      var cssClass = row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
+      cssClass = cssClass.replace(cssIllegal, "_");
+      $('.'+cssClass).html(sample.data.value);
     } else
     if(table.topic=='SampleArray') {
       // Track the observed range of values for the row through all time
@@ -320,6 +323,7 @@ window.onload = function(e) {
           labelSpan.innerHTML = relatedNumerics[i].name;
 
           var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
+          cssClass = cssClass.replace(cssIllegal, '_');
           valueSpan.setAttribute("class", cssClass+" valueSpan");
           var fontHeight = 85 / relatedNumerics.length;
           valueSpan.style.fontSize = fontHeight+"px";
