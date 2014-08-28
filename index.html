@@ -36,7 +36,7 @@
 				<img id="logo" class="visible-xs" src="./assets/logo.png" />
 				<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
 			</div>
-			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation">
+			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="navbar-header">
@@ -76,6 +76,32 @@
 				</div>
 			</nav>
 		</section>
+		
+		<section>
+			<div id="entry-screen" class="entry-screen container-fluid" style="background-color:#777; display:none; margin:0px; padding:0px; height:500px;">
+				<h1>foobar</h1>
+			</div>
+			<script type="text/javascript">
+				$( document.body ).ready(function() {
+					$( "#entry-screen" ).fadeIn(1500);
+				});
+			</script>
+
+			<div class="container-fluid" style="max-width:1400px; height:350px">
+				<div class="col-sm-3">
+					<h1 style="background-color:#F00; height:350px">OpenICE</h1>
+				</div>
+				<div class="col-sm-3">
+					<h1 style="background-color:#0F0; height:350px">Explore</h1>
+				</div>
+				<div class="col-sm-3">
+					<h1 style="background-color:#00F; height:350px">Learn</h1>					
+				</div>
+				<div class="col-sm-3">
+					<h1 style="background-color:#FF0; height:350px">Interoperability</h1>
+				</div>
+			</div>
+		</section>
 
 		<section id="readme">
 			<div class="page-container">
@@ -88,14 +114,6 @@
 				<p>This website utilizes a JavaScript API to access the MD PnP medical device test bed. The purpose of this site is to visualize the vital sign data flowing from the OpenICE network in the MD PnP lab in Cambridge, MA.</p>
 				<p>To start the sample application, please navigate to the <a href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'view-demo');">demo</a> page.</p>
 				<br />
-
-				<h1>White House Smart America Healthcare App Challenge</h1>
-				<p>Have an idea for an innovative healthcare application but lack the data and resources necessary to develop it?</p>
-				<p>MD PnP is holding an app challenge to enable healthcare innovation outside the walls of hospitals and medical device manufacturers. Contestants will use websockets to access real-time streaming medical device data from the MD PnP test lab to their applications.</p>
-				<br />
-				<p class="text-center"><a class="btn btn-lg btn-primary" href="http://www.mdpnp.org/SmartAmerica_AppChallenge.html" role="button" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'AC-info');">App Challenge Information</a></p>
-				<br />
-
 
 				<h1>Download the JavaScript API and Sample App from GitHub</h1>
 				<p>The git repository for the MD PnP Lab JavaScript API, this website, the 'flot' data visualization script and supporting assets are available on GitHub. Please contribute to this project by forking this code and submitting a pull request.</p>
@@ -125,7 +143,7 @@
 				<br /><br />
 			</div>
 		</section>
-		<section>
+		<section class="section-carousel">
 			<div class="page-container">
 				<div id="lab-slide-show" class="carousel slide" data-ride="carousel">
 					<!-- Indicators -->
@@ -189,7 +207,7 @@
 		<section class="footer" class="center-block">
 			<div class="page-container">
 				<br /><br />
-				<p><small>Logos present on this page do not imply endorsement</small></p>
+				<p><small>MD PnP</small></p>
 				<br />
 			</div>
 		</section>
