@@ -1,5 +1,7 @@
 (function(window){ "use strict";
 
+var io = require('socket.io-client');
+
 // jsmpeg by Dominic Szablewski - phoboslab.org, github.com/phoboslab
 //
 // Consider this to be under MIT license. It's largely based an an Open Source
