@@ -2252,4 +2252,6 @@ BitReader.prototype.rewind = function(count) {
 	return (this.index -= count);
 };
 
+module.exports = exports = jsmpeg;
+
 }
