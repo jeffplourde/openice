@@ -8,7 +8,8 @@ var plotColors = {
 	"MDC_ECG_AMPL_ST_V": "#00FF00",
 	"MDC_PULS_OXIM_PLETH": "#CC00FF",
 	"MDC_FLOW_AWAY": "#0000FF",
-	"MDC_CAPNOGRAPH": "#FFFF00"
+	"MDC_AWAY_CO2": "#FFFF00",
+	"MDC_IMPED_TTHOR": "#FFFF00"
 };
 
 var commonNames = {
@@ -21,11 +22,13 @@ var commonNames = {
 	"MDC_ECG_AMPL_ST_V": "ECG - V",
 	"MDC_PULS_OXIM_PLETH": "Pulse Oximetry",
 	"MDC_FLOW_AWAY": "Airway Flow",
-	"MDC_CAPNOGRAPH": "Respiration",
+	"MDC_IMP": "Respiration",
 	"MDC_ECG_AMPL_ST_V2": "ECG - V2",
 	"MDC_PRESS_BLD_ART_ABP": "Arterial BP",
 	"MDC_ECG_AMPL_ST_AVR": "ECG - aVR",
-	"MDC_PRESS_BLD_ART": "ART"
+	"MDC_PRESS_BLD_ART": "ART",
+	"MDC_AWAY_CO2": "Capnogram",
+	"MDC_IMPED_TTHOR": "Transthoracic Impedance"
 };
 
 var flotNames = {
@@ -37,7 +40,8 @@ var flotNames = {
 	"MDC_ECG_AMPL_ST_III": "monitor-HR",
 	"MDC_PULS_OXIM_PLETH": "monitor-spo2",
 	"MDC_FLOW_AWAY": "vent-RR",
-	"MDC_CAPNOGRAPH": "monitor-RR",
+	"MDC_AWAY_CO2": "monitor-RR",
+	"MDC_IMPED_TTHOR": "monitor-RR",
 	"MDC_ECG_AMPL_ST_V2": "monitor",
 	"MDC_PRESS_BLD_ART_ABP": "monitor",
 	"MDC_ECG_AMPL_ST_AVR": "monitor",
@@ -48,12 +52,12 @@ var relatedNumeric = {
 	"MDC_PRESS_AWAY": [{code:"MDC_PRESS_AWAY",name:"PEEP"}],
 	"MDC_PRESS_BLD": [{code:"MDC_PRESS_BLD_SYS",name:"Systolic"},{code:"MDC_PRESS_BLD_DIA",name:"Diastolic"}],
 	"MDC_CONC_AWAY_CO2_ET": [],
-	"MDC_ECG_AMPL_ST_I": [{code:"MDC_ECG_CARD_BEAT_RATE",name:"HR"}],
-	"MDC_ECG_AMPL_ST_II": [{code:"MDC_ECG_CARD_BEAT_RATE",name:"HR"}],
-	"MDC_ECG_AMPL_ST_III": [{code:"MDC_ECG_CARD_BEAT_RATE",name:"HR"}],
+	"MDC_ECG_AMPL_ST_I": [{code:"MDC_ECG_HEART_RATE",name:"HR"}],
+	"MDC_ECG_AMPL_ST_II": [{code:"MDC_ECG_HEART_RATE",name:"HR"}],
+	"MDC_ECG_AMPL_ST_III": [{code:"MDC_ECG_HEART_RATE",name:"HR"}],
 	"MDC_PULS_OXIM_PLETH": [{code:"MDC_PULS_OXIM_SAT_O2", name:"SpO\u2082%"}, {code:"MDC_PULS_OXIM_PULS_RATE",name:"PR"}],
-	"MDC_FLOW_AWAY": [{code:"MDC_RESP_RATE",name:"RR"}],
-	"MDC_CAPNOGRAPH": [{code:"MDC_RESP_RATE",name:"RR"}],
+	"MDC_FLOW_AWAY": [{code:"MDC_CO2_RESP_RATE",name:"RR"}],
+	"MDC_AWAY_CO2": [{code:"MDC_CO2_RESP_RATE",name:"RR"}],
 	"MDC_ECG_AMPL_ST_V2": [],
 	"MDC_PRESS_BLD_ART_ABP": [],
 	"MDC_ECG_AMPL_ST_AVR": [],
