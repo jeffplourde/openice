@@ -61,7 +61,8 @@ var relatedNumeric = {
 	"MDC_ECG_AMPL_ST_V2": [],
 	"MDC_PRESS_BLD_ART_ABP": [],
 	"MDC_ECG_AMPL_ST_AVR": [],
-	"MDC_PRESS_BLD_ART": []
+	"MDC_PRESS_BLD_ART": [],
+	"MDC_IMPED_TTHOR": [{code:"MDC_TTHOR_RESP_RATE",name:"RR"}],
 };
 
 
