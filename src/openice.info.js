@@ -233,8 +233,8 @@ window.onload = function(e) {
   var wsHost = window.location.protocol == 'file:' ? 'www.openice.info' : window.location.host;
   var baseURL = wsProtocol + wsHost;
 
-  //startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
-  //startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');
+  startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
+  startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');
 
   openICE = new OpenICE(baseURL);
 
