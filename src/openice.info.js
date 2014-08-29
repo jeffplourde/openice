@@ -1,10 +1,16 @@
+
+var OpenICE = require('./openice.js');
+var prefs = require('./demopreferences.js');
+var io = require('socket.io-client');
+var moment = require('moment');
+
 Date.now = Date.now || function() { return +new Date; }; 
 
 if (typeof Array.prototype.forEach != 'function') {
   Array.prototype.forEach = function(callback){
     for (var i = 0; i < this.length; i++){
       callback.apply(this, [this[i], i, this]);
-    }
+    } 
   };
 }
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -227,12 +233,12 @@ window.onload = function(e) {
   var wsHost = window.location.protocol == 'file:' ? 'www.openice.info' : window.location.host;
   var baseURL = wsProtocol + wsHost;
 
-  startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
-  startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');
+  //startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
+  //startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');
 
   openICE = new OpenICE(baseURL);
 
-  openICE.onafterremove = function(openICE, table, row) {
+  openICE.on('afterremove', function(openICE, table, row) {
     // If the row is decorated with flot data, delete it
 
     if(row.flotData) {
@@ -255,9 +261,9 @@ window.onload = function(e) {
       delete row.numericDiv;
       delete row.numericDivAdds;
     }
-  };
+  });
 
-  openICE.onsample = function(openICE, table, row, sample) {
+  openICE.on('sample', function(openICE, table, row, sample) {
     if(table.topic=='Numeric') {
       var cssClass = row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
       cssClass = cssClass.replace(cssIllegal, "_");
@@ -285,8 +291,8 @@ window.onload = function(e) {
         row.flotData = [[]];
 
         // Fixed DIV declared in the HTML (don't add it or remove it)
-        row.waveDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)+"-wave");
-        row.numericDiv = document.getElementById("flotit-"+getFlotName(row.keyValues.metric_id)+"-numeric");
+        row.waveDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-wave");
+        row.numericDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-numeric");
 
         // Record all the elements we add for easy removal later
         row.waveDivAdds = [];
@@ -295,9 +301,9 @@ window.onload = function(e) {
         row.waveLabelSpan = document.createElement("span");
 
         // Translate from 11073-10101 metric id to something more colloquial
-        row.waveLabelSpan.innerHTML = getCommonName(row.keyValues.metric_id);
+        row.waveLabelSpan.innerHTML = prefs.getCommonName(row.keyValues.metric_id);
         row.waveLabelSpan.setAttribute("class", "waveLabelSpan");
-        row.waveLabelSpan.style.color = getPlotColor(row.keyValues.metric_id);
+        row.waveLabelSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
         row.waveDiv.appendChild(row.waveLabelSpan);
         row.waveDivAdds.push(row.waveLabelSpan);
 
@@ -310,15 +316,15 @@ window.onload = function(e) {
 
         row.numericDivAdds = [];
 
-        var relatedNumerics = getRelatedNumeric(row.keyValues.metric_id);
+        var relatedNumerics = prefs.getRelatedNumeric(row.keyValues.metric_id);
         for(i = 0; i < relatedNumerics.length; i++) {
           var labelSpan = document.createElement("span");
           var valueSpan = document.createElement("span");
 
           labelSpan.setAttribute("class", "numericLabelSpan");
 
-          labelSpan.style.color = getPlotColor(row.keyValues.metric_id);
-          valueSpan.style.color = getPlotColor(row.keyValues.metric_id);
+          labelSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
+          valueSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
 
           labelSpan.innerHTML = relatedNumerics[i].name;
 
@@ -340,7 +346,7 @@ window.onload = function(e) {
             lines: { show: true },
             shadowSize: 0,
             points: { show: false },
-            color: getPlotColor(row.keyValues.metric_id),
+            color: prefs.getPlotColor(row.keyValues.metric_id),
           },
           grid: {
             show: true,
@@ -377,27 +383,24 @@ window.onload = function(e) {
         }
       }
     }
-  };
-  openICE.onopen = function(openICE) {
+  });
+  openICE.on('open', function(openICE) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);
     this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
     this.createTable({domain: targetDomain, partition: [], topic:'Numeric'});
-  };
+  });
 
-  openICE.onclose = function(openICE) {
+  openICE.on('close', function(openICE) {
     connect_btn("Connecting...", "danger");
     $("#connectionStateAlert").fadeIn(1);
-  };
+  });
 
-  openICE.onerror = function(openICE) {
+  openICE.on('error', function(openICE) {
     connect_btn("Connecting...", "danger");
     $("#connectionStateAlert").fadeIn(1);
-  };
+  });
 
-  // Plot five times per second
-setTimeout(flotIt, FLOT_INTERVAL);
+  setTimeout(flotIt, FLOT_INTERVAL);
 }
 
-window.onbeforeunload = function(e) {
-}

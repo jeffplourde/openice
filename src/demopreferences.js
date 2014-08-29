@@ -66,18 +66,19 @@ var relatedNumeric = {
 };
 
 
-function getPlotColor(metric_id) {
+exports.getPlotColor = function(metric_id) {
 	return plotColors[metric_id] || "#FFFFFF";
 }
 
-function getCommonName (metric_id) {
+exports.getCommonName = function(metric_id) {
 	return commonNames[metric_id] || metric_id;
 }
 
-function getFlotName(metric_id) {
+exports.getFlotName = function(metric_id) {
 	return flotNames[metric_id] || "monitor";
 }
 
-function getRelatedNumeric(metric_id) {
+exports.getRelatedNumeric = function(metric_id) {
 	return relatedNumeric[metric_id] || [];
 }
+
