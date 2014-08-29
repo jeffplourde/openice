@@ -77,32 +77,63 @@
 			</nav>
 		</section>
 		
-		<section>
-			<div id="entry-screen" class="entry-screen container-fluid" style="background-color:#777; display:none; margin:0px; padding:0px; height:500px;">
+		<section id="landling-section">
+			<div id="landing-jumbotron" class="fadeIn container-fluid">
 				<h1>foobar</h1>
 			</div>
-			<script type="text/javascript">
-				$( document.body ).ready(function() {
-					$( "#entry-screen" ).fadeIn(1500);
-				});
-			</script>
-
-			<div class="container-fluid" style="max-width:1400px; height:350px">
-				<div class="col-sm-3">
+			<div id="landing-links" class="container vis-hidden">
+				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-md-3">
 					<h1 style="background-color:#F00; height:350px">OpenICE</h1>
 				</div>
-				<div class="col-sm-3">
+				<div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-md-3">
 					<h1 style="background-color:#0F0; height:350px">Explore</h1>
 				</div>
-				<div class="col-sm-3">
+				<div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-md-3">
 					<h1 style="background-color:#00F; height:350px">Learn</h1>					
 				</div>
-				<div class="col-sm-3">
-					<h1 style="background-color:#FF0; height:350px">Interoperability</h1>
+				<div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-md-3">
+					<h1  style="background-color:#FF0; height:350px">Interoperability</h1>
 				</div>
 			</div>
+			<script>
+				$(window).scroll(function() {
+					$('#landing-links').each(function(){
+						var imagePos = $(this).offset().top;
+						var topOfWindow = $(window).scrollTop();
+						if (imagePos < topOfWindow + 550) {
+							$( '#landing-links' ).removeClass("vis-hidden");
+							$( '#landing-link-1' ).addClass("fadeInUp");
+							$( '#landing-link-2' ).addClass("fadeInUp-2");
+							$( '#landing-link-3' ).addClass("fadeInUp-3");
+							$( '#landing-link-4' ).addClass("fadeInUp-4");
+						}
+					});
+				});
+			</script>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 		</section>
-
 		<section id="readme">
 			<div class="page-container">
 				<br /><br />
