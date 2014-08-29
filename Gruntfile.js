@@ -14,8 +14,12 @@ module.exports = function(grunt) {
     },
     browserify: {
       dist: {
-        src: ['src/**/*.js'],
+        src: ['src/openice.info.js'],
         dest: 'build/<%= pkg.name %>.js'
+      },
+      lab: {
+        src: ['src/lab.js'],
+        dest: 'build/lab.js'
       }
     }
   });
