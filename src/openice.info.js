@@ -3,7 +3,7 @@ var OpenICE = require('./openice.js');
 var prefs = require('./demopreferences.js');
 var io = require('socket.io-client');
 var moment = require('moment');
-var jsmpg = window.ie && window.ie==8?null:require('./jsmpg.js');
+var jsmpg = require('./jsmpg.js');
 
 Date.now = Date.now || function() { return +new Date; }; 
 

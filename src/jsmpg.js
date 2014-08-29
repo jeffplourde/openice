@@ -1,6 +1,6 @@
-(function(window){ "use strict";
-
 var io = require('socket.io-client');
+
+if(window.ArrayBuffer) {
 
 // jsmpeg by Dominic Szablewski - phoboslab.org, github.com/phoboslab
 //
@@ -2251,6 +2251,5 @@ BitReader.prototype.advance = function(count) {
 BitReader.prototype.rewind = function(count) {
 	return (this.index -= count);
 };
-	
-})(window);
 
+}
