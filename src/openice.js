@@ -245,7 +245,7 @@ OpenICE.prototype.createTable = function(args) {
 
 OpenICE.prototype.destroyAllTables = function(unsubscribe) {
 	var keys = Object.keys(this.tables);
-	for(i = 0; i < keys.length; i++) {
+	for(var i = 0; i < keys.length; i++) {
 		var tableKey = keys[i];
 		var table = this.tables[tableKey];
 		this.destroyTable(table, unsubscribe);
@@ -264,16 +264,16 @@ OpenICE.prototype.destroyTable = function(args, unsubscribe) {
 	message.domain = args.domain;
 	message.topic = args.topic;
 	message.partition = args.partition;
-
+ 
 	if(typeof unsubscribe != 'undefined' && unsubscribe) {
 		this.connection.emit('dds', message);
 	}
 	
 	var tableKey = calcTableKey(message);
-	var table = this.tables[tableKey];
+	var table = this.tables[tableKey]; 
 	if (null != table) {
 		var keys = Object.keys(table.rows);
-		for(i = 0; i < keys.length; i++) {
+		for(var i = 0; i < keys.length; i++) {
 			var rowKey = keys[i];
         	var row = table.rows[rowKey];
         	this.emit('beforeremove', this, table, row);
