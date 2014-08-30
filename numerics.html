@@ -13,54 +13,11 @@
 			border:1px solid #000000;
 			}
 		</style>
-		<script language="javascript" type="text/javascript" src="js/socket.io.js"></script>
-		<script language="javascript" type="text/javascript" src="js/openice.js"></script>
-		<script language="javascript">
-  			var openICE = new OpenICE("http://www.openice.info");
-  			openICE.onsample = function(openICE, table, row, sample) {
-  				var tr = document.getElementById(row.rowId);
-  				if(typeof tr === 'undefined' || tr == null) {
-  					tr = document.createElement("tr");
-  					tr.id = row.rowId;
-  					var td = document.createElement("td");
-  					td.innerHTML = row.keyValues.unique_device_identifier;
-  					tr.appendChild(td);
-  					td = document.createElement("td");
-  					td.innerHTML = row.keyValues.metric_id;
-  					tr.appendChild(td);
-  					td = document.createElement("td");
-  					td.innerHTML = row.keyValues.instance_id;
-  					tr.appendChild(td);
-  					td = document.createElement("td");
-  					td.id = row.rowId+"value";
-  					td.innerHTML = "";
-  					tr.appendChild(td);
+		<script language="javascript" type="text/javascript" src="build/numerics.js"></script>
 
-  					var numerics = document.getElementById("numerics");
-  					numerics.appendChild(tr);
-  				}
-  				var td = document.getElementById(row.rowId+"value");
-  				td.innerHTML = sample.data.value;
-  			};
-  			openICE.onafterremove = function(openICE, table, row) {
-  				var tr = document.getElementById(row.rowId);
-  				if(typeof tr !== 'undefined' && tr != null) {
-  					document.getElementById("numerics").removeChild(tr);
-  				}
-  			};
-  			var currentTable;
-  			openICE.onopen = function(openICE) {
-  				currentTable = openICE.createTable({domain: 15, partition: ["MDPNP|004"], topic:'Numeric'});
-			 };
-  			function changePartition(str) {
-  				openICE.destroyAllTables(true);
-  				var newPartition = str.split(",");
-  				currentTable = openICE.createTable({domain: 15, partition: newPartition, topic:'Numeric'});
-  			}
-		</script>
 	</head>
 	<body>
-		<form onsubmit="changePartition(document.getElementById('partitionBox').value); return false;">
+		<form id="partitionForm">
 		Partition:<input id="partitionBox" type="text" name="partition" value="MDPNP|004"/><input type="submit" value="Change" />
 		</form>
 		<table id="numerics">

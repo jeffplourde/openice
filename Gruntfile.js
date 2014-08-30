@@ -20,6 +20,10 @@ module.exports = function(grunt) {
       lab: {
         src: ['src/lab.js'],
         dest: 'build/lab.js'
+      },
+      numerics: {
+        src: ['src/numerics.js'],
+        dest: 'build/numerics.js'
       }
     }
   });
