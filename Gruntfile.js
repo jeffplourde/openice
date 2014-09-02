@@ -24,12 +24,21 @@ module.exports = function(grunt) {
       numerics: {
         src: ['src/numerics.js'],
         dest: 'build/numerics.js'
+      },
+      vitals: {
+        src: ['src/vitals.js','src/main.js'],
+        dest: 'build/vitals.js'
       }
+    },
+    watch: {
+        files: ["src/**/*.js"],
+        tasks: ['browserify']
     }
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
   // Default task(s).
   grunt.registerTask('default', ['browserify', 'uglify']);
