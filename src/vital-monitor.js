@@ -274,9 +274,7 @@ function renderVitalStatus(vitalSigns, canvas) {
 
         // END OF TRANSFORM SECTION
 
-        if (vital.values.length == 0) {
-            continue;
-        } else {
+        if (vital.values.length > 0) {
         	var vital_values = [];
 
             for(var i = 0; i < vital.values.length; i++) {
@@ -295,7 +293,7 @@ function renderVitalStatus(vitalSigns, canvas) {
                 }
             }
 
-            for (var j = 0; j < i; j++) {
+            for (var j = 0; j < vital_values.length; j++) {
                 var f = vital_values[j];
                 var proportion = 1.0 * (f - minimum) / (maximum - minimum);
                 var x = Math.floor(proportion * (x2 - x1) + x1);
@@ -327,6 +325,7 @@ function renderVitalStatus(vitalSigns, canvas) {
 
     if (dataArea.points.length > 1) {
     	dataArea.fill(ctx);
+    	ctx.stroke();
 	}
 }
 
