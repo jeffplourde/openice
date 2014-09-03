@@ -47,7 +47,7 @@ Sample.prototype.toString = function() {
 }
 
 Sample.prototype.expire = function() {
-	this.emit('expire', sample);
+	this.emit('expire', this);
 	this.removeAllListeners();
 };
 
