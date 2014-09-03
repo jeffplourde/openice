@@ -365,13 +365,6 @@ window.onload = function(e) {
         },
         yaxis: { show: false, font: { color: "#FFF" }}
       });
-      row.reflot = function() {
-        this.flotPlot.setData(this.flotData);
-        // Redraws the plot decorations, etc.
-        this.flotPlot.setupGrid();
-        // Draw the actual data!
-        this.flotPlot.draw();
-      };
     }
 
     // For every new data sample add it to the data series to be plotted
@@ -409,8 +402,6 @@ window.onload = function(e) {
     sampleArrayTable.on('sample', onSampleArraySample);
     return false;
   };
-
-  document.getElementById('partitionForm').onsubmit();
 
   openICE.on('open', function(openICE) {
     connect_btn("Connected", "success");

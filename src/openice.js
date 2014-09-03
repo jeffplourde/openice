@@ -48,7 +48,7 @@ Sample.prototype.toString = function() {
 
 Sample.prototype.expire = function() {
 	this.emit('expire', this);
-	this.removeAllListeners();
+	this.off();
 };
 
 /**
@@ -83,6 +83,12 @@ Row.prototype.addSample = function(data) {
 		this.samples.shift().expire();
 	}
 	this.emit('sample', this, sample);
+};
+
+Row.prototype.removeAllSamples = function() {
+	while(this.samples.length>0) {
+		this.samples.shift().expire();
+	}
 };
 
 /**
@@ -130,7 +136,8 @@ Table.prototype.removeRow = function(data) {
 	var row = this.rows[data.identifier];
 	if (null != row) {
 		this.emit('beforeremove', this, row);
-		this.rows[data.identifier].removeAllListeners();
+		this.rows[data.identifier].off();
+		this.rows[data.identifier].removeAllSamples();
 		delete this.rows[data.identifier];
 		this.emit('afterremove', this, row);
 	}
