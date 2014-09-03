@@ -6,6 +6,7 @@ function Polygon() {
 
 Polygon.prototype.addPoint = function(x,y) {
 	this.points.push([x,y]);
+	return this;
 };
 
 Polygon.prototype.path = function(ctx) {
@@ -17,17 +18,29 @@ Polygon.prototype.path = function(ctx) {
 		}
 	}
 	ctx.closePath();
+	return this;
 };
 
 Polygon.prototype.fill = function(ctx) {
 	this.path(ctx);
 	ctx.fill();
+	return this;
 };
 
 Polygon.prototype.stroke = function(ctx) {
 	this.path(ctx);
 	ctx.stroke();
+	return this;
 };
+
+function drawLine(ctx, x1,y1,x2,y2) {
+	ctx.beginPath();
+	ctx.moveTo(x1,y1);
+	ctx.lineTo(x2,y2);
+	ctx.closePath();
+	ctx.stroke();
+}
+
 
 var IDEAL_COLOR = "#0000FF"; // wanted opacity 0.8
 var DATA_COLOR  = "#00FF00"; // 0.3
@@ -54,7 +67,6 @@ function renderVitalStatus(vitalSigns, canvas) {
 	ctx.font = "12pt Arial";
 
     if (N < 3) {	 
-    	console.log("Wrote asking for 3 vitals " + size + " " + center);
         var s = "Please add at least three vital signs.";
         var width = ctx.measureText(s).width;
         var height = 12; //ctx.measureText(s).height;
@@ -183,6 +195,7 @@ function renderVitalStatus(vitalSigns, canvas) {
         var lbl = vital.label + " (" + vital.units + ")";
         // is there an HTML5 equivalent to g.getFontMetrics().getMaxDescent();
         var maxDescent = 3; 
+        var tickSize = 5;
 		// is there an equivalent? g.getFontMetrics().getHeight();
         var height = 12; 
         var str_w = ctx.measureText(lbl).width;
@@ -196,12 +209,10 @@ function renderVitalStatus(vitalSigns, canvas) {
         str_w = ctx.measureText(lbl).width;
         if (FLIP) {
             ctx.fillText(lbl, length / 2 - str_w, maxDescent + height + 5);
-            ctx.moveTo(length/2,0);
-            ctx.lineTo(length/2,5);
+            drawLine(ctx,length/2,0,length/2,tickSize);
         } else {
             ctx.fillText(lbl, -length / 2, -maxDescent - 5);
-            ctx.moveTo(-length / 2, 0);
-            ctx.lineTo(-length / 2, -5);
+            drawLine(ctx, -length / 2, 0, -length / 2, -tickSize);
         }
 
         if (null != vital.warningLow) {
@@ -214,12 +225,10 @@ function renderVitalStatus(vitalSigns, canvas) {
             var xloc = proportion * length;
             if (FLIP) {
                 ctx.fillText(lbl, -xloc - str_w / 2, maxDescent + height + 5);
-                ctx.moveTo(-xloc, 0);
-                ctx.lineTo(-xloc, 5);
+                drawLine(ctx, -xloc, 0, -xloc, tickSize);
             } else {
                 ctx.fillText(lbl, xloc - str_w / 2, -maxDescent - 5);
-                ctx.moveTo(xloc, 0);
-                ctx.lineTo(xloc, -5);
+                drawLine(ctx,xloc,0,xloc,-tickSize);
             }
             ctx.fillStyle = c;
         }
@@ -228,12 +237,10 @@ function renderVitalStatus(vitalSigns, canvas) {
         str_w = ctx.measureText(lbl).width;
         if (FLIP) {
             ctx.fillText(lbl, -length / 2, maxDescent + 5 + height);
-            ctx.moveTo(-length / 2, 0);
-            ctx.lineTo(-length / 2, 5);
+            drawLine(ctx, -length / 2, 0, -length / 2, tickSize);
         } else {
             ctx.fillText(lbl, length / 2 - str_w, -maxDescent - 5);
-            ctx.moveTo(length / 2, 0);
-            ctx.lineTo(length / 2, -5);
+            drawLine(ctx, length / 2, 0, length / 2, -tickSize);
         }
 
         if (null != vital.warningHigh) {
@@ -246,12 +253,10 @@ function renderVitalStatus(vitalSigns, canvas) {
             var xloc = proportion * length;
             if (FLIP) {
                 ctx.fillText(lbl, -xloc - str_w / 2, maxDescent + height + 5);
-                ctx.moveTo(-xloc, 0);
-                ctx.lineTo(-xloc, 5);
+                drawLine(ctx, -xloc, 0, -xloc, tickSize);
             } else {
                 ctx.fillText(lbl, xloc - str_w / 2, -maxDescent - 5);
-                ctx.moveTo(xloc, 0);
-                ctx.lineTo(xloc, -5);
+                drawLine(ctx, xloc, 0, xloc, -tickSize);
             }
             ctx.fillStyle = c;
         }
@@ -259,12 +264,10 @@ function renderVitalStatus(vitalSigns, canvas) {
         str_w = ctx.measureText(lbl).width;
         if (FLIP) {
             ctx.fillText(lbl, -str_w / 2, maxDescent + 5 + height);
-            ctx.moveTo(0, 0);
-            ctx.lineTo(0, 5);
+            drawLine(ctx, 0, 0, 0, tickSize);
         } else {
             ctx.fillText(lbl, -str_w / 2, -maxDescent - 5);
-            ctx.moveTo(0, 0);
-            ctx.lineTo(0, -5);
+            drawLine(ctx, 0, 0, 0, -tickSize);
         }
 
         ctx.setTransform(1,0,0,1,0,0);
@@ -281,7 +284,8 @@ function renderVitalStatus(vitalSigns, canvas) {
             		vital_values.push(vital.values[i].numeric.value);
             	}
             }
-            vital_values.sort();
+            // use a numeric sort; default is lexical and undesirable
+            vital_values = vital_values.sort(function(a,b) { return a-b; });
 
             if (REVERSE_DIRECTION && vital_values.length > 1) {
                 for (var k = 0; k < vital_values.length / 2; k++) {
@@ -312,7 +316,7 @@ function renderVitalStatus(vitalSigns, canvas) {
     chartArea.stroke(ctx);
     ctx.fillStyle  = ctx.strokeStyle = IDEAL_COLOR;
     idealArea.stroke(ctx);
-    //console.log("vitalSigns.state="+vitalSigns.state);
+
     if("Alarm"==vitalSigns.state) {
         ctx.fillStyle = ctx.strokeStyle = ALARM_DATA_COLOR;
     } else if("Warning"==vitalSigns.state) {

@@ -5,6 +5,8 @@ var io = require('socket.io-client');
 var moment = require('moment');
 var jsmpg = require('./jsmpg.js');
 
+var partition = [];
+
 Date.now = Date.now || function() { return +new Date; }; 
 
 if (typeof Array.prototype.forEach != 'function') {
@@ -231,15 +233,15 @@ window.onload = function(e) {
   port = port == '' ? '' : (':'+port);
   // Pages served over https can only utilize wss protocol
   var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  var wsHost = window.location.protocol == 'file:' ? 'www.openice.info' : window.location.host;
+  var wsHost = window.location.protocol == 'file:' ? 'localhost:3000' : window.location.host;
   var baseURL = wsProtocol + wsHost;
 
   startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
   startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');
-
+ 
   openICE = new OpenICE(baseURL);
 
-  openICE.on('afterremove', function(openICE, table, row) {
+  function onRemove(table, row) {
     // If the row is decorated with flot data, delete it
 
     if(row.flotData) {
@@ -262,134 +264,157 @@ window.onload = function(e) {
       delete row.numericDiv;
       delete row.numericDivAdds;
     }
-  });
+  };
 
-  openICE.on('sample', function(openICE, table, row, sample) {
-    if(table.topic=='Numeric') {
-      var cssClass = row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
-      cssClass = cssClass.replace(cssIllegal, "_");
-      $('.'+cssClass).html(sample.data.value);
-    } else
-    if(table.topic=='SampleArray') {
-      // Track the observed range of values for the row through all time
-      if(sample.data.values) {
-        for(var i = 0; i < sample.data.values.length; i++) {
-          var value = sample.data.values[i];
-          if(!row.maxValue || value > row.maxValue) {
-            row.maxValue = value;
-          }
-          if(!row.minValue || value < row.minValue) {
-            row.minValue = value;
-          }
+  function onNumericSample(table, row, sample) {
+    var cssClass = row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
+    cssClass = cssClass.replace(cssIllegal, "_");
+    $('.'+cssClass).html(sample.data.value);
+  }
+
+  function onSampleArraySample(table, row, sample) {
+    // Track the observed range of values for the row through all time
+    if(sample.data.values) {
+      for(var i = 0; i < sample.data.values.length; i++) {
+        var value = sample.data.values[i];
+        if(!row.maxValue || value > row.maxValue) {
+          row.maxValue = value;
         }
-      }
-
-      // If flotData wasn't previously initialized AND
-      // we've seen a range of data greater than 0
-      // This filters out unattached sensors for convenience
-      if(!row.flotData && row.maxValue > row.minValue) {  
-        // The set of data series we will plot
-        row.flotData = [[]];
-
-        // Fixed DIV declared in the HTML (don't add it or remove it)
-        row.waveDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-wave");
-        row.numericDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-numeric");
-
-        // Record all the elements we add for easy removal later
-        row.waveDivAdds = [];
-        row.numericDivAdds = [];
-
-        row.waveLabelSpan = document.createElement("span");
-
-        // Translate from 11073-10101 metric id to something more colloquial
-        row.waveLabelSpan.innerHTML = prefs.getCommonName(row.keyValues.metric_id);
-        row.waveLabelSpan.setAttribute("class", "waveLabelSpan");
-        row.waveLabelSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
-        row.waveDiv.appendChild(row.waveLabelSpan);
-        row.waveDivAdds.push(row.waveLabelSpan);
-
-        // div onto which data will be plotted
-        row.wavePlotDiv = document.createElement("div");
-        row.wavePlotDiv.setAttribute("id", row.rowId);
-        row.wavePlotDiv.setAttribute("class", "graph");
-        row.waveDiv.appendChild(row.wavePlotDiv);
-        row.waveDivAdds.push(row.wavePlotDiv);
-
-        row.numericDivAdds = [];
-
-        var relatedNumerics = prefs.getRelatedNumeric(row.keyValues.metric_id);
-        for(i = 0; i < relatedNumerics.length; i++) {
-          var labelSpan = document.createElement("span");
-          var valueSpan = document.createElement("span");
-
-          labelSpan.setAttribute("class", "numericLabelSpan");
-
-          labelSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
-          valueSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
-
-          labelSpan.innerHTML = relatedNumerics[i].name;
-
-          var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
-          cssClass = cssClass.replace(cssIllegal, '_');
-          valueSpan.setAttribute("class", cssClass+" valueSpan");
-          var fontHeight = 85 / relatedNumerics.length;
-          valueSpan.style.fontSize = fontHeight+"px";
-
-          row.numericDiv.appendChild(labelSpan);
-          row.numericDivAdds.push(labelSpan);
-          row.numericDiv.appendChild(valueSpan);
-          row.numericDivAdds.push(valueSpan);
-        }
-
-        // Set up the actual plot
-        row.flotPlot = $.plot('#'+row.rowId, row.flotData, options = {
-          series: {
-            lines: { show: true },
-            shadowSize: 0,
-            points: { show: false },
-            color: prefs.getPlotColor(row.keyValues.metric_id),
-          },
-          grid: {
-            show: true,
-            aboveData: false,
-            color: "#FFFFFF",
-            backgroundColor: "#000000"
-          },
-          xaxis: {
-            show: true,
-            mode: "time",
-            font: { color: "#FFF" },
-            timezone: "browser"
-          },
-          yaxis: { show: false, font: { color: "#FFF" }}
-        });
-        row.reflot = function() {
-          this.flotPlot.setData(this.flotData);
-          // Redraws the plot decorations, etc.
-          this.flotPlot.setupGrid();
-          // Draw the actual data!
-          this.flotPlot.draw();
-        };
-      }
-
-      // For every new data sample add it to the data series to be plotted
-      if(row.flotData && sample.data && sample.data.values && sample.data.millisecondsPerSample) {
-        row.millisecondsPerSample = sample.data.millisecondsPerSample;
-        for(var i = 0; i < sample.data.values.length; i++) {
-          var value = sample.data.values[i];
-          // This could be some downsampling if it becomes necessary
-          // if(0==(i%1)) {
-          row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
-          //}
+        if(!row.minValue || value < row.minValue) {
+          row.minValue = value;
         }
       }
     }
-  });
+
+    // If flotData wasn't previously initialized AND
+    // we've seen a range of data greater than 0
+    // This filters out unattached sensors for convenience
+    if(!row.flotData && row.maxValue > row.minValue) {  
+      // The set of data series we will plot
+      row.flotData = [[]];
+
+      // Fixed DIV declared in the HTML (don't add it or remove it)
+      row.waveDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-wave");
+      row.numericDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-numeric");
+
+      // Record all the elements we add for easy removal later
+      row.waveDivAdds = [];
+      row.numericDivAdds = [];
+
+      row.waveLabelSpan = document.createElement("span");
+
+      // Translate from 11073-10101 metric id to something more colloquial
+      row.waveLabelSpan.innerHTML = prefs.getCommonName(row.keyValues.metric_id);
+      row.waveLabelSpan.setAttribute("class", "waveLabelSpan");
+      row.waveLabelSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
+      row.waveDiv.appendChild(row.waveLabelSpan);
+      row.waveDivAdds.push(row.waveLabelSpan);
+
+      // div onto which data will be plotted
+      row.wavePlotDiv = document.createElement("div");
+      row.wavePlotDiv.setAttribute("id", row.rowId);
+      row.wavePlotDiv.setAttribute("class", "graph");
+      row.waveDiv.appendChild(row.wavePlotDiv);
+      row.waveDivAdds.push(row.wavePlotDiv);
+
+      row.numericDivAdds = [];
+
+      var relatedNumerics = prefs.getRelatedNumeric(row.keyValues.metric_id);
+      for(i = 0; i < relatedNumerics.length; i++) {
+        var labelSpan = document.createElement("span");
+        var valueSpan = document.createElement("span");
+
+        labelSpan.setAttribute("class", "numericLabelSpan");
+
+        labelSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
+        valueSpan.style.color = prefs.getPlotColor(row.keyValues.metric_id);
+
+        labelSpan.innerHTML = relatedNumerics[i].name;
+
+        var cssClass = row.keyValues.unique_device_identifier+"-"+relatedNumerics[i].code;
+        cssClass = cssClass.replace(cssIllegal, '_');
+        valueSpan.setAttribute("class", cssClass+" valueSpan");
+        var fontHeight = 85 / relatedNumerics.length;
+        valueSpan.style.fontSize = fontHeight+"px";
+
+        row.numericDiv.appendChild(labelSpan);
+        row.numericDivAdds.push(labelSpan);
+        row.numericDiv.appendChild(valueSpan);
+        row.numericDivAdds.push(valueSpan);
+      }
+
+      // Set up the actual plot
+      row.flotPlot = $.plot('#'+row.rowId, row.flotData, options = {
+        series: {
+          lines: { show: true },
+          shadowSize: 0,
+          points: { show: false },
+          color: prefs.getPlotColor(row.keyValues.metric_id),
+        },
+        grid: {
+          show: true,
+          aboveData: false,
+          color: "#FFFFFF",
+          backgroundColor: "#000000"
+        },
+        xaxis: {
+          show: true,
+          mode: "time",
+          font: { color: "#FFF" },
+          timezone: "browser"
+        },
+        yaxis: { show: false, font: { color: "#FFF" }}
+      });
+      row.reflot = function() {
+        this.flotPlot.setData(this.flotData);
+        // Redraws the plot decorations, etc.
+        this.flotPlot.setupGrid();
+        // Draw the actual data!
+        this.flotPlot.draw();
+      };
+    }
+
+    // For every new data sample add it to the data series to be plotted
+    if(row.flotData && sample.data && sample.data.values && sample.data.millisecondsPerSample) {
+      row.millisecondsPerSample = sample.data.millisecondsPerSample;
+      for(var i = 0; i < sample.data.values.length; i++) {
+        var value = sample.data.values[i];
+        // This could be some downsampling if it becomes necessary
+        // if(0==(i%1)) {
+        row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+        //}
+      }
+    }
+  };
+
+
+
+  var medicalDeviceData = document.getElementById('medicalDeviceData');
+  var partitionBox = document.getElementById('partitionBox');
+  medicalDeviceData.onclick = function() {
+    if(partitionBox.style.display=='none') {
+      partitionBox.style.display='inline';
+    } else {
+      partitionBox.style.display='none';
+    }
+  };
+  document.getElementById('partitionForm').onsubmit = function() {
+
+    partition = partitionBox.value.split(",");
+    openICE.destroyAllTables(true);
+    var sampleArrayTable = openICE.createTable({domain: targetDomain, partition: partition, topic:'SampleArray'});
+    var numericTable = openICE.createTable({domain: targetDomain, partition: partition, topic:'Numeric'});
+    sampleArrayTable.on('afterremove', onRemove);
+    numericTable.on('sample', onNumericSample);
+    sampleArrayTable.on('sample', onSampleArraySample);
+    return false;
+  };
+
+  document.getElementById('partitionForm').onsubmit();
+
   openICE.on('open', function(openICE) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);
-    this.createTable({domain: targetDomain, partition: [], topic:'SampleArray'});
-    this.createTable({domain: targetDomain, partition: [], topic:'Numeric'});
   });
 
   openICE.on('close', function(openICE) {

@@ -37,7 +37,7 @@ function Value(args) {
 	});
 	Object.defineProperty(this, "isAtOrAboveHigh", {
 		get: function() {
-        	return (this.isIgnore || null == this.warningHigh) ? false : (this.numeric.value >= this.parent.warningHigh);
+        	return (this.isIgnore || null == this.parent.warningHigh) ? false : (this.numeric.value >= this.parent.warningHigh);
 		}
 	});
 	Object.defineProperty(this, "isAtOrBelowLow", {
@@ -353,11 +353,7 @@ Vital.prototype.toString = function() {
 
 Emitter(VitalSigns.prototype);
 
-function VitalSigns(openICE, domain, partition, topic) {
-	Object.defineProperty(this, 'openICE', {
-		writable: false,
-		value: openICE
-	});
+function VitalSigns() {
 	var vitals = [];
 	Object.defineProperty(this, "vitals", {
 		writable: false,
@@ -376,26 +372,24 @@ function VitalSigns(openICE, domain, partition, topic) {
 		}
 	});
 	this.warningText = "";
-	openICE.on('sample', this.onSample.bind(this));
-	openICE.on('afteradd', this.onInsert.bind(this));
-	openICE.on('beforeremove', this.onRemove.bind(this));
+
 	this.on('vitalchanged', this.updateState.bind(this));
-
-	var existingTable = openICE.getTable({domain:domain,partition:partition,topic:topic});
-	if(null != existingTable) {
-		for(var i = 0; i < existingTable.rows.length; i++) {
-			this.onInsert(openICE, existingTable, existingTable.rows[i]);
-		}
-	} else {
-		openICE.createTable({domain:domain,partition:partition,topic:topic});
-	}
-
-
-
 
 };
 
-VitalSigns.prototype.onSample = function(openICE, table, row, sample) {
+VitalSigns.prototype.setTable = function(numericsTable) {
+	// TODO Reset the state of this model (clear values)
+
+	numericsTable.on('sample', this.onSample.bind(this));
+	numericsTable.on('afteradd', this.onInsert.bind(this));
+	numericsTable.on('beforeremove', this.onRemove.bind(this));
+	for(var i = 0; i < numericsTable.rows.length; i++) {
+		this.onInsert(numericsTable, numericsTable.rows[i]);
+	}
+}
+
+
+VitalSigns.prototype.onSample = function(table, row, sample) {
 	for(var i = 0; i < this.vitals.length; i++) {
 		var v = this.vitals[i];
         if (v != null) {
@@ -423,10 +417,10 @@ VitalSigns.prototype.onSample = function(openICE, table, row, sample) {
         }
     }
 };
-VitalSigns.prototype.onInsert = function(openICE, table, row) {
+VitalSigns.prototype.onInsert = function(table, row) {
 
 };
-VitalSigns.prototype.onRemove = function(openICE, table, row) {
+VitalSigns.prototype.onRemove = function(table, row) {
 	for(var i = 0; i < this.vitals.length; i++) {
 		var updated = false;
 		var v = this.vitals[i];
@@ -436,6 +430,7 @@ VitalSigns.prototype.onRemove = function(openICE, table, row) {
 					for(var k = 0; k < v.values.length; k++) {
 						var value = v.values[k];
 						if(value.uniqueDeviceIdentifier == row.keyValues.unique_device_identifier && value.instanceId == row.keyValues.instance_id) {
+
 							v.values.splice(k, 1);
 							updated = true;
 						}
@@ -506,7 +501,6 @@ VitalSigns.prototype.updateState = function() {
         this.warningText = "";
         this.state = "Normal";
     }
-
     if (countWarnings >= this.countWarningsBecomeAlarm) {
         this.state = "Alarm";
         //stopInfusion("Pump Stopped\r\n" + warningText + "\r\nnurse alerted");

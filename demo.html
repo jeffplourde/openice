@@ -22,7 +22,7 @@
 		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
 		<script language="javascript" type="text/javascript" src="js/jquery.flot.time.js"></script>
 		<script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script language="javascript" type="text/javascript" src="build/openice.info.min.js"></script>
+		<script language="javascript" type="text/javascript" src="build/openice.info.js"></script>
 	</head>
 	<body>
 		<section id="splash">
@@ -75,15 +75,17 @@
 		</section>
 
 		<section id="web-demo">
+			<form id="partitionForm">
 			<div id="header-demo" class="text-center container">
 				<div id="connectionStateAlert" class="alert alert-danger">
 					<span id="connectionStateText">Connecting...</span>
 					<br />
 				</div>
 				<div>
-					<h1 style="margin-top:0px">Live Medical Device Data <br /><small class="hidden-xs">Streaming from the MD PnP Lab in Cambridge, MA</small></h1>
+					<h1 style="margin-top:0px"><span id="medicalDeviceData">Live Medical Device Data</span><input id="partitionBox" type="text" style="display:none"/><br /><small class="hidden-xs">Streaming from the MD PnP Lab in Cambridge, MA</small></h1>
 				</div>
 			</div>
+			</form>
 			<div id="ivy-container" class="container-fluid demo-container">
 				<div id="webcam-ivy" class="col-md-6 text-center">
 					<h3 style="color: #FFF">Ivy Vital-Guard 450C</h3>

@@ -11,7 +11,9 @@ var Emitter = require('component-emitter');
 module.exports = OpenICE;
 
 Emitter(OpenICE.prototype);
-
+Emitter(Table.prototype);
+Emitter(Row.prototype);
+Emitter(Sample.prototype);
 /** 
  * Calculates a string identifier for a table.
  * @param {object} data - Object containing domain, partition and topic attributes
@@ -44,6 +46,11 @@ Sample.prototype.toString = function() {
 	return "@"+new Date(this.sourceTimestamp)+ " " + JSON.stringify(this.data);
 }
 
+Sample.prototype.expire = function() {
+	this.emit('expire', sample);
+	this.removeAllListeners();
+};
+
 /**
  * Represents a data row for a unique instance of table data.
  * @constructor
@@ -65,6 +72,19 @@ Row.prototype.toString = function() {
 	return this.table+" "+this.rowId+" "+JSON.stringify(this.keyValues)+" "+this.samples.length;
 }
 
+Row.prototype.addSample = function(data) {
+	var sample = new Sample(this, data);
+	var self = this;
+	sample.on('expire', function(sample) {
+		self.emit('expire', self, sample);
+	});
+	this.samples.push(sample);
+	while(this.samples.length>=this.table.openICE.maxSamples) {
+		this.samples.shift().expire();
+	}
+	this.emit('sample', this, sample);
+};
+
 /**
  * Represents a data table.
  * @constructor
@@ -84,6 +104,44 @@ function Table(openICE, domain, partition, topic) {
 	this.topic = topic;
 	/** @property {object} rows - Rows stored by row identifier. */
 	this.rows = {};
+}
+
+Table.prototype.setSchema = function(schema) {
+	this.schema = schema;
+	this.emit('schema', this, schema);
+};
+
+Table.prototype.addRow = function(data) {
+	var row = this.rows[data.identifier];
+	if (null == row) {
+		row = new Row(this, data.identifier);
+		var self = this;
+		row.on('sample', function(row, sample) {
+			self.emit('sample', self, row, sample);
+		});
+	}
+	row.keyValues = data.sample;
+	this.emit('beforeadd', this, row);
+	this.rows[data.identifier] = row;
+	this.emit('afteradd', this, row);
+};
+
+Table.prototype.removeRow = function(data) {
+	var row = this.rows[data.identifier];
+	if (null != row) {
+		this.emit('beforeremove', this, row);
+		this.rows[data.identifier].removeAllListeners();
+		delete this.rows[data.identifier];
+		this.emit('afterremove', this, row);
+	}
+};
+
+Table.prototype.removeAllRows = function() {
+	var keys = Object.keys(this.rows);
+	for(var i = 0; i < keys.length; i++) {
+		var rowKey = keys[i];
+    	this.removeRow({identifier:rowKey});
+	}
 }
 
 Table.prototype.toString = function() {
@@ -147,36 +205,18 @@ function OpenICE(url) {
 		}
 
 		if ("Schema" == data.messageType) {
-			table.schema = data.sample;
-			self.emit('schema', self, table);
+			table.setSchema(data.sample);
 		} else if ("Add" == data.messageType) {
-			var row = table.rows[data.identifier];
-			if (null == row) {
-				row = new Row(table, data.identifier);
-			}
-			row.keyValues = data.sample;
-			self.emit('beforeadd', self, table, row);
-			table.rows[data.identifier] = row;
-			self.emit('afteradd', self, table, row);
+			table.addRow(data);
 		} else if ("Remove" == data.messageType) {
-			var row = table.rows[data.identifier];
-			if (null != row) {
-				self.emit('beforeremove', self, table, row);
-				delete table.rows[data.identifier];
-				self.emit('afterremove', self, table, row);
-			}
+			table.removeRow(data);
 		} else if ("Sample" == data.messageType) {
 			var row = table.rows[data.identifier];
 			if (null == row) {
 				console.log("No such row for sample");
 				return;
 			}
-			var sample = new Sample(row, data);
-			row.samples.push(sample);
-			while(row.samples.length>=self.maxSamples) {
-				self.emit('expire', self, table, row, row.samples.shift());
-			}
-			self.emit('sample', self, table, row, sample);
+			row.addSample(data);
 		} else {
 			console.log("Unknown message:" + e.data);
 		}
@@ -236,6 +276,25 @@ OpenICE.prototype.createTable = function(args) {
 	var table = this.tables[tableKey];
 	if (null == table) {
 		table = new Table(this, args.domain, args.partition, args.topic);
+		var self = this;
+		table.on('sample', function(table, row, sample) {
+			self.emit('sample', self, table, row, sample);
+		});
+		table.on('schema', function(table) {
+			self.emit('schema', self, table);
+		});
+		table.on('beforeremove', function(table, row) {
+			self.emit('beforeremove', self, table, row);
+		});
+		table.on('afterremove', function(table, row) {
+			self.emit('afterremove', self, table, row);
+		});
+		table.on('beforeadd', function(table, row) {
+			self.emit('beforeadd', self, table, row);
+		});
+		table.on('afteradd', function(table, row) {
+			self.emit('afteradd', self, table, row);
+		});
 		this.tables[tableKey] = table;
 		this.emit('addtable', this, table);
 		this.connection.emit('dds',message);
@@ -272,14 +331,7 @@ OpenICE.prototype.destroyTable = function(args, unsubscribe) {
 	var tableKey = calcTableKey(message);
 	var table = this.tables[tableKey]; 
 	if (null != table) {
-		var keys = Object.keys(table.rows);
-		for(var i = 0; i < keys.length; i++) {
-			var rowKey = keys[i];
-        	var row = table.rows[rowKey];
-        	this.emit('beforeremove', this, table, row);
-			delete table.rows[rowKey];
-			this.emit('afterremove', this, table, row);
-		}
+		table.removeAllRows();
 		delete this.tables[tableKey];
 	}
 	this.emit('removetable', this, table);
