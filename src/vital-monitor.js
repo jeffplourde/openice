@@ -1,20 +1,29 @@
 "use strict";
 
+function Point(x,y) {
+	this.x = x;
+	this.y = y;
+}
+
+Point.prototype.toString = function() {
+	return "["+x+","+y+"]";
+}
+
 function Polygon() {
 	this.points = [];
 }
 
 Polygon.prototype.addPoint = function(x,y) {
-	this.points.push([x,y]);
+	this.points.push(new Point(x,y));
 	return this;
 };
 
 Polygon.prototype.path = function(ctx) {
 	ctx.beginPath();
 	if(this.points.length > 0) {
-		ctx.moveTo(this.points[0][0], this.points[0][1]);
+		ctx.moveTo(this.points[0].x, this.points[0].y);
 		for(var i = 1; i < this.points.length; i++) {
-			ctx.lineTo(this.points[i][0], this.points[i][1]);
+			ctx.lineTo(this.points[i].x, this.points[i].y);
 		}
 	}
 	ctx.closePath();
@@ -82,6 +91,73 @@ function renderVitalStatus(vitalSigns, canvas) {
     var dataArea = new Polygon();
     var idealArea = new Polygon();
 
+    for (var v = 0; v < N; v++) {
+		var vital = vitalSigns.vitals[v];
+		var r1 = v * radiansPerArc;
+        var r2 = (v == (N - 1) ? 0 : (v + 1)) * radiansPerArc;
+
+        var x1 = Math.round(center.x + radius * Math.cos(r1));
+        var x2 = Math.round(center.x + radius * Math.cos(r2));
+        var y1 = Math.round(center.y + radius * Math.sin(r1));
+        var y2 = Math.round(center.y + radius * Math.sin(r2));
+
+        var REVERSE_DIRECTION = y2 > y1;
+        var VERTICAL = Math.abs(x2 - x1) <= 1;
+
+        var minimum = REVERSE_DIRECTION ? vital.displayMaximum : vital.displayMinimum;
+        var maximum = REVERSE_DIRECTION ? vital.displayMinimum : vital.displayMaximum;
+
+        var slope = 1.0 * (y2 - y1) / (x2 - x1);
+        var intercept = y1 - slope * x1;
+
+    	if (vital.values.length > 0) {
+        	var vital_values = [];
+
+            for(var i = 0; i < vital.values.length; i++) {
+            	if(!vital.values[i].isIgnore) {
+            		vital_values.push(vital.values[i].numeric.value);
+            	}
+            }
+            // use a numeric sort; default is lexical and undesirable
+            vital_values = vital_values.sort(function(a,b) { return a-b; });
+
+            if (REVERSE_DIRECTION && vital_values.length > 1) {
+                for (var k = 0; k < vital_values.length / 2; k++) {
+                    var tmp = vital_values[k];
+                    vital_values[k] = vital_values[vital_values.length - 1 - k];
+                    vital_values[vital_values.length - 1 - k] = tmp;
+                }
+            }
+
+            for (var j = 0; j < vital_values.length; j++) {
+                var f = vital_values[j];
+                var proportion = 1.0 * (f - minimum) / (maximum - minimum);
+                var x = Math.floor(proportion * (x2 - x1) + x1);
+                var y = Math.floor(slope * x + intercept);
+
+                if (VERTICAL) {
+                    x = x1;
+                    y = proportion * (y2 - y1) + y1;
+                }
+                dataArea.addPoint(x, y);
+            }
+        }
+    }
+    if("Alarm"==vitalSigns.state) {
+        ctx.fillStyle = ctx.strokeStyle = ALARM_DATA_COLOR;
+    } else if("Warning"==vitalSigns.state) {
+        ctx.fillStyle = ctx.strokeStyle = WARN_DATA_COLOR;
+    } else {
+        ctx.fillStyle = ctx.strokeStyle = DATA_COLOR;
+    }
+
+    if (dataArea.points.length > 1) {
+    	dataArea.fill(ctx);
+    	ctx.stroke();
+	}
+
+	ctx.strokeStyle = "#000000";
+    ctx.fillStyle = "#000000";
 
     for (var v = 0; v < N; v++) {
     	var vital = vitalSigns.vitals[v];
@@ -274,59 +350,14 @@ function renderVitalStatus(vitalSigns, canvas) {
 
         // END OF TRANSFORM SECTION
 
-        if (vital.values.length > 0) {
-        	var vital_values = [];
-
-            for(var i = 0; i < vital.values.length; i++) {
-            	if(!vital.values[i].isIgnore) {
-            		vital_values.push(vital.values[i].numeric.value);
-            	}
-            }
-            // use a numeric sort; default is lexical and undesirable
-            vital_values = vital_values.sort(function(a,b) { return a-b; });
-
-            if (REVERSE_DIRECTION && vital_values.length > 1) {
-                for (var k = 0; k < vital_values.length / 2; k++) {
-                    var tmp = vital_values[k];
-                    vital_values[k] = vital_values[vital_values.length - 1 - k];
-                    vital_values[vital_values.length - 1 - k] = tmp;
-                }
-            }
-
-            for (var j = 0; j < vital_values.length; j++) {
-                var f = vital_values[j];
-                var proportion = 1.0 * (f - minimum) / (maximum - minimum);
-                var x = Math.floor(proportion * (x2 - x1) + x1);
-                var y = Math.floor(slope * x + intercept);
-
-                if (VERTICAL) {
-                    x = x1;
-                    y = proportion * (y2 - y1) + y1;
-                }
-                dataArea.addPoint(x, y);
-            }
-        }
 	}
 	ctx.setTransform(1,0,0,1,0,0); 
-	ctx.fillStyle = WHITEN_COLOR;
-    chartArea.fill(ctx);
-    ctx.fillStyle = ctx.strokeStyle = "#000000";
-    chartArea.stroke(ctx);
+
     ctx.fillStyle  = ctx.strokeStyle = IDEAL_COLOR;
     idealArea.stroke(ctx);
+    ctx.fillStyle = ctx.strokeStyle = "#000000";
+    chartArea.stroke(ctx);
 
-    if("Alarm"==vitalSigns.state) {
-        ctx.fillStyle = ctx.strokeStyle = ALARM_DATA_COLOR;
-    } else if("Warning"==vitalSigns.state) {
-        ctx.fillStyle = ctx.strokeStyle = WARN_DATA_COLOR;
-    } else {
-        ctx.fillStyle = ctx.strokeStyle = DATA_COLOR;
-    }
-
-    if (dataArea.points.length > 1) {
-    	dataArea.fill(ctx);
-    	ctx.stroke();
-	}
 }
 
 module.exports.renderVitalStatus = renderVitalStatus;
