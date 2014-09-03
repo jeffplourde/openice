@@ -234,11 +234,13 @@ function OpenICE(url) {
 	});
 	this.connection.on('connect', function() {
 		self.emit('open', self);
+		this.unsubscribeAll();
 		self.subscribeAllTables();
 		self.connected = true;
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
 		self.emit('open', self);
+		this.unsubscribeAll();
 		self.subscribeAllTables();
 		self.connected = true;
 	});
@@ -346,6 +348,10 @@ OpenICE.prototype.subscribeAllTables = function() {
 		var table = this.tables[tableKey];
 		this.subscribe(table);
 	}
+};
+
+OpenICE.prototype.unsubscribeAll = function() {
+	this.connection.emit('dds', {messageType:'UnsubscribeAll'});
 };
 
 /**
