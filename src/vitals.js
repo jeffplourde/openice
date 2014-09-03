@@ -32,7 +32,7 @@ function Value(args) {
 	});
 	Object.defineProperty(this, "isIgnore", {
 		get: function() {
-			return this.parent.ignoreZero && (0 == this.numeric.value || Number.isNaN(this.numeric.value));
+			return this.parent.ignoreZero && (0 == this.numeric.value);
 		}
 	});
 	Object.defineProperty(this, "isAtOrAboveHigh", {
