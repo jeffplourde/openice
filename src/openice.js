@@ -4,10 +4,12 @@
   @License BSD 2-Clause License
 */
 
+"use strict";
+
 var io = require('socket.io-client');
 
 var Emitter = require('component-emitter');
-
+ 
 module.exports = OpenICE;
 
 Emitter(OpenICE.prototype);
@@ -149,11 +151,11 @@ Table.prototype.removeAllRows = function() {
 		var rowKey = keys[i];
     	this.removeRow({identifier:rowKey});
 	}
-}
+};
 
 Table.prototype.toString = function() {
 	return this.domain+" "+this.partition+" "+this.topic+" "+this.schema;
-}
+};
 
 /**
  * Returns rows with matching values for the specified key fields.
@@ -180,7 +182,7 @@ Table.prototype.getRows = function(keys) {
         }
 	}
 	return (matchingRows);
-}
+};
 
 /**
  * Represents a connection back to the OpenICE system.
@@ -198,6 +200,8 @@ function OpenICE(url) {
 	
 	/** @property {int} maxSamples - Max samples preserved for each row. */
 	this.maxSamples = 100;
+
+	this.connected = false;
 
 	var self = this;
 
@@ -229,10 +233,14 @@ function OpenICE(url) {
 		}
 	});
 	this.connection.on('connect', function() {
-		self.emit('open', self)
+		self.emit('open', self);
+		self.subscribeAllTables();
+		self.connected = true;
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
 		self.emit('open', self);
+		self.subscribeAllTables();
+		self.connected = true;
 	});
 	this.connection.on('reconnect_attempt', function() {
 	});
@@ -244,17 +252,19 @@ function OpenICE(url) {
 	});
 	this.connection.on('error', function(err) {
 		self.emit('error', self, err);
-		self.destroyAllTables(false);
+		self.removeAllRows();
+		self.connected = false;
 	});
 	this.connection.on('disconnect', function() {
 		self.emit('close', self);
-		self.destroyAllTables(false);
+		self.removeAllRows();
+		self.connected = false;
 	});
-}
+};
 
 OpenICE.prototype.toString = function() {
 	return this.url;
-}
+};
 
 /**
  * Retrieves a table by identifying information.
@@ -265,7 +275,7 @@ OpenICE.prototype.toString = function() {
 OpenICE.prototype.getTable = function(args) {
     var tableKey = calcTableKey(args);
     return this.tables[tableKey];	
-}
+};
 
 /**
  * Creates a table with identifying information (or returns existing table if already created)
@@ -274,12 +284,7 @@ OpenICE.prototype.getTable = function(args) {
  * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
  */
 OpenICE.prototype.createTable = function(args) {
-	var message = new Object();
-	message.messageType = "Subscribe";
-	message.domain = args.domain;
-	message.topic = args.topic;
-	message.partition = args.partition;
-	var tableKey = calcTableKey(message);
+	var tableKey = calcTableKey(args);
 	var table = this.tables[tableKey];
 	if (null == table) {
 		table = new Table(this, args.domain, args.partition, args.topic);
@@ -304,19 +309,44 @@ OpenICE.prototype.createTable = function(args) {
 		});
 		this.tables[tableKey] = table;
 		this.emit('addtable', this, table);
-		this.connection.emit('dds',message);
+		if(this.connected) {
+			this.subscribe(table);
+		}
 	}
 	return table;
-}
+};
 
-OpenICE.prototype.destroyAllTables = function(unsubscribe) {
+OpenICE.prototype.subscribe = function(table) {
+	var message = {messageType:'Subscribe',domain:table.domain,partition:table.partition,topic:table.topic};
+	this.connection.emit('dds', message);
+};
+
+OpenICE.prototype.destroyAllTables = function() {
 	var keys = Object.keys(this.tables);
 	for(var i = 0; i < keys.length; i++) {
 		var tableKey = keys[i];
 		var table = this.tables[tableKey];
-		this.destroyTable(table, unsubscribe);
+		this.destroyTable(table);
 	}
-}
+};
+
+OpenICE.prototype.removeAllRows = function() {
+	var keys = Object.keys(this.tables);
+	for(var i = 0; i < keys.length; i++) {
+		var tableKey = keys[i];
+		var table = this.tables[tableKey];
+		table.removeAllRows();
+	}
+};
+
+OpenICE.prototype.subscribeAllTables = function() {
+	var keys = Object.keys(this.tables);
+	for(var i = 0; i < keys.length; i++) {
+		var tableKey = keys[i];
+		var table = this.tables[tableKey];
+		this.subscribe(table);
+	}
+};
 
 /**
  * Destroys a table with identifying information (or no op if it does not exist)
@@ -324,28 +354,27 @@ OpenICE.prototype.destroyAllTables = function(unsubscribe) {
  * @public
  * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
  */
-OpenICE.prototype.destroyTable = function(args, unsubscribe) {
-	var message = new Object();
-	message.messageType = "Unsubscribe";
-	message.domain = args.domain;
-	message.topic = args.topic;
-	message.partition = args.partition;
- 
-	if(typeof unsubscribe != 'undefined' && unsubscribe) {
-		this.connection.emit('dds', message);
-	}
-	
-	var tableKey = calcTableKey(message);
+OpenICE.prototype.destroyTable = function(args) {
+	var tableKey = calcTableKey(args);
 	var table = this.tables[tableKey]; 
 	if (null != table) {
+		if(this.connected) {
+			this.unsubscribe(table);
+		}
 		table.removeAllRows();
 		delete this.tables[tableKey];
+		this.emit('removetable', this, table);
+
 	}
-	this.emit('removetable', this, table);
 	return table;
-}
+};
+
+OpenICE.prototype.unsubscribe = function(table) {
+	var message = {messageType:'Unsubscribe', domain:table.domain, partition:table.partition, topic: table.topic};
+	this.connection.emit('dds', message);
+};
 
 OpenICE.prototype.close = function() {
 	this.connection.disconnect();
-}
+};
 

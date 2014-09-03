@@ -402,10 +402,10 @@ window.onload = function(e) {
     sampleArrayTable.on('sample', onSampleArraySample);
     return false;
   };
+  document.getElementById('partitionForm').onsubmit();
 
   openICE.on('open', function(openICE) {
     connect_btn("Connected", "success");
-    document.getElementById('partitionForm').onsubmit();
     $("#connectionStateAlert").fadeOut(1500);
   });
 
