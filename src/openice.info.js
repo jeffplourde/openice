@@ -414,6 +414,7 @@ window.onload = function(e) {
 
   openICE.on('open', function(openICE) {
     connect_btn("Connected", "success");
+    document.getElementById('partitionForm').onsubmit();
     $("#connectionStateAlert").fadeOut(1500);
   });
 
