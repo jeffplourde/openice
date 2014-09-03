@@ -29,13 +29,13 @@
 	</head>
 	<body>
 		<section id="splash">
-			<div id="logo-banner-holder" class="container-fluid">
+<!-- 			<div id="logo-banner-holder" class="container-fluid">
 				<a href="./index.html">
 					<img id="logo-banner" class="hidden-xs" src="./assets/logo-banner.png" />
 				</a>
 				<img id="logo" class="visible-xs" src="./assets/logo.png" />
 				<a class="hidden-xs" href="https://github.com/jeffplourde/openice"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1000" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" /></a>
-			</div>
+			</div> -->
 			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -77,31 +77,45 @@
 			</nav>
 		</section>
 		
-		<section id="landling-section">
+		<section id="landing-section">
 			<div id="landing-jumbotron" class="fadeIn container-fluid">
-				<h1>foobar</h1>
+				<img src="./assets/landing-page-pics/many-screens-sm.jpeg" class="img-responsive" />
+				<h1>MDPnP Interoperability Lab</h1>
+				<h2>Getting Connected for Patient Safety</h2>
 			</div>
-			<div id="landing-links" class="container vis-hidden">
+			<div id="landing-link-container" class="container vis-hidden">
 				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<h1 style="background-color:#F00; height:350px">OpenICE</h1>
+					<a href="./demo.html">
+						<img src="./assets/landing-page-pics/tile-demo.jpg" class="img-responsive" />
+						<h1>OpenICE Demo</h1>
+					</a>
 				</div>
 				<div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<h1 style="background-color:#0F0; height:350px">Explore</h1>
+					<a href="./explore.html">
+						<img src="./assets/landing-page-pics/tile-explore.jpg" class="img-responsive" />
+						<h1>Explore</h1>
+					</a>
 				</div>
 				<div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<h1 style="background-color:#00F; height:350px">Learn</h1>					
+					<a href="./learn.html">
+						<img src="./assets/landing-page-pics/tile-learn.jpg" class="img-responsive" />
+						<h1>Learn</h1>
+					</a>
 				</div>
 				<div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<h1  style="background-color:#FF0; height:350px">Interoperability</h1>
+					<a href="interoperability.html">
+						<img src="./assets/landing-page-pics/tile-interop.jpg" class="img-responsive" />
+						<h1 >Interoperability</h1>
+					</a>
 				</div>
 			</div>
 			<script>
 				$(window).scroll(function() {
-					$('#landing-links').each(function(){
+					$('#landing-link-container').each(function(){
 						var imagePos = $(this).offset().top;
 						var topOfWindow = $(window).scrollTop();
 						if (imagePos < topOfWindow + 550) {
-							$( '#landing-links' ).removeClass("vis-hidden");
+							$( '#landing-link-container' ).removeClass("vis-hidden");
 							$( '#landing-link-1' ).addClass("fadeInUp");
 							$( '#landing-link-2' ).addClass("fadeInUp-2");
 							$( '#landing-link-3' ).addClass("fadeInUp-3");

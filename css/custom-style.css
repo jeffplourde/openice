@@ -347,22 +347,50 @@ dt, dd {
 #landing-jumbotron {
 	margin: 0px;
 	padding: 0px;
-	background-color: #777;
-	height: 500px;
 }
-
-#landing-links {
-	max-width: 1400px;
-	height: 350px;
+#landing-jumbotron h1 {
+	text-align: center;
+	margin-bottom: 5px;
 }
-
-.landing-link {
-	z-index: -1;
+#landing-jumbotron h2 {
+	text-align: center;
+	color: #777;
+	margin-top: 0px;
+	margin-bottom: 50px;
 }
-
+@media (max-width: 1000px) {
+	#landing-jumbotron h1 {
+		font-size: 35px;
+	}
+	#landing-jumbotron h2 {
+		font-size: 25px;
+	}
+}
+@media (min-width: 1000px) {
+	#landing-jumbotron h1 {
+		font-size: 75px;
+	}
+	#landing-jumbotron h2 {
+		font-size: 35px;
+	}
+}
 .vis-hidden {
 	opacity: 0;
 }
+
+#landing-link-container {
+	max-width: 1400px;
+}
+
+.landing-link {
+	padding: 5px;
+}
+
+.landing-link a {
+	display: inline-block;
+	color: #333;
+}
+
 
 @-webkit-keyframes fadeIn {
   0% { opacity: 0; }
@@ -374,8 +402,8 @@ dt, dd {
 }
 
 .fadeIn {
-  animation: fadeIn 1.75s;
-  -webkit-animation: fadeIn 1.75s;
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
 }
 
 @-webkit-keyframes fadeInUp {
