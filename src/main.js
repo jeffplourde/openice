@@ -5,7 +5,14 @@ var VitalMonitor = require('./vital-monitor.js');
 var DOMAINID = 15;
 
 window.onload = function(e) {
-	var openICE = new OpenICE('http://localhost:3000');
+  	var port = window.location.port;
+  	// Internet Explorer does not populate port for default port 80
+  	port = port == '' ? '' : (':'+port);
+  	// Pages served over https can only utilize wss protocol
+  	var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
+  	var wsHost = window.location.protocol == 'file:' ? 'localhost:3000' : window.location.host;
+  	var baseURL = wsProtocol + wsHost;
+	var openICE = new OpenICE(baseURL);
 	var rebuildSelect = function(openICE, table, row) {
 		var names = {};
 		var select = document.getElementById('partition');
