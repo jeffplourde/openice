@@ -297,6 +297,8 @@ window.onload = function(e) {
       // The set of data series we will plot
       row.flotData = [[]];
 
+      row.millisecondsPerSample = 1000.0 / row.keyValues.frequency;
+
       // Fixed DIV declared in the HTML (don't add it or remove it)
       row.waveDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-wave");
       row.numericDiv = document.getElementById("flotit-"+prefs.getFlotName(row.keyValues.metric_id)+"-numeric");
@@ -372,13 +374,12 @@ window.onload = function(e) {
     }
 
     // For every new data sample add it to the data series to be plotted
-    if(row.flotData && sample.data && sample.data.values && sample.data.millisecondsPerSample) {
-      row.millisecondsPerSample = sample.data.millisecondsPerSample;
+    if(row.flotData && sample.data && sample.data.values && row.millisecondsPerSample) {
       for(var i = 0; i < sample.data.values.length; i++) {
         var value = sample.data.values[i];
         // This could be some downsampling if it becomes necessary
         // if(0==(i%1)) {
-        row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-sample.data.millisecondsPerSample*(sample.data.values.length-i), value]);
+        row.flotData[0].push([moment(sample.sourceTimestamp).valueOf()-row.millisecondsPerSample*(sample.data.values.length-i), value]);
         //}
       }
     }
@@ -407,18 +408,18 @@ window.onload = function(e) {
     return false;
   };
   document.getElementById('partitionForm').onsubmit();
-
-  openICE.on('open', function(openICE) {
+  
+  openICE.on('open', function(e) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);
   });
 
-  openICE.on('close', function(openICE) {
+  openICE.on('close', function(e) {
     connect_btn("Connecting...", "danger");
     $("#connectionStateAlert").fadeIn(1);
   });
 
-  openICE.on('error', function(openICE) {
+  openICE.on('error', function(e) {
     connect_btn("Connecting...", "danger");
     $("#connectionStateAlert").fadeIn(1);
   });
