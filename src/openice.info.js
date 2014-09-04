@@ -241,6 +241,9 @@ window.onload = function(e) {
  
   openICE = new OpenICE(baseURL);
 
+  // We're not using this openICE info for storing historical samples.
+  openICE.maxSamples = 1;
+
   function onRemove(evt) {
     var row = evt.row;
     // If the row is decorated with flot data, delete it
