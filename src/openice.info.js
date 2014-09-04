@@ -4,6 +4,7 @@ var prefs = require('./demopreferences.js');
 var io = require('socket.io-client');
 var moment = require('moment');
 var jsmpg = require('./jsmpg.js');
+var PartitionBox = require('./partition-box.js');
 
 var partition = [];
 
@@ -233,7 +234,7 @@ window.onload = function(e) {
   port = port == '' ? '' : (':'+port);
   // Pages served over https can only utilize wss protocol
   var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  var wsHost = window.location.protocol == 'file:' ? 'localhost:3000' : window.location.host;
+  var wsHost = window.location.protocol == 'file:' ? 'www.openice.info' : window.location.host;
   var baseURL = wsProtocol + wsHost;
 
   startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
@@ -388,10 +389,8 @@ window.onload = function(e) {
     }
   };
 
-
-
   var medicalDeviceData = document.getElementById('medicalDeviceData');
-  var partitionBox = document.getElementById('partitionBox');
+
   medicalDeviceData.onclick = function() {
     if(partitionBox.style.display=='none') {
       partitionBox.style.display='inline';
@@ -399,19 +398,31 @@ window.onload = function(e) {
       partitionBox.style.display='none';
     }
   };
-  document.getElementById('partitionForm').onsubmit = function() {
+  var partitionBox = document.getElementById('partitionBox');
+  PartitionBox(openICE, partitionBox, targetDomain);
+  var sampleArrayTable = null;
+  var numericTable = null;
 
-    partition = partitionBox.value.split(",");
-    openICE.destroyAllTables(true);
-    var sampleArrayTable = openICE.createTable({domain: targetDomain, partition: partition, topic:'SampleArray'});
-    var numericTable = openICE.createTable({domain: targetDomain, partition: partition, topic:'Numeric'});
+  function changePartition(partition) {
+    if(null != sampleArrayTable) {
+      openICE.destroyTable(sampleArrayTable);
+    }
+    if(null != numericTable) {
+      openICE.destroyTable(numericTable);
+    }
+    sampleArrayTable = openICE.createTable({domain: targetDomain, 'partition': partition, topic:'SampleArray'});
+    numericTable = openICE.createTable({domain: targetDomain, 'partition': partition, topic:'Numeric'});
     sampleArrayTable.on('afterremove', onRemove);
     numericTable.on('sample', onNumericSample);
     sampleArrayTable.on('sample', onSampleArraySample);
-    return false;
+  }
+
+  partitionBox.onchange = function(e) {
+    changePartition([partitionBox.options[partitionBox.selectedIndex].value]);
   };
-  document.getElementById('partitionForm').onsubmit();
   
+  changePartition([""]);
+
   openICE.on('open', function(e) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);

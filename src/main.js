@@ -1,6 +1,7 @@
 var OpenICE = require('./openice.js');
 var VitalSigns = require('./vitals.js');
 var VitalMonitor = require('./vital-monitor.js');
+var PartitionBox = require('./partition-box.js');
 
 var DOMAINID = 15;
 
@@ -13,52 +14,8 @@ window.onload = function(e) {
   	var wsHost = window.location.protocol == 'file:' ? 'openice.info' : window.location.host;
   	var baseURL = wsProtocol + wsHost;
 	var openICE = new OpenICE(baseURL);
-	var rebuildSelect = function(e) {
-		var table = e.table, row = e.row;
-		var names = {};
-		var select = document.getElementById('partition');
-		while(select.options.length>0) {
-			select.remove(0);
-		}
-		var rowKeys = Object.keys(table.rows);
-		for(var i = 0; i < rowKeys.length; i++) {
-			var row = table.rows[rowKeys[i]];
-			var name = row.samples[row.samples.length-1].data.partition.name;
-			if(typeof name === 'undefined' || null == name || name.length==0) {
-				names["<default>"] = "";
-			} else {
-				for(var j = 0; j < name.length; j++) {
-					if(name[j]=="") {
-						names["<default>"] = "";
-					} else {
-						names[name[j]] = name[j];
-					}
-				}
-			}
-		}
-		delete names["<default>"];
-		var partKeys = Object.keys(names);
-		var opt = document.createElement("option");
-		opt.text = "<default>";
-		opt.value = "";
-		select.add(opt);
-		
 
-		for(var i = 0; i < partKeys.length; i++) {
-			var opt = document.createElement("option");
-			opt.text = partKeys[i];
-			opt.value = names[partKeys[i]];
-			select.add(opt);
-		}		
-	};
-
-	var publicationsTable = openICE.createTable({domain:DOMAINID, partition:[], topic:'DCPSPublication'});
-	publicationsTable.on('sample', function(e) {
-		rebuildSelect(e);
-	});
-	publicationsTable.on('afterremove', function(e) {
-		rebuildSelect(e);
-	});
+	PartitionBox(openICE, document.getElementById('partition'), DOMAINID);
 
 	vitalSigns = new VitalSigns(openICE, DOMAINID, [], 'Numeric');
 	vitalSigns.addVital({label:'Heart Rate', units:'bpm', metricIds:['MDC_PULS_OXIM_PULS_RATE','MDC_ECG_HEART_RATE'],
