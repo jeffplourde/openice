@@ -1,6 +1,7 @@
 var plotColors = {
 	"MDC_PRESS_AWAY": "#00FFFF",
 	"MDC_PRESS_BLD": "#FF0000",
+	"MDC_PRESS_BLD_ART_ABP": "#FF0000",
 	"MDC_CONC_AWAY_CO2_ET": "#FF00FF",
 	"MDC_ECG_LEAD_I": "#00FF00",
 	"MDC_ECG_LEAD_II": "#00FF00",
@@ -35,6 +36,7 @@ var commonNames = {
 var flotNames = {
 	"MDC_PRESS_AWAY": "vent-PEEP",
 	"MDC_PRESS_BLD": "monitor-press",
+	"MDC_PRESS_BLD_ART_ABP": "monitor-press",
 	"MDC_CONC_AWAY_CO2_ET": "monitor",
 	"MDC_ECG_LEAD_I": "monitor-HR",
 	"MDC_ECG_LEAD_II": "monitor-HR",
