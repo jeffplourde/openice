@@ -348,29 +348,38 @@ dt, dd {
 	margin: 0px;
 	padding: 0px;
 }
-#landing-jumbotron h1 {
+#landing-title {
 	text-align: center;
-	margin-bottom: 5px;
-}
-#landing-jumbotron h2 {
-	text-align: center;
-	color: #777;
-	margin-top: 0px;
 	margin-bottom: 50px;
 }
+#landing-title h1 {
+	margin-bottom: 5px;
+}
+#landing-title h2 {
+	color: #777;
+	margin-top: 0px;
+}
+#landing-title p {
+	font-size: 1.25em;
+	color: #333;
+}
+#landing-title span {
+	font-size: 2.5em;
+	margin-top: 35px;
+}
 @media (max-width: 1000px) {
-	#landing-jumbotron h1 {
+	#landing-title h1 {
 		font-size: 35px;
 	}
-	#landing-jumbotron h2 {
+	#landing-title h2 {
 		font-size: 25px;
 	}
 }
 @media (min-width: 1000px) {
-	#landing-jumbotron h1 {
+	#landing-title h1 {
 		font-size: 75px;
 	}
-	#landing-jumbotron h2 {
+	#landing-title h2 {
 		font-size: 35px;
 	}
 }
@@ -380,17 +389,34 @@ dt, dd {
 
 #landing-link-container {
 	max-width: 1400px;
+	margin-bottom: 75px;
 }
-
 .landing-link {
 	padding: 5px;
 }
-
 .landing-link a {
 	display: inline-block;
 	color: #333;
+	text-decoration: none;
 }
-
+.landing-link h1 {
+	margin-top: 5px;
+}
+.landing-link img:hover {
+	opacity: 0.5;
+}
+#landing-info {
+	margin-bottom: 100px;
+}
+#landing-info h1 {
+	text-align: center;
+	font-weight: 300;
+}
+#landing-info h3 {
+	text-align: center;
+	font-weight: 300;
+	margin-top: 50px;
+}
 
 @-webkit-keyframes fadeIn {
   0% { opacity: 0; }
@@ -400,7 +426,6 @@ dt, dd {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-
 .fadeIn {
   animation: fadeIn 2s;
   -webkit-animation: fadeIn 2s;
