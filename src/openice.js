@@ -137,7 +137,7 @@ Row.prototype.addSample = function(data) {
 		self.emit('expire', {'row':self, 'sample':sample});
 	});
 	this.samples.push(sample);
-	while(this.samples.length>=this.table.openICE.maxSamples) {
+	while(this.samples.length>this.table.openICE.maxSamples) {
 		this.samples.shift().expire();
 	}
 	/**
