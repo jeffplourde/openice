@@ -389,7 +389,8 @@ VitalSigns.prototype.setTable = function(numericsTable) {
 }
 
 
-VitalSigns.prototype.onSample = function(table, row, sample) {
+VitalSigns.prototype.onSample = function(e) {
+	var table = e.table, row = e.row, sample = e.sample;
 	for(var i = 0; i < this.vitals.length; i++) {
 		var v = this.vitals[i];
         if (v != null) {
@@ -417,10 +418,12 @@ VitalSigns.prototype.onSample = function(table, row, sample) {
         }
     }
 };
-VitalSigns.prototype.onInsert = function(table, row) {
+VitalSigns.prototype.onInsert = function(e) {
+	var table = e.table, row = e.row;
 
 };
-VitalSigns.prototype.onRemove = function(table, row) {
+VitalSigns.prototype.onRemove = function(e) {
+	var table = e.table, row = e.row;
 	for(var i = 0; i < this.vitals.length; i++) {
 		var updated = false;
 		var v = this.vitals[i];

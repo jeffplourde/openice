@@ -10,10 +10,11 @@ window.onload = function(e) {
   	port = port == '' ? '' : (':'+port);
   	// Pages served over https can only utilize wss protocol
   	var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  	var wsHost = window.location.protocol == 'file:' ? 'localhost:3000' : window.location.host;
+  	var wsHost = window.location.protocol == 'file:' ? 'openice.info' : window.location.host;
   	var baseURL = wsProtocol + wsHost;
 	var openICE = new OpenICE(baseURL);
-	var rebuildSelect = function(openICE, table, row) {
+	var rebuildSelect = function(e) {
+		var table = e.table, row = e.row;
 		var names = {};
 		var select = document.getElementById('partition');
 		while(select.options.length>0) {
@@ -52,11 +53,11 @@ window.onload = function(e) {
 	};
 
 	var publicationsTable = openICE.createTable({domain:DOMAINID, partition:[], topic:'DCPSPublication'});
-	publicationsTable.on('sample', function(table, row, sample) {
-		rebuildSelect(openICE, table, row);
+	publicationsTable.on('sample', function(e) {
+		rebuildSelect(e);
 	});
-	publicationsTable.on('afterremove', function(table, row) {
-		rebuildSelect(openICE, table, row);
+	publicationsTable.on('afterremove', function(e) {
+		rebuildSelect(e);
 	});
 
 	vitalSigns = new VitalSigns(openICE, DOMAINID, [], 'Numeric');

@@ -26,75 +26,173 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
-  @overview
+  @overview A JavaScript library for remote communication with the OpenICE system.
   @author Jeff Plourde &lt;jeff@mdpnp.org>
   @License BSD 2-Clause License
 */
 
+"use strict";
+
+var io = require('socket.io-client');
+
+var Emitter = require('component-emitter');
+ 
+module.exports = exports = OpenICE;
+
+Emitter(OpenICE.prototype);
+Emitter(Table.prototype);
+Emitter(Row.prototype);
+Emitter(Sample.prototype);
+
 /** 
  * Calculates a string identifier for a table.
  * @param {object} data - Object containing domain, partition and topic attributes
+ * @access private
  */
 function calcTableKey(data) {
 	// Use blank for null partition
-	data.partition = null == data.partition ? "" : data.partition;
-	// TODO partition is now an array this is probably broken
+	data.partition = 'undefined'==typeof data.partition || null == data.partition ? "" : data.partition;
 	return data.domain + '-' + data.partition + '-' + data.topic;
 }
 
 /**
  * Represents a data sample at a point in time.
  * @constructor
+ * @access protected 
  * @param {Row} row - The parent row for this data sample.
  * @param {object} msg - The message containing details for this sample including sourceTimestamp, receptionTimestamp, and sample.
  */
 function Sample(row,msg) {
-	/** @property {Row} row - The parent row. */
+	/** 
+	 * @public
+	 * @property {Row} row - The parent row. 
+	 */
 	this.row = row;
 	
-	/** @property {Time_t} sourceTimestamp - Timestamp at the data source. */
+	/** 
+	 * @public 
+	 * @property {Date} sourceTimestamp - Timestamp at the data source. 
+	 */
 	this.sourceTimestamp = msg.sourceTimestamp;
-	/** @property {Time_t} receptionTimestamp - Timestamp when the sample was received by the OpenICE server. */
-	this.receptionTimestamp = msg.receptionTimestamp;
-	/** @property {object} data - The sample data itself. */
-	this.data = msg.sample;
 
-	this.toString = function() {
-		return "@"+new Date(this.sourceTimestamp)+ " " + JSON.stringify(this.data);
-	};
+	/** 
+	 * @public 
+	 * @property {object} data - The sample data itself. 
+	 */
+	this.data = msg.sample;
 }
+
+/**
+ * @access public
+ */
+Sample.prototype.toString = function() {
+	return "@"+new Date(this.sourceTimestamp)+ " " + JSON.stringify(this.data);
+}
+
+/**
+ * @access private
+ * @fires Sample#expire
+ */
+Sample.prototype.expire = function() {
+	/**
+	 * Fired when a sample is removed from the row by expiration policy.
+	 * @event Sample#Sample:expire
+	 * @type {object}
+	 * @property {Sample} sample - The expired sample
+	 */
+	this.emit('expire', {'sample': this});
+	this.off();
+};
 
 /**
  * Represents a data row for a unique instance of table data.
  * @constructor
+ * @access protected
  * @param {Table} table - The parent table for this row.
  * @param {string} rowId - Unique identifier for this row.
  */
 function Row(table, rowId) {
-	this.type = 'Row';
-	/** @property {Table} table - The parent table containing this row. */
+	/** 
+	 * @access public
+	 * @property {Table} table - The parent table containing this row. 
+	 */
 	this.table = table;
-	/** @property {string} rowId - Unique identifier for this row. */
+
+	/** 
+	 * @access public
+	 * @property {string} rowId - Unique identifier for this row. 
+	 */
 	this.rowId = rowId;
-	/** @property {string[]} keyValues - Invariant values (constitute the primary key) for this row. */
+
+	/**
+	 * @access public 
+	 * @property {string[]} keyValues - Invariant values (constitute the primary key) for this row. 
+	 */
 	this.keyValues = {};
-	/** @property {Sample[]} samples - Collection of data samples for this row. */
+
+	/** 
+	 * @access public
+	 * @property {Sample[]} samples - Collection of data samples for this row. 
+	 */
 	this.samples = [];
-	this.toString = function() {
-		return this.table+" "+this.rowId+" "+JSON.stringify(this.keyValues)+" "+this.samples.length;
-	};
 }
+
+/**
+ * @access public
+ */
+Row.prototype.toString = function() {
+	return this.table+" "+this.rowId+" "+JSON.stringify(this.keyValues)+" "+this.samples.length;
+}
+
+/**
+ * Add a sample to the row
+ * @access private
+ * @param {object} data - data containing sample information
+ * @fires Row#expire
+ */
+Row.prototype.addSample = function(data) {
+	var sample = new Sample(this, data);
+	var self = this;
+	sample.on('expire', function(evt) {
+		/**
+	 	 * Fired when a sample is removed from the row by expiration policy.
+	     * @event Row#Row:expire
+	     * @type {object}
+	     * @property {Row} row - The Row previously containing the Sample
+	     * @property {Sample} sample - The expired Sample
+	     */
+		self.emit('expire', {'row':self, 'sample':sample});
+	});
+	this.samples.push(sample);
+	while(this.samples.length>=this.table.openICE.maxSamples) {
+		this.samples.shift().expire();
+	}
+	/**
+	 * Fired when a sample is added to the row
+	 * @event Row#Row:sample
+	 * @type {object}
+	 * @property {Row} row - The Row containing the new sample
+	 * @property {Sample} sample - The newly added Sample
+	 */
+	this.emit('sample', {'row':this, 'sample':sample});
+};
+
+Row.prototype.removeAllSamples = function() {
+	while(this.samples.length>0) {
+		this.samples.shift().expire();
+	}
+};
 
 /**
  * Represents a data table.
  * @constructor
+ * @access protected
  * @param {OpenICE} openICE - The parent OpenICE connection.
  * @param {int} domain - The domain containing the table.
  * @param {string[]} partition - The partition containing the table.
  * @param {string} topic - The topic identifier for the table.
  */
 function Table(openICE, domain, partition, topic) {
-	this.type = 'Table';
 	/** @property {OpenICE} openICE - The parent OpenICE instances. */
 	this.openICE = openICE;
 	/** @property {int} domain - The domain containing this table. */
@@ -105,279 +203,404 @@ function Table(openICE, domain, partition, topic) {
 	this.topic = topic;
 	/** @property {object} rows - Rows stored by row identifier. */
 	this.rows = {};
-	this.toString = function() {
-		return this.domain+" "+this.partition+" "+this.topic+" "+this.schema;
-	};
-	
-	/**
-	 * Returns rows with matching values for the specified key fields.
-	 * @public
-	 * @param {object} keys - Key values to match.
-	 */
-	this.getRows = function(keys) {
-		var matchingRows = [];
-		for (rowKey in this.rows) {
-	        if (this.rows.hasOwnProperty(rowKey)) {
-	        	var row = this.rows[rowKey];
-	        	// does this row match the incoming filter?
-	        	var match = true;
-	        	for(key in keys) {
-	        		if(keys.hasOwnProperty(key)) {
-	        			if(keys[key] != row.keyValues[key]) {
-	        				match = false;
-	        			}
-	        		}
-	        	}
-	        	if(match) {
-	        		matchingRows.push(row);
-	        	}
-	        }
-		}
-		return (matchingRows);
-	}
 }
+
+Table.prototype.setSchema = function(schema) {
+	this.schema = schema;
+	/**
+	 * A schema has been (re)assigned to the table
+	 * @event Table#Table:schema 
+	 * @type {object}
+	 * @property {Table} table - The table 
+	 * @property {object} schema - The schema
+	 */	
+	this.emit('schema', {'table':this, 'schema':schema});
+};
+
+Table.prototype.addRow = function(data) {
+	var row = this.rows[data.identifier];
+	if (null == row) {
+		row = new Row(this, data.identifier);
+		var self = this;
+		row.on('sample', function(e) {
+			/**
+			 * A Sample is added to a Row of the table
+			 * @event Table#Table:sample 
+			 * @type {object}
+			 * @property {Table} table - The table 
+			 * @property {Row} row - The row
+			 * @property {Sample} sample - The new sample
+			 */
+			self.emit('sample', {'table':self, 'row':e.row, 'sample':e.sample});
+		});
+	}
+	row.keyValues = data.sample;
+	/**
+	 * A new row is about to be added to the table
+	 * @event Table#Table:beforeadd
+	 * @type {object}
+	 * @property {Table} table - The table
+	 * @property {Row} row - The new row
+	 */
+	this.emit('beforeadd', {'table':this, 'row':row});
+	this.rows[data.identifier] = row;
+	/**
+	 * A new row was just added to the table
+	 * @event Table#Table:afteradd
+	 * @type {object}
+	 * @property {Table} table - The table
+	 * @property {Row} row - The new row
+	 */
+	this.emit('afteradd', {'table': this, 'row':row});
+};
+
+Table.prototype.removeRow = function(data) {
+	var row = this.rows[data.identifier];
+	if (null != row) {
+		/**
+		 * A row is about to be removed from the table
+		 * @event Table#Table:beforeremove
+		 * @type {object}
+		 * @property {Table} table - The table
+		 * @property {Row} row - The row about to be removed
+		 */
+		this.emit('beforeremove', {'table':this, 'row':row});
+		this.rows[data.identifier].off();
+		this.rows[data.identifier].removeAllSamples();
+		delete this.rows[data.identifier];
+		/**
+		 * A row has been removed from the table
+		 * @event Table#Table:afterremove
+		 * @type {object}
+		 * @property {Table} table - The table
+		 * @property {Row} row - The removed row
+		 */
+		this.emit('afterremove', {'table':this, 'row':row});
+	}
+};
+
+Table.prototype.removeAllRows = function() {
+	var keys = Object.keys(this.rows);
+	for(var i = 0; i &lt; keys.length; i++) {
+		var rowKey = keys[i];
+    	this.removeRow({identifier:rowKey});
+	}
+};
+
+Table.prototype.toString = function() {
+	return this.domain+" "+this.partition+" "+this.topic+" "+this.schema;
+};
+
+/**
+ * Returns rows with matching values for the specified key fields.
+ * @public
+ * @param {object} keys - Key values to match.
+ */
+Table.prototype.getRows = function(keys) {
+	var matchingRows = [];
+	for (rowKey in this.rows) {
+        if (this.rows.hasOwnProperty(rowKey)) {
+        	var row = this.rows[rowKey];
+        	// does this row match the incoming filter?
+        	var match = true;
+        	for(key in keys) {
+        		if(keys.hasOwnProperty(key)) {
+        			if(keys[key] != row.keyValues[key]) {
+        				match = false;
+        			}
+        		}
+        	}
+        	if(match) {
+        		matchingRows.push(row);
+        	}
+        }
+	}
+	return (matchingRows);
+};
 
 /**
  * Represents a connection back to the OpenICE system.
  * @constructor
+ * @access public
  * @param {string} url - The URL to connect to the OpenICE system.
  */
 function OpenICE(url) {
-	this.type = 'OpenICE';
-	this.connection = null;
-	/** @property {object} tables - Tables hashed by table key string. */
-	this.tables = {};
 	/** @property {string} url - The URL of the remote OpenICE server. */
 	this.url = url;
+
+	this.connection = new io(this.url);
+
+	/** @property {object} tables - Tables hashed by table key string. */
+	this.tables = {};
+	
 	/** @property {int} maxSamples - Max samples preserved for each row. */
 	this.maxSamples = 100;
-	
-	this.toString = function() {
-		return this.url;
-	};
 
-	/**
-	 * Opens a WebSocket connection to the OpenICE server.
-	 * @public
-	 *
-	 */
-	this.open = function() {
-		this.connection = new WebSocket(this.url);
-		this.connection.openICE = this;
-		this.connection.onmessage = function(e) {
-			var data = JSON.parse(e.data);
+	this.connected = false;
 
-			// Find the appropriate reader
-			var tableKey = calcTableKey(data);
+	var self = this;
 
-			var table = this.openICE.tables[tableKey];
-			if (null == table) {
-				console.log("Nonfatal unknown Table (tableKey="+tableKey+")");
+	this.connection.on('dds', function(data) {
+		// Find the appropriate reader
+		var tableKey = calcTableKey(data);
+
+		var table = self.tables[tableKey];
+		if (null == table) {
+			console.log("Nonfatal unknown Table (tableKey="+tableKey+")");
+			return;
+		}
+
+		if ("Schema" == data.messageType) {
+			table.setSchema(data.sample);
+		} else if ("Add" == data.messageType) {
+			table.addRow(data);
+		} else if ("Remove" == data.messageType) {
+			table.removeRow(data);
+		} else if ("Sample" == data.messageType) {
+			var row = table.rows[data.identifier];
+			if (null == row) {
+				console.log("No such row for sample");
 				return;
 			}
-
-			if ("Schema" == data.messageType) {
-				table.schema = data.sample;
-				this.openICE.onschema(this.openICE, table);
-			} else if ("Add" == data.messageType) {
-				var row = table.rows[data.identifier];
-				if (null == row) {
-					row = new Row(table, data.identifier);
-				}
-				row.keyValues = data.sample;
-				this.openICE.onbeforeadd(this.openICE, table, row);
-				table.rows[data.identifier] = row;
-				this.openICE.onafteradd(this.openICE, table, row);
-			} else if ("Remove" == data.messageType) {
-				var row = table.rows[data.identifier];
-				if (null != row) {
-					this.openICE.onbeforeremove(this.openICE, table, row);
-					delete table.rows[data.identifier];
-					this.openICE.onafterremove(this.openICE, table, row);
-				}
-			} else if ("Sample" == data.messageType) {
-				var row = table.rows[data.identifier];
-				if (null == row) {
-					console.log("No such row for sample");
-					return;
-				}
-				var sample = new Sample(row, data);
-				row.samples.push(sample);
-				while(row.samples.length>=this.openICE.maxSamples) {
-					this.openICE.onexpire(this.openICE, table, row, row.samples.shift());
-				}
-				this.openICE.onsample(this.openICE, table, row, sample);
-			} else {
-				console.log("Unknown message:" + e.data);
-			}
-		};
-		this.connection.onopen = function(e) {
-			console.log("Connection opened");
-		};
-		this.connection.onerror = function(e) {
-			console.log("Connection error");
-		};
-		this.connection.onclose = function(e) {
-			console.log("Connection closed");
-		};
-	};
-	
-	/**
-	 * Retrieves a table by identifying information.
-	 * If the table does not exist it is NOT created.
-	 * @public
-	 * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
-	 */
-	this.getTable = function(args) {
-	    var tableKey = calcTableKey(args);
-	    return this.tables[tableKey];
-	}
-
-	/**
-	 * Creates a table with identifying information (or returns existing table if already created)
-	 * and requests table information from the server.
-	 * @public
-	 * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
-	 */
-	this.createTable = function(args) {
-		var message = new Object();
-		message.messageType = "Subscribe";
-		message.domain = args.domain;
-		message.topic = args.topic;
-		message.partition = args.partition;
-		//console.log('create '+args.domain+" "+args.topic+" "+args.partition);
-		var tableKey = calcTableKey(message);
-		var table = this.tables[tableKey];
-		if (null == table) {
-			table = new Table(this, args.domain, args.partition, args.topic);
-			this.tables[tableKey] = table;
-			this.onaddtable(this, table);
-			this.connection.send(JSON.stringify(message));
+			row.addSample(data);
+		} else {
+			console.log("Unknown message:" + e.data);
 		}
-		return table;
-	};
-	
-	/**
-	 * Destroys a table with identifying information (or no op if it does not exist)
-	 * and requests that the server stop sending information about the table.
-	 * @public
-	 * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
-	 */
-	this.destroyTable = function(args) {
-		var message = new Object();
-		message.messageType = "Unsubscribe";
-		message.domain = args.domain;
-		message.topic = args.topic;
-		message.partition = args.partition;
-		//console.log('destroy '+args.domain+" "+args.topic+" "+args.partition);
-		this.connection.send(JSON.stringify(message));
-		
-		var tableKey = calcTableKey(message);
-		var table = this.tables[tableKey];
-		if (null != table) {
-			for (rowKey in table.rows) {
-		        if (table.rows.hasOwnProperty(rowKey)) {
-//			Object.keys(table.rows).forEach(function(rowKey) {
-		        	var row = table.rows[rowKey];
-					this.onbeforeremove(this, table, row);
-					delete table.rows[rowKey];
-					this.onafterremove(this, table, row);
-		        }
-			}
-			delete this.tables[tableKey];
+	});
+	this.connection.on('connect', function() {
+		/**
+		 * The connection has been (re)opened
+		 * @event OpenICE#OpenICE:open
+		 * @type {object}
+		 * @property {OpenICE} openICE
+		 */
+		self.emit('open', {'openICE':self});
+		self.unsubscribeAll();
+		self.subscribeAllTables();
+		self.connected = true;
+	});
+	this.connection.on('reconnect', function(attemptNumber) {
+		self.emit('open', {'openICE':self});
+		self.unsubscribeAll();
+		self.subscribeAllTables();
+		self.connected = true;
+	});
+	this.connection.on('reconnect_attempt', function() {
+	});
+	this.connection.on('reconnecting', function(attemptNumber) {
+	});
+	this.connection.on('reconnect_error', function(err) {
+	});
+	this.connection.on('reconnect_failed', function() {
+	});
+	this.connection.on('error', function(err) {
+		/**
+		 * An error has occurred
+		 * @event OpenICE#OpenICE:error
+		 * @type {object}
+		 * @property {OpenICE} openICE - The OpenICE object
+		 * @property {object} err - Further information about the error
+		 */		
+		self.emit('error', {'openICE':self, 'err':err});
+		self.removeAllRows();
+		self.connected = false;
+	});
+	this.connection.on('disconnect', function() {
+		/**
+		 * The connection has been closed
+		 * @event OpenICE#OpenICE:close
+		 * @type {object}
+		 * @property {OpenICE} openICE
+		 */		
+		self.emit('close', {'openICE':self});
+		self.removeAllRows();
+		self.connected = false;
+	});
+};
+
+OpenICE.prototype.toString = function() {
+	return this.url;
+};
+
+/**
+ * Retrieves a table by identifying information.
+ * If the table does not exist it is NOT created.
+ * @public
+ * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
+ */
+OpenICE.prototype.getTable = function(args) {
+    var tableKey = calcTableKey(args);
+    return this.tables[tableKey];	
+};
+
+/**
+ * Creates a table with identifying information (or returns existing table if already created)
+ * and requests table information from the server.
+ * @public
+ * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
+ * @returns {Table} 
+ */
+OpenICE.prototype.createTable = function(args) {
+	var tableKey = calcTableKey(args);
+	var table = this.tables[tableKey];
+	if (null == table) {
+		table = new Table(this, args.domain, args.partition, args.topic);
+		var self = this;
+		table.on('sample', function(evt) {
+			/**
+			 * A new sample has been added to a row of a table
+			 * @event OpenICE#OpenICE:sample
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} row - The row
+			 * @property {Sample} sample - The new sample
+			 */							
+			self.emit('sample', {'openICE':self, 'table':evt.table, 'row':evt.row, 'sample':evt.sample});
+		});
+		table.on('schema', function(evt) {
+			/**
+			 * A schema has been (re)assigned to a table
+			 * @event OpenICE#OpenICE:schema
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {object} schema - The new schema
+			 */							
+			self.emit('schema', {'openICE':self, 'table':evt.table, 'schema':evt.schema});
+		});
+		table.on('beforeremove', function(evt) {
+			/**
+			 * A row will be removed from a table
+			 * @event OpenICE#OpenICE:beforeremove
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The row to be removed
+			 */							
+			self.emit('beforeremove', {'openICE':self, 'table':evt.table, 'row':evt.row});
+		});
+		table.on('afterremove', function(evt) {
+			/**
+			 * A row has been removed from a table
+			 * @event OpenICE#OpenICE:afterremove
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The removed row
+			 */							
+			self.emit('afterremove', {'openICE':self, 'table':evt.table, 'row':evt.row});
+		});
+		table.on('beforeadd', function(evt) {
+			/**
+			 * A row will be added to a table
+			 * @event OpenICE#OpenICE:beforeadd
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The row to be added
+			 */							
+			self.emit('beforeadd', {'openICE':self, 'table':evt.table, 'row':evt.row});
+		});
+		table.on('afteradd', function(evt) {
+			/**
+			 * A row has been added to a table
+			 * @event OpenICE#OpenICE:beforeadd
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The added row
+			 */										
+			self.emit('afteradd', {'openICE':self, 'table':evt.table, 'row':evt.row});
+		});
+		this.tables[tableKey] = table;
+		/**
+		 * A table has been added
+		 * @event OpenICE#OpenICE:addtable
+		 * @type {object}
+		 * @property {OpenICE} openICE - The OpenICE object
+		 * @property {Table} table - The added table
+		 */		
+		this.emit('addtable', {'openICE':this, 'table':table});
+		if(this.connected) {
+			this.subscribe(table);
 		}
-		this.onremovetable(this, table);
-		return table;
 	}
+	return table;
+};
 
-	/**
-	 * Close the connection to the remote server.
-	 * @public
-	 */
-	this.close = function() {
-		this.connection.close();
-	};
+OpenICE.prototype.subscribe = function(table) {
+	var message = {messageType:'Subscribe',domain:table.domain,partition:table.partition,topic:table.topic};
+	this.connection.emit('dds', message);
+};
 
-	/**
-	 * Called when a schema definition arrives.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table for which a schema has arrived.
-	 */
-	this.onschema = function(openICE, table) {
-	};
+OpenICE.prototype.destroyAllTables = function() {
+	var keys = Object.keys(this.tables);
+	for(var i = 0; i &lt; keys.length; i++) {
+		var tableKey = keys[i];
+		var table = this.tables[tableKey];
+		this.destroyTable(table);
+	}
+};
 
-	/**
-	 * Called before a row is added to a table.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table for which a row will be added.
-	 * @param {Row} row - The row that will be added.
-	 */	
-	this.onbeforeadd = function(openICE, table, row) {
-	};
+OpenICE.prototype.removeAllRows = function() {
+	var keys = Object.keys(this.tables);
+	for(var i = 0; i &lt; keys.length; i++) {
+		var tableKey = keys[i];
+		var table = this.tables[tableKey];
+		table.removeAllRows();
+	}
+};
 
-	/**
-	 * Called after a row is added to a table.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table to which a row has been added.
-	 * @param {Row} row - The row that was added.
-	 */	
-	this.onafteradd = function(openICE, table, row) {
-	};
+OpenICE.prototype.subscribeAllTables = function() {
+	var keys = Object.keys(this.tables);
+	for(var i = 0; i &lt; keys.length; i++) {
+		var tableKey = keys[i];
+		var table = this.tables[tableKey];
+		this.subscribe(table);
+	}
+};
 
-	/**
-	 * Called before a row is removed from a table.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table for which a row will be removed.
-	 * @param {Row} row - The row that will be removed.
-	 */	
-	this.onbeforeremove = function(openICE, table, row) {
-	};
+OpenICE.prototype.unsubscribeAll = function() {
+	this.connection.emit('dds', {messageType:'UnsubscribeAll'});
+};
 
-	/**
-	 * Called after a row has been removed from a table.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table from which a row has been removed.
-	 * @param {Row} row - The row that was removed.
-	 */	
-	this.onafterremove = function(openICE, table, row) {
-	};
+/**
+ * Destroys a table with identifying information (or no op if it does not exist)
+ * and requests that the server stop sending information about the table.
+ * @public
+ * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
+ */
+OpenICE.prototype.destroyTable = function(args) {
+	var tableKey = calcTableKey(args);
+	var table = this.tables[tableKey]; 
+	if (null != table) {
+		if(this.connected) {
+			this.unsubscribe(table);
+		}
+		table.removeAllRows();
+		delete this.tables[tableKey];
+		/**
+		 * A table has been removed
+		 * @event OpenICE#OpenICE:removetable
+		 * @type {object}
+		 * @property {OpenICE} openICE - The OpenICE object
+		 * @property {Table} table - The removed table
+		 */		
+		this.emit('removetable', {'openICE':this, 'table':table});
 
-	/**
-	 * Called when a new data sample has arrived for a row.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The relevant table.
-	 * @param {Row} row - The row to which a sample has been added.
-	 * @param {Sample} sample - New sample that has been added.
-	 */	
-	this.onsample = function(openICE, table, row, sample) {
-	};
+	}
+	return table;
+};
 
-	/**
-	 * Called when a data sample expires and is removed from the cache.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table for which a schema has arrived.
-	 * @param {Row} row - The row for which a data sample has expired.
-	 * @param {Sample} sample - The data sample that has been removed by expiration policy.
-	 */	
-	this.onexpire = function(openICE, table, row, sample) {
-	};
+OpenICE.prototype.unsubscribe = function(table) {
+	var message = {messageType:'Unsubscribe', domain:table.domain, partition:table.partition, topic: table.topic};
+	this.connection.emit('dds', message);
+};
 
-	/**
-	 * Called when a table is added.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table that has been added.
-	 */	
-	this.onaddtable = function(openICE, table) {
-	};
-
-	/**
-	 * Called when a table is removed.
-	 * @param {OpenICE} openICE - The containing OpenICE object.
-	 * @param {Table} table - The table that has been removed.
-	 */	
-	this.onremovetable = function(openICE, table) {
-	};
-}
+OpenICE.prototype.close = function() {
+	this.connection.disconnect();
+};
 
 </code></pre>
         </article>
@@ -389,13 +612,13 @@ function OpenICE(url) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="OpenICE.html">OpenICE</a></li><li><a href="Row.html">Row</a></li><li><a href="Sample.html">Sample</a></li><li><a href="Table.html">Table</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calcTableKey">calcTableKey</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="OpenICE.html">OpenICE</a></li><li><a href="Row.html">Row</a></li><li><a href="Sample.html">Sample</a></li><li><a href="Table.html">Table</a></li></ul><h3>Events</h3><ul><li><a href="OpenICE.html#event:OpenICE:addtable">OpenICE:addtable</a></li><li><a href="OpenICE.html#event:OpenICE:afterremove">OpenICE:afterremove</a></li><li><a href="OpenICE.html#event:OpenICE:beforeadd">OpenICE:beforeadd</a></li><li><a href="OpenICE.html#event:OpenICE:beforeremove">OpenICE:beforeremove</a></li><li><a href="OpenICE.html#event:OpenICE:close">OpenICE:close</a></li><li><a href="OpenICE.html#event:OpenICE:error">OpenICE:error</a></li><li><a href="OpenICE.html#event:OpenICE:open">OpenICE:open</a></li><li><a href="OpenICE.html#event:OpenICE:removetable">OpenICE:removetable</a></li><li><a href="OpenICE.html#event:OpenICE:sample">OpenICE:sample</a></li><li><a href="OpenICE.html#event:OpenICE:schema">OpenICE:schema</a></li><li><a href="Row.html#event:Row:expire">Row:expire</a></li><li><a href="Row.html#event:Row:sample">Row:sample</a></li><li><a href="Sample.html#event:Sample:expire">Sample:expire</a></li><li><a href="Table.html#event:Table:afteradd">Table:afteradd</a></li><li><a href="Table.html#event:Table:afterremove">Table:afterremove</a></li><li><a href="Table.html#event:Table:beforeadd">Table:beforeadd</a></li><li><a href="Table.html#event:Table:beforeremove">Table:beforeremove</a></li><li><a href="Table.html#event:Table:sample">Table:sample</a></li><li><a href="Table.html#event:Table:schema">Table:schema</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Tue Jun 03 2014 11:57:48 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Thu Sep 04 2014 09:48:55 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

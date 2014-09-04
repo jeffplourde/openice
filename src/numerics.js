@@ -4,7 +4,8 @@ var openICE = new OpenICE("http://www.openice.info");
 
 var partition = ["MDPNP|004"];
 
-openICE.on('sample', function(openICE, table, row, sample) {
+openICE.on('sample', function(e) {
+  var openICE = e.openICE, table = e.table, row = e.row, sample = e.sample;
 	var tr = document.getElementById(row.rowId);
 	if(typeof tr === 'undefined' || tr == null) {
 		tr = document.createElement("tr");
@@ -29,14 +30,16 @@ openICE.on('sample', function(openICE, table, row, sample) {
 	var td = document.getElementById(row.rowId+"value");
 	td.innerHTML = sample.data.value;
 });
-openICE.on('afterremove', function(openICE, table, row) {
+openICE.on('afterremove', function(e) {
+  var openICE = e.openICE, table = e.table, row = e.row;
 	var tr = document.getElementById(row.rowId);
 	if(typeof tr !== 'undefined' && tr != null) {
 		document.getElementById("numerics").removeChild(tr);
 	}
 });
 var currentTable;
-openICE.on('open', function(openICE) {
+openICE.on('open', function(e) {
+  var openICE = e.openICE;
 	currentTable = openICE.createTable({domain: 15, partition: partition, topic:'Numeric'});
 });
 function changePartition(str) {

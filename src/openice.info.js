@@ -241,7 +241,8 @@ window.onload = function(e) {
  
   openICE = new OpenICE(baseURL);
 
-  function onRemove(table, row) {
+  function onRemove(evt) {
+    var row = evt.row;
     // If the row is decorated with flot data, delete it
 
     if(row.flotData) {
@@ -266,13 +267,16 @@ window.onload = function(e) {
     }
   };
 
-  function onNumericSample(table, row, sample) {
-    var cssClass = row.keyValues.unique_device_identifier+"-"+row.keyValues.metric_id;
+  function onNumericSample(e) {
+    var cssClass = e.row.keyValues.unique_device_identifier+"-"+e.row.keyValues.metric_id;
     cssClass = cssClass.replace(cssIllegal, "_");
-    $('.'+cssClass).html(sample.data.value);
+    $('.'+cssClass).html(e.sample.data.value);
   }
 
-  function onSampleArraySample(table, row, sample) {
+  function onSampleArraySample(e) {
+    var table = e.table;
+    var row = e.row;
+    var sample = e.sample;
     // Track the observed range of values for the row through all time
     if(sample.data.values) {
       for(var i = 0; i < sample.data.values.length; i++) {

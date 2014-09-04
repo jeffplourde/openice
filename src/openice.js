@@ -1,5 +1,5 @@
 /**
-  @overview
+  @overview A JavaScript library for remote communication with the OpenICE system.
   @author Jeff Plourde <jeff@mdpnp.org>
   @License BSD 2-Clause License
 */
@@ -10,15 +10,17 @@ var io = require('socket.io-client');
 
 var Emitter = require('component-emitter');
  
-module.exports = OpenICE;
+module.exports = exports = OpenICE;
 
 Emitter(OpenICE.prototype);
 Emitter(Table.prototype);
 Emitter(Row.prototype);
 Emitter(Sample.prototype);
+
 /** 
  * Calculates a string identifier for a table.
  * @param {object} data - Object containing domain, partition and topic attributes
+ * @access private
  */
 function calcTableKey(data) {
 	// Use blank for null partition
@@ -29,62 +31,123 @@ function calcTableKey(data) {
 /**
  * Represents a data sample at a point in time.
  * @constructor
+ * @access protected 
  * @param {Row} row - The parent row for this data sample.
  * @param {object} msg - The message containing details for this sample including sourceTimestamp, receptionTimestamp, and sample.
  */
 function Sample(row,msg) {
-	/** @property {Row} row - The parent row. */
+	/** 
+	 * @public
+	 * @property {Row} row - The parent row. 
+	 */
 	this.row = row;
 	
-	/** @property {Time_t} sourceTimestamp - Timestamp at the data source. */
+	/** 
+	 * @public 
+	 * @property {Date} sourceTimestamp - Timestamp at the data source. 
+	 */
 	this.sourceTimestamp = msg.sourceTimestamp;
-	/** @property {Time_t} receptionTimestamp - Timestamp when the sample was received by the OpenICE server. */
-	this.receptionTimestamp = msg.receptionTimestamp;
-	/** @property {object} data - The sample data itself. */
+
+	/** 
+	 * @public 
+	 * @property {object} data - The sample data itself. 
+	 */
 	this.data = msg.sample;
 }
 
+/**
+ * @access public
+ */
 Sample.prototype.toString = function() {
 	return "@"+new Date(this.sourceTimestamp)+ " " + JSON.stringify(this.data);
 }
 
+/**
+ * @access private
+ * @fires Sample#expire
+ */
 Sample.prototype.expire = function() {
-	this.emit('expire', this);
+	/**
+	 * Fired when a sample is removed from the row by expiration policy.
+	 * @event Sample#Sample:expire
+	 * @type {object}
+	 * @property {Sample} sample - The expired sample
+	 */
+	this.emit('expire', {'sample': this});
 	this.off();
 };
 
 /**
  * Represents a data row for a unique instance of table data.
  * @constructor
+ * @access protected
  * @param {Table} table - The parent table for this row.
  * @param {string} rowId - Unique identifier for this row.
  */
 function Row(table, rowId) {
-	/** @property {Table} table - The parent table containing this row. */
+	/** 
+	 * @access public
+	 * @property {Table} table - The parent table containing this row. 
+	 */
 	this.table = table;
-	/** @property {string} rowId - Unique identifier for this row. */
+
+	/** 
+	 * @access public
+	 * @property {string} rowId - Unique identifier for this row. 
+	 */
 	this.rowId = rowId;
-	/** @property {string[]} keyValues - Invariant values (constitute the primary key) for this row. */
+
+	/**
+	 * @access public 
+	 * @property {string[]} keyValues - Invariant values (constitute the primary key) for this row. 
+	 */
 	this.keyValues = {};
-	/** @property {Sample[]} samples - Collection of data samples for this row. */
+
+	/** 
+	 * @access public
+	 * @property {Sample[]} samples - Collection of data samples for this row. 
+	 */
 	this.samples = [];
 }
 
+/**
+ * @access public
+ */
 Row.prototype.toString = function() {
 	return this.table+" "+this.rowId+" "+JSON.stringify(this.keyValues)+" "+this.samples.length;
 }
 
+/**
+ * Add a sample to the row
+ * @access private
+ * @param {object} data - data containing sample information
+ * @fires Row#expire
+ */
 Row.prototype.addSample = function(data) {
 	var sample = new Sample(this, data);
 	var self = this;
-	sample.on('expire', function(sample) {
-		self.emit('expire', self, sample);
+	sample.on('expire', function(evt) {
+		/**
+	 	 * Fired when a sample is removed from the row by expiration policy.
+	     * @event Row#Row:expire
+	     * @type {object}
+	     * @property {Row} row - The Row previously containing the Sample
+	     * @property {Sample} sample - The expired Sample
+	     */
+		self.emit('expire', {'row':self, 'sample':sample});
 	});
 	this.samples.push(sample);
 	while(this.samples.length>=this.table.openICE.maxSamples) {
 		this.samples.shift().expire();
 	}
-	this.emit('sample', this, sample);
+	/**
+	 * Fired when a sample is added to the row
+	 * @event Row#Row:sample
+	 * @type {object}
+	 * @property {Row} row - The Row containing the new sample
+	 * @property {Sample} sample - The newly added Sample
+	 */
+	this.emit('sample', {'row':this, 'sample':sample});
 };
 
 Row.prototype.removeAllSamples = function() {
@@ -96,6 +159,7 @@ Row.prototype.removeAllSamples = function() {
 /**
  * Represents a data table.
  * @constructor
+ * @access protected
  * @param {OpenICE} openICE - The parent OpenICE connection.
  * @param {int} domain - The domain containing the table.
  * @param {string[]} partition - The partition containing the table.
@@ -116,7 +180,14 @@ function Table(openICE, domain, partition, topic) {
 
 Table.prototype.setSchema = function(schema) {
 	this.schema = schema;
-	this.emit('schema', this, schema);
+	/**
+	 * A schema has been (re)assigned to the table
+	 * @event Table#Table:schema 
+	 * @type {object}
+	 * @property {Table} table - The table 
+	 * @property {object} schema - The schema
+	 */	
+	this.emit('schema', {'table':this, 'schema':schema});
 };
 
 Table.prototype.addRow = function(data) {
@@ -124,24 +195,60 @@ Table.prototype.addRow = function(data) {
 	if (null == row) {
 		row = new Row(this, data.identifier);
 		var self = this;
-		row.on('sample', function(row, sample) {
-			self.emit('sample', self, row, sample);
+		row.on('sample', function(e) {
+			/**
+			 * A Sample is added to a Row of the table
+			 * @event Table#Table:sample 
+			 * @type {object}
+			 * @property {Table} table - The table 
+			 * @property {Row} row - The row
+			 * @property {Sample} sample - The new sample
+			 */
+			self.emit('sample', {'table':self, 'row':e.row, 'sample':e.sample});
 		});
 	}
 	row.keyValues = data.sample;
-	this.emit('beforeadd', this, row);
+	/**
+	 * A new row is about to be added to the table
+	 * @event Table#Table:beforeadd
+	 * @type {object}
+	 * @property {Table} table - The table
+	 * @property {Row} row - The new row
+	 */
+	this.emit('beforeadd', {'table':this, 'row':row});
 	this.rows[data.identifier] = row;
-	this.emit('afteradd', this, row);
+	/**
+	 * A new row was just added to the table
+	 * @event Table#Table:afteradd
+	 * @type {object}
+	 * @property {Table} table - The table
+	 * @property {Row} row - The new row
+	 */
+	this.emit('afteradd', {'table': this, 'row':row});
 };
 
 Table.prototype.removeRow = function(data) {
 	var row = this.rows[data.identifier];
 	if (null != row) {
-		this.emit('beforeremove', this, row);
+		/**
+		 * A row is about to be removed from the table
+		 * @event Table#Table:beforeremove
+		 * @type {object}
+		 * @property {Table} table - The table
+		 * @property {Row} row - The row about to be removed
+		 */
+		this.emit('beforeremove', {'table':this, 'row':row});
 		this.rows[data.identifier].off();
 		this.rows[data.identifier].removeAllSamples();
 		delete this.rows[data.identifier];
-		this.emit('afterremove', this, row);
+		/**
+		 * A row has been removed from the table
+		 * @event Table#Table:afterremove
+		 * @type {object}
+		 * @property {Table} table - The table
+		 * @property {Row} row - The removed row
+		 */
+		this.emit('afterremove', {'table':this, 'row':row});
 	}
 };
 
@@ -187,6 +294,7 @@ Table.prototype.getRows = function(keys) {
 /**
  * Represents a connection back to the OpenICE system.
  * @constructor
+ * @access public
  * @param {string} url - The URL to connect to the OpenICE system.
  */
 function OpenICE(url) {
@@ -233,13 +341,19 @@ function OpenICE(url) {
 		}
 	});
 	this.connection.on('connect', function() {
-		self.emit('open', self);
+		/**
+		 * The connection has been (re)opened
+		 * @event OpenICE#OpenICE:open
+		 * @type {object}
+		 * @property {OpenICE} openICE
+		 */
+		self.emit('open', {'openICE':self});
 		self.unsubscribeAll();
 		self.subscribeAllTables();
 		self.connected = true;
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
-		self.emit('open', self);
+		self.emit('open', {'openICE':self});
 		self.unsubscribeAll();
 		self.subscribeAllTables();
 		self.connected = true;
@@ -253,12 +367,25 @@ function OpenICE(url) {
 	this.connection.on('reconnect_failed', function() {
 	});
 	this.connection.on('error', function(err) {
-		self.emit('error', self, err);
+		/**
+		 * An error has occurred
+		 * @event OpenICE#OpenICE:error
+		 * @type {object}
+		 * @property {OpenICE} openICE - The OpenICE object
+		 * @property {object} err - Further information about the error
+		 */		
+		self.emit('error', {'openICE':self, 'err':err});
 		self.removeAllRows();
 		self.connected = false;
 	});
 	this.connection.on('disconnect', function() {
-		self.emit('close', self);
+		/**
+		 * The connection has been closed
+		 * @event OpenICE#OpenICE:close
+		 * @type {object}
+		 * @property {OpenICE} openICE
+		 */		
+		self.emit('close', {'openICE':self});
 		self.removeAllRows();
 		self.connected = false;
 	});
@@ -284,6 +411,7 @@ OpenICE.prototype.getTable = function(args) {
  * and requests table information from the server.
  * @public
  * @param {object} args - Contains attributes domain, partition, and topic identifying the table.
+ * @returns {Table} 
  */
 OpenICE.prototype.createTable = function(args) {
 	var tableKey = calcTableKey(args);
@@ -291,26 +419,82 @@ OpenICE.prototype.createTable = function(args) {
 	if (null == table) {
 		table = new Table(this, args.domain, args.partition, args.topic);
 		var self = this;
-		table.on('sample', function(table, row, sample) {
-			self.emit('sample', self, table, row, sample);
+		table.on('sample', function(evt) {
+			/**
+			 * A new sample has been added to a row of a table
+			 * @event OpenICE#OpenICE:sample
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} row - The row
+			 * @property {Sample} sample - The new sample
+			 */							
+			self.emit('sample', {'openICE':self, 'table':evt.table, 'row':evt.row, 'sample':evt.sample});
 		});
-		table.on('schema', function(table) {
-			self.emit('schema', self, table);
+		table.on('schema', function(evt) {
+			/**
+			 * A schema has been (re)assigned to a table
+			 * @event OpenICE#OpenICE:schema
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {object} schema - The new schema
+			 */							
+			self.emit('schema', {'openICE':self, 'table':evt.table, 'schema':evt.schema});
 		});
-		table.on('beforeremove', function(table, row) {
-			self.emit('beforeremove', self, table, row);
+		table.on('beforeremove', function(evt) {
+			/**
+			 * A row will be removed from a table
+			 * @event OpenICE#OpenICE:beforeremove
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The row to be removed
+			 */							
+			self.emit('beforeremove', {'openICE':self, 'table':evt.table, 'row':evt.row});
 		});
-		table.on('afterremove', function(table, row) {
-			self.emit('afterremove', self, table, row);
+		table.on('afterremove', function(evt) {
+			/**
+			 * A row has been removed from a table
+			 * @event OpenICE#OpenICE:afterremove
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The removed row
+			 */							
+			self.emit('afterremove', {'openICE':self, 'table':evt.table, 'row':evt.row});
 		});
-		table.on('beforeadd', function(table, row) {
-			self.emit('beforeadd', self, table, row);
+		table.on('beforeadd', function(evt) {
+			/**
+			 * A row will be added to a table
+			 * @event OpenICE#OpenICE:beforeadd
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The row to be added
+			 */							
+			self.emit('beforeadd', {'openICE':self, 'table':evt.table, 'row':evt.row});
 		});
-		table.on('afteradd', function(table, row) {
-			self.emit('afteradd', self, table, row);
+		table.on('afteradd', function(evt) {
+			/**
+			 * A row has been added to a table
+			 * @event OpenICE#OpenICE:beforeadd
+			 * @type {object}
+			 * @property {OpenICE} openICE - The OpenICE object
+			 * @property {Table} table - The table
+			 * @property {Row} Row - The added row
+			 */										
+			self.emit('afteradd', {'openICE':self, 'table':evt.table, 'row':evt.row});
 		});
 		this.tables[tableKey] = table;
-		this.emit('addtable', this, table);
+		/**
+		 * A table has been added
+		 * @event OpenICE#OpenICE:addtable
+		 * @type {object}
+		 * @property {OpenICE} openICE - The OpenICE object
+		 * @property {Table} table - The added table
+		 */		
+		this.emit('addtable', {'openICE':this, 'table':table});
 		if(this.connected) {
 			this.subscribe(table);
 		}
@@ -369,7 +553,14 @@ OpenICE.prototype.destroyTable = function(args) {
 		}
 		table.removeAllRows();
 		delete this.tables[tableKey];
-		this.emit('removetable', this, table);
+		/**
+		 * A table has been removed
+		 * @event OpenICE#OpenICE:removetable
+		 * @type {object}
+		 * @property {OpenICE} openICE - The OpenICE object
+		 * @property {Table} table - The removed table
+		 */		
+		this.emit('removetable', {'openICE':this, 'table':table});
 
 	}
 	return table;

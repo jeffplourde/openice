@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Table"><span class="type-signature"></span>new Table<span class="signature">(openICE, domain, partition, topic)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Table"><span class="type-signature">(protected) </span>new Table<span class="signature">(openICE, domain, partition, topic)</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -133,7 +133,7 @@
             <td class="type">
             
                 
-<span class="param-type">string[]</span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
@@ -197,7 +197,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line69">line 69</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -234,6 +234,8 @@
     
 
     
+
+     
 
     
 
@@ -326,7 +328,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line74">line 74</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -429,7 +431,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line72">line 72</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line170">line 170</a>
     </li></ul></dd>
     
 
@@ -494,7 +496,7 @@
             <td class="type">
             
                 
-<span class="param-type">string[]</span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
@@ -532,7 +534,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line76">line 76</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line174">line 174</a>
     </li></ul></dd>
     
 
@@ -635,7 +637,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line80">line 80</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -738,7 +740,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line78">line 78</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line176">line 176</a>
     </li></ul></dd>
     
 
@@ -853,7 +855,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line90">line 90</a>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line272">line 272</a>
     </li></ul></dd>
     
 
@@ -886,6 +888,963 @@
     
 
     
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id="event:Table:afteradd">Table:afteradd</h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        A new row was just added to the table
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Table.html">Table</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>row</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Row.html">Row</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new row</td>
+        </tr>
+
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line220">line 220</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="event:Table:afterremove">Table:afterremove</h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        A row has been removed from the table
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Table.html">Table</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>row</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Row.html">Row</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The removed row</td>
+        </tr>
+
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line244">line 244</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="event:Table:beforeadd">Table:beforeadd</h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        A new row is about to be added to the table
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Table.html">Table</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>row</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Row.html">Row</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new row</td>
+        </tr>
+
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line211">line 211</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="event:Table:beforeremove">Table:beforeremove</h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        A row is about to be removed from the table
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Table.html">Table</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>row</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Row.html">Row</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The row about to be removed</td>
+        </tr>
+
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="event:Table:sample">Table:sample</h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        A Sample is added to a Row of the table
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Table.html">Table</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>row</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Row.html">Row</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The row</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sample</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Sample.html">Sample</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new sample</td>
+        </tr>
+
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line199">line 199</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="event:Table:schema">Table:schema</h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        A schema has been (re)assigned to the table
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>table</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Table.html">Table</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The table</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The schema</td>
+        </tr>
+
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openice.js.html">openice.js</a>, <a href="openice.js.html#line183">line 183</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    
 </article>
 
 </section>
@@ -896,13 +1855,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="OpenICE.html">OpenICE</a></li><li><a href="Row.html">Row</a></li><li><a href="Sample.html">Sample</a></li><li><a href="Table.html">Table</a></li></ul><h3>Global</h3><ul><li><a href="global.html#calcTableKey">calcTableKey</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="OpenICE.html">OpenICE</a></li><li><a href="Row.html">Row</a></li><li><a href="Sample.html">Sample</a></li><li><a href="Table.html">Table</a></li></ul><h3>Events</h3><ul><li><a href="OpenICE.html#event:OpenICE:addtable">OpenICE:addtable</a></li><li><a href="OpenICE.html#event:OpenICE:afterremove">OpenICE:afterremove</a></li><li><a href="OpenICE.html#event:OpenICE:beforeadd">OpenICE:beforeadd</a></li><li><a href="OpenICE.html#event:OpenICE:beforeremove">OpenICE:beforeremove</a></li><li><a href="OpenICE.html#event:OpenICE:close">OpenICE:close</a></li><li><a href="OpenICE.html#event:OpenICE:error">OpenICE:error</a></li><li><a href="OpenICE.html#event:OpenICE:open">OpenICE:open</a></li><li><a href="OpenICE.html#event:OpenICE:removetable">OpenICE:removetable</a></li><li><a href="OpenICE.html#event:OpenICE:sample">OpenICE:sample</a></li><li><a href="OpenICE.html#event:OpenICE:schema">OpenICE:schema</a></li><li><a href="Row.html#event:Row:expire">Row:expire</a></li><li><a href="Row.html#event:Row:sample">Row:sample</a></li><li><a href="Sample.html#event:Sample:expire">Sample:expire</a></li><li><a href="Table.html#event:Table:afteradd">Table:afteradd</a></li><li><a href="Table.html#event:Table:afterremove">Table:afterremove</a></li><li><a href="Table.html#event:Table:beforeadd">Table:beforeadd</a></li><li><a href="Table.html#event:Table:beforeremove">Table:beforeremove</a></li><li><a href="Table.html#event:Table:sample">Table:sample</a></li><li><a href="Table.html#event:Table:schema">Table:schema</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Tue Jun 03 2014 11:57:48 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Thu Sep 04 2014 09:48:55 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
