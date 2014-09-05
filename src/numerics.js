@@ -1,7 +1,8 @@
 var OpenICE = require('./openice.js');
 var PartitionBox = require('./partition-box.js');
 
-var currentTable = null;
+var numericTable = null;
+var patientAlertTable = null;
 
 window.onload = function() {
   var select = document.getElementById('partitionBox');
@@ -10,17 +11,22 @@ window.onload = function() {
   PartitionBox(openICE, select, 15);
 
   var changePartition = function(partition) {
-    if(currentTable != null) {
-      openICE.destroyTable(currentTable);
+    if(numericTable != null) {
+      openICE.destroyTable(numericTable);
+      numericTable = null;
     }
-    currentTable = openICE.createTable({domain: 15, 'partition': partition, topic:'Numeric'});
+    if(patientAlertTable != null) {
+      openICE.destroyTable(patientAlertTable);
+      patientAlertTable = null;
+    }
+    numericTable = openICE.createTable({domain: 15, 'partition': partition, topic:'Numeric'});
 
-    currentTable.on('sample', function(e) {
+    numericTable.on('sample', function(e) {
       var openICE = e.openICE, table = e.table, row = e.row, sample = e.sample;
-      var tr = document.getElementById(row.rowId);
+      var tr = document.getElementById("N"+row.rowId);
       if(typeof tr === 'undefined' || tr == null) {
         tr = document.createElement("tr");
-        tr.id = row.rowId;
+        tr.id = "N"+row.rowId;
         var td = document.createElement("td");
         td.innerHTML = row.keyValues.unique_device_identifier;
         tr.appendChild(td);
@@ -31,24 +37,58 @@ window.onload = function() {
         td.innerHTML = row.keyValues.instance_id;
         tr.appendChild(td);
         td = document.createElement("td");
-        td.id = row.rowId+"value";
+        td.id = "N"+row.rowId+"value";
         td.innerHTML = "";
         tr.appendChild(td);
 
-        var numerics = document.getElementById("numerics");
+        var numerics = document.getElementById("Numeric");
         numerics.appendChild(tr);
       }
-      var td = document.getElementById(row.rowId+"value");
+      var td = document.getElementById("N"+row.rowId+"value");
       td.innerHTML = sample.data.value;
     });
 
-    currentTable.on('afterremove', function(e) {
+    numericTable.on('afterremove', function(e) {
       var openICE = e.openICE, table = e.table, row = e.row;
-      var tr = document.getElementById(row.rowId);
+      var tr = document.getElementById("N"+row.rowId);
       if(typeof tr !== 'undefined' && tr != null) {
-        document.getElementById("numerics").removeChild(tr);
+        document.getElementById("Numeric").removeChild(tr);
       }
     });
+
+    patientAlertTable = openICE.createTable({domain: 15, 'partition': partition, topic:'PatientAlert'});
+
+    patientAlertTable.on('sample', function(e) {
+      var openICE = e.openICE, table = e.table, row = e.row, sample = e.sample;
+      var tr = document.getElementById("P"+row.rowId);
+      if(typeof tr === 'undefined' || tr == null) {
+        tr = document.createElement("tr");
+        tr.id = "P"+row.rowId;
+        var td = document.createElement("td");
+        td.innerHTML = row.keyValues.unique_device_identifier;
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.innerHTML = row.keyValues.identifier;
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.id = "P"+row.rowId+"value";
+        td.innerHTML = "";
+        tr.appendChild(td);
+
+        var patientAlert = document.getElementById("PatientAlert");
+        patientAlert.appendChild(tr);
+      }
+      var td = document.getElementById("P"+row.rowId+"value");
+      td.innerHTML = sample.data.text;
+    });
+
+    patientAlertTable.on('afterremove', function(e) {
+      var openICE = e.openICE, table = e.table, row = e.row;
+      var tr = document.getElementById("P"+row.rowId);
+      if(typeof tr !== 'undefined' && tr != null) {
+        document.getElementById("PatientAlert").removeChild(tr);
+      }
+    });    
   };
 
   select.onchange = function(e) {
