@@ -12,14 +12,39 @@
 			table td{
 			border:1px solid #000000;
 			}
+
+			h2 {
+				font-size: 12pt;
+			}
 		</style>
 		<script language="javascript" type="text/javascript" src="build/numerics.js"></script>
 
 	</head>
 	<body>
+	<span id="status"></span>
 		<form id="partitionForm">
 		Partition:<select id="partitionBox"><option value="">&lt;default&gt;</option></select>
 		</form>
+	<h2>DeviceIdentity</h2><br/>
+		<table id="DeviceIdentity">
+		    <tr><td>UDI</td><td>Manufacturer</td><td>Model</td><td>Serial Number</td><td>Icon</td><td>Build</td></tr>
+		</table><br/>	
+    <h2>DeviceConnectivity</h2><br/>
+		<table id="DeviceConnectivity">
+		    <tr><td>UDI</td><td>Type</td><td>State</td><td>Info</td><td>Valid Targets</td></tr>
+		</table><br/>
+    <h2>AlarmSettings</h2><br/>
+		<table id="AlarmSettings">
+		    <tr><td>UDI</td><td>Metric Id</td><td>Lower</td><td>Upper</td></tr>
+		</table><br/>
+	<h2>GlobalAlarmSettingsObjective</h2><br/>
+		<table id="GlobalAlarmSettingsObjective">
+		    <tr><td>Metric Id</td><td>Lower</td><td>Upper</td></tr>
+		</table><br/>
+	<h2>LocalAlarmSettingsObjective</h2><br/>
+		<table id="LocalAlarmSettingsObjective">
+		    <tr><td>UDI</td><td>Metric Id</td><td>Lower</td><td>Upper</td></tr>
+		</table><br/>		
     <h2>Numerics</h2><br/>
 		<table id="Numeric">
 		    <tr><td>UDI</td><td>Metric</td><td>Instance</td><td>Value</td></tr>
@@ -40,6 +65,9 @@
     <table id="DeviceAlertCondition">
       <tr><td>identifier</td><td>text</td></tr>
     </table><br/>
-
+    <h2>InfusionStatus</h2><br/>
+    <table id="InfusionStatus">
+      <tr><td>UDI</td><td>value</td></tr>
+    </table><br/>
 	</body>
 </html>
