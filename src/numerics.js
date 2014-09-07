@@ -33,6 +33,10 @@ TableManager.prototype.changePartition = function(partition) {
         td.innerHTML = row.keyValues[self.keyFields[i]];
         tr.appendChild(td);  
       }
+      var td = document.createElement("td");
+      tr.appendChild(td);
+      tr.timestamp = td;
+
       tr.valueTds = [];
       for(var i = 0; i < self.valueColumns; i++) {
         var td = document.createElement("td");
@@ -42,6 +46,7 @@ TableManager.prototype.changePartition = function(partition) {
 
       self.htmlTable.appendChild(tr);
     }
+    tr.timestamp.innerHTML = sample.sourceTimestamp;
     self.valueHandler(tr.valueTds, sample.data);
   });
   this.table.on('afterremove', function(e) {
@@ -55,7 +60,9 @@ TableManager.prototype.changePartition = function(partition) {
 
 window.onload = function() {
   var select = document.getElementById('partitionBox');
-  var openICE = new OpenICE("http://www.openice.info");
+  var wsHost = window.location.protocol == 'file:' ? 'http://dev.openice.info' : window.location.protocol + '//' + window.location.host;
+
+  var openICE = new OpenICE(wsHost);
   var tables = [];
 
   PartitionBox(openICE, select, DOMAINID);
