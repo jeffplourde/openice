@@ -121,7 +121,7 @@ window.onload = function() {
         [], function(tds, data) { tds[0].innerHTML = JSON.stringify(data); },
         1));
   tables.push(new TableManager(openICE, "InfusionStatus", document.getElementById("InfusionStatus"), 
-        [], function(tds, data) { tds[0].innerHTML = JSON.stringify(data); },
+        ["unique_device_identifier"], function(tds, data) { tds[0].innerHTML = JSON.stringify(data); },
         1));
 
   var changePartition = function(partition) {
