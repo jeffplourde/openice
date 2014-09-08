@@ -101,14 +101,11 @@ dt, dd {
 #logo-banner-holder {
 	padding-left: 0px;
 	padding-right: 0px;
-	overflow: hidden;
+	position: relative;
 }
 
 #logo-banner {
-	width: auto;
-	height: 150px;
-	display: block;
-	margin: 0 auto;
+	width: 100%;
 }
 
 #logo {
@@ -395,7 +392,6 @@ dt, dd {
 	padding: 5px;
 }
 .landing-link a {
-	display: inline-block;
 	color: #333;
 	text-decoration: none;
 }
