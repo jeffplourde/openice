@@ -79,7 +79,7 @@
 				<h2>Getting Connected for Patient Safety</h2>
 				<span class="glyphicon glyphicon-chevron-down"></span>
 			</div>
-			<div id="landing-link-container" class="container vis-hidden">
+			<div id="landing-link-container" class="container">
 				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-md-3">
 					<a href="./demo.html">
 						<img src="./assets/tile-demo.jpg" class="img-responsive" />
@@ -115,19 +115,19 @@
 			</div>
 
 			<script>
-				$(window).scroll(function() {
-					$('#landing-link-container').each(function(){
-						var imagePos = $(this).offset().top;
-						var topOfWindow = $(window).scrollTop();
-						if (imagePos < topOfWindow + 550) {
-							$( '#landing-link-container' ).removeClass("vis-hidden");
-							$( '#landing-link-1' ).addClass("fadeInUp");
-							$( '#landing-link-2' ).addClass("fadeInUp-2");
-							$( '#landing-link-3' ).addClass("fadeInUp-3");
-							$( '#landing-link-4' ).addClass("fadeInUp-4");
-						}
-					});
-				});
+				// $(window).scroll(function() {
+				// 	$('#landing-link-container').each(function(){
+				// 		var imagePos = $(this).offset().top;
+				// 		var topOfWindow = $(window).scrollTop();
+				// 		if (imagePos < topOfWindow + 550) {
+				// 			$( '#landing-link-container' ).removeClass("vis-hidden");
+				// 			$( '#landing-link-1' ).addClass("fadeInUp");
+				// 			$( '#landing-link-2' ).addClass("fadeInUp-2");
+				// 			$( '#landing-link-3' ).addClass("fadeInUp-3");
+				// 			$( '#landing-link-4' ).addClass("fadeInUp-4");
+				// 		}
+				// 	});
+				// });
 			</script>
 		</section>
 		
