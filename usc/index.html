@@ -15,11 +15,13 @@
 
     <div ng-controller="DeviceIdentityController as devices">
       <div class="list-group">
-        <div class="list-group-item" ng-repeat="device in devices.deviceList">
-          <h3>{{device}}<em class="pull-right">number</em></h3>
-
-          <patient-assessment></patient-assessment>
-
+        <div class="list-group-item" ng-repeat="device in devices.deviceTable.rows">
+          <h3>{{device.latest_sample.data.manufacturer}} {{device.latest_sample.data.model}}<!--<em class="pull-right">--><img style="text-align:right" class="" src="data:image/png;base64, {{device.latest_sample.data.icon.raster}}"/><!--</em>--></h3>
+        </div>
+      </div>
+      <div class="list-group">
+        <div class="list-group-item" ng-repeat="numeric in devices.numericTable.rows">
+          <h3>{{devices.deviceNames[numeric.keyValues.unique_device_identifier]}} {{numeric.keyValues.metric_id}} {{numeric.keyValues.instance_id}} {{numeric.latest_sample.data.value}}</h3>
         </div>
       </div>
     </div>
