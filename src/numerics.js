@@ -291,7 +291,7 @@ window.onload = function() {
 
   var openICE = new OpenICE(wsHost);
   openICE.maxSamples = 200;
-  PartitionBox(openICE, select, DOMAINID);
+  
 
   for(var i = 0; i < this.tables.length; i++) {
     tables[i].openICE = openICE;
@@ -309,6 +309,7 @@ window.onload = function() {
       tables[i].changePartition(partition);
     }
   };
+  PartitionBox(openICE, select, DOMAINID, changePartition);
 
   function renderFunction() {
     if(renderers.length > 0) {
@@ -338,10 +339,7 @@ window.onload = function() {
   };
   setTimeout(renderFunction, 75);
 
-  select.onchange = function(e) {
-    changePartition([select.options[select.selectedIndex].value]);
-  };
-  changePartition([""]);
+  select.focus();
 };
 
 window.tables = tables;

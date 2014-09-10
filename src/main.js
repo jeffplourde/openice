@@ -15,7 +15,7 @@ window.onload = function(e) {
   	var baseURL = wsProtocol + wsHost;
 	var openICE = new OpenICE(baseURL);
 
-	PartitionBox(openICE, document.getElementById('partition'), DOMAINID);
+	
 
 	vitalSigns = new VitalSigns(openICE, DOMAINID, [], 'Numeric');
 	vitalSigns.addVital({label:'Heart Rate', units:'bpm', metricIds:['MDC_PULS_OXIM_PULS_RATE','MDC_ECG_HEART_RATE'],
@@ -41,13 +41,8 @@ window.onload = function(e) {
 		if(null != previousTable) {
 			openICE.destroyTable(previousTable, true);
 		}
-		previousTable = openICE.createTable({domain:DOMAINID,partition:partition,topic:'Numeric'});
+		previousTable = openICE.createTable({domain:DOMAINID,'partition':partition,topic:'Numeric'});
 		vitalSigns.setTable(previousTable);
 	};
-
-	document.getElementById('partition').onchange = function(e) {
-		var select = document.getElementById('partition');
-		vitalSignsSetup([select.options[select.selectedIndex].value]);
-	};
-	vitalSignsSetup([]);
+	PartitionBox(openICE, document.getElementById('partition'), DOMAINID, vitalSignsSetup);
 };

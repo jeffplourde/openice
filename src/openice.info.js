@@ -234,7 +234,7 @@ window.onload = function(e) {
   port = port == '' ? '' : (':'+port);
   // Pages served over https can only utilize wss protocol
   var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  var wsHost = window.location.protocol == 'file:' ? 'www.openice.info' : window.location.host;
+  var wsHost = window.location.protocol == 'file:' ? 'dev.openice.info' : window.location.host;
   var baseURL = wsProtocol + wsHost;
 
   startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
@@ -399,7 +399,7 @@ window.onload = function(e) {
     }
   };
   var partitionBox = document.getElementById('partitionBox');
-  PartitionBox(openICE, partitionBox, targetDomain);
+  
   var sampleArrayTable = null;
   var numericTable = null;
 
@@ -416,13 +416,7 @@ window.onload = function(e) {
     numericTable.on('sample', onNumericSample);
     sampleArrayTable.on('sample', onSampleArraySample);
   }
-
-  partitionBox.onchange = function(e) {
-    changePartition([partitionBox.options[partitionBox.selectedIndex].value]);
-  };
-  
-  changePartition([""]);
-
+  PartitionBox(openICE, partitionBox, targetDomain, changePartition);
   openICE.on('open', function(e) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);
