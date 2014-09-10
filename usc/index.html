@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="usc">
+  <head>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <script type="text/javascript" src="src/angular.js"></script>
+    <script type="text/javascript" src="../../build/usc.js"></script>
+  </head>
+
+  <body>
+    <navbar></navbar>
+    <header>
+      <h1 class="text-center">Universal Central Station</h1>
+      <h3 class="text-center">MD PnP Interoperability Lab</h3>
+    </header>
+
+    <div ng-controller="DeviceIdentityController as devices">
+      <div class="list-group">
+        <div class="list-group-item" ng-repeat="device in devices.deviceList">
+          <h3>{{device}}<em class="pull-right">number</em></h3>
+
+          <patient-assessment></patient-assessment>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

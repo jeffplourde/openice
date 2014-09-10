@@ -28,10 +28,14 @@ module.exports = function(grunt) {
       vitals: {
         src: ['src/vitals.js','src/main.js'],
         dest: 'build/vitals.js'
+      },
+      usc: {
+        src: ['usc/src/app.js'],
+        dest: 'build/usc.js'
       }
     },
     watch: {
-        files: ["src/**/*.js"],
+        files: ["src/**/*.js", "usc/src/**/*.js"],
         tasks: ['browserify']
     }
   });
