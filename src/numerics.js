@@ -2,10 +2,12 @@
 var OpenICE = require('./openice.js');
 var PartitionBox = require('./partition-box.js');
 var moment = require('moment');
+var Renderer = require('./plot.js');
 
 var DOMAINID = 15;
 var tables = [];
 var deviceName = {};
+var renderers = [];
 
 function TableManager(tableName, keyFields, valueFields, valueHandler, keyHandler, description) {
   this.table = null;
@@ -98,12 +100,17 @@ TableManager.prototype.changePartition = function(partition) {
       document.getElementById(self.tableName).appendChild(tr);
     }
     tr.timestamp.innerHTML = localT(sample.sourceTimestamp);
-    self.valueHandler(tr.valueTds, sample.data);
+    self.valueHandler(tr.valueTds, sample.data, sample);
   });
   this.table.on('afterremove', function(e) {
     var openICE = e.openICE, table = e.table, row = e.row;
     if(table.topic == 'DeviceIdentity') {
       delete deviceName[row.keyValues.unique_device_identifier];
+    }
+    if(row.renderer) {
+      var idx = renderers.indexOf(row.renderer);
+      renderers.splice(idx,1);
+      delete row.renderer;
     }
     var tr = document.getElementById(self.tableName+row.rowId);
     if(typeof tr !== 'undefined' && tr != null) {
@@ -187,7 +194,18 @@ tables.push(new TableManager("Numeric",
 tables.push(new TableManager("SampleArray", 
       ["UDI", "Metric", "Instance", "Frequency"], 
       ["Values", "Device Time"],
-      function(tds, data) { tds[0].innerHTML = JSON.stringify(data.values); tds[1].innerHTML = timeFromTimeT(data.device_time); },
+      function(tds, data, sample) { 
+        if(!sample.row.renderer) {
+          sample.row.canvas = document.createElement("canvas");
+          sample.row.canvas.onclick = function(e) {
+            sample.row.renderer.overwrite = !sample.row.renderer.overwrite;
+          };
+          tds[0].appendChild(sample.row.canvas);
+          sample.row.renderer = new Renderer({'canvas':sample.row.canvas, 'row':sample.row, overwrite: true});
+          renderers.push(sample.row.renderer);
+        }
+        // sample.row.renderer.render(t1, t2);
+        tds[1].innerHTML = timeFromTimeT(data.device_time); },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
         tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id;
         tds[3].innerHTML = keys.frequency; },
@@ -272,6 +290,7 @@ window.onload = function() {
   var wsHost = window.location.protocol == 'file:' ? 'http://dev.openice.info' : window.location.protocol + '//' + window.location.host;
 
   var openICE = new OpenICE(wsHost);
+  openICE.maxSamples = 200;
   PartitionBox(openICE, select, DOMAINID);
 
   for(var i = 0; i < this.tables.length; i++) {
@@ -290,6 +309,34 @@ window.onload = function() {
       tables[i].changePartition(partition);
     }
   };
+
+  function renderFunction() {
+    if(renderers.length > 0) {
+      var now = Date.now();
+      var t2 = now - 4000;
+      var t1 = t2 - 5000;
+      // var oldest = renderers[0];
+
+
+      // if(oldest.lastRender) {
+        for(var i = 0; i < renderers.length; i++) {
+          // if(!renderers[i].lastRender) {
+            // oldest = renderers[i];
+            // break;
+          // } else if(renderers[i].lastRender < oldest.lastRender) {
+            // oldest = renderers[i];
+          // }
+          renderers[i].render(t1, t2);
+        }
+      // }
+      // oldest.render(t1, t2);
+      // oldest.lastRender = now;
+
+    } 
+    
+    setTimeout(renderFunction, 75);
+  };
+  setTimeout(renderFunction, 75);
 
   select.onchange = function(e) {
     changePartition([select.options[select.selectedIndex].value]);
