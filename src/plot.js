@@ -56,11 +56,13 @@ Renderer.prototype.render = function(t1, t2) {
 
   var aged_segment = true;
   var started = false;
+  var msPerSample = 1000 / this.row.keyValues.frequency;
 
   for(var i = 0; i < this.row.samples.length; i++) {
   	var sample = this.row.samples[i];
+    var sampleTime = Date.parse(sample.sourceTimestamp);
   	for(var j = 0; j < sample.data.values.length; j++) {
-  	  var time = Date.parse(sample.sourceTimestamp) - (1000 / this.row.keyValues.frequency) * (sample.data.values.length - j);
+  	  var time = sampleTime - msPerSample * (sample.data.values.length - j);
   	  var value = sample.data.values[j];
   	  if(time>=t1&&time<t2) {
   	  	this.minY = Math.min(value, this.minY);
