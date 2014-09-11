@@ -284,6 +284,13 @@ tables.push(new TableManager("InfusionObjective",
       tds[1].innerHTML = keys.requestor; },
       "Speculative topic used for the PCA demonstration.  The supervisory safety app publishes a sample with stopInfusion=1 to indicate the infusion pump may not infuse.  Currently a third topic, indicating that the pump has acknowledged the safety interlock, has not yet been included.  We should also explore the possibility of a setup whereby the pump receives periodic 'ok to infuse' information and stops when that information is not received."
       ));
+tables.push(new TableManager("Patient",
+      ["Medical Record Number"], 
+      ["Given Name", "Family Name"],
+      function(tds, data) { tds[0].innerHTML = data.given_name; tds[1].innerHTML = data.family_name; },
+      function(tds, keys) { tds[0].innerHTML = keys.mrn; },
+      ""
+      ));
 
 window.onload = function() {
   var select = document.getElementById('partitionBox');
