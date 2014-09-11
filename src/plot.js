@@ -57,6 +57,7 @@ Renderer.prototype.render = function(t1, t2) {
   var aged_segment = true;
   var started = false;
   var msPerSample = 1000 / this.row.keyValues.frequency;
+  var lastTime = null;
 
   for(var i = 0; i < this.row.samples.length; i++) {
   	var sample = this.row.samples[i];
@@ -111,12 +112,18 @@ Renderer.prototype.render = function(t1, t2) {
         
       if(x_prop>=0&&x_prop<1&&y_prop>=0&&y_prop<1) {
         if(started) {
-          ctx.lineTo(x,y);
+          if(time > (lastTime + msPerSample+10)) {
+            ctx.stroke();
+            ctx.moveTo(x,y);
+          } else {
+            ctx.lineTo(x,y);
+          }
         } else {
           ctx.moveTo(x,y);
           started = true;
         }
       }
+      lastTime = time;
     }
   }
   // ctx.closePath();
