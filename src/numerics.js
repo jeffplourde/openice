@@ -47,7 +47,7 @@ function trunc(udi) {
 }
 
 TableManager.prototype.write = function(document) {
-  document.write("<a id=\""+this.tableName+"\"></a>");
+  document.write("<a name=\""+this.tableName+"\"></a>");
   document.write("<h2>"+this.tableName+"</h2><br/>");
   document.write("<span class=\"description\">"+this.description+"</span>");
   document.write("<table id=\""+this.tableName+"\"><tr>");
