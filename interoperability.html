@@ -29,6 +29,12 @@
 	</head>
 	<body>
 		<section id="splash">
+			<div id="logo-banner-holder" class="container-fluid">
+				<a href="./index.html">
+					<img id="logo-banner" class="hidden-xs" src="./assets/banner.png" />
+				</a>
+				<img id="logo" class="visible-xs" src="./assets/logo.png" />
+			</div>
 			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -76,69 +82,33 @@
 				</div>
 			</nav>
 		</section>
-		
-		<section id="landing-section">
-			<div id="landing-jumbotron" class="fadeIn container-fluid">
-				<img src="./assets/many-screens-sm.jpeg" class="img-responsive" />
-			</div>
-			<div id="landing-title" class="container">
-				<h1>MDPnP Interoperability Lab</h1>
-				<h2>Getting Connected for Patient Safety</h2>
-				<span class="glyphicon glyphicon-chevron-down"></span>
-			</div>
-			<div id="landing-link-container" class="container">
-				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./demo.html">
-						<img src="./assets/tile-demo.jpg" class="img-responsive" />
-						<h1>OpenICE Web Demo</h1>
-					</a>
-				</div>
-				<div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./software.html">
-						<img src="./assets/tile-software.jpg" class="img-responsive" />
-						<h1>Explore Our Software</h1>
-					</a>
-				</div>
-				<div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./learn.html">
-						<img src="./assets/tile-learn.jpg" class="img-responsive" />
-						<h1>Learn About Our Technology</h1>
-					</a>
-				</div>
-				<div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./interoperability.html">
-						<img src="./assets/tile-interop.jpg" class="img-responsive" />
-						<h1 >Interoperability 101</h1>
-					</a>
-				</div>
-			</div>
-			<div id="landing-info" class="page-container">
-				<h1>Change&nbsp;Expectations<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Technology<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Healthcare</h1>
-				<h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
-			</div>
 
-			<script>
-				// $(window).scroll(function() {
-				// 	$('#landing-link-container').each(function(){
-				// 		var imagePos = $(this).offset().top;
-				// 		var topOfWindow = $(window).scrollTop();
-				// 		if (imagePos < topOfWindow + 550) {
-				// 			$( '#landing-link-container' ).removeClass("vis-hidden");
-				// 			$( '#landing-link-1' ).addClass("fadeInUp");
-				// 			$( '#landing-link-2' ).addClass("fadeInUp-2");
-				// 			$( '#landing-link-3' ).addClass("fadeInUp-3");
-				// 			$( '#landing-link-4' ).addClass("fadeInUp-4");
-				// 		}
-				// 	});
-				// });
-			</script>
+		<section>
+			<div class="page-container">
+				<h1>Interoperability 101</h1>
+				<blockquote>
+					<p class="lead">The ability of two or more medical devices and other equipment, which are intended by their manufacturers to exchange information via an electronic data interface (EDI), to safely perform a clinical function with a specific intended use, and in a assembled configuration not necessarily foreseen by the manufacturers.</p>
+					<footer>Julian Goldman</footer>
+				</blockquote>
+
+				<p>Interoperability is the ability of medical devices and other equipment to work together in clinical environments to enable functionality only possible with the devices functioning as a greater system. To interoperate, medical devices and other equipment must be designed to allow information to be exchanged via an electronic data interface (EDI). Additionally, medical devices and other equipment must be able to be assembled in a configuration that is not necessarily foreseen by the manufacturers. These capabilities will enable clinicians to safely perform a clinical function with a specific intended use that could supersede the intended use of a single device present in the system.</p>
+
+				<p>Specifically, interoperability of devices and IT systems will permit mixed-vendor (“heterogeneous”) data transfer, comprehensive secure data acquisition, and safety-enhancing capabilities such as safety interlocks and closed-loop device control.</p>
+				<br />
+
+				<p><span class="lead">Currently,</span> medical devices are essential to the practice of modern medicine. Clinical measurements such as blood pressure and temperature, x-ray and ultrasound imaging, administration of intravenous medications, and support of critical life functions all require medical devices. However, despite our reliance on sophisticated medical equipment, most devices are not designed to interconnect with other devices.</p>
+
+				<p>Existing medical devices in most hospital settings continue to be used as independent, separate devices. Therefore, much of what could be automated is left to human intervention. For example: data collection, communication of patients’ problems and needs, equipment set-up, equipment status check-out, monitoring patient well-being, monitoring equipment usability, and finding out relevant patient history. </p>
+
+				<p>The absence of an intranet-like ecosystem for interconnecting medical devices and clinical information systems is a fundamental impediment to realizing the national vision of using comprehensive, accurate, electronic medical records and HIT systems to improve the quality and efficiency of healthcare. </p>
+
+				<p>Medical devices are increasingly being networked, for example to populate the electronic health record (EHR). Problems with individual devices in such a system, or unexpected interactions between the devices, can cause device failures and may compromise patient safety. For example, in our lab we have documented a case of ventilator failure triggered by requesting data to send to the EHR. When this kind of incident occurs, clinicians, manufacturers, and regulators have the responsibility to investigate the cause of the problem and try to ensure that it does not happen again. </p>
+
+				<br />
+				<p>Page under construction. More content coming soon.</p>
+			</div>
 		</section>
 		
-
 		<section class="footer page-container center-block">
 			<img src="./assets/logo.png">
 		</section>

@@ -29,6 +29,12 @@
 	</head>
 	<body>
 		<section id="splash">
+			<div id="logo-banner-holder" class="container-fluid">
+				<a href="./index.html">
+					<img id="logo-banner" class="hidden-xs" src="./assets/banner.png" />
+				</a>
+				<img id="logo" class="visible-xs" src="./assets/logo.png" />
+			</div>
 			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -76,68 +82,80 @@
 				</div>
 			</nav>
 		</section>
-		
-		<section id="landing-section">
-			<div id="landing-jumbotron" class="fadeIn container-fluid">
-				<img src="./assets/many-screens-sm.jpeg" class="img-responsive" />
-			</div>
-			<div id="landing-title" class="container">
-				<h1>MDPnP Interoperability Lab</h1>
-				<h2>Getting Connected for Patient Safety</h2>
-				<span class="glyphicon glyphicon-chevron-down"></span>
-			</div>
-			<div id="landing-link-container" class="container">
-				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./demo.html">
-						<img src="./assets/tile-demo.jpg" class="img-responsive" />
-						<h1>OpenICE Web Demo</h1>
-					</a>
-				</div>
-				<div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./software.html">
-						<img src="./assets/tile-software.jpg" class="img-responsive" />
-						<h1>Explore Our Software</h1>
-					</a>
-				</div>
-				<div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./learn.html">
-						<img src="./assets/tile-learn.jpg" class="img-responsive" />
-						<h1>Learn About Our Technology</h1>
-					</a>
-				</div>
-				<div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./interoperability.html">
-						<img src="./assets/tile-interop.jpg" class="img-responsive" />
-						<h1 >Interoperability 101</h1>
-					</a>
-				</div>
-			</div>
-			<div id="landing-info" class="page-container">
-				<h1>Change&nbsp;Expectations<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Technology<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Healthcare</h1>
-				<h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
+
+		<section>
+			<div id="previous-demos" class="page-container">
+				<h1>MD PnP Software</h1>
+				<p><span class="lead">OpenICE</span> is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment. The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts.</p>
+				<h1>Links to helpful information:</h1>
+				<ul>
+					<li><a href="./demo.html">OpenICE Web Demo</a></li>
+					<li><a href="http://mdpnp.sourceforge.net/" target="_blank">OpenICE Demo-App Suite</a></li>
+					<li><a href="https://play.google.com/store/apps/details?id=org.mdpnp.rtbb&amp;hl=en" target="_blank">Blue Button Android App</a></li>
+				</ul>
+				<br />
+
+				<p>Page under construction. More content coming soon.</p>
 			</div>
 
-			<script>
-				// $(window).scroll(function() {
-				// 	$('#landing-link-container').each(function(){
-				// 		var imagePos = $(this).offset().top;
-				// 		var topOfWindow = $(window).scrollTop();
-				// 		if (imagePos < topOfWindow + 550) {
-				// 			$( '#landing-link-container' ).removeClass("vis-hidden");
-				// 			$( '#landing-link-1' ).addClass("fadeInUp");
-				// 			$( '#landing-link-2' ).addClass("fadeInUp-2");
-				// 			$( '#landing-link-3' ).addClass("fadeInUp-3");
-				// 			$( '#landing-link-4' ).addClass("fadeInUp-4");
-				// 		}
-				// 	});
-				// });
-			</script>
+			<!-- <div class="page-container">
+				<div id="lab-slide-show" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#lab-slide-show" data-slide-to="0" class="active"></li>
+						<li data-target="#lab-slide-show" data-slide-to="1"></li>
+						<li data-target="#lab-slide-show" data-slide-to="2"></li>
+						<li data-target="#lab-slide-show" data-slide-to="3"></li>
+						<li data-target="#lab-slide-show" data-slide-to="4"></li>
+					</ol>
+
+					<div id="slideshow" class="carousel-inner">
+						<div class="item active" style="background-image:url(./assets/lab-slide-show/1.jpg); background-position: left center; background-repeat: no-repeat;background-size:100% auto;">
+							<img style="opacity:0" class="img-responsive" src="./assets/lab-slide-show/1.jpg" alt="">
+							<div class="carousel-caption">
+								<h3></h3>
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/2.jpg" alt="">
+							<div class="carousel-caption">
+								<h3></h3>
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/3.jpg" alt="">
+							<div class="carousel-caption">
+								<h3></h3>
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/4.jpg" alt="">
+							<div class="carousel-caption">
+								<h3></h3>
+								<p></p>
+							</div>
+						</div>
+						<div class="item">
+							<img class="img-responsive center-block" src="./assets/lab-slide-show/5.jpg" alt="">
+							<div class="carousel-caption">
+								<h3></h3>
+								<p></p>
+							</div>
+						</div>
+					</div>
+					
+					<a class="left carousel-control" href="#lab-slide-show" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#lab-slide-show" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div>
+			</div> -->
+
 		</section>
-		
 
 		<section class="footer page-container center-block">
 			<img src="./assets/logo.png">
