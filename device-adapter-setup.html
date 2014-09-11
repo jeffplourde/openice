@@ -211,14 +211,15 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 						NOTE: This process will obviously overwrite the contents of your BBB's internal memory. Backup any content you wish to preserve.
 					</div>
 					<ol>
-						<li>Insert the MicroSD card into the BBB</li>
-						<li>Plug in the BBB power supply (No need to hold S2 button used to boot directly to MicroSD)</li>
+						<li>Insert the MicroSD card into the BBB.</li>
+						<li>Plug in the BBB power supply (No need to hold S2 button used to boot directly to MicroSD).</li>
 						<div class="alert alert-warning">
 							WARNING: Do not use the USB power during the flashing process. eLinux reports that this process may exceed 500mA and trigger a PC or laptop to disable USB power. Please you a dedicated 5V 1A power supply as detailed above.
 						</div>
 						<li>When the image starts copying onto the BBB, USR0 LED (the outside most blue LED near button S1) will blink slowly - compared to the usual heartbeat blink pattern.</li>
-						<li>When the USR0 light goes solid, remove the power and MicroSD card</li>
+						<li>When the USR0 light goes solid, remove the power and MicroSD card.</li>
 						<li>Your beagle is now running Ubuntu 14.04.1 LTS and has the OpenICE device adapter software installed. It can now be configured to run as a device adapter for any of the supported devices. In the next section we will configure the adapter to communicate with a Philips MP70.</li>
+						<li>The default user is "ubuntu". The default password is "ubuntu".</li>
 					</ol>
 					<div class="alert alert-info">
 						NOTE: The BBB with Ubuntu will take up to 3 minutes to boot without a network cable attached.
@@ -258,7 +259,7 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 						<dt>RJ45 to DB-9</dt>
 						<dd>To connect to the RJ45 port on the MP70 to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. If you wish to make the cable, the MP70 'Data Export Program Guide' depicts the pinout of the RJ45 port. However, we have observed that this pinout matches the common RJ45 to DB-9 "Cisco console cable". This cable is available from many distributors and should allow the devices to connect.</dd>
 						<dt>Computer w/ OpenICE</dt>
-						<dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="mdpnp.sourceforge.com">Sourceforge</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
+						<dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="http://mdpnp.sourceforge.net">Sourceforge</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
 						<dt>A Network</dt>
 						<dd>You will need a network to connect the devices to that is capable of DHCP. A standard home WiFi router is sufficient.</dd>
 						<dt>Monitor and Keyboard</dt>
