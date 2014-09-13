@@ -1,5 +1,41 @@
 var moment = require('moment');
 
+var PIXEL_RATIO = (function () {
+    var ctx = document.createElement("canvas").getContext("2d"),
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
+              ctx.mozBackingStorePixelRatio ||
+              ctx.msBackingStorePixelRatio ||
+              ctx.oBackingStorePixelRatio ||
+              ctx.backingStorePixelRatio || 1;
+
+    return dpr / bsr;
+})();
+
+createHiPPICanvas = function(w, h, ratio) {
+    if (!ratio) { ratio = PIXEL_RATIO; }
+    var can = document.createElement("canvas");
+    can.width = w * ratio;
+    can.height = h * ratio;
+    can.style.width = w + "px";
+    can.style.height = h + "px";
+    can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+    return can;
+}
+makeHiPPICanvas = function(canvas, ratio) {
+  var style = getComputedStyle(canvas);
+  if(!canvas.styleWidthWhenComputed || style.width != canvas.styleWidthWhenComputed || style.height != canvas.styleHeightWhenComputed) {
+    if (!ratio) { ratio = PIXEL_RATIO; }
+    if(ratio != 1) {
+      canvas.width = ratio * parseFloat(style.width);
+      canvas.height = ratio * parseFloat(style.height);
+    }
+    canvas.styleWidthWhenComputed = style.width;
+    canvas.styleHeightWhenComputed = style.height;
+  }
+  return canvas;
+}
+
 
 function isElementInViewport (el) {
 
@@ -22,6 +58,7 @@ function isElementInViewport (el) {
 
 function Renderer(args) {
   this.canvas = args.canvas;
+  this.canvas = makeHiPPICanvas(this.canvas);
   this.row = args.row;
   this.continuousRescale = args.continuousRescale || false;
   this.overwrite = args.overwrite || false;	
@@ -40,24 +77,31 @@ function Renderer(args) {
       this.__textFontSize = +value.match(/[0-9]+/);
     }
   });
-  this.textFont = args.textFont || "8pt Arial";
+  this.textFont = args.textFont || "20pt Arial";
   Object.defineProperty(this, "textFontSize", {
     get: function() {
       return this.__textFontSize;
     }
   });
   this.lineWidth = args.lineWidth || 1;
+  this.borderWidth = args.borderWidth || 0;
+  this.borderColor = args.borderColor || "#000000";
+  this.fillArea = args.fillArea || false;
 }
 
 module.exports = exports = Renderer;
+
+var DASHES = 21;
 
 Renderer.prototype.render = function(t1, t2, s1, s2) {
   if(!isElementInViewport(this.canvas)) {
     return;
   }
+
+
   var ctx = this.canvas.getContext("2d");
-  ctx.lineWidth = this.lineWidth;
-  ctx.strokeStyle = this.color;
+  makeHiPPICanvas(this.canvas);
+  ctx.save();
   var height = this.canvas.height;
   var width = this.canvas.width;
 
@@ -88,15 +132,42 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
       ctx.fillText(s0, 0, height);
     } else {
       ctx.fillText(s1, 0, height);
+      var smid = moment(t1+(t2-t1)/2).format('HH:mm:ss');
+      ctx.moveTo(width/2, 0);
+      for(var i = 0; i < DASHES; i++) {
+        if(1==i%2) {
+          ctx.lineTo(width/2,((i+1)/DASHES)*(height-this.textFontSize-5));
+          ctx.stroke();  
+        } else {
+          ctx.moveTo(width/2,((i+1)/DASHES)*(height-this.textFontSize-5));
+        }
+      }
+      ctx.fillText(smid, width/2 - ctx.measureText(smid).width / 2, height);
       ctx.fillText(s2, width - ctx.measureText(s2).width, height);
     }
     height -= this.textFontSize + 5; 
   }
 
+  if(this.borderWidth > 0) {
+    ctx.strokeStyle = this.borderColor;
+    ctx.lineWidth = PIXEL_RATIO * this.borderWidth;
+    ctx.strokeRect(ctx.lineWidth/2,ctx.lineWidth/2,width-ctx.lineWidth,height-ctx.lineWidth);
+    width -= 2 * ctx.lineWidth + 4;
+    height -= 2 * ctx.lineWidth + 4;
+    ctx.translate(ctx.lineWidth+2,ctx.lineWidth+2);
+  }
+
+
+
+  ctx.lineWidth = PIXEL_RATIO * this.lineWidth;
+  ctx.strokeStyle = this.color;
+  ctx.fillStyle = this.color;
+
   var aged_segment = true;
   var started = false;
   var msPerSample = 1000 / this.row.keyValues.frequency;
   var lastTime = null;
+  var lastValue = 0;
 
   for(var i = 0; i < this.row.samples.length; i++) {
   	var sample = this.row.samples[i];
@@ -142,15 +213,13 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
         
       var y_prop = 1 * (value - this.minY) / (this.maxY-this.minY);
       
-
-
       var x = x_prop * width;
       var y = height - (y_prop * height);
 
-
-        
       if(x_prop>=0&&x_prop<1&&y_prop>=0&&y_prop<1) {
         if(started) {
+          // There is a gap in the data
+          // TODO This won't work correctly with fill area!
           if(time > (lastTime + msPerSample+10)) {
             ctx.stroke();
             ctx.moveTo(x,y);
@@ -158,14 +227,27 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
             ctx.lineTo(x,y);
           }
         } else {
-          ctx.moveTo(x,y);
+          if(this.fillArea) {
+            ctx.moveTo(x, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+            ctx.lineTo(x,y);
+          } else {
+            ctx.moveTo(x,y);
+          }
           started = true;
         }
       }
       lastTime = time;
+      lastValue = value;
     }
   }
-  // ctx.closePath();
-  ctx.stroke();
+
+  if(this.fillArea) {
+    ctx.lineTo(width, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+    ctx.lineTo(0, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+    ctx.fill();
+  } else {
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 

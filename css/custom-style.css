@@ -54,9 +54,13 @@ table td {
 	font-size: 20px;
 }
 
+.graphWrapper {
+}
+
 .graph {
-	height: 150px;
+	height: 125px;
 	margin: 5px auto 5px 0;
+	width:100%;
 }
 
 .numeric {

@@ -70,6 +70,11 @@ var relatedNumeric = {
 	"MDC_IMPED_TTHOR": [{code:"MDC_TTHOR_RESP_RATE",name:"RR"}],
 };
 
+var fillArea = {
+	"MDC_FLOW_AWAY": true,
+	"MDC_PRESS_AWAY": true
+};
+
 
 exports.getPlotColor = function(metric_id) {
 	return plotColors[metric_id] || "#FFFFFF";
@@ -85,5 +90,9 @@ exports.getFlotName = function(metric_id) {
 
 exports.getRelatedNumeric = function(metric_id) {
 	return relatedNumeric[metric_id] || [];
+}
+
+exports.getFillArea = function(metric_id) {
+	return fillArea[metric_id] || false;
 }
 
