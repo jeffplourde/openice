@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 
 function isElementInViewport (el) {
 
@@ -7,6 +9,8 @@ function isElementInViewport (el) {
     }
 
     var rect = el.getBoundingClientRect();
+
+    // Changed from original to return true even if the element is clipped (not fully displayed)
 
     return (
         rect.top >= -el.height &&
@@ -26,15 +30,33 @@ function Renderer(args) {
   this.gap_size = 0.05;
   this.background = args.background || "#FFFFFF";
   this.color = args.color || "#000000";
+  this.textColor = args.textColor || "#000000";
+  Object.defineProperty(this, "textFont", {
+    get: function() {
+      return this.__textFont;
+    },
+    set: function(value) {
+      this.__textFont = value;
+      this.__textFontSize = +value.match(/[0-9]+/);
+    }
+  });
+  this.textFont = args.textFont || "8pt Arial";
+  Object.defineProperty(this, "textFontSize", {
+    get: function() {
+      return this.__textFontSize;
+    }
+  });
+  this.lineWidth = args.lineWidth || 1;
 }
 
 module.exports = exports = Renderer;
 
-Renderer.prototype.render = function(t1, t2) {
+Renderer.prototype.render = function(t1, t2, s1, s2) {
   if(!isElementInViewport(this.canvas)) {
     return;
   }
   var ctx = this.canvas.getContext("2d");
+  ctx.lineWidth = this.lineWidth;
   ctx.strokeStyle = this.color;
   var height = this.canvas.height;
   var width = this.canvas.width;
@@ -52,6 +74,23 @@ Renderer.prototype.render = function(t1, t2) {
   var t0 = 0;
   if(this.overwrite) {
   	t0 = t2 - t2 % (t2 - t1);
+  }
+
+  if(true) {
+    // draw timestamps
+    s1 = s1 || moment(t1).format('HH:mm:ss');
+    s2 = s2 || moment(t2).format('HH:mm:ss');
+    ctx.font = this.textFont;
+    ctx.fillStyle = this.textColor;
+
+    if(this.overwrite) {
+      var s0 = moment(t0).format('HH:mm:ss');
+      ctx.fillText(s0, 0, height);
+    } else {
+      ctx.fillText(s1, 0, height);
+      ctx.fillText(s2, width - ctx.measureText(s2).width, height);
+    }
+    height -= this.textFontSize + 5; 
   }
 
   var aged_segment = true;
