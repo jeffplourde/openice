@@ -136,7 +136,20 @@ Row.prototype.addSample = function(data) {
 	     */
 		self.emit('expire', {'row':self, 'sample':sample});
 	});
-	this.samples.push(sample);
+	if(this.samples.length==0||this.samples[this.samples.length-1].sourceTimestamp<=sample.sourceTimestamp) {
+		// Newer than any existing sample
+		this.samples.push(sample);
+	} else if(sample.sourceTimestamp <= this.samples[0].sourceTimestamp) {
+		// Older than any existing sample
+		this.samples.unshift(sample);
+	} else {
+		// Interleaved within existing samples
+		var i = 0; 
+		while(this.samples[i].sourceTimestamp<sample.sourceTimestamp) {
+			i++;
+		}
+		this.samples.splice(i, 0, sample);
+	}
 	while(this.samples.length>this.table.openICE.maxSamples) {
 		this.samples.shift().expire();
 	}
