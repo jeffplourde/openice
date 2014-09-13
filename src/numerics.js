@@ -247,16 +247,21 @@ tables.push(new TableManager("SampleArray",
               var queryStart = new Date(canvas.startTime-10000);
               var queryEnd = new Date((canvas.endTime+10000)>Date.now()?Date.now():canvas.endTime+10000);
 
+              var q = {"_id.key":sample.row.keyValues, 
+                       "_id.topic":sample.row.table.topic,
+                       "_id.partition":sample.row.table.partition,
+                       "_id.domain":sample.row.table.domain};
+
               if(sample.row.samples.length==0) {
-                var q = {"_id.sourceTimestamp": {$gt: queryStart, $lt: queryEnd}};
+                q["_id.sourceTimestamp"] = {$gt: queryStart, $lt: queryEnd};
                 sample.row.query(q);
               } else {
                 if (queryStart < sample.row.samples[0].sourceTimestamp) {
-                  var q = {"_id.sourceTimestamp": {$gt: queryStart, $lt: sample.row.samples[0].sourceTimestamp}};
+                  q["_id.sourceTimestamp"] = {$gt: queryStart, $lt: sample.row.samples[0].sourceTimestamp};
                   sample.row.query(q);
                 }
                 if(queryEnd > sample.row.latest_sample.sourceTimestamp) {
-                  var q = {"_id.sourceTimestamp": {$gt: sample.row.latest_sample.sourceTimestamp, $lt: queryEnd}};
+                  q["_id.sourceTimestamp"] = {$gt: sample.row.latest_sample.sourceTimestamp, $lt: queryEnd};
                   sample.row.query(q); 
                 }
               }
