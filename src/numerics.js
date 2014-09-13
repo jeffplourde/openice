@@ -59,7 +59,6 @@ TableManager.prototype.write = function(document) {
     document.write("<td>"+this.valueFields[i]+"</td>");
   }
   document.write("</tr></table><br/>");
-  
 }
 
 TableManager.prototype.changePartition = function(partition) {
@@ -197,12 +196,57 @@ tables.push(new TableManager("SampleArray",
       ["Values", "Device Time"],
       function(tds, data, sample) { 
         if(!sample.row.renderer) {
-          sample.row.canvas = document.createElement("canvas");
-          sample.row.canvas.onclick = function(e) {
-            sample.row.renderer.overwrite = !sample.row.renderer.overwrite;
+          var canvas = document.createElement("canvas");
+          sample.row.canvas = canvas;
+          // sample.row.canvas.onclick = function(e) {
+          //   sample.row.renderer.overwrite = !sample.row.renderer.overwrite;
+          // };
+          canvas.onmousedown = function(e) {
+            if(!canvas.endTime) {
+              // Initialize the timeframe to a fixed value
+              var now = Date.now();
+              canvas.endTime = now - 4000;
+            } 
+              
+            canvas.startTime = canvas.endTime - 5000;
+            canvas.startTimeString = moment(canvas.startTime).format('HH:mm:ss');
+            canvas.endTimeString = moment(canvas.endTime).format('HH:mm:ss');
+
+            canvas.downEndTime = canvas.endTime;
+            canvas.startX = e.x;
+            canvas.msPerPixel = 5000 / canvas.width;
+            canvas.mouseDown = true;
+            e.cancelBubble = true;
+            e.returnValue = false;
+            if (e.stopPropagation) e.stopPropagation();
+            if (e.preventDefault) { e.preventDefault(); }
+            document.onmousemove = function(e) {
+              if (!e) var e = window.event;
+              if(canvas.mouseDown) {
+                canvas.endTime = canvas.downEndTime - (e.x-canvas.startX) * canvas.msPerPixel;
+                canvas.startTime = canvas.endTime - 5000;
+                canvas.startTimeString = moment(canvas.startTime).format('HH:mm:ss');
+                canvas.endTimeString = moment(canvas.endTime).format('HH:mm:ss');
+
+                e.cancelBubble = true;
+                e.returnValue = false;
+                if (e.stopPropagation) e.stopPropagation();
+                if (e.preventDefault) { e.preventDefault(); }
+                return false;
+              } else {
+                return true;
+              }
+            };
+            document.onmouseup = function(e) {
+              canvas.mouseDown = false;
+              document.onmousemove = null;
+            };
+            return false;
           };
+
+
           tds[0].appendChild(sample.row.canvas);
-          sample.row.renderer = new Renderer({'canvas':sample.row.canvas, 'row':sample.row, overwrite: true});
+          sample.row.renderer = new Renderer({'canvas':sample.row.canvas, 'row':sample.row, overwrite: false});
           renderers.push(sample.row.renderer);
         }
         // sample.row.renderer.render(t1, t2);
@@ -290,7 +334,7 @@ tables.push(new TableManager("Patient",
       ["Given Name", "Family Name"],
       function(tds, data) { tds[0].innerHTML = data.given_name; tds[1].innerHTML = data.family_name; },
       function(tds, keys) { tds[0].innerHTML = keys.mrn; },
-      ""
+      "Speculative patient info topic thus far used only to prove the viability of unicode text sent through DDS and out onto the web."
       ));
 
 window.onload = function() {
@@ -298,7 +342,7 @@ window.onload = function() {
   var wsHost = window.location.protocol == 'file:' ? 'http://dev.openice.info' : window.location.protocol + '//' + window.location.host;
 
   var openICE = new OpenICE(wsHost);
-  openICE.maxSamples = 200;
+  openICE.maxSamples = 1000;
   
 
   for(var i = 0; i < this.tables.length; i++) {
@@ -321,21 +365,31 @@ window.onload = function() {
 
   function renderFunction() {
     if(renderers.length > 0) {
+
+
       var now = Date.now();
       var t2 = now - 4000;
       var t1 = t2 - 5000;
       // var oldest = renderers[0];
+      var s1 = moment(t1).format('HH:mm:ss');
+      var s2 = moment(t2).format('HH:mm:ss');
 
 
       // if(oldest.lastRender) {
         for(var i = 0; i < renderers.length; i++) {
+          var canvas = renderers[i].canvas;
+          if(canvas.startTime && canvas.endTime) {
+            renderers[i].render(canvas.startTime, canvas.endTime, canvas.startTimeString, canvas.endTimeString);
+          } else {
+            renderers[i].render(t1, t2, s1, s2);
+          }
           // if(!renderers[i].lastRender) {
             // oldest = renderers[i];
             // break;
           // } else if(renderers[i].lastRender < oldest.lastRender) {
             // oldest = renderers[i];
           // }
-          renderers[i].render(t1, t2);
+          // renderers[i].render(t1, t2, s1, s2);
         }
       // }
       // oldest.render(t1, t2);
