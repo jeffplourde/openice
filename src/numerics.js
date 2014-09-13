@@ -198,12 +198,9 @@ tables.push(new TableManager("SampleArray",
         if(!sample.row.renderer) {
           var canvas = document.createElement("canvas");
           sample.row.canvas = canvas;
-          // sample.row.canvas.onclick = function(e) {
-          //   sample.row.renderer.overwrite = !sample.row.renderer.overwrite;
-          // };
+
           var touchdown = function(e) {
             if (!e) var e = window.event;
-            console.log(e);
             if(!canvas.endTime) {
               // Initialize the timeframe to a fixed value
               var now = Date.now();
@@ -224,7 +221,6 @@ tables.push(new TableManager("SampleArray",
             if (e.preventDefault) { e.preventDefault(); }
             var touchmove = function(e) {
               if (!e) var e = window.event;
-              console.log(e);
               if(canvas.mouseDown) {
                 canvas.endTime = canvas.downEndTime - ((e.touches ? e.touches[0].screenX : e.x)-canvas.startX) * canvas.msPerPixel;
                 canvas.startTime = canvas.endTime - 5000;
@@ -248,6 +244,23 @@ tables.push(new TableManager("SampleArray",
               document.removeEventListener("touchmove", touchmove);
               document.removeEventListener("touchend", touchup);
               document.removeEventListener("touchcancel", touchup);
+              var queryStart = new Date(canvas.startTime-10000);
+              var queryEnd = new Date((canvas.endTime+10000)>Date.now()?Date.now():canvas.endTime+10000);
+
+              if(sample.row.samples.length==0) {
+                var q = {"_id.sourceTimestamp": {$gt: queryStart, $lt: queryEnd}};
+                sample.row.query(q);
+              } else {
+                if (queryStart < sample.row.samples[0].sourceTimestamp) {
+                  var q = {"_id.sourceTimestamp": {$gt: queryStart, $lt: sample.row.samples[0].sourceTimestamp}};
+                  sample.row.query(q);
+                }
+                if(queryEnd > sample.row.latest_sample.sourceTimestamp) {
+                  var q = {"_id.sourceTimestamp": {$gt: sample.row.latest_sample.sourceTimestamp, $lt: queryEnd}};
+                  sample.row.query(q); 
+                }
+              }
+              
             };
             document.addEventListener("mousemove", touchmove);
             document.addEventListener("mouseup", touchup);
@@ -358,7 +371,7 @@ window.onload = function() {
   var wsHost = window.location.protocol == 'file:' ? 'http://dev.openice.info' : window.location.protocol + '//' + window.location.host;
 
   var openICE = new OpenICE(wsHost);
-  openICE.maxSamples = 1000;
+  openICE.maxSamples = 10000;
   
 
   for(var i = 0; i < this.tables.length; i++) {

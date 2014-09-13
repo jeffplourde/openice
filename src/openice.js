@@ -46,7 +46,7 @@ function Sample(row,msg) {
 	 * @public 
 	 * @property {Date} sourceTimestamp - Timestamp at the data source. 
 	 */
-	this.sourceTimestamp = Date.parse(msg.sourceTimestamp);
+	this.sourceTimestamp = new Date(msg.sourceTimestamp);
 
 	/** 
 	 * @public 
@@ -152,11 +152,14 @@ Row.prototype.addSample = function(data) {
 		this.samples.unshift(sample);
 	} else {
 		// Interleaved within existing samples
-		for(var i = 0; i < this.samples[i].length; i++) {
+		for(var i = 0; i < this.samples.length; i++) {
 			if(this.samples[i].sourceTimestamp==sample.sourceTimestamp) {
-				console.log("Not adding duplicate sample at " + sample.sourceTimestamp);
+				// Duplicate samples not currently allowed
+				// console.log("Not adding duplicate sample at " + sample.sourceTimestamp);
+				break;
 			} else if(this.samples[i].sourceTimestamp>sample.sourceTimestamp) {
-				this.samples.splice(i-1,0,sample);
+				// Insert a sample
+				this.samples.splice(i,0,sample);
 				break;
 			}
 		}
@@ -180,6 +183,10 @@ Row.prototype.removeAllSamples = function() {
 	}
 };
 
+Row.prototype.query = function(q) {
+	var message = {messageType:'Query',domain:this.table.domain,partition:this.table.partition,topic:this.table.topic,identifier:this.rowId, query:q};
+	this.table.openICE.connection.emit('dds', message);
+};
 /**
  * Represents a data table.
  * @constructor
@@ -356,7 +363,7 @@ function OpenICE(url) {
 		} else if ("Sample" == data.messageType) {
 			var row = table.rows[data.identifier];
 			if (null == row) {
-				console.log("No such row for sample");
+				console.log("No such row for sample "+data.identifier);
 				return;
 			}
 			row.addSample(data);
