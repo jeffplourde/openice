@@ -108,6 +108,14 @@ function Row(table, rowId) {
 	 * @property {Sample[]} samples - Collection of data samples for this row. 
 	 */
 	this.samples = [];
+
+
+	Object.defineProperty(this, 'latest_sample', {
+		get: function() {
+			return this.samples.length > 0 ? this.samples[this.samples.length-1] : null;
+		}
+	});
+
 }
 
 /**
