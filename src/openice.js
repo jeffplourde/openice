@@ -46,7 +46,7 @@ function Sample(row,msg) {
 	 * @public 
 	 * @property {Date} sourceTimestamp - Timestamp at the data source. 
 	 */
-	this.sourceTimestamp = msg.sourceTimestamp;
+	this.sourceTimestamp = Date.parse(msg.sourceTimestamp);
 
 	/** 
 	 * @public 
