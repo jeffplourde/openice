@@ -201,7 +201,9 @@ tables.push(new TableManager("SampleArray",
           // sample.row.canvas.onclick = function(e) {
           //   sample.row.renderer.overwrite = !sample.row.renderer.overwrite;
           // };
-          canvas.onmousedown = function(e) {
+          var touchdown = function(e) {
+            if (!e) var e = window.event;
+            console.log(e);
             if(!canvas.endTime) {
               // Initialize the timeframe to a fixed value
               var now = Date.now();
@@ -213,17 +215,18 @@ tables.push(new TableManager("SampleArray",
             canvas.endTimeString = moment(canvas.endTime).format('HH:mm:ss');
 
             canvas.downEndTime = canvas.endTime;
-            canvas.startX = e.x;
+            canvas.startX = e.touches ? e.touches[0].screenX : e.x;
             canvas.msPerPixel = 5000 / canvas.width;
             canvas.mouseDown = true;
             e.cancelBubble = true;
             e.returnValue = false;
             if (e.stopPropagation) e.stopPropagation();
             if (e.preventDefault) { e.preventDefault(); }
-            document.onmousemove = function(e) {
+            var touchmove = function(e) {
               if (!e) var e = window.event;
+              console.log(e);
               if(canvas.mouseDown) {
-                canvas.endTime = canvas.downEndTime - (e.x-canvas.startX) * canvas.msPerPixel;
+                canvas.endTime = canvas.downEndTime - ((e.touches ? e.touches[0].screenX : e.x)-canvas.startX) * canvas.msPerPixel;
                 canvas.startTime = canvas.endTime - 5000;
                 canvas.startTimeString = moment(canvas.startTime).format('HH:mm:ss');
                 canvas.endTimeString = moment(canvas.endTime).format('HH:mm:ss');
@@ -237,13 +240,26 @@ tables.push(new TableManager("SampleArray",
                 return true;
               }
             };
-            document.onmouseup = function(e) {
+            var touchup = function(e) {
+              if (!e) var e = window.event;
               canvas.mouseDown = false;
-              document.onmousemove = null;
+              document.removeEventListener("mousemove", touchmove);
+              document.removeEventListener("mouseup", touchup);
+              document.removeEventListener("touchmove", touchmove);
+              document.removeEventListener("touchend", touchup);
+              document.removeEventListener("touchcancel", touchup);
             };
+            document.addEventListener("mousemove", touchmove);
+            document.addEventListener("mouseup", touchup);
+            document.addEventListener("touchmove", touchmove);
+            document.addEventListener("touchend", touchup);
+            document.addEventListener("touchcancel", touchup);
+            
+
             return false;
           };
-
+          canvas.addEventListener("mousedown", touchdown);
+          canvas.addEventListener("touchstart", touchdown);
 
           tds[0].appendChild(sample.row.canvas);
           sample.row.renderer = new Renderer({'canvas':sample.row.canvas, 'row':sample.row, overwrite: false});
