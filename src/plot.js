@@ -168,6 +168,7 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
   var msPerSample = 1000 / this.row.keyValues.frequency;
   var lastTime = null;
   var lastValue = 0;
+  var lastX = 0, firstX = Number.NaN;
 
   for(var i = 0; i < this.row.samples.length; i++) {
   	var sample = this.row.samples[i];
@@ -217,7 +218,12 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
       var y = height - (y_prop * height);
 
       if(x_prop>=0&&x_prop<1&&y_prop>=0&&y_prop<1) {
+
         if(started) {
+          lastX = x;
+          if(isNaN(firstX)) {
+            firstX = x;
+          }
           // There is a gap in the data
           // TODO This won't work correctly with fill area!
           if(time > (lastTime + msPerSample+10)) {
@@ -242,8 +248,8 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
   }
 
   if(this.fillArea) {
-    ctx.lineTo(width, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
-    ctx.lineTo(0, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+    ctx.lineTo(lastX, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+    ctx.lineTo(firstX, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
     ctx.fill();
   } else {
     ctx.stroke();
