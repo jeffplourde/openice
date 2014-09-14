@@ -212,7 +212,7 @@ tables.push(new TableManager("SampleArray",
             canvas.endTimeString = moment(canvas.endTime).format('HH:mm:ss');
 
             canvas.downEndTime = canvas.endTime;
-            canvas.startX = e.touches ? e.touches[0].screenX : e.x;
+            canvas.startX = e.touches ? e.touches[0].screenX : e.screenX;
             canvas.msPerPixel = 5000 / canvas.width;
             canvas.mouseDown = true;
             e.cancelBubble = true;
@@ -222,7 +222,7 @@ tables.push(new TableManager("SampleArray",
             var touchmove = function(e) {
               if (!e) var e = window.event;
               if(canvas.mouseDown) {
-                canvas.endTime = canvas.downEndTime - ((e.touches ? e.touches[0].screenX : e.x)-canvas.startX) * canvas.msPerPixel;
+                canvas.endTime = canvas.downEndTime - ((e.touches ? e.touches[0].screenX : e.screenX)-canvas.startX) * canvas.msPerPixel;
                 canvas.startTime = canvas.endTime - 5000;
                 canvas.startTimeString = moment(canvas.startTime).format('HH:mm:ss');
                 canvas.endTimeString = moment(canvas.endTime).format('HH:mm:ss');
