@@ -12,24 +12,12 @@ var PIXEL_RATIO = (function () {
     return dpr / bsr;
 })();
 
-createHiPPICanvas = function(w, h, ratio) {
-    if (!ratio) { ratio = PIXEL_RATIO; }
-    var can = document.createElement("canvas");
-    can.width = w * ratio;
-    can.height = h * ratio;
-    can.style.width = w + "px";
-    can.style.height = h + "px";
-    can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
-    return can;
-}
-makeHiPPICanvas = function(canvas, ratio) {
+var makeHiPPICanvas = function(canvas) {
   var style = getComputedStyle(canvas);
+
   if(!canvas.styleWidthWhenComputed || style.width != canvas.styleWidthWhenComputed || style.height != canvas.styleHeightWhenComputed) {
-    if (!ratio) { ratio = PIXEL_RATIO; }
-    if(ratio != 1) {
-      canvas.width = ratio * parseFloat(style.width);
-      canvas.height = ratio * parseFloat(style.height);
-    }
+    canvas.width = PIXEL_RATIO * parseFloat(style.width);
+    canvas.height = PIXEL_RATIO * parseFloat(style.height);
     canvas.styleWidthWhenComputed = style.width;
     canvas.styleHeightWhenComputed = style.height;
   }
@@ -77,7 +65,7 @@ function Renderer(args) {
       this.__textFontSize = +value.match(/[0-9]+/);
     }
   });
-  this.textFont = args.textFont || "20pt Arial";
+  this.textFont = args.textFont || (PIXEL_RATIO*12)+"px Arial";
   Object.defineProperty(this, "textFontSize", {
     get: function() {
       return this.__textFontSize;
@@ -97,7 +85,6 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
   if(!isElementInViewport(this.canvas)) {
     return;
   }
-
 
   var ctx = this.canvas.getContext("2d");
   makeHiPPICanvas(this.canvas);
