@@ -65,7 +65,7 @@ function Renderer(args) {
       this.__textFontSize = +value.match(/[0-9]+/);
     }
   });
-  this.textFont = args.textFont || "12pt Arial";
+  this.textFont = args.textFont || (PIXEL_RATIO*12)+"px Arial";
   Object.defineProperty(this, "textFontSize", {
     get: function() {
       return this.__textFontSize;
