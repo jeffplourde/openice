@@ -36,11 +36,14 @@
 				right:0;
 			}
 		</style>
+		<script src="bower_components/angular/angular.js"></script>
 		<script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
 		<script language="javascript" type="text/javascript" src="build/numerics.js"></script>
+
 		<base target="_blank"/>
 	</head>
-	<body>
+	<body ng-app="diagnostics">
+
 	<h1>OpenICE System Diagnostics</h1>
 	<span class="description">This page shows current realtime data values from the OpenICE system.  It is meant to surface available data for diagnostic and testing purposes while other, more advanced UIs, UXs, and apps are developed to represent and interact with this data model in more meaningful ways.  Descriptions of each data topic have also been included.  <br/><br/>Note:
 	<ul><li>For convenience Unique Device Identifiers (UDIs) have been replaced on this page with Make/Model for a device when it is available from the DeviceIdentity topic.</li><li>Timestamps are presented in the timezone of the lab in Cambridge, MA for convenience though they are transported by the OpenICE system in Universal Time Coordinates.</li></ul></span><br/>
@@ -53,7 +56,43 @@
 	<h2>Partition&nbsp;<select id="partitionBox" multiple=""></select></h2>
 	</form>
 	<span class="description">Partitions are a DDS concept.  A publisher and subscriber must be "in" a common logical partition before the writers and readers they contain will "match" and begin sharing information.  The concept transcends topology.  A portable device accompanying an ambulatory patient connected via a wifi network can still be in the same logical partition as the devices in that patient's room attached to a physical ethernet network.  And a subscriber subscribed in that partition will receive data from both devices.  Thus a singular "ICE environment" defined by partition obviates a lot of issues with patient transport, ambulatory, and room preparation scenarios.  Our first candidate for a partitioning scheme is this one partition per-patient paradigm.  But options abound for other partitions existing in parallel perhaps for device type, assigned unit, etc.  This dropdown box collects all the partitions for all available publications and allows this page to "tune into" one partition in particular.  Currently in the lab several 'environments' are configured with their own partition name.</span><br/><br/>
+	<div ng-controller="DiagnosticController as di">
+		<script type="text/ng-template" id="data.html">
 
+		</script>
+		<div ng-repeat="t in topics">
+		<h2>{{t.name}}</h2><br/>
+		<span class="description">{{t.description}}</span>
+		<table>
+			<tr>
+				<td ng-repeat="key in t.keys">{{key.name}}</td>
+				<td>Timestamp</td>
+				<td ng-repeat="value in t.values">{{value.name}}</td>
+			</tr>
+			<tr ng-repeat="row in t.dataTable.rows">
+				<td ng-repeat="key in t.keys" ng-switch on="key.type" ng-init=" value = pathIndex(row.keyValues,key.id); suffix = key.suffix ">
+				   <img  ng-switch-when="img" ng-src="data:image/png;base64, {{value}}"></img>
+				   <span ng-switch-when="udi">{{deviceNames[value]}}{{suffix}}</span>
+				   <span ng-switch-when="time_t">{{timeFromTimeT(value)|date:'MM/dd/yyyy HH:mm:ss.sss'}}{{suffix}}</span>
+				   <span ng-switch-when="dob">{{value.month+"/"+value.day+"/"+value.century+value.year}}{{suffix}}</span>
+				   <span ng-switch-when="json">{{JSON.stringify(value)}}{{suffix}}</span>
+				   <span ng-switch-default>{{value}}{{suffix}}</span>
+				</td>
+				<td>{{row.latest_sample.sourceTimestamp|date:'MM/dd/yyyy HH:mm:ss.sss'}}</td>
+				<td ng-repeat="v in t.values" ng-switch on="v.type" ng-init="value = pathIndex(row.latest_sample.data,v.id); suffix = v.suffix">
+				   <img  ng-switch-when="img" ng-src="data:image/png;base64, {{value}}"></img>
+				   <span ng-switch-when="udi">{{deviceNames[value]}}{{suffix}}</span>
+				   <span ng-switch-when="time_t">{{timeFromTimeT(value)|date:'MM/dd/yyyy HH:mm:ss.sss'}}{{suffix}}</span>
+				   <span ng-switch-when="dob">{{value.month+"/"+value.day+"/"+value.century+value.year}}{{suffix}}</span>
+				   <span ng-switch-when="json">{{JSON.stringify(value)}}{{suffix}}</span>
+				   <span ng-switch-default>{{value}}{{suffix}}</span>
+				 </td>
+			</tr>
+		</table>
+		</div>
+
+
+	</div>
 	<script language="javascript" type="text/javascript">
 	  for(var i = 0; i < tables.length; i++) {
 	    tables[i].write(document);

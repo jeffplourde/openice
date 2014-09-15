@@ -14,6 +14,7 @@ module.exports = function(grunt) {
     },
     browserify: {
       dist: {
+        options: {debug: true},
         src: ['src/openice.info.js'],
         dest: 'build/<%= pkg.name %>.js'
       },
