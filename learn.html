@@ -29,6 +29,12 @@
 	</head>
 	<body>
 		<section id="splash">
+			<div id="logo-banner-holder" class="container-fluid">
+				<a href="./index.html">
+					<img id="logo-banner" class="hidden-xs" src="./assets/banner.png" />
+				</a>
+				<img id="logo" class="visible-xs" src="./assets/logo.png" />
+			</div>
 			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -76,68 +82,89 @@
 				</div>
 			</nav>
 		</section>
-		
-		<section id="landing-section">
-			<div id="landing-jumbotron" class="fadeIn container-fluid">
-				<img src="./assets/many-screens-sm.jpeg" class="img-responsive" />
-			</div>
-			<div id="landing-title" class="container">
-				<h1>MDPnP Interoperability Lab</h1>
-				<h2>Getting Connected for Patient Safety</h2>
-				<span class="glyphicon glyphicon-chevron-down"></span>
-			</div>
-			<div id="landing-link-container" class="container">
-				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./demo.html">
-						<img src="./assets/tile-demo.jpg" class="img-responsive" />
-						<h1>OpenICE Web Demo</h1>
-					</a>
-				</div>
-				<div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./software.html">
-						<img src="./assets/tile-software.jpg" class="img-responsive" />
-						<h1>Explore Our Software</h1>
-					</a>
-				</div>
-				<div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./learn.html">
-						<img src="./assets/tile-learn.jpg" class="img-responsive" />
-						<h1>Learn About Our Technology</h1>
-					</a>
-				</div>
-				<div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-md-3">
-					<a href="./interoperability.html">
-						<img src="./assets/tile-interop.jpg" class="img-responsive" />
-						<h1 >Interoperability 101</h1>
-					</a>
-				</div>
-			</div>
-			<div id="landing-info" class="page-container">
-				<h1>Change&nbsp;Expectations<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Technology<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Healthcare</h1>
-				<h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
-			</div>
 
-			<script>
-				// $(window).scroll(function() {
-				// 	$('#landing-link-container').each(function(){
-				// 		var imagePos = $(this).offset().top;
-				// 		var topOfWindow = $(window).scrollTop();
-				// 		if (imagePos < topOfWindow + 550) {
-				// 			$( '#landing-link-container' ).removeClass("vis-hidden");
-				// 			$( '#landing-link-1' ).addClass("fadeInUp");
-				// 			$( '#landing-link-2' ).addClass("fadeInUp-2");
-				// 			$( '#landing-link-3' ).addClass("fadeInUp-3");
-				// 			$( '#landing-link-4' ).addClass("fadeInUp-4");
-				// 		}
-				// 	});
-				// });
-			</script>
+		<section>
+			<!-- <div class="container">
+				<h1>Learn</h1>
+				<ul>
+					<li>OpenICE:
+						<ul>
+							<li>ICE Standard</li>
+							<li>Architecture Description</li>
+						</ul>
+					</li>
+					<li>Tutorials:
+						<ul>
+							<li>Device Adapter Setup</li>
+							<li>DDS</li>
+						</ul>
+					</li>
+					<li>Lab:
+						<ul>
+							<li>Capabilites</li>
+							<li>Tour</li>
+							<li>Inventory</li>
+							<li>Device Connectivity Reviews</li>
+						</ul>
+					</li>
+				</ul>
+			</div> -->
+			<div class="page-container">
+				<h1>Links to helpful information:</h1>
+				<ul>
+					<li><a href="./device-adapter-setup.html">Device Adapter Tutorial</a></li>
+					<li><a href="https://sourceforge.net/p/mdpnp/wiki/Medical%20Device%20Plug-and-Play%20Interoperability%20Lab/" target="_blank">Sourceforge Wiki</a></li>
+					<li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw" target="_blank" >Architecture Description</a></li>
+					<li><a href="http://www.mdpnp.org/uploads/F2761_completed_committee_draft.pdf" target="_blank">ICE Standard F2761</a></li>
+					<li><a href="http://portals.omg.org/dds/" target="_blank" >OMG DDS Portal</a></li>
+					<li><a href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/" target="_blank">OpenICE IDL</a></li>
+				</ul>
+			</div>
 		</section>
-		
+
+
+		<section id="readme">
+			<div class="page-container">
+				<br /><br />
+				<h1>API Access to the MD PnP OpenICE Network</h1>
+				<p>This website utilizes a JavaScript API to access the MD PnP medical device test bed. The purpose of this site is to visualize the vital sign data flowing from the OpenICE network in the MD PnP lab in Cambridge, MA.</p>
+				<p>To start the sample application, please navigate to the <a href="./demo.html" onclick="ga('send', 'event', 'button', 'click', 'view-demo');">demo</a> page.</p>
+				<br />
+
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="./demo.html" role="button" onclick="ga('send', 'event', 'button', 'click', 'view-demo');">View Streaming Medical<br />Data Demo</a></p>
+				<br />
+
+				<h1>Download the JavaScript API and Sample App from GitHub</h1>
+				<p>The git repository for the MD PnP Lab JavaScript API, this website, the 'flot' data visualization script and supporting assets are available on GitHub. Please contribute to this project by forking this code and submitting a pull request.</p>
+				<br />
+				<p class="text-center"><a class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/openice/" role="button" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'download');">Download the Demo</a></p>
+				<br />
+	
+				<h1>OpenICE.js Documentation</h1>
+				<p>The files used to visualize data on this webpage are listed below. The detailed documentation of OpenICE.js can be found by clicking the link below.</p>
+				<h3>Files in the Repository</h3>
+				<dl class="dl-horizontal">
+					<dt>openice.js</dt>
+					<dd>The JavaScript API developed at MD PnP used to access data flowing from the lab</dd>
+					<dt>openice.flot.js</dt>
+					<dd>The example script used in the demo webpage to pass data from OpenICE.js to a visualization library called flot.js</dd>
+					<dt>jquery.flot.js</dt>
+					<dd>The flot script used for plotting the vital signs data originating from the MD PnP lab</dd>
+					<dt>jquery.flot.time.js</dt>
+					<dd>The script used for creating 'flots' with a time-based axis</dd>
+					<dt>jquery.js</dt>
+					<dd>A dependency of several scripts</dd>
+					<dt>bootstrap.css</dt>
+					<dd>A front-end framework used to improve site layout and appearance</dd>
+				</dl>
+				<br />
+				<p class="text-center"><a id="documentation" class="btn btn-lg btn-primary" href="./jsdocs/" role="button" target="_blank" onclick="ga('send', 'event', 'button', 'click', 'documentation');">View the Documentation</a></p>
+				<br /><br />
+				<p>Page under construction. More content coming soon.</p>
+			</div>
+		</section>
+
+
 
 		<section class="footer page-container center-block">
 			<img src="./assets/logo.png">

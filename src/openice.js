@@ -46,7 +46,7 @@ function Sample(row,msg) {
 	 * @public 
 	 * @property {Date} sourceTimestamp - Timestamp at the data source. 
 	 */
-	this.sourceTimestamp = msg.sourceTimestamp;
+	this.sourceTimestamp = new Date(msg.sourceTimestamp);
 
 	/** 
 	 * @public 
@@ -109,11 +109,13 @@ function Row(table, rowId) {
 	 */
 	this.samples = [];
 
+
 	Object.defineProperty(this, 'latest_sample', {
 		get: function() {
 			return this.samples.length > 0 ? this.samples[this.samples.length-1] : null;
 		}
 	});
+
 }
 
 /**
@@ -142,7 +144,26 @@ Row.prototype.addSample = function(data) {
 	     */
 		self.emit('expire', {'row':self, 'sample':sample});
 	});
-	this.samples.push(sample);
+	if(this.samples.length==0||this.samples[this.samples.length-1].sourceTimestamp<sample.sourceTimestamp) {
+		// Newer than any existing sample
+		this.samples.push(sample);
+	} else if(sample.sourceTimestamp < this.samples[0].sourceTimestamp) {
+		// Older than any existing sample
+		this.samples.unshift(sample);
+	} else {
+		// Interleaved within existing samples
+		for(var i = 0; i < this.samples.length; i++) {
+			if(this.samples[i].sourceTimestamp==sample.sourceTimestamp) {
+				// Duplicate samples not currently allowed
+				// console.log("Not adding duplicate sample at " + sample.sourceTimestamp);
+				break;
+			} else if(this.samples[i].sourceTimestamp>sample.sourceTimestamp) {
+				// Insert a sample
+				this.samples.splice(i,0,sample);
+				break;
+			}
+		}
+	}
 	while(this.samples.length>this.table.openICE.maxSamples) {
 		this.samples.shift().expire();
 	}
@@ -162,6 +183,10 @@ Row.prototype.removeAllSamples = function() {
 	}
 };
 
+Row.prototype.query = function(q) {
+	var message = {messageType:'Query',domain:this.table.domain,partition:this.table.partition,topic:this.table.topic,identifier:this.rowId, query:q};
+	this.table.openICE.connection.emit('dds', message);
+};
 /**
  * Represents a data table.
  * @constructor
@@ -338,7 +363,7 @@ function OpenICE(url) {
 		} else if ("Sample" == data.messageType) {
 			var row = table.rows[data.identifier];
 			if (null == row) {
-				console.log("No such row for sample");
+				console.log("No such row for sample "+data.identifier);
 				return;
 			}
 			row.addSample(data);
