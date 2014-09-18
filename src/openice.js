@@ -84,7 +84,7 @@ Sample.prototype.expire = function() {
  * @param {Table} table - The parent table for this row.
  * @param {string} rowId - Unique identifier for this row.
  */
-function Row(table, rowId) {
+function Row(table, rowId, pub_partition) {
 	/** 
 	 * @access public
 	 * @property {Table} table - The parent table containing this row. 
@@ -96,6 +96,8 @@ function Row(table, rowId) {
 	 * @property {string} rowId - Unique identifier for this row. 
 	 */
 	this.rowId = rowId;
+
+	this.pub_partition = pub_partition;
 
 	/**
 	 * @access public 
@@ -224,7 +226,7 @@ Table.prototype.setSchema = function(schema) {
 Table.prototype.addRow = function(data) {
 	var row = this.rows[data.identifier];
 	if (null == row) {
-		row = new Row(this, data.identifier);
+		row = new Row(this, data.identifier, data.pub_partition);
 		var self = this;
 		row.on('sample', function(e) {
 			/**
