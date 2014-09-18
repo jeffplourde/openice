@@ -129,7 +129,7 @@ tables.push(new TableManager("DeviceIdentity",
                                tds[3].removeChild(tds[3].firstChild);
                             }
                             var img = new Image();
-                            img.src = "data:image/png;base64, " + data.icon.raster;
+                            img.src = "data:"+data.icon.content_type+";base64, " + data.icon.image;
                             tds[3].appendChild(img);
                             tds[4].innerHTML = data.build;
                           },
@@ -183,16 +183,16 @@ tables.push(new TableManager("LocalAlarmSettingsObjective",
       "This objective is published by a device to acknowledge that it has received the global alarm settings objective for a metric.  Eventually its AlarmSettings should indicate that the change has been made.  So the three AlarmSettingsXXX topics form an objective-state form of command and control.  At any time any participant can see the current state of request, acknowledgment of the request, and implementation of the requested change."
       ));      
 tables.push(new TableManager("Numeric", 
-      ["UDI", "Metric", "Instance"], 
+      ["UDI", "Metric", "Instance", "Units"], 
       ["Value", "Device Time"],
       function(tds, data) { tds[0].innerHTML = data.value; tds[1].innerHTML = timeFromTimeT(data.device_time); },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
-        tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id;
+        tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id; tds[3].innerHTML = keys.unit_id;
          },
       "Numerics are values observed by sensors at a relatively slow rate; generally <=1Hz.  Multiple sensors may exist for the same metric so the instance_id serves to distinguish between them.  If a timestamp is available from the device's internal clock it is specified as device_time.  A device ought to register an instance of Numeric when the associated sensor might provide observations.  If the sensor is physically disconnected or otherwise certain not to provide samples then the associated instance should be unregistered.  Sensors are encouraged to publish a new sample whenever a new observation is made even when the same value is observed.  In this way subscribers are made aware of the timeliness of the observation."
       ));
 tables.push(new TableManager("SampleArray", 
-      ["UDI", "Metric", "Instance", "Frequency"], 
+      ["UDI", "Metric", "Instance", "Units", "Frequency"], 
       ["Values", "Device Time"],
       function(tds, data, sample) { 
         if(!sample.row.renderer) {
@@ -286,8 +286,8 @@ tables.push(new TableManager("SampleArray",
         // sample.row.renderer.render(t1, t2);
         tds[1].innerHTML = timeFromTimeT(data.device_time); },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
-        tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id;
-        tds[3].innerHTML = keys.frequency; },
+        tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id; tds[3].innerHTML = keys.unit_id;
+        tds[4].innerHTML = keys.frequency; },
       "SampleArrays are values observed by sensors at a relatively high rate; generally >1Hz.  Multiple sensors may exist for the same metric so the instance_id serves to distinguish between them.  If a timestamp is available from the device's internal clock it is specified as device_time.  A device ought to register an instance of SampleArray when the associated sensor might provide observations.  If the sensor is physically disconnected or otherwise certain not to provide samples then the associated instance should be unregistered.  Sourcetimestamp and device_time should both represent the point in time at the end of the sample array."
       ));
 tables.push(new TableManager("PatientAlert", 
