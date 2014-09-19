@@ -17,4 +17,5 @@ function start(e) {
 	start('evita');
 	start('ivy');
 	start('eye');
-//	start('3');
+	start('eye2');
+	start('eye3');
