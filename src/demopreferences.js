@@ -1,5 +1,6 @@
 var plotColors = {
 	"MDC_PRESS_AWAY": "#00FFFF",
+	"MDC_VENT_VOL_TIDAL": "#00FFFF",
 	"MDC_PRESS_BLD": "#FF0000",
 	"MDC_PRESS_BLD_ART_ABP": "#FF0000",
 	"MDC_CONC_AWAY_CO2_ET": "#FF00FF",
@@ -16,6 +17,7 @@ var plotColors = {
 
 var commonNames = {
 	"MDC_PRESS_AWAY": "Airway Pressure",
+	"MDC_VENT_VOL_TIDAL": "Volume",
 	"MDC_PRESS_BLD": "Invasive BP",
 	"MDC_CONC_AWAY_CO2_ET": "Capnogram",
 	"MDC_ECG_LEAD_I": "ECG - I",
@@ -43,6 +45,7 @@ var flotNames = {
 	"MDC_ECG_LEAD_III": "monitor-HR",
 	"MDC_PULS_OXIM_PLETH": "monitor-spo2",
 	"MDC_FLOW_AWAY": "vent-RR",
+	"MDC_VENT_VOL_TIDAL": "vent-VOL",
 	"MDC_RESP_RATE": "monitor-RR",
 	"MDC_IMPED_TTHOR": "monitor-RR",
 	"MDC_ECG_LEAD_V2": "monitor",
@@ -68,11 +71,13 @@ var relatedNumeric = {
 	"MDC_ECG_LEAD_AVR": [],
 	"MDC_PRESS_BLD_ART": [],
 	"MDC_IMPED_TTHOR": [{code:"MDC_TTHOR_RESP_RATE",name:"RR"}],
+	"MDC_VENT_VOL_TIDAL": []
 };
 
 var fillArea = {
 	"MDC_FLOW_AWAY": true,
-	"MDC_PRESS_AWAY": true
+	"MDC_PRESS_AWAY": true,
+	"MDC_VENT_VOL_TIDAL": true
 };
 
 
