@@ -84,7 +84,7 @@ TableManager.prototype.changePartition = function(partition) {
         tr.keyTds.push(td);
         tr.appendChild(td);  
       }
-      self.keyHandler(tr.keyTds, row.keyValues);
+      self.keyHandler(tr.keyTds, row.keyValues, row);
 
       var td = document.createElement("td");
       tr.appendChild(td);
@@ -120,7 +120,7 @@ TableManager.prototype.changePartition = function(partition) {
 }
 
 tables.push(new TableManager("DeviceIdentity", 
-      ["UDI"],
+      ["UDI", "Publication Partition"],
       ["Manufacturer", "Model", "Serial Number", "Icon", "Build"],
       function(tds, data) { tds[0].innerHTML = data.manufacturer; 
                             tds[1].innerHTML = data.model; 
@@ -133,7 +133,7 @@ tables.push(new TableManager("DeviceIdentity",
                             tds[3].appendChild(img);
                             tds[4].innerHTML = data.build;
                           },
-      function(tds, keys) { tds[0].innerHTML = keys.unique_device_identifier.substring(0,4); },
+      function(tds, keys, row) { tds[0].innerHTML = keys.unique_device_identifier.substring(0,4); tds[1].innerHTML = JSON.stringify(row.pub_partition); },
       "DeviceIdentity allows a device to share identifying information.  A device generally publishes this information only once.  A device with a further connection, perhaps a serial RS-232 link, might publish details like serial number only after they become available."
       ));
 tables.push(new TableManager("DeviceConnectivity",
