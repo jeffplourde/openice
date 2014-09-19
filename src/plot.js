@@ -50,8 +50,33 @@ function Renderer(args) {
   this.row = args.row;
   this.continuousRescale = args.continuousRescale || false;
   this.overwrite = args.overwrite || false;	
+
+  Object.defineProperty(this, "minY", {
+    get: function() {
+      return this.fixedMinY || this.__minY;
+    },
+    set: function(value) {
+      this.__minY = value;
+    }
+  });
+
+  Object.defineProperty(this, "maxY", {
+    get: function() {
+      return this.fixedMaxY || this.__maxY;
+    },
+    set: function(value) {
+      this.__maxY = value;
+    }
+  });
+
   this.minY = Number.MAX_VALUE;
   this.maxY = Number.MIN_VALUE;
+  this.fixedMaxY = args.fixedMaxY;
+  this.fixedMinY = args.fixedMinY;
+  if(args.range) {
+    this.fixedMinY = args.range[0];
+    this.fixedMaxY = args.range[1];
+  }
   this.gap_size = 0.05;
   this.background = args.background || "#FFFFFF";
   this.color = args.color || "#000000";

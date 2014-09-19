@@ -273,6 +273,7 @@ window.onload = function(e) {
         {canvas:row.wavePlotDiv, 
          'row':row,
           background: '#000000',
+          range: prefs.getRange(row.keyValues.metric_id),
           color: prefs.getPlotColor(row.keyValues.metric_id),
           textColor: prefs.getPlotColor(row.keyValues.metric_id),
           borderWidth: 2,

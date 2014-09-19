@@ -80,6 +80,16 @@ var fillArea = {
 	"MDC_VENT_VOL_TIDAL": true
 };
 
+var range = {
+	"MDC_PRESS_AWAY": [-10, 60],
+	"MDC_FLOW_AWAY": [-25, 25],
+	"MDC_VENT_VOL_TIDAL": [0, 500]
+};
+
+exports.getRange = function(metric_id) {
+	// Currently assumes units match
+	return range[metric_id];
+}
 
 exports.getPlotColor = function(metric_id) {
 	return plotColors[metric_id] || "#FFFFFF";
