@@ -94,6 +94,27 @@
 				</div>
 			</div>
 			</form>
+			<div class="text-center container">
+				<button class="btn btn-info" data-toggle="modal" data-target="#data-flow-modal">Where is this data coming from?</button>
+				<br><br>
+				<div id="data-flow-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dataFlowModal" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								<h4 class="modal-title" id="modalLabel">Where is this data coming from?</h4>
+							</div>
+							<div class="modal-body">
+								<img class="img-responsive" src="./assets/OpenICE-data-flow.png" />
+								<br/><p>For more information, read <a href="./interoperability.html">Interoperability 101</a>.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
 			<div id="ivy-container" class="container-fluid demo-container">
 				<div id="webcam-ivy" class="col-md-6 text-center">
 					<h3 style="color: #FFF">Ivy Vital-Guard 450C</h3>
@@ -105,6 +126,7 @@
 								<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
 						</p>
 					</canvas>
+					<p style="color: #FFF">Live Video of the Patient Monitor</p>
 				</div>
 
 				<div id="flotit-monitor-HR" class="col-xs-12 col-md-6 enclosingDiv">
@@ -140,6 +162,7 @@
 								<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
 						</p>
 					</canvas>
+					<p style="color: #FFF">Live Video of the Ventilator</p>
 				</div>
 
 				<div id="flotit-vent-PEEP" class="col-xs-12 col-md-6 enclosingDiv">
