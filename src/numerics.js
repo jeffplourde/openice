@@ -249,7 +249,7 @@ tables.push(new TableManager("SampleArray",
 
               var q = {"_id.key":sample.row.keyValues, 
                        "_id.topic":sample.row.table.topic,
-                       "_id.partition":sample.row.table.partition,
+                       "_id.partition":sample.row.pub_partition,
                        "_id.domain":sample.row.table.domain};
 
               if(sample.row.samples.length==0) {
