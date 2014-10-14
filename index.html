@@ -79,7 +79,39 @@
 		
 		<section id="landing-section">
 			<div id="landing-jumbotron" class="fadeIn container-fluid">
-				<img src="./assets/many-screens-sm.jpeg" class="img-responsive" />
+
+				<div id="landing-slide-show" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#landing-slide-show" data-slide-to="0" class="active"></li>
+						<li data-target="#landing-slide-show" data-slide-to="1"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="item active">
+							<a href="./demo.html">
+								<img class="img-responsive" src="./assets/many-screens-sm.jpeg" alt="many-screens">
+								<div class="carousel-caption">
+									<h1>OpenICE Web Demo</h1>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="http://campaign.r20.constantcontact.com/render?ca=5fc0a671-73a5-4f93-8d24-082c7001cccc">
+								<img class="img-responsive" src="./assets/open-house-slide.jpeg" alt="open-house">
+							</a>
+						</div>
+					</div>
+					
+					<a class="left carousel-control" href="#landing-slide-show" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#landing-slide-show" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div>
+
+
+
+
 			</div>
 			<div id="landing-title" class="container">
 				<h1>MDPnP Interoperability Lab</h1>
