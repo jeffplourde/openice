@@ -50,7 +50,7 @@ TableManager.prototype.write = function(document) {
   document.write("<a name=\""+this.tableName+"\"></a>");
   document.write("<h2>"+this.tableName+"</h2><br/>");
   document.write("<span class=\"description\">"+this.description+"</span>");
-  document.write("<table id=\""+this.tableName+"\"><tr>");
+  document.write("<table class=\"table table-diagnostic\" id=\""+this.tableName+"\"><tbody>");
   for(var i = 0; i < this.keyFields.length; i++) {
     document.write("<td>"+this.keyFields[i]+"</td>");
   }
@@ -58,7 +58,7 @@ TableManager.prototype.write = function(document) {
   for(var i = 0; i < this.valueFields.length; i++) {
     document.write("<td>"+this.valueFields[i]+"</td>");
   }
-  document.write("</tr></table><br/>");
+  document.write("</tbody></table><br/>");
 }
 
 TableManager.prototype.changePartition = function(partition) {
@@ -198,6 +198,8 @@ tables.push(new TableManager("SampleArray",
         if(!sample.row.renderer) {
           var canvas = document.createElement("canvas");
           sample.row.canvas = canvas;
+          canvas.width = canvas.width/2;
+          canvas.height = canvas.height/2;
 
           var touchdown = function(e) {
             if (!e) var e = window.event;

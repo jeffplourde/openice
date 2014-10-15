@@ -25,6 +25,10 @@ module.exports = function(grunt) {
         src: ['src/numerics.js'],
         dest: 'build/numerics.js'
       },
+      diagnostics: {
+        src: ['src/diagnostics.js'],
+        dest: 'build/diagnostics.js'
+      },
       vitals: {
         src: ['src/vitals.js','src/main.js'],
         dest: 'build/vitals.js'

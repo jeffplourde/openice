@@ -1,3 +1,4 @@
+/* I can't figure out what this is for and it's screwing with the diagnostic page - peterson
 table {
 	border-collapse: collapse;
 	border: 1px solid #000000;
@@ -6,7 +7,7 @@ table {
 table td {
 	border: 1px solid #000000;
 }
-
+*/
 .navbar-default .navbar-nav>li>a {
 	color: #333;
 }
@@ -478,5 +479,27 @@ dt, dd {
   animation: fadeInUp 1s .75s;
 }
 
-
+/******     DIAGNOSTICS PAGE     *****/
+.description {
+	float:left;
+	margin-left: 10%;
+	font-size: 10pt;
+	font-style: italic;
+	width:70%;
+	margin-right:20%;
+	margin-bottom: 20pt;
+}
+#connectionStatus {
+	position:fixed;
+	top:0;
+	right:0;
+}
+.table-diagnostic {
+	border-collapse: collapse;
+}
+.table-diagnostic td {
+	padding: 3px;
+	border: 1px solid #ddd;
+}
+/*****     END OF DIAGNOSTICS PAGE     *****/
 
