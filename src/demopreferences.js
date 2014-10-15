@@ -75,13 +75,31 @@ var fillArea = {
 	"MDC_PRESS_AWAY": true
 };
 
+var ecg_range = undefined; // [-4,6];
+
+var range = {
+	"MDC_PRESS_AWAY": [-10, 60],
+	"MDC_FLOW_AWAY": [-25, 25],
+	"MDC_VENT_VOL_TIDAL": [0, 500],
+	"MDC_ECG_LEAD_I": ecg_range,
+	"MDC_ECG_LEAD_II": ecg_range,
+	"MDC_ECG_LEAD_III": ecg_range,
+	"MDC_ECG_LEAD_V1": ecg_range,
+	"MDC_ECG_LEAD_V2": ecg_range,
+};
+
+exports.getRange = function(metric_id) {
+	// Currently assumes units match
+	return range[metric_id];
+}
 
 exports.getPlotColor = function(metric_id) {
 	return plotColors[metric_id] || "#FFFFFF";
 }
 
 exports.getCommonName = function(metric_id) {
-	return commonNames[metric_id] || metric_id;
+	return "";
+	// return commonNames[metric_id] || metric_id;
 }
 
 exports.getFlotName = function(metric_id) {

@@ -35,8 +35,8 @@ var demopreferences;
 // We primarily use domain 15 for physiological data in the lab
 var targetDomain = 15;
 
-var expectedDelay = 1000;
-var timeDomain = 10000;
+var expectedDelay = 3000;
+var timeDomain = 4000;
 var acceptableOutOfSync = 2000;
 var PLOT_INTERVAL = 125;
 
@@ -153,7 +153,7 @@ window.onload = function(e) {
   port = port == '' ? '' : (':'+port);
   // Pages served over https can only utilize wss protocol
   var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  var wsHost = window.location.protocol == 'file:' ? 'dev.openice.info' : window.location.host;
+  var wsHost = window.location.protocol == 'file:' ? 'localhost:3000' : window.location.host;
   var baseURL = wsProtocol + wsHost;
 
   startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');

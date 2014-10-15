@@ -33,6 +33,10 @@ module.exports = function(grunt) {
       usc: {
         src: ['usc/src/app.js'],
         dest: 'build/usc.js'
+      },
+      drew: {
+        src: ['src/drew.js'],
+        dest: 'build/drew.js'
       }
     },
     watch: {

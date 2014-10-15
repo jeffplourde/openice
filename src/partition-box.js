@@ -71,7 +71,7 @@ function PartitionBox(openICE, selectElement, domainId, changePartition) {
     	}
     	changePartition(partitions);
   	};
-  	changePartition([""]);
+  	changePartition([]);
 }
 
 

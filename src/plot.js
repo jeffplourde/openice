@@ -28,9 +28,9 @@ var makeHiPPICanvas = function(canvas) {
 function isElementInViewport (el) {
 
     //special bonus for those using jQuery
-    if (el instanceof jQuery) {
-        el = el[0];
-    }
+    // if (jQuery && el instanceof jQuery) {
+    //     el = el[0];
+    // }
 
     var rect = el.getBoundingClientRect();
 
@@ -44,15 +44,53 @@ function isElementInViewport (el) {
     );
 }
 
+function RowMapper(row) {
+  this.row = row;
+}
+
+RowMapper.prototype.map = function(callback) {
+  var msPerSample = 1000 / this.row.keyValues.frequency;
+  for(var i = 0; i < this.row.samples.length; i++) {
+    var sample = this.row.samples[i];
+    var sampleTime = sample.sourceTimestamp;
+    for(var j = 0; j < sample.data.values.length; j++) {
+      var time = sampleTime - msPerSample * (sample.data.values.length - j);
+      var value = sample.data.values[j];
+      callback(time, value);
+    }
+  }
+}
+
+function ArrayMapper(array) {
+  this.array = array;
+}
+
+ArrayMapper.prototype.map = function(callback) {
+  for(var i = 0; i < this.array.length; i++) {
+    callback(i, this.array[i]);
+  }
+}
+
+
+
 function Renderer(args) {
   this.canvas = args.canvas;
   this.canvas = makeHiPPICanvas(this.canvas);
-  this.row = args.row;
+  if(args.data) {
+    this.dataMap = new ArrayMapper(args.data);
+  } else if(args.row) {
+    this.dataMap = new RowMapper(args.row);
+  } else if(args.mapper) {
+    this.dataMap = args.mapper;
+  }
+
   this.continuousRescale = args.continuousRescale || false;
   this.overwrite = args.overwrite || false;	
   this.minY = Number.MAX_VALUE;
   this.maxY = Number.MIN_VALUE;
-  this.gap_size = 0.05;
+
+  
+  this.gap_size = typeof(args.gap_size) == 'undefined' ? 0.05 : args.gap_size;
   this.background = args.background || "#FFFFFF";
   this.color = args.color || "#000000";
   this.textColor = args.textColor || "#000000";
@@ -76,6 +114,9 @@ function Renderer(args) {
   this.borderColor = args.borderColor || "#000000";
   this.fillArea = args.fillArea || false;
 }
+
+Renderer.prototype.ArrayMapper = ArrayMapper;
+Renderer.prototype.RowMapper = RowMapper;
 
 module.exports = exports = Renderer;
 
@@ -152,28 +193,29 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
 
   var aged_segment = true;
   var started = false;
-  var msPerSample = 1000 / this.row.keyValues.frequency;
+  
   var lastTime = null;
   var lastValue = 0;
   var lastX = 0, firstX = Number.NaN;
 
-  for(var i = 0; i < this.row.samples.length; i++) {
-  	var sample = this.row.samples[i];
-    var sampleTime = sample.sourceTimestamp;
-  	for(var j = 0; j < sample.data.values.length; j++) {
-  	  var time = sampleTime - msPerSample * (sample.data.values.length - j);
-  	  var value = sample.data.values[j];
+
+  var self = this;
+  this.dataMap.map(function(time, value) {
+
   	  if(time>=t1&&time<t2) {
-  	  	this.minY = Math.min(value, this.minY);
-  	  	this.maxY = Math.max(value, this.maxY);
-  	  	if(this.maxY == this.minY) {
-  	  		this.maxY = this.minY + 0.01;
+        //console.log("BEFORE "+time+","+value+","+self.minY+","+self.maxY);
+  	  	self.minY = Math.min(value, self.minY);
+  	  	self.maxY = Math.max(value, self.maxY);
+  	  	if(self.maxY == self.minY) {
+  	  		self.maxY = self.minY + 0.01;
   	  	}
+        //console.log("AFTER "+time+","+value+","+self.minY+","+self.maxY);
   	  } else {
-        continue;
+        return;
       }
+
       var x_prop = -1;
-      if(this.overwrite) {
+      if(self.overwrite) {
         var split_prop = 1 * (t2 - t0) / (t2 - t1);
         if(time >= t0 && time < t2) {
           // the newer data (left)
@@ -187,7 +229,7 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
           // the older data (right)
           x_prop = 1 * (time - t1) / (t0-t1);
           x_prop *= (1-split_prop);
-          if(x_prop < this.gap_size) {
+          if(x_prop < self.gap_size) {
             x_prop = -1;
           } else {
             x_prop += split_prop;
@@ -198,11 +240,12 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
       } else {
         x_prop = 1 * (time - t1) / (t2-t1);
       }
-        
-      var y_prop = 1 * (value - this.minY) / (this.maxY-this.minY);
+      
+      var y_prop = 1 * (value - self.minY) / (self.maxY-self.minY);
       
       var x = x_prop * width;
       var y = height - (y_prop * height);
+      
 
       if(x_prop>=0&&x_prop<1&&y_prop>=0&&y_prop<1) {
 
@@ -213,15 +256,17 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
           }
           // There is a gap in the data
           // TODO This won't work correctly with fill area!
-          if(time > (lastTime + msPerSample+10)) {
+          // console.log(x_prop+","+y_prop+","+time+","+lastTime+","+self.gap_size);
+          if(time > (lastTime + self.gap_size)) {
             ctx.stroke();
             ctx.moveTo(x,y);
           } else {
+            // console.log("lineTo:"+x+","+y);
             ctx.lineTo(x,y);
           }
         } else {
-          if(this.fillArea) {
-            ctx.moveTo(x, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+          if(self.fillArea) {
+            ctx.moveTo(x, height - height * ((self.minY>0?self.minY:0) - self.minY) / (self.maxY - self.minY));
             ctx.lineTo(x,y);
           } else {
             ctx.moveTo(x,y);
@@ -231,16 +276,17 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
       }
       lastTime = time;
       lastValue = value;
-    }
-  }
+  });
 
-  if(this.fillArea) {
-    ctx.lineTo(lastX, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
-    ctx.lineTo(firstX, height - height * ((this.minY>0?this.minY:0) - this.minY) / (this.maxY - this.minY));
+  if(self.fillArea) {
+    ctx.lineTo(lastX, height - height * ((self.minY>0?self.minY:0) - self.minY) / (self.maxY - self.minY));
+    ctx.lineTo(firstX, height - height * ((self.minY>0?self.minY:0) - self.minY) / (self.maxY - self.minY));
     ctx.fill();
   } else {
     ctx.stroke();
   }
   ctx.restore();
+
 }
 
+Renderer.ArrayMapper = ArrayMapper;
