@@ -505,5 +505,8 @@ dt, dd {
 	padding: 3px;
 	border: 1px solid #ddd;
 }
+.table-heading{
+	overflow: scroll;
+}
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
