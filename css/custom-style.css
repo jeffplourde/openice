@@ -490,9 +490,13 @@ dt, dd {
 	margin-bottom: 20pt;
 }
 #connectionStatus {
-	position:fixed;
-	top:0;
-	right:0;
+	position: absolute;
+	right: 8px;
+}
+#connectionStatus.sticky {
+    position: fixed;
+    opacity: 0.5;
+    top: 0px;
 }
 .table-diagnostic {
 	border-collapse: collapse;

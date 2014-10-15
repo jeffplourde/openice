@@ -87,6 +87,9 @@
 					This page is not optimized for mobile.
 				</div>
 			</div>
+			<div id="connectionStatus">
+				<h2><span class="status"></span></h2>
+			</div>
 			<div class="container">
 				<h1>OpenICE System Diagnostics</h1>
 				<span class="description">This page shows current realtime data values from the OpenICE system.  It is meant to surface available data for diagnostic and testing purposes while other, more advanced UIs, UXs, and apps are developed to represent and interact with this data model in more meaningful ways.  Descriptions of each data topic have also been included.
@@ -99,9 +102,6 @@
 				</span>
 				<br/>
 
-				<div id="connectionStatus">
-					<h2><span class="status"></span></h2>
-				</div>
 				<h2>Status:&nbsp;<span class="status"></span></h2>
 				<span class="description">"Status" (also in the upper right) indicates whether this page is currently connected to the OpenICE web gateway.  The OpenICE web gateway is a <a href="http://www.nodejs.org">node.js</a> server program that uses an MD PnP DDS add-on for node.js to retrieve DDS information and share it over the web.  It utilizes <a href="http://socket.io">socket.io</a> for connectivity between client and server.</span>
 
@@ -109,7 +109,7 @@
 				<form id="partitionForm" role="form" class="form-horizontal">
 					<div class="form-group">
 						<label for="partitionBox" class="col-sm-2 control-label">Select one or more partitions to view:</label>
-						<div class="col-sm-10"><select class="form-control" id="partitionBox" multiple=""></select></div>
+						<div class="col-sm-6"><select class="form-control" id="partitionBox" multiple=""></select></div>
 					</div>
 				</form>
 

@@ -50,6 +50,7 @@ TableManager.prototype.write = function(document) {
   document.write("<a name=\""+this.tableName+"\"></a>");
   document.write("<h2>"+this.tableName+"</h2><br/>");
   document.write("<span class=\"description\">"+this.description+"</span>");
+  document.write("<div class=\"table-responsive\">");
   document.write("<table class=\"table table-diagnostic\" id=\""+this.tableName+"\"><tbody>");
   for(var i = 0; i < this.keyFields.length; i++) {
     document.write("<td>"+this.keyFields[i]+"</td>");
@@ -58,7 +59,8 @@ TableManager.prototype.write = function(document) {
   for(var i = 0; i < this.valueFields.length; i++) {
     document.write("<td>"+this.valueFields[i]+"</td>");
   }
-  document.write("</tbody></table><br/>");
+  document.write("</tbody></table>");
+  document.write("</div><br/>");
 }
 
 TableManager.prototype.changePartition = function(partition) {
@@ -374,6 +376,18 @@ tables.push(new TableManager("Patient",
       ));
 
 window.onload = function() {
+
+  // http://stackoverflow.com/questions/2907367/have-a-div-cling-to-top-of-screen-if-scrolled-down-past-it
+  var $window = $(window),
+  $stickyEl = $('#connectionStatus'),
+  elTop = $stickyEl.offset().top;
+
+  $window.scroll(function() {
+    $stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);
+  });
+  setTimeout(function() {$stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);}, 100);
+
+
   var select = document.getElementById('partitionBox');
   var wsHost = window.location.protocol == 'file:' ? 'http://dev.openice.info' : window.location.protocol + '//' + window.location.host;
 
