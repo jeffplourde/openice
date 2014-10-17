@@ -1,84 +1,84 @@
 /******     NAVBAR STUFF     ******/
 .navbar-default .navbar-nav>li>a {
-	color: #333;
+  color: #333;
 }
 
 .navbar-default .navbar-brand {
-	color: #333;
+  color: #333;
 }
 
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-	color: #6CF;
+  color: #6CF;
 }
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-	color: #6CF;
+  color: #6CF;
 }
 
 .navbar-brand {
-	font-size: 27px;
+  font-size: 27px;
 }
 /******     END NAVBAR STUFF     ******/
 
 /******     DEMO CSS     ******/
 .demo-container {
-	background-color:#000000;
-	border-radius: 5px;
-	margin: 1px;
-	padding-right: 5px;
-	padding-left: 5px;
-	line-height: 1.15;
+  background-color:#000000;
+  border-radius: 5px;
+  margin: 1px;
+  padding-right: 5px;
+  padding-left: 5px;
+  line-height: 1.15;
 }
 
 .enclosingDiv {
-	padding: 0px;
+  padding: 0px;
 }
 
 .waveform {
-	padding-right: 5px;
-	padding-left: 5px;
-	color: #FFF;
+  padding-right: 5px;
+  padding-left: 5px;
+  color: #FFF;
 }
 
 .waveLabelSpan {
-	display: block;
-	font-size: 20px;
+  display: block;
+  font-size: 20px;
 }
 
 .graphWrapper {
 }
 
 .graph {
-	height: 125px;
-	margin: 5px auto 5px 0;
-	width:100%;
+  height: 125px;
+  margin: 5px auto 5px 0;
+  width:100%;
 }
 
 .numeric {
-	padding-right: 5px;
-	padding-left: 5px;
-	color: #FFF;
+  padding-right: 5px;
+  padding-left: 5px;
+  color: #FFF;
 }
 
 .numericLabelSpan {
-	display: block;
-	font-size: 20px;
+  display: block;
+  font-size: 20px;
 }
 
 .valueSpan {
-	display: block;
-	font-size: 100px;
-	text-align: center;
+  display: block;
+  font-size: 100px;
+  text-align: center;
 }
 
 #header-demo {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 #webcam {
-	background-color:#000000;
+  background-color:#000000;
 }
 .videowrapper {
     position: relative;
@@ -98,11 +98,11 @@
 }
 
 #connectionStateAlert {
-	width: 125px;
-	display: inline;
-	position: absolute;
-	right: 30px;
-	z-index: 2;
+  width: 125px;
+  display: inline;
+  position: absolute;
+  right: 30px;
+  z-index: 2;
 }
 
 #connectionStateAlert.sticky {
@@ -116,52 +116,52 @@
 /*****     SITE-WIDE STUFF    *****/
 
 #logo-banner-holder {
-	padding-left: 0px;
-	padding-right: 0px;
-	position: relative;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: relative;
 }
 
 #logo-banner {
-	width: 100%;
+  width: 100%;
 }
 
 #logo {
-	height: 100px;
-	padding-left: 0px;
+  height: 100px;
+  padding-left: 0px;
 }
 
 .footer {
-	color: #777;
-	text-align: center;
+  color: #777;
+  text-align: center;
 }
 
 .page-container {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 @media (min-width: 768px) {
-	.page-container {
-		padding-right: 15px;
-		padding-left: 15px;
-		width: 700px;
-	}
+  .page-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 700px;
+  }
 }
 
 @media (min-width: 992px) {
-	.page-container {
-		padding-right: 15px;
-		padding-left: 15px;	
-		width: 700px;
-	}
+  .page-container {
+    padding-right: 15px;
+    padding-left: 15px; 
+    width: 700px;
+  }
 }
 
 @media (min-width: 1200px) {
-	.page-container {
-		width: 920px;
-	}
+  .page-container {
+    width: 920px;
+  }
 }
 
 /*****     END SITE-WIDE STUFF     *****/
@@ -169,11 +169,11 @@
 /******     LANDING PAGE     ******/
 
 #landing-jumbotron {
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
 }
 .carousel-caption {
 background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
@@ -183,48 +183,48 @@ background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,
 background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
 }
 #landing-title {
-	text-align: center;
-	margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 #landing-title h1 {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 #landing-title h2 {
-	color: #777;
-	margin-top: 0px;
+  color: #777;
+  margin-top: 0px;
 }
 #landing-title p {
-	font-size: 1.25em;
-	color: #333;
+  font-size: 1.25em;
+  color: #333;
 }
 #landing-title span {
-	font-size: 2.5em;
-	margin-top: 5px;
+  font-size: 2.5em;
+  margin-top: 5px;
 }
 @media (max-width: 1000px) {
-	#landing-title h1 {
-		font-size: 35px;
-	}
-	#landing-title h2 {
-		font-size: 25px;
-	}
+  #landing-title h1 {
+    font-size: 35px;
+  }
+  #landing-title h2 {
+    font-size: 25px;
+  }
 }
 @media (min-width: 1000px) {
-	#landing-title h1 {
-		font-size: 75px;
-	}
-	#landing-title h2 {
-		font-size: 35px;
-	}
+  #landing-title h1 {
+    font-size: 75px;
+  }
+  #landing-title h2 {
+    font-size: 35px;
+  }
 }
 
 #landing-link-container {
-	margin-bottom: 75px;
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-	overflow: auto;
+  margin-bottom: 75px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: auto;
 }
 @media (min-width: 768px) {
   #landing-link-container {
@@ -238,24 +238,40 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179
 }
 
 .landing-link {
-	padding: 5px;
+  padding: 5px;
 }
 .landing-link-title
  {
- 	position:absolute;
-    left:0;
-    right:0;
-    margin-left:auto;
-    margin-right:auto;
-	top: 25px;
-	width: 250px;
-	color: #FFF;
-	text-align: center;
-	background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(70%,rgba(179,179,179,0)), color-stop(100%,rgba(255,255,255,0)));
-	background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
-	background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
-	background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+  position:absolute;
+  left:0;
+  right:0;
+  margin-left:auto;
+  margin-right:auto;
+  top: 40px;
+  width: 250px;
+  text-align: center;
+  color: #FFF;
+  background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(70%,rgba(179,179,179,0)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+}
+.landing-link-title-light {
+  position:absolute;
+  left:0;
+  right:0;
+  margin-left:auto;
+  margin-right:auto;
+  top: 40px;
+  width: 250px;
+  text-align: center;
+  color: #000;
+  background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,1)), color-stop(70%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 80%,rgba(255,255,255,0) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%);
 }
 .landing-link-image {
     display: block;
@@ -263,20 +279,20 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179
     margin-right: auto;
 }
 .landing-link a:hover > img {
-	opacity: 0.4;
+  opacity: 0.4;
 }
 
 #landing-info {
-	margin-bottom: 100px;
+  margin-bottom: 100px;
 }
 #landing-info h1 {
-	text-align: center;
-	font-weight: 300;
+  text-align: center;
+  font-weight: 300;
 }
 #landing-info h3 {
-	text-align: center;
-	font-weight: 300;
-	margin-top: 50px;
+  text-align: center;
+  font-weight: 300;
+  margin-top: 50px;
 }
 
 @-webkit-keyframes fadeIn {
@@ -297,17 +313,17 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179
 
 /******     DIAGNOSTICS PAGE     *****/
 .description {
-	float:left;
-	margin-left: 10%;
-	font-size: 10pt;
-	font-style: italic;
-	width:70%;
-	margin-right:20%;
-	margin-bottom: 20pt;
+  float:left;
+  margin-left: 10%;
+  font-size: 10pt;
+  font-style: italic;
+  width:70%;
+  margin-right:20%;
+  margin-bottom: 20pt;
 }
 #connectionStatus {
-	position: absolute;
-	right: 8px;
+  position: absolute;
+  right: 8px;
 }
 #connectionStatus.sticky {
     position: fixed;
@@ -315,20 +331,20 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179
     top: 0px;
 }
 .table-diagnostic {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 .table-diagnostic td {
-	padding: 3px;
-	border: 1px solid #ddd;
+  padding: 3px;
+  border: 1px solid #ddd;
 }
 .table-heading{
-	overflow: scroll;
+  overflow: scroll;
 }
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 /* Don't know what these are for... */
 
 dt, dd {
-	padding-top: 8px;
+  padding-top: 8px;
 }
 

@@ -1,166 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>MD PnP OpenICE</title>
+  <head>
+    <title>MD PnP OpenICE</title>
 
-		<meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
-  		<meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
-  		<meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
-		
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
+    <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
+    <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link href="assets/favicon.ico" rel="shortcut icon">
+    <link href="assets/favicon.ico" rel="shortcut icon">
 
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/custom-style.css" rel="stylesheet">
-		<script language="javascript" type="text/javascript" src="js/respond.min.js"></script>
-		
-		<script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
-		<script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-51695046-1', 'auto');ga('send', 'pageview');
-		</script>
-	</head>
-	<body>
-		<section id="splash">
-			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
-							<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="./index.html" >OpenICE</a>
-					</div>
-					<div id="main-nav-collapse" class="collapse navbar-collapse">
-						<ul class="nav navbar-nav">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="./software.html">Explore Our Software</a></li>
-									<li><a href="./demo.html">OpenICE Web Demo</a></li>
-									<li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
-									<li class="divider"></li>
-									<li><a href="http://mdpnp.sourceforge.net/" target="_blank">OpenICE Demo-App Suite</a></li>
-									<li><a href="https://play.google.com/store/apps/details?id=org.mdpnp.rtbb&amp;hl=en" target="_blank">Blue Button Android App</a></li>
-									<!-- <li><a href="./software.html#previous-demos">Previous Demos</a></li> -->
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Learn<b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="./learn.html">Learn About Our Technology</a></li>
-									<!-- <li><a href="./learn.html">OpenICE Technical Description</a></li>
-									<li><a href="./learn.html">Interoperability Tutorials</a></li>
-									<li><a href="./learn.html">Lab Capabilities</a></li> -->
-									<li><a href="./device-adapter-setup.html">Device Adapter Tutorial</a></li>
-									<li class="divider"></li>
-									<li><a href="https://sourceforge.net/p/mdpnp/wiki/Medical%20Device%20Plug-and-Play%20Interoperability%20Lab/" target="_blank">Sourceforge Wiki</a></li>
-									<li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw" target="_blank" >Architecture Description</a></li>
-									<li><a href="http://www.mdpnp.org/uploads/F2761_completed_committee_draft.pdf" target="_blank">ICE Standard F2761</a></li>
-									<li><a href="http://portals.omg.org/dds/" target="_blank" >OMG DDS Portal</a></li>
-									<li><a href="http://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl" target="_blank">OpenICE IDL</a></li>
-								</ul>
-							</li>
-							<li><a href="./interoperability.html"><small>Interoperability 101</small></a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="http://www.mdpnp.org" target="_blank">MD PnP Home</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</section>
-		
-		<section id="landing-section">
-			<div id="landing-jumbotron" class="fadeIn container-fluid">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+    <script language="javascript" type="text/javascript" src="js/respond.min.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-51695046-1', 'auto');ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <section id="splash">
+      <nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html" >OpenICE</a>
+          </div>
+          <div id="main-nav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="./software.html">Explore Our Software</a></li>
+                  <li><a href="./software.html#downloads">Downloads</a></li>
+                  <li class="divider"></li>
+                  <li><a href="./demo.html">OpenICE Web Demo</a></li>
+                  <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="./resources.html">Learning Resources</a></li>
+                  <li><a href="./resources.html#documentation">Documentation</a></li>
+                  <li><a href="./resources.html#further-reading">Further Reading</a></li>
+                </ul>
+              </li>
+              <li><a href="./what-is-openice.html"><small>What is OpenICE?</small></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://www.mdpnp.org" target="_blank">MD PnP Home</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </section>
+    
+    <section id="landing-section">
+      <div id="landing-jumbotron" class="fadeIn container-fluid">
+        <div id="landing-slide-show" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#landing-slide-show" data-slide-to="0" class="active"></li>
+            <li data-target="#landing-slide-show" data-slide-to="1"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="item active">
+              <a href="./demo.html">
+                <img class="img-responsive" src="./assets/many-screens-sm.jpeg" alt="many-screens">
+                <div class="carousel-caption">
+                  <h1>OpenICE Web Demo</h1>
+                </div>
+              </a>
+            </div>
+            <div class="item">
+              <a href="http://campaign.r20.constantcontact.com/render?ca=5fc0a671-73a5-4f93-8d24-082c7001cccc">
+                <img class="img-responsive" src="./assets/open-house-slide.jpeg" alt="open-house">
+              </a>
+            </div>
+          </div>
+          <a class="left carousel-control" href="#landing-slide-show" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </a>
+          <a class="right carousel-control" href="#landing-slide-show" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
+        </div>
+      </div>
+      <div id="landing-title" class="container-fluid">
+        <h1>MDPnP Interoperability Lab</h1>
+        <h2>Getting Connected for Patient Safety</h2>
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </div>
+      <div id="landing-link-container">
+        <div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+          <a href="./demo.html">
+            <img class="landing-link-image img-responsive" src="./assets/tile-demo.jpg" />
+            <div>
+              <h1 class="landing-link-title">OpenICE Web Portal</h1>
+            </div>
+          </a>
+        </div>
+        <div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+          <a href="./software.html">
+            <img class="landing-link-image img-responsive" src="./assets/tile-software.jpg" />
+            <div>
+              <h1 class="landing-link-title">Explore Our Software</h1>
+            </div>
+          </a>
+        </div>
+        <div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+          <a href="./learn.html">
+            <img class="landing-link-image img-responsive" src="./assets/tile-learn.jpg" />
+            <div>
+              <h1 class="landing-link-title">OpenICE Resources</h1>
+            </div>
+          </a>
+        </div>
+        <div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+          <a href="./interoperability.html">
+            <img class="landing-link-image img-responsive" src="./assets/tile-interop.jpg" />
+            <div>
+              <h1 class="landing-link-title-light">What is OpenICE?</h1>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div id="landing-info" class="page-container">
+        <h1>Change&nbsp;Expectations<br />
+        <small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
+        Change&nbsp;Technology<br />
+        <small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
+        Change&nbsp;Healthcare</h1>
+        <h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
+      </div>
+    </section>  
 
-				<div id="landing-slide-show" class="carousel slide" data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#landing-slide-show" data-slide-to="0" class="active"></li>
-						<li data-target="#landing-slide-show" data-slide-to="1"></li>
-					</ol>
-					<div class="carousel-inner">
-						<div class="item active">
-							<a href="./demo.html">
-								<img class="img-responsive" src="./assets/many-screens-sm.jpeg" alt="many-screens">
-								<div class="carousel-caption">
-									<h1>OpenICE Web Demo</h1>
-								</div>
-							</a>
-						</div>
-						<div class="item">
-							<a href="http://campaign.r20.constantcontact.com/render?ca=5fc0a671-73a5-4f93-8d24-082c7001cccc">
-								<img class="img-responsive" src="./assets/open-house-slide.jpeg" alt="open-house">
-							</a>
-						</div>
-					</div>
-					
-					<a class="left carousel-control" href="#landing-slide-show" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-					</a>
-					<a class="right carousel-control" href="#landing-slide-show" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>
-				</div>
-			</div>
-			<div id="landing-title" class="container-fluid">
-				<h1>MDPnP Interoperability Lab</h1>
-				<h2>Getting Connected for Patient Safety</h2>
-				<span class="glyphicon glyphicon-chevron-down"></span>
-			</div>
-			<div id="landing-link-container">
-				<div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-lg-3">
-					<a href="./demo.html">
-						<img class="landing-link-image img-responsive" src="./assets/tile-demo.jpg" />
-						<div class="landing-link-title">
-							<h1>OpenICE Web Demo</h1>
-						</div>
-					</a>
-				</div>
-				<div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-lg-3">
-					<a href="./software.html">
-						<img class="landing-link-image img-responsive" src="./assets/tile-software.jpg" />
-						<div class="landing-link-title">
-							<h1>Explore Our Software</h1>
-						</div>
-					</a>
-				</div>
-				<div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-lg-3">
-					<a href="./learn.html">
-						<img class="landing-link-image img-responsive" src="./assets/tile-learn.jpg" />
-						<div class="landing-link-title">
-							<h1>Learn About Our Technology</h1>
-						</div>
-					</a>
-				</div>
-				<div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-lg-3">
-					<a href="./interoperability.html">
-						<img class="landing-link-image img-responsive" src="./assets/tile-interop.jpg" />
-						<div class="landing-link-title">
-							<h1 >Interoperability 101</h1>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div id="landing-info" class="page-container">
-				<h1>Change&nbsp;Expectations<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Technology<br />
-				<small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
-				Change&nbsp;Healthcare</h1>
-				<h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
-			</div>
-		</section>	
-
-		<section class="footer page-container center-block">
-			<img src="./assets/logo.png">
-		</section>
-	</body>
+    <section class="footer page-container center-block">
+      <img src="./assets/logo.png">
+    </section>
+  </body>
 </html>
