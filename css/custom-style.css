@@ -1,13 +1,4 @@
-/* I can't figure out what this is for and it's screwing with the diagnostic page - peterson
-table {
-	border-collapse: collapse;
-	border: 1px solid #000000;
-}
-
-table td {
-	border: 1px solid #000000;
-}
-*/
+/******     NAVBAR STUFF     ******/
 .navbar-default .navbar-nav>li>a {
 	color: #333;
 }
@@ -29,6 +20,7 @@ table td {
 .navbar-brand {
 	font-size: 27px;
 }
+/******     END NAVBAR STUFF     ******/
 
 /******     DEMO CSS     ******/
 .demo-container {
@@ -88,230 +80,6 @@ table td {
 #webcam {
 	background-color:#000000;
 }
-/******     END DEMO CSS     ******/
-
-#demo-header {
-	display: none;	
-}
-
-.iconImg {
-	width: 63px;
-	height: 63px;
-}
-
-dt, dd {
-	padding-top: 8px;
-}
-
-#logo-banner-holder {
-	padding-left: 0px;
-	padding-right: 0px;
-	position: relative;
-}
-
-#logo-banner {
-	width: 100%;
-}
-
-#logo {
-	height: 100px;
-	padding-left: 0px;
-}
-
-@media (min-width: 768px) {
-	#logo-img {
-		margin-top: 15px;
-		margin-bottom: 10px;
-		height: 115px;
-	}
-}
-
-@media (max-width: 768px) {
-	#logo-img {
-		height: 75px;
-	}
-}
-
-#qrcode {
-	padding-top: 5px;
-	padding-right: 7px;
-	float: right;
-}
-
-#qrtext {
-	text-align: right;
-	clear: both;
-}
-
-.carousel-pics {
-	vertical-align: middle;
-}
-
-#slideshow {
-	max-width: 1500px;
-	margin-right: auto;
-	margin-left: auto;
-}
-@media (max-width: 1000px) {
-	#slideshow {
-		max-height: 200px;
-	}
-}
-@media (min-width: 1000px) {
-	#slideshow {
-		height: 450px;
-	}
-}
-
-.footer {
-	color: #777;
-	text-align: center;
-}
-
-#readme-banner {
-	background-image: url('../assets/banner.png');
-	background-repeat: no-repeat;
-	background-position: center center;
-}
-
-@media (max-width: 1000px) {
-	#readme-banner {
-	height: 125px;
-	}
-}
-
-@media (min-width: 1000px) {
-	#readme-banner {
-	height: 225px;
-	}
-}
-
-#readme-banner-text {
-	color: #FFF;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-
-.page-container {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-@media (min-width: 768px) {
-	.page-container {
-		padding-right: 15px;
-		padding-left: 15px;
-		width: 700px;
-	}
-}
-
-@media (min-width: 992px) {
-	.page-container {
-		padding-right: 15px;
-		padding-left: 15px;	
-		width: 700px;
-	}
-}
-
-@media (min-width: 1200px) {
-	.page-container {
-		width: 920px;
-	}
-}
-
-#arrow{
-	position: absolute;
-	z-index: 10;
-	width: 237px;
-	height: 238px;
-	margin-left: 100px;
-	left: 50%;
-	margin-top: -250px;
-
-	animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s; /*name duration delay*/
-	-webkit-animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s;
-	-moz-animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s;
-	-o-animation: blank 5s, slideInRight 1.5s 5s, fade 2s 1.5s;
-	animation-iteration-count: 1, 1, infinite;
-	-webkit-animation-iteration-count: 1, 1, infinite;
-	-moz-animation-iteration-count: 1, 1, infinite;  
-	-o-animation-iteration-count: 1, 1, infinite;
-}
-
-@keyframes blank {
-0%   {opacity:0;}
-100% {opacity:0;}
-}
-
-@-webkit-keyframes blank {
-0%   {opacity:0;}
-100% {opacity:0;}
-}
-
-@-moz-keyframes blank {
-0%   {opacity:0;}
-100% {opacity:0;}
-}
-
-@-o-keyframes blank {
-0%   {opacity:0;}
-100% {opacity:0;}
-}
-
-@keyframes fade {
-0%   {opacity:1;}
-50%   {opacity:0;}
-100% {opacity:1;}
-}
-
-@-webkit-keyframes fade {
-0%   {opacity:1;}
-50%   {opacity:0;}
-100% {opacity:1;}
-}
-
-@-moz-keyframes fade {
-0%   {opacity:1;}
-50%   {opacity:0;}
-100% {opacity:1;}
-}
-
-@-o-keyframes fade {
-0%   {opacity:1;}
-50%   {opacity:0;}
-100% {opacity:1;}
-}
-
-/*Thanks to github.com/daneden/animate.css !!!!!!*/
-@-webkit-keyframes slideInRight {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateX(200px);
-    transform: translateX(200px);
-  }
-
-  100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateX(200px);
-    -ms-transform: translateX(200px);
-    transform: translateX(200px);
-  }
-
-  100% {
-    -webkit-transform: translateX(0);
-    -ms-transform: translateX(0);
-    transform: translateX(0);
-  }
-}
-
 .videowrapper {
     position: relative;
     padding-bottom: 56.25%;
@@ -343,8 +111,62 @@ dt, dd {
     top: 30px;
 }
 
+/******     END DEMO CSS     ******/
 
-/****** Landing Page ******/
+/*****     SITE-WIDE STUFF    *****/
+
+#logo-banner-holder {
+	padding-left: 0px;
+	padding-right: 0px;
+	position: relative;
+}
+
+#logo-banner {
+	width: 100%;
+}
+
+#logo {
+	height: 100px;
+	padding-left: 0px;
+}
+
+.footer {
+	color: #777;
+	text-align: center;
+}
+
+.page-container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+@media (min-width: 768px) {
+	.page-container {
+		padding-right: 15px;
+		padding-left: 15px;
+		width: 700px;
+	}
+}
+
+@media (min-width: 992px) {
+	.page-container {
+		padding-right: 15px;
+		padding-left: 15px;	
+		width: 700px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.page-container {
+		width: 920px;
+	}
+}
+
+/*****     END SITE-WIDE STUFF     *****/
+
+/******     LANDING PAGE     ******/
 
 #landing-jumbotron {
 	margin-top: 0px;
@@ -352,6 +174,13 @@ dt, dd {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0px;
+}
+.carousel-caption {
+background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(70%,rgba(179,179,179,0)), color-stop(100%,rgba(255,255,255,0)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
 }
 #landing-title {
 	text-align: center;
@@ -370,7 +199,7 @@ dt, dd {
 }
 #landing-title span {
 	font-size: 2.5em;
-	margin-top: 35px;
+	margin-top: 5px;
 }
 @media (max-width: 1000px) {
 	#landing-title h1 {
@@ -388,27 +217,55 @@ dt, dd {
 		font-size: 35px;
 	}
 }
-.vis-hidden {
-	opacity: 0;
-}
 
 #landing-link-container {
-	max-width: 1400px;
 	margin-bottom: 75px;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	overflow: auto;
 }
+@media (min-width: 768px) {
+  #landing-link-container {
+    width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  #landing-link-container {
+    width: 1170px;
+  }
+}
+
 .landing-link {
 	padding: 5px;
 }
-.landing-link a {
-	color: #333;
-	text-decoration: none;
+.landing-link-title
+ {
+ 	position:absolute;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+	top: 25px;
+	width: 250px;
+	color: #FFF;
+	text-align: center;
+	background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(70%,rgba(179,179,179,0)), color-stop(100%,rgba(255,255,255,0)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+	background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+	background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
 }
-.landing-link h1 {
-	margin-top: 5px;
+.landing-link-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-.landing-link img:hover {
-	opacity: 0.5;
+.landing-link a:hover > img {
+	opacity: 0.4;
 }
+
 #landing-info {
 	margin-bottom: 100px;
 }
@@ -435,49 +292,8 @@ dt, dd {
   -webkit-animation: fadeIn 2s;
 }
 
-@-webkit-keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 100px, 0);
-    transform: translate3d(0, 100px, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 100px, 0);
-    -ms-transform: translate3d(0, 100px, 0);
-    transform: translate3d(0, 100px, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    -ms-transform: none;
-    transform: none;
-  }
-}
+/******     END LANDING PAGE     ******/
 
-.fadeInUp {
-  -webkit-animation: fadeInUp 1s;
-  animation: fadeInUp 1s;
-}
-.fadeInUp-2 {
-  -webkit-animation: fadeInUp 1s .25s;
-  animation: fadeInUp 1s .25s;
-}
-.fadeInUp-3 {
-  -webkit-animation: fadeInUp 1s .5s;
-  animation: fadeInUp 1s .5s;
-}
-.fadeInUp-4 {
-  -webkit-animation: fadeInUp 1s .75s;
-  animation: fadeInUp 1s .75s;
-}
 
 /******     DIAGNOSTICS PAGE     *****/
 .description {
@@ -509,4 +325,10 @@ dt, dd {
 	overflow: scroll;
 }
 /*****     END OF DIAGNOSTICS PAGE     *****/
+
+/* Don't know what these are for... */
+
+dt, dd {
+	padding-top: 8px;
+}
 
