@@ -368,6 +368,30 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 			</div>
 		</section>
 		
+
+
+		Yes, Eastern.  GTM sounds good if you wouldn’t mind and having more people on the line is fine… I’ve also invited my colleague Jeff Peterson if he is available.
+
+There are some resources at http://www.openice.info and we are trying to create a lot more in between crises (you know how it is) so your feedback is valuable about what is helpful and what is not.
+
+Basically DDS is a standards-based middleware API for distributed systems.  We tend to stick with the one underlying protocol implementation that is based upon UDP and standardized.  It is a 1.) broker-less, 2.) publish-subscribe, 3.) data-centric middleware.  Meaning 1.) default discovery mechanism is peer-to-peer via multicast 2.) by default writing/reading end is matched by strongly-typed topics 3.) data is maintained within the middleware pursuant to rules defined by policies (as opposed to a strictly message-oriented approach).
+
+The topics and associated types we currently use are available in our git repo.  Here’s a direct link to the SourceForge view-git
+http://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl
+
+For a quick start we have a package of precompiled software demonstrations available for download at
+http://mdpnp.sourceforge.net
+this includes many “simulated” devices that will write data to DDS for your apps to consume.
+
+A C++ example I recently wrote for a different project but it might be instructive…
+https://github.com/jeffplourde/TechEnDDS
+
+I also have a java example I can update and share pretty quickly if that’s more helpful.
+
+From our website you can tell we also have a strategy for disseminating this data over the web if we decide that’s more useful we can talk about that.
+
+Thanks
+-Jeff
 		<section class="footer page-container center-block">
 			<img src="./assets/logo.png">
 		</section>

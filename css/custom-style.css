@@ -163,7 +163,6 @@
     width: 920px;
   }
 }
-
 /*****     END SITE-WIDE STUFF     *****/
 
 /******     LANDING PAGE     ******/
@@ -176,49 +175,44 @@
   padding: 0px;
 }
 .carousel-caption {
-background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(70%,rgba(179,179,179,0)), color-stop(100%,rgba(255,255,255,0)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(179,179,179,0) 70%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(70%,rgba(179,179,179,0)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
 }
-#landing-title {
-  text-align: center;
+#landing-text-container {
+  overflow: auto;
   margin-bottom: 50px;
 }
-#landing-title h1 {
-  margin-bottom: 5px;
+#landing-text-title {
+  font-weight: 300;
+  text-align: center;
+  font-size: 72px;
 }
-#landing-title h2 {
-  color: #777;
-  margin-top: 0px;
+#landing-text-caption li {
+  font-weight: 300;
+  font-size: 24px;
+  padding: 5px;
+  text-indent: -15px;
 }
-#landing-title p {
-  font-size: 1.25em;
-  color: #333;
-}
-#landing-title span {
+#landing-text-chevron {
   font-size: 2.5em;
   margin-top: 5px;
+  text-align: center;
 }
 @media (max-width: 1000px) {
-  #landing-title h1 {
-    font-size: 35px;
-  }
-  #landing-title h2 {
-    font-size: 25px;
+  #landing-text-title {
+    font-size: 36px;
   }
 }
 @media (min-width: 1000px) {
-  #landing-title h1 {
-    font-size: 75px;
-  }
-  #landing-title h2 {
-    font-size: 35px;
+  #landing-text-title {
+    font-size: 72px;
   }
 }
 
-#landing-link-container {
+.landing-link-container {
   margin-bottom: 75px;
   padding-right: 15px;
   padding-left: 15px;
@@ -227,12 +221,12 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179
   overflow: auto;
 }
 @media (min-width: 768px) {
-  #landing-link-container {
+  .landing-link-container {
     width: 750px;
   }
 }
 @media (min-width: 1200px) {
-  #landing-link-container {
+  .landing-link-container {
     width: 1170px;
   }
 }
