@@ -297,7 +297,6 @@ background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179
 
 /******     DIAGNOSTICS PAGE     *****/
 .description {
-	float:left;
 	margin-left: 10%;
 	font-size: 10pt;
 	font-style: italic;

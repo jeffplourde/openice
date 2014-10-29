@@ -87,18 +87,20 @@
 			</div>
 			<div class="container">
 				<h1>OpenICE System Diagnostics</h1>
-				<span class="description">This page shows current realtime data values from the OpenICE system.  It is meant to surface available data for diagnostic and testing purposes while other, more advanced UIs, UXs, and apps are developed to represent and interact with this data model in more meaningful ways.  Descriptions of each data topic have also been included.
-					<br/><br/>
+				<p class="description">
+					This page shows current realtime data values from the OpenICE system.It is meant to surface available data for diagnostic and testing purposes while other, more advanced UIs, UXs, and apps are developed to represent and interact with this data model in more meaningful ways.  Descriptions of each data topic have also been included.
+				</p>
+				<div class="description">
 					Note:
 					<ul>
 						<li>For convenience Unique Device Identifiers (UDIs) have been replaced on this page with Make/Model for a device when it is available from the DeviceIdentity topic.</li>
 						<li>Timestamps are presented in the timezone of the lab in Cambridge, MA for convenience though they are transported by the OpenICE system in Universal Time Coordinates.</li>
 					</ul>
-				</span>
+				</div>
 				<br/>
 
 				<h2>Status:&nbsp;<span class="status"></span></h2>
-				<span class="description">"Status" (also in the upper right) indicates whether this page is currently connected to the OpenICE web gateway.  The OpenICE web gateway is a <a href="http://www.nodejs.org">node.js</a> server program that uses an MD PnP DDS add-on for node.js to retrieve DDS information and share it over the web.  It utilizes <a href="http://socket.io">socket.io</a> for connectivity between client and server.</span>
+				<p class="description">"Status" (also in the upper right) indicates whether this page is currently connected to the OpenICE web gateway.  The OpenICE web gateway is a <a href="http://www.nodejs.org">node.js</a> server program that uses an MD PnP DDS add-on for node.js to retrieve DDS information and share it over the web.  It utilizes <a href="http://socket.io">socket.io</a> for connectivity between client and server.</p>
 
 				<h2>Partition:&nbsp;</h2>
 				<form id="partitionForm" role="form" class="form-horizontal">
@@ -108,7 +110,7 @@
 					</div>
 				</form>
 
-				<span class="description">Partitions are a DDS concept.  A publisher and subscriber must be "in" a common logical partition before the writers and readers they contain will "match" and begin sharing information.  The concept transcends topology.  A portable device accompanying an ambulatory patient connected via a wifi network can still be in the same logical partition as the devices in that patient's room attached to a physical ethernet network.  And a subscriber subscribed in that partition will receive data from both devices.  Thus a singular "ICE environment" defined by partition obviates a lot of issues with patient transport, ambulatory, and room preparation scenarios.  Our first candidate for a partitioning scheme is this one partition per-patient paradigm.  But options abound for other partitions existing in parallel perhaps for device type, assigned unit, etc.  This dropdown box collects all the partitions for all available publications and allows this page to "tune into" one partition in particular.  Currently in the lab several 'environments' are configured with their own partition name.</span>
+				<p class="description">Partitions are a DDS concept.  A publisher and subscriber must be "in" a common logical partition before the writers and readers they contain will "match" and begin sharing information.  The concept transcends topology.  A portable device accompanying an ambulatory patient connected via a wifi network can still be in the same logical partition as the devices in that patient's room attached to a physical ethernet network.  And a subscriber subscribed in that partition will receive data from both devices.  Thus a singular "ICE environment" defined by partition obviates a lot of issues with patient transport, ambulatory, and room preparation scenarios.  Our first candidate for a partitioning scheme is this one partition per-patient paradigm.  But options abound for other partitions existing in parallel perhaps for device type, assigned unit, etc.  This dropdown box collects all the partitions for all available publications and allows this page to "tune into" one partition in particular.  Currently in the lab several 'environments' are configured with their own partition name.</p>
 				<br/><br/>
 
 				<script language="javascript" type="text/javascript">
