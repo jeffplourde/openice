@@ -130,9 +130,26 @@
   padding-left: 0px;
 }
 
-.footer {
-  color: #777;
+#footer {
+  border-top: 1px solid #DDD;
+  padding-top: 75px;
+  padding-bottom: 50px;
+  background-color: #F8F8F8;
+  color: #333;
   text-align: center;
+}
+.footer-repos {
+  display: inline-block;
+  padding-right: 10px;
+  margin: 10px 10px 25px 10px;
+
+}
+.footer-repos-a {
+  color: #333;
+}
+.footer-span {
+  display: block;
+  margin: 15px 1px 25px 1px;
 }
 
 .page-container {
@@ -334,6 +351,10 @@
 .table-heading{
   overflow: scroll;
 }
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+} /* Firefox fix for fieldset bug */
+
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 /* Don't know what these are for... */
