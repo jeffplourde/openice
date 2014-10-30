@@ -49,14 +49,8 @@
                   <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
                 </ul>
               </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="./resources.html">Learning Resources</a></li>
-                  <li><a href="./resources.html#documentation">Documentation</a></li>
-                  <li><a href="./resources.html#further-reading">Further Reading</a></li>
-                </ul>
-              </li>
+              <li><a href="./resources.html"><small>Resources</small></a></li>
+              <li class="hidden-sm"><a href="#"><small>Community</small></a></li>
               <li><a href="./what-is-openice.html"><small>What is OpenICE?</small></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -67,7 +61,7 @@
       </nav>
     </section>
     
-    <section id="landing-section">
+    <section id="section-landing-jumbotron">
       <div id="landing-jumbotron" class="fadeIn container-fluid">
         <div id="landing-slide-show" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
@@ -79,13 +73,14 @@
               <a href="./demo.html">
                 <img class="img-responsive" src="./assets/many-screens-sm.jpeg" alt="many-screens">
                 <div class="carousel-caption">
-                  <h1>View the Web Demo</h1>
+                  <h1 class="hidden-xs">Click to View Streaming<br/>Medical Device Data</h1>
+                  <h1 class="visible-xs">Click to View Demo</h1>
                 </div>
               </a>
             </div>
             <div class="item">
-              <a href="http://campaign.r20.constantcontact.com/render?ca=5fc0a671-73a5-4f93-8d24-082c7001cccc">
-                <img class="img-responsive" src="./assets/open-house-slide.jpeg" alt="open-house">
+              <a href="http://www.prismtech.com/events/harnessing-dds-next-generation-healthcare-systems-webcast" target="_blank">
+                <img class="img-responsive" src="./assets/carousel-webinar.jpg" alt="webinar">
               </a>
             </div>
           </div>
@@ -97,7 +92,10 @@
           </a>
         </div>
       </div>
-      <div id="landing-text-container" class="landing-link-container" style="margin-top: 25px; margin-bottom: 50px;">
+    </section>
+
+    <section class="section-landing-text">
+      <div id="landing-text-container" class="landing-container">
         <div id="landing-text-chevron">
           <span class="glyphicon glyphicon-chevron-down"></span>
         </div>
@@ -114,40 +112,41 @@
           </ul>
         </div>
       </div>
-      <div class="landing-link-container">
-        <div id="landing-link-1" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+    </section>
+
+    <section class="section-landing-link">
+      <div class="section-landing-link-back"></div>
+      <div class="landing-container">
+        <h1 class="landing-link-heading">Innovation Through Cooperation</h1>
+        <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
           <a href="./demo.html">
             <img class="landing-link-image img-responsive" src="./assets/tile-demo.jpg" />
-            <div>
-              <h1 class="landing-link-title">OpenICE Web Portal</h1>
-            </div>
+            <h1 class="landing-link-title">OpenICE Web Demo</h1>
           </a>
         </div>
-        <div id="landing-link-2" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+        <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
           <a href="./software.html">
             <img class="landing-link-image img-responsive" src="./assets/tile-software.jpg" />
-            <div>
-              <h1 class="landing-link-title">Explore Our Software</h1>
-            </div>
+            <h1 class="landing-link-title">Explore and Download</h1>
           </a>
         </div>
-        <div id="landing-link-3" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+        <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
           <a href="./resources.html">
             <img class="landing-link-image img-responsive" src="./assets/tile-learn.jpg" />
-            <div>
-              <h1 class="landing-link-title">OpenICE Resources</h1>
-            </div>
+            <h1 class="landing-link-title">Tutorials and Documentaion</h1>
           </a>
         </div>
-        <div id="landing-link-4" class="landing-link col-xs-12 col-sm-6 col-lg-3">
+        <div class="landing-link-light col-xs-12 col-sm-6 col-lg-3">
+          <div class="landing-link-light-back"></div>
           <a href="./what-is-openice.html">
             <img class="landing-link-image img-responsive" src="./assets/tile-interop.jpg" />
-            <div>
-              <h1 class="landing-link-title-light">What is OpenICE?</h1>
-            </div>
+            <h1 class="landing-link-title-light">What is OpenICE?</h1>
           </a>
         </div>
       </div>
+    </section>
+
+    <section class="section-landing-slogan">
       <div id="landing-info" class="page-container">
         <h1>Change&nbsp;Expectations<br />
         <small><span class="glyphicon glyphicon-chevron-down"></span></small><br />
@@ -157,6 +156,22 @@
         <h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
       </div>
     </section>  
+
+    <section class="section-community">
+      <div class="section-community-back"></div>
+      <div class="landing-container">
+        <h1 class="section-community-heading">JOIN THE COMMUNITY</h1>
+        <div class="section-community-glyphicons">
+          <span class="glyphicon glyphicon-user section-community-glyphicon1"></span>
+          <span class="glyphicon glyphicon-user section-community-glyphicon2"></span>
+          <span class="glyphicon glyphicon-user section-community-glyphicon3"></span>
+        </div>
+        <a href="community.openice.com" style="text-decoration:none;">
+          <h3 class="section-community-caption">Ask questions, share your knowledge, find answers.</h3>
+          <h3 class="section-community-caption">community.openice.info</h3>
+        </a>
+      </div>
+    </section>
 
     <section id="footer">
       <div class="container">

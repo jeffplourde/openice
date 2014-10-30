@@ -1,4 +1,11 @@
 /******     NAVBAR STUFF     ******/
+#main-navba {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  margin: 0 auto 0 auto;
+  background-color: rgba(255,255,255,0.5)
+}
 .navbar-default .navbar-nav>li>a {
   color: #333;
 }
@@ -134,7 +141,7 @@
   border-top: 1px solid #DDD;
   padding-top: 75px;
   padding-bottom: 50px;
-  background-color: #F8F8F8;
+  background-color: #F7FCFF;
   color: #333;
   text-align: center;
 }
@@ -215,7 +222,8 @@
 }
 #landing-text-chevron {
   font-size: 2.5em;
-  margin-top: 5px;
+  margin-top: 15px;
+  margin-bottom: 5px;
   text-align: center;
 }
 @media (max-width: 1000px) {
@@ -228,31 +236,64 @@
     font-size: 72px;
   }
 }
-
-.landing-link-container {
-  margin-bottom: 75px;
+.section-landing-link {
+  display: block;
+  position: relative;
+  padding-top: 75px;
+  padding-bottom: 100px;
+  overflow: auto;
+}
+.section-landing-link-back {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #2D2D2C;
+  z-index: -1;
+}
+.landing-container {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  overflow: auto;
 }
 @media (min-width: 768px) {
-  .landing-link-container {
+  .landing-container {
     width: 750px;
   }
 }
 @media (min-width: 1200px) {
-  .landing-link-container {
+  .landing-container {
     width: 1170px;
   }
 }
-
+.landing-link-heading {
+  color: #FFF;
+  margin-top: 0;
+  margin-bottom: 45px;
+  font-weight: 300;
+  font-size: 3em;
+}
 .landing-link {
   padding: 5px;
+  margin: 0px;
 }
-.landing-link-title
- {
+.landing-link-light {
+  padding: 5px;
+  margin: 0px;
+}
+.landing-link-light-back {
+  margin: 5px;
+  background-color: #FFF;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+.landing-link-title {
   position:absolute;
   left:0;
   right:0;
@@ -284,26 +325,84 @@
   background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%);
   background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%);
 }
-.landing-link-image {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 .landing-link a:hover > img {
   opacity: 0.4;
 }
+.landing-link-light a:hover > img {
+  opacity: 0.4;
+}
 
-#landing-info {
+.section-landing-slogan {
+  margin-top: 75px;
   margin-bottom: 100px;
 }
 #landing-info h1 {
   text-align: center;
   font-weight: 300;
+  overflow: scroll;
+  padding: 5px;
 }
 #landing-info h3 {
   text-align: center;
   font-weight: 300;
   margin-top: 50px;
+}
+
+.section-community {
+  display: block;
+  position: relative;
+  height: 485px;
+  text-align: center;
+}
+.section-community-back {
+  background: url(../assets/community.jpeg);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+.section-community-heading {
+  color: #FFF;
+  padding-top: 88px;
+  padding-bottom: 25px;
+  font-size: 5em;
+  font-weight: 300;
+  margin: 0px;
+}
+.section-community-caption {
+  color: #FFF;
+  font-size: 3em;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+}
+.section-community-caption:hover {
+  color: #6CF;
+}
+.section-community-glyphicons {
+  color: #FFF;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+.section-community-glyphicon1 {
+  position: relative;
+  left: 25px;
+  font-size: 5em;
+}
+.section-community-glyphicon2 {
+  position: relative;
+  font-size: 8em;
+}
+.section-community-glyphicon3 {
+  position: relative;
+  right: 25px;
+  font-size: 5em;
 }
 
 @-webkit-keyframes fadeIn {
