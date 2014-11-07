@@ -423,13 +423,12 @@
 
 /******     DIAGNOSTICS PAGE     *****/
 .description {
-  float:left;
-  margin-left: 10%;
-  font-size: 10pt;
-  font-style: italic;
-  width:70%;
-  margin-right:20%;
-  margin-bottom: 20pt;
+	margin-left: 10%;
+	font-size: 10pt;
+	font-style: italic;
+	width:70%;
+	margin-right:20%;
+	margin-bottom: 20pt;
 }
 #connectionStatus {
   position: absolute;
