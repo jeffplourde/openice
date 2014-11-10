@@ -334,8 +334,11 @@
 }
 
 .section-landing-slogan {
-  margin-top: 75px;
-  margin-bottom: 100px;
+  display: block;
+  position: relative;
+  padding-top: 75px;
+  padding-bottom: 100px;
+  overflow: auto;
 }
 #landing-info h1 {
   text-align: center;
@@ -348,7 +351,15 @@
   font-weight: 300;
   margin-top: 50px;
 }
-
+.section-whatis {
+  margin-top: 75px;
+  margin-bottom: 100px;
+}
+.section-whatis-image {
+  height: 500px;
+  margin-right: auto;
+  margin-left: auto;
+}
 .section-community {
   display: block;
   position: relative;
@@ -456,13 +467,27 @@
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 
-/*****     WHAT-IS-OPENICE PAGE     *****/
-
-.whatis-image {
-  
+/*****     SOFTWARE PAGE     *****/
+.software-link {
+  text-align: center;
+}
+.section-software {
+  margin-top: 25px;
+}
+.section-downloads {
+  margin-top: 75px;
+  margin-bottom: 100px;
 }
 
-/*****     END OF WHAT-IS-OPENICE PAGE     *****/
+/*****     END OF SOFTWARE PAGE     *****/
+
+/*****     RESOURCES PAGE     *****/
+.section-links {
+  margin-top: 25px;
+  margin-bottom: 100px;
+}
+
+/*****     END OF RESOURCES PAGE     *****/
 
 
 /* Don't know what these are for... */

@@ -55,15 +55,8 @@
                   <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
                 </ul>
               </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="./resources.html">Learning Resources</a></li>
-                  <li><a href="./resources.html#documentation">Documentation</a></li>
-                  <li><a href="./resources.html#further-reading">Further Reading</a></li>
-                </ul>
-              </li>
-              <li><a href="./what-is-openice.html"><small>What is OpenICE?</small></a></li>
+              <li><a href="./resources.html"><small>Resources</small></a></li>
+              <li><a href="http://community.openice.info"><small>Community</small></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
@@ -73,38 +66,67 @@
       </nav>
     </section>
 
-    <section id="software">
-      <div class="container">
-        <h1>OpenICE Software Suite (this should be an image or graphic)</h1>
+    <section class="section-software">
+      <div class="page-container">
         <div>
           <h1>OpenICE Web Portal</h1>
           <h3>Web Demo</h3>
-          demo.html link and description
+          <p>To view the OpenICE web demonstration, click <a href="./demo.html">here</a>. The web demo is a tool that allows the browser to view data in the lab network in Cambridge, MA.</p>
+          <div class="software-link">
+            <a class="btn btn-lg btn-primary" href="./demo.html" role="button">View the Web Demo</a>
+          </div>
           <h3>Diagnostic Data Model Viewer</h3>
-          diagnostics.html link and description
-          <h3>Download the Data Viewer</h3>
-          github repo link to openice and node-dds
-        </div>
-      </div>
-    </section>
-    <section id="downloads">
-      <div class="container">
-        <div>
-          <h1>Downloads</h1>
-          description
-          picture of diagram labeled with software
-          <h3>OpecICE Demo Apps Software Bundle</h3>
-          description
-          demo-app binaries
-          <h3>Real Time Blue Button Android App</h3>
-          description
-          Play Store RTBB link
+          <p>This page visualizes all data in the network. This data is what an application or device has access to when it is a participant in the network.</p>
+          <div class="software-link">
+            <a class="btn btn-lg btn-primary" href="./diagnostics.html" role="button">View the Diagnostics Page</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="footer page-container center-block">
-      <img src="./assets/logo.png" />
+    <section id="downloads" class="section-downloads">
+      <div class="page-container">
+        <div>
+          <h1>Downloads</h1>
+          <h3>Download the Data Viewer</h3>
+          <p>To download the source code for OpenICE data viewer and diagnostic page, visit the following links. The first link is for a repo containing the code of the website. The second link is for a repo containing the code for the node.js adapter to feed data to the web.</p>
+          <div class="software-link">
+            <a class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/openice" role="button" target="_blank">Download OpenICE.info</a>
+            <br>
+            <br>
+            <a class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/node-dds" role="button" target="_blank">Download Node-DDS</a>
+          </div>
+          <h3>OpecICE Demo Apps Software Bundle</h3>
+          <p>The following link is for a git repository for the OpenICE demo application. The demo application contains a supervisor, sample PCA safety application, simulated medical devices and medical device adapters.</p>
+          <div class="software-link">
+            <a class="btn btn-lg btn-primary" href="http://mdpnp.sourceforge.net" role="button" target="_blank">MDPnP.Sourceforge.net</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="footer">
+      <div class="container">
+        <div>
+          <div class="footer-repos">
+            <span><img src="./assets/sourceforge.png" alt="sourceforge" /></span>
+            <a href="https://sourceforge.net/projects/mdpnp/" class="footer-repos-a" style="text-decoration:none;">MD PnP Demo-Apps</a>
+          </div>
+          <div class="footer-repos">
+            <span><img src="./assets/github.png" alt="github" /></span>
+            <a href="https://github.com/jeffplourde/openice" class="footer-repos-a" style="text-decoration:none;">OpenICE.info</a>
+          </div>
+          <div class="footer-repos">
+            <span><img src="./assets/github.png" alt="github" /></span>
+            <a href="https://github.com/jeffplourde/node-dds" class="footer-repos-a" style="text-decoration:none;">OpenICE Node-DDS</a>
+          </div>
+
+          <span class="footer-span">Copyright (c) 2014, MD PnP Program<br/>
+          All rights reserved.</span>
+
+          <a href="http://www.mdpnp.org"><img src="./assets/logo.png"></a>
+        </div>
+      </div>
     </section>
   </body>
 </html>

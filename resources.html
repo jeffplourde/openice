@@ -55,15 +55,8 @@
                   <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
                 </ul>
               </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="./resources.html">Learning Resources</a></li>
-                  <li><a href="./resources.html#documentation">Documentation</a></li>
-                  <li><a href="./resources.html#further-reading">Further Reading</a></li>
-                </ul>
-              </li>
-              <li><a href="./what-is-openice.html"><small>What is OpenICE?</small></a></li>
+              <li><a href="./resources.html"><small>Resources</small></a></li>
+              <li><a href="http://community.openice.info"><small>Community</small></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
@@ -73,7 +66,7 @@
       </nav>
     </section>
 
-    <section>
+    <section class="section-links">
       <div class="page-container">
         <h1>Links to helpful information:</h1>
         <ul>
@@ -87,49 +80,28 @@
       </div>
     </section>
 
+    <section id="footer">
+      <div class="container">
+        <div>
+          <div class="footer-repos">
+            <span><img src="./assets/sourceforge.png" alt="sourceforge" /></span>
+            <a href="https://sourceforge.net/projects/mdpnp/" class="footer-repos-a" style="text-decoration:none;">MD PnP Demo-Apps</a>
+          </div>
+          <div class="footer-repos">
+            <span><img src="./assets/github.png" alt="github" /></span>
+            <a href="https://github.com/jeffplourde/openice" class="footer-repos-a" style="text-decoration:none;">OpenICE.info</a>
+          </div>
+          <div class="footer-repos">
+            <span><img src="./assets/github.png" alt="github" /></span>
+            <a href="https://github.com/jeffplourde/node-dds" class="footer-repos-a" style="text-decoration:none;">OpenICE Node-DDS</a>
+          </div>
 
-    <section id="readme">
-      <div class="page-container">
-        <h1>API Access to the MD PnP OpenICE Network</h1>
-        <p>This website utilizes a JavaScript API to access the MD PnP medical device test bed. The purpose of this site is to visualize the vital sign data flowing from the OpenICE network in the MD PnP lab in Cambridge, MA.</p>
-        <p>To start the sample application, please navigate to the <a href="./demo.html">demo</a> page.</p>
-        <br />
+          <span class="footer-span">Copyright (c) 2014, MD PnP Program<br/>
+          All rights reserved.</span>
 
-        <p class="text-center"><a class="btn btn-lg btn-primary" href="./demo.html" role="button">View Streaming Medical<br />Data Demo</a></p>
-        <br />
-
-        <h1>Download the JavaScript API and Sample App from GitHub</h1>
-        <p>The git repository for the MD PnP Lab JavaScript API, this website, the 'flot' data visualization script and supporting assets are available on GitHub. Please contribute to this project by forking this code and submitting a pull request.</p>
-        <br />
-        <p class="text-center"><a class="btn btn-lg btn-primary" href="https://github.com/jeffplourde/openice/" role="button" target="_blank">Download the Demo</a></p>
-        <br />
-  
-        <h1>OpenICE.js Documentation</h1>
-        <p>The files used to visualize data on this webpage are listed below. The detailed documentation of OpenICE.js can be found by clicking the link below.</p>
-        <h3>Files in the Repository</h3>
-        <dl class="dl-horizontal">
-          <dt>openice.js</dt>
-          <dd>The JavaScript API developed at MD PnP used to access data flowing from the lab</dd>
-          <dt>openice.flot.js</dt>
-          <dd>The example script used in the demo webpage to pass data from OpenICE.js to a visualization library called flot.js</dd>
-          <dt>jquery.flot.js</dt>
-          <dd>The flot script used for plotting the vital signs data originating from the MD PnP lab</dd>
-          <dt>jquery.flot.time.js</dt>
-          <dd>The script used for creating 'flots' with a time-based axis</dd>
-          <dt>jquery.js</dt>
-          <dd>A dependency of several scripts</dd>
-          <dt>bootstrap.css</dt>
-          <dd>A front-end framework used to improve site layout and appearance</dd>
-        </dl>
-        <br />
-        <p class="text-center"><a id="documentation" class="btn btn-lg btn-primary" href="./jsdocs/" role="button" target="_blank">View the Documentation</a></p>
-
-    </section>
-
-
-
-    <section class="footer page-container center-block">
-      <img src="./assets/logo.png">
+          <a href="http://www.mdpnp.org"><img src="./assets/logo.png"></a>
+        </div>
+      </div>
     </section>
   </body>
 </html>
