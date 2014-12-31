@@ -42,15 +42,11 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="./software.html">Explore Our Software</a></li>
-                  <li><a href="./software.html#downloads">Downloads</a></li>
-                  <li class="divider"></li>
                   <li><a href="./demo.html">OpenICE Web Demo</a></li>
                   <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
                 </ul>
               </li>
-              <li><a href="./resources.html"><small>Resources</small></a></li>
-              <li><a href="http://community.openice.info"><small>Community</small></a></li>
+              <li><a href="http://community.openice.info">Community</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
@@ -65,7 +61,7 @@
         <div id="landing-slide-show" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#landing-slide-show" data-slide-to="0" class="active"></li>
-            <li data-target="#landing-slide-show" data-slide-to="1"></li>
+            <!-- <li data-target="#landing-slide-show" data-slide-to="1"></li> -->
           </ol>
           <div class="carousel-inner">
             <div class="item active">
@@ -77,11 +73,11 @@
                 </div>
               </a>
             </div>
-            <div class="item">
+<!--             <div class="item">
               <a href="http://www.prismtech.com/events/harnessing-dds-next-generation-healthcare-systems-webcast" target="_blank">
                 <img class="img-responsive" src="./assets/carousel-webinar.jpg" alt="webinar">
               </a>
-            </div>
+            </div> -->
           </div>
           <a class="left carousel-control" href="#landing-slide-show" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left"></span>
@@ -119,36 +115,36 @@
         <h1 class="landing-link-heading">Innovation Through Cooperation</h1>
         <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
           <a href="./demo.html">
-            <img class="landing-link-image img-responsive" src="./assets/tile-demo.jpg" />
+            <img class="landing-link-image" src="./assets/tile-demo.jpg" />
             <h1 class="landing-link-title">OpenICE Web Demo</h1>
           </a>
         </div>
         <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
-          <a href="./software.html">
-            <img class="landing-link-image img-responsive" src="./assets/tile-software.jpg" />
-            <h1 class="landing-link-title">Explore and Download</h1>
-          </a>
-        </div>
-        <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
-          <a href="./resources.html">
-            <img class="landing-link-image img-responsive" src="./assets/tile-learn.jpg" />
-            <h1 class="landing-link-title">Tutorials and Documentaion</h1>
+          <a href="http://mdpnp.sourceforge.net" target="_blank">
+            <img class="landing-link-image" src="./assets/tile-software.jpg" />
+            <h1 class="landing-link-title">Download the Demo App</h1>
           </a>
         </div>
         <div class="landing-link-light col-xs-12 col-sm-6 col-lg-3">
           <div class="landing-link-light-back"></div>
+          <a href="http://www.mdpnp.org" target="_blank">
+            <img class="landing-link-image" src="./assets/tile-interop.jpg" />
+            <h1 class="landing-link-title-light">MD PnP Website</h1>
+          </a>
+        </div>
+        <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
           <a href="http://community.openice.info">
-            <img class="landing-link-image img-responsive" src="./assets/tile-interop.jpg" />
-            <h1 class="landing-link-title-light">OpenICE Community</h1>
+            <img class="landing-link-image" src="./assets/tile-learn.jpg" />
+            <h1 class="landing-link-title">OpenICE Community</h1>
           </a>
         </div>
       </div>
     </section>
 
     <section class="section-whatis">
-      <div class="page-container">
+      <div class="landing-container">
         <h1>What is OpenICE?</h1>
-        <p><span class="lead">OpenICE</span> is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment. The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety. OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts.</p>
+        <h4 style="font-weight: 300; line-height: 1.35">OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment. The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety. OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts.</h4>
         <br>
         <div>
           <img class="img-responsive section-whatis-image" src="./assets/OpenICE-data-flow.png" />
@@ -166,10 +162,139 @@
           <span class="glyphicon glyphicon-user section-community-glyphicon3"></span>
         </div>
         <a href="http://community.openice.info" style="text-decoration:none;">
-          <h3 class="section-community-caption">Ask questions, share knowledge, find answers.</h3>
+          <h3 class="section-community-caption">Ask&nbsp;questions, share&nbsp;knowledge, find&nbsp;answers.</h3>
           <h3 class="section-community-caption">community.openice.info</h3>
         </a>
       </div>
+    </section>
+
+    <section class="section-software">
+      <div class="page-container">
+        <table class="table table-hover">
+          <tr><th><h3>OpenICE Web</h3></th></tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" href="./demo.html" role="button">View the Web Demo</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>To view the OpenICE web demonstration, click <a href="./demo.html">here</a>. The web demo is a tool that allows the web browser to view data in the medical device lab network in Cambridge, MA.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" href="./diagnostics.html" role="button">View the Diagnostics Page</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>The OpenICE diagnostic page is a tool that subscribes to and displays all the data in the medical device lab network. This data is what an application or device has access to when it is a participant in OpenICE.</p>
+              </div>
+            </td>
+          </tr>
+          <tr><th><h3>Downloads</h3></th></tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" href="https://github.com/jeffplourde/openice" role="button" target="_blank">Download OpenICE.info</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>To download or view the repository of source code for the OpenICE web demo and diagnostic page, visit the OpenICE project on github.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" href="http://mdpnp.sourceforge.net" role="button" target="_blank">MDPnP.Sourceforge.net</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>The OpenICE Demo Apps Software is a application for PC, Mac and Linux that contains an OpenICE application supervisor, device adapters and device simulators. The demo application supervisor comes with a sample PCA infusion safety application, simulated medical device controller, a x-ray / ventilator synchronization demo and vital signs visualization application. Follow the link and press the big one-click download button to run the pre-built, hassle-free application.</p>
+              </div>
+            </td>
+          </tr>
+          <tr><th><h3>Helpful information</h3></th></tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" href="./device-adapter-setup.html">Device Adapter Tutorial</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>Interested in connecting a compatible device into your own OpenICE network? Follow this tutorial to learn how to install the Philips MP70 device-adapter software onto a Beaglebone Black. The process used here can be used to connect any supported device onto any Java compatible computer, including your laptop.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" target="_blank" href="https://sourceforge.net/p/mdpnp/wiki/Medical%20Device%20Plug-and-Play%20Interoperability%20Lab/">Sourceforge Wiki</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>For additional information about the OpenICE Demo Apps Software, visit the sourceforge wiki. The wiki contains high level documentation how to install and run the software on all three platforms, platform prerequisites, source code building instructions and third party tools and resources.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" target="_blank" href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw">App Architecture Description</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>The Infusion Safety Application Architecture Description provides a high-level survey of key architectural components of the current implementation of an Integrated Clinical Environment (ICE) devised at the MD PnP Interoperability Lab in Cambridge, MA. This document offers readers a targeted glimpse of key design features of that implementation that pertain specifically to the PCA Infusion Safety application.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" target="_blank" href="http://www.mdpnp.org/uploads/F2761_completed_committee_draft.pdf">ICE Standard F2761</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>ICE Standard F2761 - "Essential safety requirements for equipment comprising the patient-centric integrated clinical environment (ICE) — Part 1: General requirements and conceptual model" is the theoretical foundation of the OpenICE prototype. ICE-compliant architectures are intended to enable comprehensive medical device data acquisition for the EMR, and the integration of medical devices to enable real-time decision support, safety interlocks, and closed-loop control. The ICE standardization activity was initiated in 2006 by ASTM International, committee F29, based on foundational work performed by the MD PnP program and collaborators.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" target="_blank" href="http://portals.omg.org/dds/">OMG DDS Portal</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>The Object Management Group's Data Distribution Service (DDS) is a standardized publish-subscribe middleware for near-real-time communication in distributed systems. DDS is used as the underlying technology to facilitate medical device and application communication. The base standard has been implemented by PrismTech, Real-Time Innovations and the OpenDDS project. For an overview of MD PnP's use of DDS, checkout this <a href="http://www.slideshare.net/PrismTech1/harnessing-dds-in-next-generation-healthcare-systems" target="_blank">slideshare</a>.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" target="_blank" href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl">OpenICE IDL</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>ice.idl is the OpenICE Interface Description Language document that describes the data structure of the OpenICE compliant devices and applications.</p>
+              </div>
+            </td>
+          </tr>
+        </table>
     </section>
 
     <section class="section-landing-slogan">

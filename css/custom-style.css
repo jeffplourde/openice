@@ -173,16 +173,7 @@
     width: 700px;
   }
 }
-
 @media (min-width: 992px) {
-  .page-container {
-    padding-right: 15px;
-    padding-left: 15px; 
-    width: 700px;
-  }
-}
-
-@media (min-width: 1200px) {
   .page-container {
     width: 920px;
   }
@@ -226,12 +217,12 @@
   margin-bottom: 5px;
   text-align: center;
 }
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
   #landing-text-title {
     font-size: 36px;
   }
 }
-@media (min-width: 1000px) {
+@media (min-width: 768px) {
   #landing-text-title {
     font-size: 72px;
   }
@@ -257,15 +248,45 @@
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  overflow: hidden;
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .landing-container {
-    width: 750px;
+    max-width: 750px;
+  }
+  .landing-link {
+    float: none;
+    max-height: 250px;
+    overflow: hidden;
+  }
+  .landing-link-light {
+    float: none;
+    max-height: 250px;
+    overflow: hidden;
+  }
+}
+@media (max-width: 1200px) {
+  .landing-container {
+    max-width: 750px;
+  }
+  .landing-link {
+    max-height: 250px;
+    overflow: hidden;
+  }
+  .landing-link-light {
+    max-height: 250px;
+    overflow: hidden;
   }
 }
 @media (min-width: 1200px) {
   .landing-container {
     width: 1170px;
+  }
+  .landing-link {
+    height: auto;
+  }
+  .landing-link-light {
+    height: auto;
   }
 }
 .landing-link-heading {
@@ -276,21 +297,28 @@
   font-size: 3em;
 }
 .landing-link {
-  padding: 5px;
+  padding: 10px 5px 5px 5px;
   margin: 0px;
+  max-width: 360px;
+  margin-right: auto;
+  margin-left: auto;
 }
 .landing-link-light {
-  padding: 5px;
+  padding: 10px 5px 5px 5px;
   margin: 0px;
+  max-width: 360px;
+  margin-right: auto;
+  margin-left: auto;
 }
 .landing-link-light-back {
-  margin: 5px;
+  margin: 10px 5px 5px 5px;
   background-color: #FFF;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  max-width: 350px;
   z-index: -1;
 }
 .landing-link-title {
@@ -325,7 +353,12 @@
   background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%);
   background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%);
 }
-
+.landing-link-image {
+  display: block;
+  width: 100% \9;
+  max-width: 100%;
+  height: auto;
+}
 .landing-link a:hover > img {
   opacity: 0.4;
 }
@@ -356,15 +389,17 @@
   margin-bottom: 100px;
 }
 .section-whatis-image {
-  height: 500px;
+  max-height: 500px;
   margin-right: auto;
   margin-left: auto;
 }
 .section-community {
   display: block;
   position: relative;
-  height: 485px;
   text-align: center;
+  overflow: hidden;
+  padding-top: 65px;
+  padding-bottom: 45px;
 }
 .section-community-back {
   background: url(../assets/community.jpeg);
@@ -380,15 +415,12 @@
 }
 .section-community-heading {
   color: #FFF;
-  padding-top: 88px;
   padding-bottom: 25px;
-  font-size: 5em;
   font-weight: 300;
   margin: 0px;
 }
 .section-community-caption {
   color: #FFF;
-  font-size: 3em;
   font-weight: 300;
   margin: 0;
   padding: 0;
@@ -398,8 +430,7 @@
 }
 .section-community-glyphicons {
   color: #FFF;
-  padding-top: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 .section-community-glyphicon1 {
   position: relative;
@@ -414,6 +445,30 @@
   position: relative;
   right: 25px;
   font-size: 5em;
+}
+@media (max-width: 768px) {
+  .section-community-heading {
+    font-size: 3em;
+  }
+  .section-community-caption {
+    font-size: 2em;
+  }
+}
+@media (min-width: 768px) {
+  .section-community-heading {
+    font-size: 5em;
+  }
+  .section-community-caption {
+    font-size: 3em;
+  }
+}
+
+.section-software {
+  margin-top: 75px;
+  margin-bottom: 45px;
+}
+.software-link {
+  text-align: center;
 }
 
 @-webkit-keyframes fadeIn {
@@ -467,27 +522,7 @@
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 
-/*****     SOFTWARE PAGE     *****/
-.software-link {
-  text-align: center;
-}
-.section-software {
-  margin-top: 25px;
-}
-.section-downloads {
-  margin-top: 75px;
-  margin-bottom: 100px;
-}
 
-/*****     END OF SOFTWARE PAGE     *****/
-
-/*****     RESOURCES PAGE     *****/
-.section-links {
-  margin-top: 25px;
-  margin-bottom: 100px;
-}
-
-/*****     END OF RESOURCES PAGE     *****/
 
 
 /* Don't know what these are for... */
