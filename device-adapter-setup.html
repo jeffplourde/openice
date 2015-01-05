@@ -242,7 +242,9 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 						<dt>RS232 Cape</dt>
 						<dd>To connect the Beaglebone and the MP70, we will use a Beaglebone Black serial cape and a special cable described below.</dd>
 						<dt>RJ45 to DB-9</dt>
-						<dd>To connect to the RJ45 port on the MP70 to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. If you wish to make the cable, the MP70 'Data Export Program Guide' depicts the pinout of the RJ45 port. However, we have observed that this pinout matches the common RJ45 to DB-9 "Cisco console cable". This cable is available from many distributors and should allow the devices to connect.</dd>
+						<dd>To connect the RJ45 port on the MP70 (labeled as either RS232, MIB or a circle with an arrow) to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. A simple solder-less solution is to purchase a "DB-9 to RJ45 modular adapter". The image below shows the appropriate pinout for the cable. Feel free to change the gender of the DB9 connector to fit the client computer you are connecting to.
+							<img src="./assets/philips-MIB-pinout_RJ45-to-DB9.png" class="img-responsive" style="margin-left: auto; margin-right: auto; max-height: 300px;" />
+						</dd>
 						<dt>Computer w/ OpenICE</dt>
 						<dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="http://mdpnp.sourceforge.net">Sourceforge</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
 						<dt>A Network</dt>
