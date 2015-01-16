@@ -65,7 +65,7 @@
 		<section id="instructions" class="container">
 			<div class="row">
 				<div class="col-md-10">
-					<h1 style="margin-top:0px">OpenICE Medical Device Adapter Setup</h1>
+					<h1 style="margin-top:25px">OpenICE Medical Device Adapter Setup</h1>
 
 					<h3 id="beaglebone-setup">Getting Started</h3>
 
@@ -192,6 +192,9 @@ echo default-on > /sys/class/leds/beaglebone\:green\:usr0/trigger</pre>
 					<p>That's it. Your MicroSD card is ready.</p>
 
 					<h3 id="flash-memory">Flashing the Memory</h3>
+					<div class="alert alert-danger">
+						WARNING: At this time, this process has only been tested with Beaglebone Black Rev B with the Angstrom operating system. A new version of the below process will be released soon. Feel free to use the Unix 'dd' command from the terminal to manually overwrite any Beaglebone's eMMC flash memory with the supplied disk image.
+					</div>
 					<div class="alert alert-info">
 						NOTE: This process will obviously overwrite the contents of your BBB's internal memory. Backup any content you wish to preserve.
 					</div>
