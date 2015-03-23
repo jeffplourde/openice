@@ -138,29 +138,6 @@ tables.push(new TableManager("DeviceIdentity",
       function(tds, keys, row) { tds[0].innerHTML = keys.unique_device_identifier.substring(0,4); tds[1].innerHTML = JSON.stringify(row.pub_partition); },
       "DeviceIdentity allows a device to share identifying information.  A device generally publishes this information only once.  A device with a further connection, perhaps a serial RS-232 link, might publish details like serial number only after they become available."
       ));
-tables.push(new TableManager("DeviceConnectivity",
-      ["UDI"],
-      ["Type", "State", "Info", "Valid Targets"],
-      function(tds, data) { tds[0].innerHTML = data.state; tds[1].innerHTML = data.type; tds[2].innerHTML = data.info; tds[3].innerHTML = data.valid_targets; },
-      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); },
-      "DeviceConnectivity shares information about a device that has a further connection to another device, such as a serial RS-232 link.  The status of that further connection is published as well as additional information about the connection (often details about the connection process).  Targets are also provided for an associated objective topic whereby establishment of the further connection can be requested by another participant.  All current OpenICE device adapters attempt to establish such a connection by default."
-      ));
-tables.push(new TableManager("HeartBeat",
-      ["UDI"],
-      ["Type"],
-      function(tds, data) { tds[0].innerHTML = data.type; },
-      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); },
-      "At regular intervals (currently every 2 seconds) every OpenICE participant should publish to this topic.  When the instance of HeartBeat associated with a device is no longer alive that device should be considered disconnected from the system.  The Type description indicates whether the heartbeat came from a Device or Supervisor."
-      ));
-tables.push(new TableManager("TimeSync",
-      ["Source", "Recipient"],
-      ["Source Timestamp", "Recipient Timestamp"],
-      function(tds, data) { tds[0].innerHTML = timeFromTimeT(data.source_source_timestamp); 
-        tds[1].innerHTML = timeFromTimeT(data.recipient_receipt_timestamp); },
-      function(tds, keys) { tds[0].innerHTML = trunc(keys.heartbeat_source); 
-        tds[1].innerHTML = trunc(keys.heartbeat_recipient); },
-      "Upon receipt of a HeartBeat sample an OpenICE participant should publish to this topic the original source timestamp of that heartbeat as well as the reception time.  When this TimeSync message arrives back at the participant which originated the heartbeat enough information has been gathered to ascertain clock synchronization.  So a Supervisory participant can determine whether any device clocks are out of sync."
-      ));
 tables.push(new TableManager("AlarmSettings", 
       ["UDI", "Metric"],
       ["Lower", "Upper"],
@@ -169,21 +146,23 @@ tables.push(new TableManager("AlarmSettings",
         tds[1].innerHTML = keys.metric_id; },
       "The current alarm thresholds for a particular metric on a particular device."
       ));  
-tables.push(new TableManager("GlobalAlarmSettingsObjective", 
-      ["Metric"],
-      ["Lower", "Upper"],
-      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
-      function(tds, keys) { tds[0].innerHTML = keys.metric_id; },
-      "This objective is published by a Supervisory participant to request that all participants use the specified thresholds for alarms on a particular metric."
-      ));    
-tables.push(new TableManager("LocalAlarmSettingsObjective", 
-      ["UDI", "Metric"],
-      ["Lower", "Upper"],
-      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
+tables.push(new TableManager("PatientAlert", 
+      ["UDI", "Identifier"], 
+      ["Text"],
+      function(tds, data) { tds[0].innerHTML = data.text; },
+      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
+        tds[1].innerHTML = keys.identifier; },
+      "PatientAlert is an alert message related to patient state.  In the current iteration publishers may use any identifier they would like to uniquely identify patient alerts.  The instance ought to be registered and a sample published when the alarm is triggered.  If the associated text changes during the alarm another sample should be published.  When the alarm is cancelled the instance should be unregistered.  It's still an open question whether alarm samples should be published at regular intervals during the alarm condition.  This, unfortunately, might be necessary to assert the liveliness of the alarm instance to late joiners.  This is something to investigate with DDS vendors."
+      ));
+tables.push(new TableManager("TechnicalAlert", 
+      ["UDI", "Identifier"], 
+      ["Text"],
+      function(tds, data) { tds[0].innerHTML = data.text; },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); 
-        tds[1].innerHTML = keys.metric_id; },
-      "This objective is published by a device to acknowledge that it has received the global alarm settings objective for a metric.  Eventually its AlarmSettings should indicate that the change has been made.  So the three AlarmSettingsXXX topics form an objective-state form of command and control.  At any time any participant can see the current state of request, acknowledgment of the request, and implementation of the requested change."
-      ));      
+        tds[1].innerHTML = keys.identifier; },
+      "TechnicalAlert is similar to PatientAlert but is meant for technical alarms about the operation of the device."
+      ));
+
 tables.push(new TableManager("Numeric", 
       ["UDI", "Metric", "Instance", "Units"], 
       ["Value", "Device Time"],
@@ -294,22 +273,6 @@ tables.push(new TableManager("SampleArray",
         tds[4].innerHTML = keys.frequency; },
       "SampleArrays are values observed by sensors at a relatively high rate; generally >1Hz.  Multiple sensors may exist for the same metric so the instance_id serves to distinguish between them.  If a timestamp is available from the device's internal clock it is specified as device_time.  A device ought to register an instance of SampleArray when the associated sensor might provide observations.  If the sensor is physically disconnected or otherwise certain not to provide samples then the associated instance should be unregistered.  Sourcetimestamp and device_time should both represent the point in time at the end of the sample array."
       ));
-tables.push(new TableManager("PatientAlert", 
-      ["UDI", "Identifier"], 
-      ["Text"],
-      function(tds, data) { tds[0].innerHTML = data.text; },
-      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
-        tds[1].innerHTML = keys.identifier; },
-      "PatientAlert is an alert message related to patient state.  In the current iteration publishers may use any identifier they would like to uniquely identify patient alerts.  The instance ought to be registered and a sample published when the alarm is triggered.  If the associated text changes during the alarm another sample should be published.  When the alarm is cancelled the instance should be unregistered.  It's still an open question whether alarm samples should be published at regular intervals during the alarm condition.  This, unfortunately, might be necessary to assert the liveliness of the alarm instance to late joiners.  This is something to investigate with DDS vendors."
-      ));
-tables.push(new TableManager("TechnicalAlert", 
-      ["UDI", "Identifier"], 
-      ["Text"],
-      function(tds, data) { tds[0].innerHTML = data.text; },
-      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); 
-        tds[1].innerHTML = keys.identifier; },
-      "TechnicalAlert is similar to PatientAlert but is meant for technical alarms about the operation of the device."
-      ));
 tables.push(new TableManager("DeviceConditionAlert", 
       ["UDI"], 
       ["Alert State"],
@@ -374,6 +337,44 @@ tables.push(new TableManager("Patient",
       function(tds, keys) { tds[0].innerHTML = keys.mrn; },
       "Speculative patient info topic thus far used only to prove the viability of unicode text sent through DDS and out onto the web."
       ));
+tables.push(new TableManager("GlobalAlarmSettingsObjective", 
+      ["Metric"],
+      ["Lower", "Upper"],
+      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
+      function(tds, keys) { tds[0].innerHTML = keys.metric_id; },
+      "This objective is published by a Supervisory participant to request that all participants use the specified thresholds for alarms on a particular metric."
+      ));    
+tables.push(new TableManager("LocalAlarmSettingsObjective", 
+      ["UDI", "Metric"],
+      ["Lower", "Upper"],
+      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
+      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); 
+        tds[1].innerHTML = keys.metric_id; },
+      "This objective is published by a device to acknowledge that it has received the global alarm settings objective for a metric.  Eventually its AlarmSettings should indicate that the change has been made.  So the three AlarmSettingsXXX topics form an objective-state form of command and control.  At any time any participant can see the current state of request, acknowledgment of the request, and implementation of the requested change."
+      ));      
+tables.push(new TableManager("DeviceConnectivity",
+      ["UDI"],
+      ["Type", "State", "Info", "Valid Targets"],
+      function(tds, data) { tds[0].innerHTML = data.state; tds[1].innerHTML = data.type; tds[2].innerHTML = data.info; tds[3].innerHTML = data.valid_targets; },
+      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); },
+      "DeviceConnectivity shares information about a device that has a further connection to another device, such as a serial RS-232 link.  The status of that further connection is published as well as additional information about the connection (often details about the connection process).  Targets are also provided for an associated objective topic whereby establishment of the further connection can be requested by another participant.  All current OpenICE device adapters attempt to establish such a connection by default."
+      ));
+tables.push(new TableManager("HeartBeat",
+      ["UDI"],
+      ["Type"],
+      function(tds, data) { tds[0].innerHTML = data.type; },
+      function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); },
+      "At regular intervals (currently every 2 seconds) every OpenICE participant should publish to this topic.  When the instance of HeartBeat associated with a device is no longer alive that device should be considered disconnected from the system.  The Type description indicates whether the heartbeat came from a Device or Supervisor."
+      ));
+tables.push(new TableManager("TimeSync",
+      ["Source", "Recipient"],
+      ["Source Timestamp", "Recipient Timestamp"],
+      function(tds, data) { tds[0].innerHTML = timeFromTimeT(data.source_source_timestamp); 
+        tds[1].innerHTML = timeFromTimeT(data.recipient_receipt_timestamp); },
+      function(tds, keys) { tds[0].innerHTML = trunc(keys.heartbeat_source); 
+        tds[1].innerHTML = trunc(keys.heartbeat_recipient); },
+      "Upon receipt of a HeartBeat sample an OpenICE participant should publish to this topic the original source timestamp of that heartbeat as well as the reception time.  When this TimeSync message arrives back at the participant which originated the heartbeat enough information has been gathered to ascertain clock synchronization.  So a Supervisory participant can determine whether any device clocks are out of sync."
+      ));
 
 window.onload = function() {
 
@@ -411,7 +412,7 @@ window.onload = function() {
       tables[i].changePartition(partition);
     }
   };
-  PartitionBox(openICE, select, DOMAINID, changePartition);
+  PartitionBox(openICE, select, DOMAINID, changePartition, "Patricia Smith");
 
   function renderFunction() {
     if(renderers.length > 0) {
