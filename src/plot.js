@@ -184,7 +184,7 @@ Renderer.prototype.render = function(t1, t2, s1, s2) {
 
   for(var i = 0; i < this.row.samples.length; i++) {
   	var sample = this.row.samples[i];
-    var sampleTime = sample.sourceTimestamp;
+    var sampleTime = 1000 * sample.data.presentation_time.sec + sample.data.presentation_time.nanosec / 1000000;
   	for(var j = 0; j < sample.data.values.length; j++) {
   	  var time = sampleTime - msPerSample * (sample.data.values.length - j);
   	  var value = sample.data.values[j];
