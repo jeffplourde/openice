@@ -7,7 +7,7 @@ var jsmpg = require('./jsmpg.js');
 var PartitionBox = require('./partition-box.js');
 var Renderer = require('./plot.js');
 
-var partition = [];
+var partition = ['Randall Jones'];
 
 Date.now = Date.now || function() { return +new Date; }; 
 
@@ -35,7 +35,7 @@ var demopreferences;
 // We primarily use domain 15 for physiological data in the lab
 var targetDomain = 15;
 
-var expectedDelay = 1000;
+var expectedDelay = 2000;
 var timeDomain = 10000;
 var acceptableOutOfSync = 2000;
 var PLOT_INTERVAL = 125;
