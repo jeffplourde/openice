@@ -25,7 +25,7 @@ window.onload = function(e) {
 	                     warningLow: 95, warningHigh: null, criticalLow: 85, criticalHigh: null, minimum: 50, maximum: 100,
 	                     valueMsWarningLow: 5000, valueMsWarningHigh: 5000});
 	vitalSigns.addVital({label:'Resp Rate', units:'bpm', metricIds:['MDC_RESP_RATE','MDC_CO2_RESP_RATE','MDC_TTHOR_RESP_RATE'],
-	                     warningLow: 10, warningHigh: 18, criticalLow: 4, criticalHigh: 35, minimum: 0, maximum: 40,
+	                     warningLow: 10, warningHigh: 25, criticalLow: 4, criticalHigh: 35, minimum: 0, maximum: 40,
 	                     valueMsWarningLow: 5000, valueMsWarningHigh: 5000});
 
 	function bound() {
