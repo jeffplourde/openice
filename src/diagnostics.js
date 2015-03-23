@@ -123,7 +123,7 @@ TableManager.prototype.changePartition = function(partition) {
 
 tables.push(new TableManager("DeviceIdentity", 
       ["UDI", "Publication Partition"],
-      ["Manufacturer", "Model", "Serial Number", "Icon", "Build"],
+      ["Manufacturer", "Model", "Serial Number", "Icon", "Build", "OS"],
       function(tds, data) { tds[0].innerHTML = data.manufacturer; 
                             tds[1].innerHTML = data.model; 
                             tds[2].innerHTML = data.serial_number;
@@ -134,6 +134,7 @@ tables.push(new TableManager("DeviceIdentity",
                             img.src = "data:"+data.icon.content_type+";base64, " + data.icon.image;
                             tds[3].appendChild(img);
                             tds[4].innerHTML = data.build;
+                            tds[5].innerHTML = data.operating_system;
                           },
       function(tds, keys, row) { tds[0].innerHTML = keys.unique_device_identifier.substring(0,4); tds[1].innerHTML = JSON.stringify(row.pub_partition); },
       "DeviceIdentity allows a device to share identifying information.  A device generally publishes this information only once.  A device with a further connection, perhaps a serial RS-232 link, might publish details like serial number only after they become available."
