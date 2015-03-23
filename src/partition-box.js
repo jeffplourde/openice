@@ -43,22 +43,27 @@ function rebuildSelect(e, select) {
 };
 
 
-function PartitionBox(openICE, selectElement, domainId, changePartition) {
+function PartitionBox(openICE, selectElement, domainId, changePartition, defaultPartition) {
+        if(!defaultPartition) {
+            defaultPartition = "";
+        }
+        
 	var publicationsTable = openICE.createTable({domain:domainId, partition:[], topic:'DCPSPublication'});
 	publicationsTable.on('sample', function(e) {
-		rebuildSelect(e, selectElement);
+		rebuildSelect(e, selectElement, defaultPartition);
 	});
 	publicationsTable.on('afterremove', function(e) {
-		rebuildSelect(e, selectElement);
+		rebuildSelect(e, selectElementi, defaultPartition);
 	});
 	for(var i = 0; i < selectElement.options.length; i++) {
 		if(""==selectElement.options[i].text) {
 			return;
 		}
 	}
+
 	var opt = document.createElement("option");
 	opt.text = "<default>";
-	opt.value = "";
+	opt.value = defaultPartition;
 	opt.selected = 'selected';
 	selectElement.add(opt);
 
@@ -71,7 +76,7 @@ function PartitionBox(openICE, selectElement, domainId, changePartition) {
     	}
     	changePartition(partitions);
   	};
-  	changePartition([""]);
+  	changePartition([defaultPartition]);
 }
 
 
