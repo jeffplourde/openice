@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
+    <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
+    <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
+    
+    <title>OpenICE Diagnostics</title>
+    
+    <link href="assets/favicon.ico" rel="shortcut icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+    <link href="css/HIMSS15.css" rel="stylesheet">
+    <!-- <script language="javascript" type="text/javascript" src="build/diagnostics.js"></script> -->
+    <script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/HIMSS15.js"></script>
+    <!-- <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-51695046-1', 'auto');ga('send', 'pageview');
+    </script> -->
+  </head>
+  <body>
+    <section id="splash">
+      <nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html" >OpenICE</a>
+          </div>
+          <div id="main-nav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="./demo.html">OpenICE Web Demo</a></li>
+                  <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
+                </ul>
+              </li>
+              <li><a href="http://community.openice.info">Community</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </section>
+    <section id="himss-header-section">
+      <div class="himss-header-container">
+        <h1 class="himss-header-title">HIMSS15 EMR DEMO</h1>
+        <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p>
+      </div>
+    </section>
+    <section id="mrs-demo">
+      <div class="mrs-container">
+        <div class="row">
+          <div class="mrs-patient-listHolder col-sm-3">
+            <h3>Patients:</h3>
+            <div id="mrs-patient-list">
+            </div>
+          </div>
+          <div class="mrs-vitals-container col-sm-9">
+            <div class="mrs-vitals-patientHeader">
+            <!-- INSERT TEMPLATE HERE -->
+<!--               <span class="mrs-patient-pic"></span>
+              <span class="mrs-patient-lastName">Randall</span>
+              <span class="mrs-patient-firstName">Jones</span>
+              <span class="mrs-patient-mrn">P987654321</span>
+              <span class="mrs-patient-gender">M</span>
+              <span class="mrs-patient-age">84</span>
+              <span class="mrs-patient-dob">1922 Nov 15</span> -->
+            </div>
+            <div class="mrs-vitals-connectedDevices">
+              <h3>Connected Devices:</h3>
+              
+            </div>
+            <div class="mrs-vitals-data">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="himss-footer">
+      <div class="container">
+        <div class="footer-repos">
+          <span><img src="./assets/sourceforge.png" alt="sourceforge" /></span>
+          <a href="https://sourceforge.net/projects/mdpnp/" class="footer-repos-a" style="text-decoration:none;">MD PnP Demo-Apps</a>
+        </div>
+        <div class="footer-repos">
+          <span><img src="./assets/github.png" alt="github" /></span>
+          <a href="https://github.com/jeffplourde/openice" class="footer-repos-a" style="text-decoration:none;">OpenICE.info</a>
+        </div>
+        <span class="footer-span">Copyright (c) 2015, MD PnP Program<br/>
+        All rights reserved.</span>
+        <a href="http://www.mdpnp.org"><img src="./assets/logo.png"></a><br/><br/>
+      </div>
+    </section>
+  </body>
+</html>
