@@ -310,7 +310,7 @@ window.onload = function(e) {
     numericTable.on('sample', onNumericSample);
     sampleArrayTable.on('sample', onSampleArraySample);
   }
-  PartitionBox(openICE, partitionBox, targetDomain, changePartition);
+  PartitionBox(openICE, partitionBox, targetDomain, changePartition, "Randall Jones");
   openICE.on('open', function(e) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);
