@@ -53,7 +53,7 @@ function PartitionBox(openICE, selectElement, domainId, changePartition, default
 		rebuildSelect(e, selectElement, defaultPartition);
 	});
 	publicationsTable.on('afterremove', function(e) {
-		rebuildSelect(e, selectElementi, defaultPartition);
+		rebuildSelect(e, selectElement, defaultPartition);
 	});
 	for(var i = 0; i < selectElement.options.length; i++) {
 		if(""==selectElement.options[i].text) {
