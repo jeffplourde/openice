@@ -7,7 +7,7 @@ var jsmpg = require('./jsmpg.js');
 var PartitionBox = require('./partition-box.js');
 var Renderer = require('./plot.js');
 
-var partition = ['Randall Jones'];
+var partition = ['MRN=55555'];
 
 Date.now = Date.now || function() { return +new Date; }; 
 
@@ -310,7 +310,7 @@ window.onload = function(e) {
     numericTable.on('sample', onNumericSample);
     sampleArrayTable.on('sample', onSampleArraySample);
   }
-  PartitionBox(openICE, partitionBox, targetDomain, changePartition, "Randall Jones");
+  PartitionBox(openICE, partitionBox, targetDomain, changePartition, "MRN=55555");
   openICE.on('open', function(e) {
     connect_btn("Connected", "success");
     $("#connectionStateAlert").fadeOut(1500);
