@@ -41,55 +41,32 @@ function ConstructPatientList (patientData) {
   for (var i = 0; i < Object.keys(patientData).length; i++) {
     (function () {
       var pt = patientData[Object.keys(patientData)[i]];
-      // console.log(pt);
 
-      var ptContainer = document.createElement('div');
-      ptContainer.className += ' mrs-ptContainer';
+      var ptContainer = jQuery('<table/>', {
+        id: pt.id,
+        'class': 'mrs-ptContainer'
+      });
 
-      ptContainer.id = pt.id;
+      var topRow = jQuery('<tr/>').appendTo(ptContainer);
+      var bottomRow = jQuery('<tr/>').appendTo(ptContainer);
 
-      var familyNameNode = document.createElement('span');
-      familyNameNode.appendChild(document.createTextNode(pt.name[0].family[0]));
-      familyNameNode.className += ' mrs-pt-familyNameNode';
-      ptContainer.appendChild(familyNameNode);
+      jQuery('<td/>', { 'class': 'mrs-pt-familyName' }).html(pt.name[0].family[0]).appendTo(bottomRow);
+      jQuery('<td/>', { 'class': 'mrs-pt-givenName' }).html(pt.name[0].given[0]).appendTo(topRow);
 
-      var givenNameNode = document.createElement('span');
-      givenNameNode.appendChild(document.createTextNode(pt.name[0].given[0]));
-      givenNameNode.className += ' mrs-pt-givenNameNode';
-      ptContainer.appendChild(givenNameNode);
-
-      if (pt.gender) {
-        var genderNode = document.createElement('span');
-        var g = (pt.gender === 'male') ? 'M' : 'F';
-        genderNode.appendChild(document.createTextNode(g));
-        genderNode.className += ' mrs-pt-gender';
-        ptContainer.appendChild(genderNode);
-      } else {
-        console.log('No gender on patient ID', pt.id ? pt.id : '')
-      };
-
+      var age = null;
       if (pt.birthDate) {
-        var dobNode = document.createElement('span');
-        dobNode.appendChild(document.createTextNode(pt.birthDate));
-        dobNode.className += ' mrs-pt-birthDate';
-        ptContainer.appendChild(dobNode);
-      } else {
-        console.log('No date of birth on patient ID', pt.id ? pt.id : '')
+        age = moment().diff(pt.birthDate, 'years');
       };
+      jQuery('<td/>', { 'class': 'mrs-pt-birthDate' }).html(age).appendTo(topRow);
 
-      if (pt.identifier && pt.identifier.length > 0 && pt.identifier[0] && pt.identifier[0].value) {
-        var mrnNode = document.createElement('span');
-        mrnNode.appendChild(document.createTextNode(pt.identifier[0].value));
-        mrnNode.className += ' mrs-pt-identifier';
-        ptContainer.appendChild(mrnNode);
-      } else {
-        console.log('No mrn on patient ID ', pt.id ? pt.id : '')
-      };
+      jQuery('<td/>', { 'class': 'mrs-pt-gender' }).html((pt.gender === 'male') ? 'M' : 'F')
+          .appendTo(topRow);
 
-      // var ptAgeNode = document.createTextNode();
+      jQuery('<td/>', { 'class': 'mrs-pt-identifier' }).html(pt.identifier[0].value)
+          .attr('colspan', '2').appendTo(bottomRow);
 
-      ptContainer.addEventListener('click', function() { ChangeActivePatient(pt.id) }, false);
-      document.getElementById("mrs-patient-list").appendChild(ptContainer);
+      ptContainer.click(function() { ChangeActivePatient(pt.id) }).appendTo('#mrs-patient-list')
+
     })()
   };
 };
@@ -156,58 +133,77 @@ function ConstructPatientDashboard (pt) {
     console.log('creating dashboard for pt', pt);
 
     var dashboard = jQuery('<li/>', {
-        id: 'dashboard-' + pt,
-        'class': 'mrs-dashboard'
-      }).hide().appendTo('#mrs-demo-dashboardHolder');
+      id: 'dashboard-' + pt,
+      'class': 'mrs-dashboard'
+    }).hide().appendTo('#mrs-demo-dashboardHolder');
 
+    var chartContainer = jQuery('<div/>', {
+      id: 'chartContainer-' + pt,
+      'class': 'chartContainer'
+    }).appendTo(dashboard);
+
+    var yAxis = jQuery('<div/>', {
+      id: 'yAxis-' + pt,
+      'class': 'yAxis'
+    }).appendTo(chartContainer);
+
+    var chart = jQuery('<div/>', {
+      id: 'chart-' + pt,
+      'class': 'chart'
+    }).appendTo(chartContainer);
+    
+    var legend = jQuery('<div/>', {
+      id: 'legend-' + pt,
+      'class': 'chartLegend'
+    }).appendTo(chartContainer);
+
+    var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
+
+    var graphData = [];
     var metrics = Object.keys(data);
-
     for (var i = 0; i < metrics.length; i++) {
-
-      var chartContainer = jQuery('<div/>', {
-        id: 'chartContainer-' + pt + '-' + metrics[i],
-        'class': 'chartContainer'
-      }).appendTo(dashboard);
-
-      var yAxis = jQuery('<div/>', {
-        id: 'yAxis-' + pt + '-' + metrics[i],
-        'class': 'yAxis'
-      }).appendTo(chartContainer);
-
-      var chart = jQuery('<div/>', {
-        id: 'chart-' + pt + '-' + metrics[i],
-        'class': 'chart'
-      }).appendTo(chartContainer);
-
-      var graph = new Rickshaw.Graph({
-        element: chart[0],
-        // width: 500,
-        width: $('#mrs-demo-dashboardHolder').innerWidth() - 110,
-        height: 300,
-        renderer: 'line',
-        max: 200,
-        series: [
-          {
-            color: "#c05020",
-            data: data[metrics[i]],
-            name: metrics[i]
-          }
-        ]
+      graphData.push({
+        name: metrics[i],
+        data: data[metrics[i]],
+        color: palette.color()
       });
-
-      var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
-
-      var y_axis = new Rickshaw.Graph.Axis.Y( {
-        graph: graph,
-        orientation: 'left',
-        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: yAxis[0],
-      });
-
-      new Rickshaw.Graph.HoverDetail({ graph: graph });
-
-      graph.render();
     };
+
+    var graph = new Rickshaw.Graph({
+      element: chart[0],
+      width: $('#mrs-demo-dashboardHolder').innerWidth() - 110,
+      height: 400,
+      renderer: 'line',
+      max: 200,
+      series: graphData
+    });
+
+    var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+
+    var y_axis = new Rickshaw.Graph.Axis.Y( {
+      graph: graph,
+      orientation: 'left',
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+      element: yAxis[0],
+    });
+
+    new Rickshaw.Graph.HoverDetail({ graph: graph });
+
+    var legend = new Rickshaw.Graph.Legend({
+        graph: graph,
+        element: legend[0]
+    });
+    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+        graph: graph,
+        legend: legend
+    });
+    var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+        graph: graph,
+        legend: legend
+    });
+
+    graph.render();
+    
   }
 };
 // function ConstructPatientDashboard (pt) {
@@ -217,9 +213,9 @@ function ConstructPatientDashboard (pt) {
 //     console.log('creating dashboard for pt', pt);
 
 //     var dashboard = jQuery('<li/>', {
-//         id: 'dashboard-' + pt,
-//         'class': 'mrs-dashboard'
-//       }).hide().appendTo('#mrs-demo-dashboardHolder');
+//       id: 'dashboard-' + pt,
+//       'class': 'mrs-dashboard'
+//     }).hide().appendTo('#mrs-demo-dashboardHolder');
 
 //     var metrics = Object.keys(data);
 

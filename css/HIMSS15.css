@@ -4,7 +4,6 @@
     width: 100%;
     margin: 0 auto 0 auto;
     bottom: 50;
-
 }
 .mrs-container {
     margin-right: auto;
@@ -28,27 +27,21 @@
     border-right: 3px solid #ddd;
 }
 #mrs-patient-list {
-
+    width: 100%;
 }
 .mrs-ptContainer {
     cursor: pointer;
-    display: block;
-    height: 60px;
     border-top: 2px solid #fff;
-    /*margin-top: 1px;*/
     border-bottom: 2px solid #ccc;
-    /*margin-bottom: 1px;*/
-    /*padding-top: 1px;*/
-    padding-right: 10px;
-    /*padding-bottom: 1px;*/
-    padding-left: 10px;
-    line-height: 60px;
     background-color: #f5f5f5;
-    overflow: hidden;
+    width: 100%;
+    height: 80px;
 }
-
+.mrs-ptContainer:hover {
+    background-color: #FFF;
+}
 .activePt {
-    /*background-color: #9cf;*/
+    background-color: #9cf;
     border-top: 2px solid rgba(59,103,158,1);
     border-bottom: 2px solid rgba(59,103,158,1);
     color: #FFF;
@@ -59,51 +52,48 @@
     background: -o-linear-gradient(-15deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(32,124,202,1) 61%,rgba(125,185,232,1) 100%); /* Opera 11.10+ */
     background: -ms-linear-gradient(-15deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(32,124,202,1) 61%,rgba(125,185,232,1) 100%); /* IE10+ */
     background: linear-gradient(165deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(32,124,202,1) 61%,rgba(125,185,232,1) 100%); /* W3C */
-    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b679e', endColorstr='#7db9e8',GradientType=1 ); */ /* IE6-9 fallback on horizontal gradient */
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b679e', endColorstr='#7db9e8',GradientType=1 );  /* IE6-9 fallback on horizontal gradient */
 }
-
-.noData {
-    background-color: #FFF0F0;
+.activePt .mrs-pt-identifier {
+    color: #DDDDDD;
 }
-.patient-list-label {
-    border-bottom: 2px solid #ccc;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-    display: block;
-    font-size: 1.5em;
-    font-weight: 200;
-}
-.mrs-pt-givenNameNode {
-    padding: 5px;
-    font-size: 1em;
-    font-weight: 200;
-}
-.mrs-pt-familyNameNode {
-    padding: 5px;
-    font-size: 1.5em;
-    font-weight: 500;
+.noData .mrs-pt-identifier {
+    color: #B00;
 }
 .mrs-pt-identifier {
-    /*padding-top: 13px;*/
-    float: right !important;
-    color: #888;
-    line-height: 64px;
+    width: 30%;
+    color: #444;
     font-weight: 200;
+    text-align: center;
+    overflow: hidden;
+    vertical-align: top;
+    padding-top: 9px;
 }
-.active>.mrs-pt-identifier {
-    color: #DDD;
+.mrs-pt-givenName {
+    font-size: 1em;
+    font-weight: 200;
+    width: 70%;
+    padding-left: 10px;
+    vertical-align: bottom;
 }
-
+.mrs-pt-familyName {
+    padding-left: 10px;
+    font-size: 1.6em;
+    font-weight: 500;
+    width: 70%;
+    vertical-align: top;
+}
 .mrs-pt-gender {
-    padding-top: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    padding-left: 20px;
-
+    width: 15%;
+    vertical-align: bottom;
+    text-align: left;
+    padding-left: 5px;
 }
 .mrs-pt-birthDate {
-
+    width: 15%;
+    vertical-align: bottom;
+    text-align: right;
+    padding-right: 5px;
 }
 
 .mrs-demo-container {
@@ -114,10 +104,10 @@
 #mrs-demo-patientHeader {
 
 }
-.mrs-demo-givenNameNode {
+.mrs-demo-givenName {
 
 }
-.mrs-demo-familyNameNode {
+.mrs-demo-familyName {
 
 }
 .mrs-demo-identifier {
@@ -153,40 +143,21 @@
 }
 .chart {
     position: relative;
+    position: inline-block;
     left: 40px;
-}
+/*    left: 50px;
+    width: 1000px;
+    position: absolute;
+*/}
 .yAxis {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 40px;
 }
-
-
-/*  #axis0 {
-    position: absolute;
-    height: 800px;
-    width: 40px;
-  }
-  #axis1 {
-    position: absolute;
-    left: 1050px;
-    height: 800px;
-    width: 40px;
-  }
-  #chart {
-    left: 50px;
-    width: 1000px;
-    position: absolute;
-  }
-*/
-
-
-
-
-
-
-
-
-
-
+.chartLegend {
+    right: 0;
+    bottom: -15px;
+    display: inline-block;
+    position: relative;
+}
