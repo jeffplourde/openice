@@ -1,11 +1,12 @@
 /******     NAVBAR STUFF     ******/
-#main-navba {
+/*#main-navbar {
   position: fixed;
   z-index: 1;
   width: 100%;
   margin: 0 auto 0 auto;
   background-color: rgba(255,255,255,0.5)
-}
+}*/
+
 .navbar-default .navbar-nav>li>a {
   color: #333;
 }

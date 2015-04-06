@@ -8,15 +8,25 @@
     <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
     <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
     
-    <title>OpenICE Diagnostics</title>
+    <title>HIMSS15 OpenICE Demo</title>
     
-    <link href="assets/favicon.ico" rel="shortcut icon">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom-style.css" rel="stylesheet">
-    <link href="css/HIMSS15.css" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom-style.css">
+    <link rel="stylesheet" href="css/rickshaw.css">
+    <link rel="stylesheet" href="css/HIMSS15.css">
+
+    <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css">
+
     <!-- <script language="javascript" type="text/javascript" src="build/diagnostics.js"></script> -->
     <script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/d3.v3.js"></script>
+    <script language="javascript" type="text/javascript" src="js/d3.layout.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/rickshaw.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/moment.min.js"></script>
     <script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
+
     <script language="javascript" type="text/javascript" src="src/HIMSS15.js"></script>
     <!-- <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -54,42 +64,38 @@
         </div>
       </nav>
     </section>
-    <section id="himss-header-section">
-    </section>
     <section id="mrs-demo">
       <div class="mrs-container">
         <div class="row">
           <div class="mrs-patient-listHolder col-sm-3">
-            <h4>Patients</h4>
-            <div id="mrs-patient-list"></div>
-          </div>
-          <div class="mrs-demo-container col-sm-9">
-            <h4>Dashboard</h4>
-            <div id="mrs-demo-patientHeader"></div>
-            <div id="mrs-demo-dashboard">
-              <div id="himss-dashboard-splash">
-                <h1 class="himss-header-title">HIMSS15 EMR DEMO</h1>
-                <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p>
-              </div>
+            <div id="mrs-patient-list">
+              <p>No Patients to Display</p>
             </div>
+          </div>
+          <div class="mrs-demo-container col-sm-9 col-sm-offset-3">
+            <h4>Patient Vital Signs Dashboard</h4>
+            <div id="mrs-demo-patientHeader"></div>
+            <div>
+              <ul id="mrs-demo-dashboardHolder"></ul>
+            </div>
+            <div id="himss-dashboard-splash">
+              <h1 class="himss-header-title">HIMSS15 EMR DEMO</h1>
+              <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p>
+            </div>
+
+<!--
+<div id="chart_container">
+  <div id="chart" style="padding:10px;"></div>
+  <div id="legend_container">
+    <div id="smoother" title="Smoothing"></div>
+    <div id="legend"></div>
+  </div>
+  <div id="slider"></div>
+</div>
+ -->
           </div>
         </div>
       </div>
     </section>
-    <!-- <section id="himss-footer">
-      <div class="container">
-        <div class="footer-repos">
-          <span><img src="./assets/sourceforge.png" alt="sourceforge" /></span>
-          <a href="https://sourceforge.net/projects/mdpnp/" class="footer-repos-a" style="text-decoration:none;">MD PnP Demo-Apps</a>
-        </div>
-        <div class="footer-repos">
-          <span><img src="./assets/github.png" alt="github" /></span>
-          <a href="https://github.com/jeffplourde/openice" class="footer-repos-a" style="text-decoration:none;">OpenICE.info</a>
-        </div>
-        <span class="footer-span">Copyright (c) 2015, MD PnP Program<br/>
-        All rights reserved.</span>
-        <a href="http://www.mdpnp.org"><img src="./assets/logo.png"></a><br/><br/>
-      </div>
-    </section> -->
   </body>
 </html>
