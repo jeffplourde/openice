@@ -18,13 +18,13 @@
 
     <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css">
 
-    <script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery-ui.js"></script>
     <script language="javascript" type="text/javascript" src="js/d3.v3.js"></script>
     <script language="javascript" type="text/javascript" src="js/d3.layout.min.js"></script>
-    <script language="javascript" type="text/javascript" src="js/rickshaw.min.js"></script>
-    <script language="javascript" type="text/javascript" src="js/moment.min.js"></script>
-    <script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/rickshaw.js"></script>
+    <script language="javascript" type="text/javascript" src="js/moment.js"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
 
     <script language="javascript" type="text/javascript" src="src/HIMSS15.js"></script>
     <!-- <script>
@@ -72,12 +72,33 @@
             </div>
           </div>
           <div class="mrs-demo-container col-sm-9 col-sm-offset-3">
-            <h4>Patient Vital Signs Dashboard</h4>
-            <div id="mrs-demo-patientHeader"></div>
+            <div id="mrs-demo-header" style="display:none">
+              <table id="mrs-demo-patientHeader">
+                <tr>
+                  <td id="header-picture" rowspan="2"><span class="glyphicon glyphicon-user"></span></td>
+                  <td class="header-top" id="header-familyName"></td>
+                  <td class="header-top" id="header-givenName"></td>
+                  <td class="header-top" id="header-birthDate"></td>
+                  <td class="header-top" id="header-age"></td>
+                  <td class="header-top" id="header-gender"></td>
+                  <td class="header-top header-right" id="header-mrn"></td>
+                </tr>
+                <tr>
+                  <td class="header-bottom" id="header-familyName-label">Family Name</td>
+                  <td class="header-bottom" id="header-givenName-label">Given Name</td>
+                  <td class="header-bottom" id="header-birthDate-label">Birthdate</td>
+                  <td class="header-bottom" id="header-age-label">Age</td>
+                  <td class="header-bottom" id="header-gender-label">Gender</td>
+                  <td class="header-bottom header-right" id="header-mrn-label">Medical Record Number</td>
+                </tr>
+              </table>
+              <h4 class="header-title">Patient Vital Signs Dashboard</h4>
+            </div>
             <ul id="mrs-demo-dashboardHolder"></ul>
             <div id="himss-dashboard-splash">
               <h1 class="himss-header-title">HIMSS15 EMR DEMO</h1>
               <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p>
+              <!-- insert graphic of demo here -->
             </div>
           </div>
         </div>

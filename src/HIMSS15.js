@@ -1,6 +1,7 @@
 "use strict";
 
 var patientData = {};
+var activePatient = {};
 var observationData = {};
 
 window.onload = function() {
@@ -21,6 +22,22 @@ function PopulatePatientData () {
         if (pt.name && pt.name.length > 0 && pt.name[0].given && pt.name[0].given.length > 0
               && pt.name[0].family && pt.name[0].family.length > 0) {
           patientData[data.entry[i].resource.id] = data.entry[i].resource;
+
+          if (pt.birthDate) {
+            patientData[data.entry[i].resource.id].age = moment().diff(pt.birthDate, 'years');
+          };
+          if (pt.gender) {
+            switch (patientData[data.entry[i].resource.id].gender) {
+              case 'male' || 'Male' || 'MALE' || 'M' || 'm' :
+                patientData[data.entry[i].resource.id].genderShort = 'M';
+                break;
+              case 'female' || 'Female' || 'FEMALE' || 'F' || 'f' :
+                patientData[data.entry[i].resource.id].genderShort = 'F';
+                break;
+              default:
+                console.log('Invalid gender format on pt', pt.id);
+            }
+          };
         } else {
           console.log('Patient data omitted from list due to missing name value. ID: ', pt.id ? pt.id : '')
         };
@@ -52,20 +69,12 @@ function ConstructPatientList (patientData) {
 
       jQuery('<td/>', { 'class': 'mrs-pt-familyName' }).html(pt.name[0].family[0]).appendTo(bottomRow);
       jQuery('<td/>', { 'class': 'mrs-pt-givenName' }).html(pt.name[0].given[0]).appendTo(topRow);
-
-      var age = null;
-      if (pt.birthDate) {
-        age = moment().diff(pt.birthDate, 'years');
-      };
-      jQuery('<td/>', { 'class': 'mrs-pt-birthDate' }).html(age).appendTo(topRow);
-
-      jQuery('<td/>', { 'class': 'mrs-pt-gender' }).html((pt.gender === 'male') ? 'M' : 'F')
-          .appendTo(topRow);
-
+      jQuery('<td/>', { 'class': 'mrs-pt-birthDate' }).html(pt.age).appendTo(topRow);
+      jQuery('<td/>', { 'class': 'mrs-pt-gender' }).html(pt.genderShort).appendTo(topRow);
       jQuery('<td/>', { 'class': 'mrs-pt-identifier' }).html(pt.identifier[0].value)
           .attr('colspan', '2').appendTo(bottomRow);
 
-      ptContainer.click(function() { ChangeActivePatient(pt.id) }).appendTo('#mrs-patient-list')
+      ptContainer.click(function() { ChangeActivePatient(pt.id, false) }).appendTo('#mrs-patient-list')
 
     })()
   };
@@ -86,11 +95,12 @@ function GetPatientObservations () {
             var metric = data.entry[j].resource.valueQuantity.code;
             var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);
             var y = data.entry[j].resource.valueQuantity.value;
+            // get status for validated data - preliminary and final
 
-            // this looks ugly but I'm not sure what would make it better
             if (metric && t && y) {
               if (!observationData[pt]) { observationData[pt] = {} };
               if (!observationData[pt][metric]) { observationData[pt][metric] = [] };
+              // filter dataset down to most recent 12 hours? 
               observationData[pt][metric].push({'x':t, 'y':y});
             };
           }
@@ -152,10 +162,15 @@ function ConstructPatientDashboard (pt) {
       'class': 'chart'
     }).appendTo(chartContainer);
     
-    var legend = jQuery('<div/>', {
+    var legendDiv = jQuery('<div/>', {
       id: 'legend-' + pt,
       'class': 'chartLegend'
     }).appendTo(chartContainer);
+
+    // var slider = jQuery('<div/>', {
+    //   id: 'slider-' + pt,
+    //   'class': 'slider'
+    // }).appendTo(chartContainer);
 
     var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
@@ -171,16 +186,18 @@ function ConstructPatientDashboard (pt) {
 
     var graph = new Rickshaw.Graph({
       element: chart[0],
-      width: $('#mrs-demo-dashboardHolder').innerWidth() - 110,
+      width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 110,
       height: 400,
       renderer: 'line',
-      max: 200,
+      max: 150,
       series: graphData
     });
 
-    var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+    var x_axis = new Rickshaw.Graph.Axis.Time({
+      graph: graph
+    });
 
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
+    var y_axis = new Rickshaw.Graph.Axis.Y({
       graph: graph,
       orientation: 'left',
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
@@ -191,7 +208,7 @@ function ConstructPatientDashboard (pt) {
 
     var legend = new Rickshaw.Graph.Legend({
         graph: graph,
-        element: legend[0]
+        element: legendDiv[0]
     });
     var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
         graph: graph,
@@ -202,78 +219,25 @@ function ConstructPatientDashboard (pt) {
         legend: legend
     });
 
+    // var slider = new Rickshaw.Graph.RangeSlider({
+    //   graph: graph,
+    //   element: slider
+    // });
+
     graph.render();
-    
-  }
+  };
+
+  if (pt === activePatient) { ChangeActivePatient(pt, true) };
 };
-// function ConstructPatientDashboard (pt) {
-//   var data = observationData[pt];
 
-//   if (data) {
-//     console.log('creating dashboard for pt', pt);
+function ChangeActivePatient (patientID, override) {
+  activePatient = patientID;
+  override = override === null ? false : override;
 
-//     var dashboard = jQuery('<li/>', {
-//       id: 'dashboard-' + pt,
-//       'class': 'mrs-dashboard'
-//     }).hide().appendTo('#mrs-demo-dashboardHolder');
-
-//     var metrics = Object.keys(data);
-
-//     for (var i = 0; i < metrics.length; i++) {
-
-//       var chartContainer = jQuery('<div/>', {
-//         id: 'chartContainer-' + pt + '-' + metrics[i],
-//         'class': 'chartContainer'
-//       }).appendTo(dashboard);
-
-//       var yAxis = jQuery('<div/>', {
-//         id: 'yAxis-' + pt + '-' + metrics[i],
-//         'class': 'yAxis'
-//       }).appendTo(chartContainer);
-
-//       var chart = jQuery('<div/>', {
-//         id: 'chart-' + pt + '-' + metrics[i],
-//         'class': 'chart'
-//       }).appendTo(chartContainer);
-
-//       var graph = new Rickshaw.Graph({
-//         element: chart[0],
-//         // width: 500,
-//         width: $('#mrs-demo-dashboardHolder').innerWidth() - 110,
-//         height: 300,
-//         renderer: 'line',
-//         max: 200,
-//         series: [
-//           {
-//             color: "#c05020",
-//             data: data[metrics[i]],
-//             name: metrics[i]
-//           }
-//         ]
-//       });
-
-//       var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
-
-//       var y_axis = new Rickshaw.Graph.Axis.Y( {
-//         graph: graph,
-//         orientation: 'left',
-//         tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-//         element: yAxis[0],
-//       });
-
-//       new Rickshaw.Graph.HoverDetail({ graph: graph });
-
-//       graph.render();
-//     };
-//   }
-// };
-
-function ChangeActivePatient (patientID) {
   var selectedPtContainer = document.getElementById(patientID);
 
-  if ( $(selectedPtContainer).hasClass('activePt') ) {
-    console.log('Patient selected is already active. PID', patientID);
-  } else {
+  if ( !$( selectedPtContainer ).hasClass('activePt') || override ) {
+    
     console.log('Switching dashboard view to patient', patientID);
 
     // change active class in patient menu
@@ -281,20 +245,35 @@ function ChangeActivePatient (patientID) {
     $(selectedPtContainer).addClass('activePt');
 
     // remove splash screen
-    $('#himss-dashboard-splash').hide();
+    $( '#himss-dashboard-splash' ).hide();
+
+    // show demo header
+    $( '#mrs-demo-header' ).show();
 
     // switch dashboard patient header
-    document.getElementById('mrs-demo-patientHeader').innerHTML = null;
-    $('#' + patientID).clone().attr('id', 'mrs-header-' + patientID).removeClass().addClass('mrs-header')
-        .appendTo('#mrs-demo-patientHeader');
+  $( '#header-picture' ).html(patientData[patientID].picture);
+  $( '#header-familyName' ).html(patientData[patientID].name[0].family[0]);
+  $( '#header-givenName' ).html(patientData[patientID].name[0].given[0]);
+  $( '#header-birthDate' ).html(patientData[patientID].birthDate);
+  $( '#header-age' ).html(patientData[patientID].age);
+  $( '#header-gender' ).html(patientData[patientID].gender);
+  $( '#header-mrn' ).html(patientData[patientID].identifier[0].value);
+
+
+    // document.getElementById('mrs-demo-patientHeader').innerHTML = null;
+    // $('#' + patientID).clone().attr('id', 'mrs-header-' + patientID).removeClass().addClass('mrs-header')
+    //     .appendTo('#mrs-demo-patientHeader');
 
     // switch dashboard visibility
-    $('#mrs-demo-dashboardHolder').children().hide();
-    $('#dashboard-' + patientID).show();
+    $( '#mrs-demo-dashboardHolder' ).children().hide();
+    $( '#dashboard-' + patientID ).show();
+  
+  } else {
+    console.log('Patient selected is already active. PID', patientID);
   };
 };
 
 
 function UTCtoEpoch (t) {
   return moment(t, moment.ISO_8601).format('X');
-}
+};

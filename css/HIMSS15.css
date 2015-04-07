@@ -13,6 +13,9 @@
     position: relative;
     top: 50px;
 }
+
+/* Patient List Stuff */
+
 .mrs-patient-listHolder {
     position: fixed;
     top: 52px;
@@ -26,6 +29,7 @@
     background-color: #e5e5e5;
     border-right: 3px solid #ddd;
 }
+
 #mrs-patient-list {
     width: 100%;
 }
@@ -73,11 +77,11 @@
     font-size: 1em;
     font-weight: 200;
     width: 70%;
-    padding-left: 10px;
+    padding-left: 15px;
     vertical-align: bottom;
 }
 .mrs-pt-familyName {
-    padding-left: 10px;
+    padding-left: 15px;
     font-size: 1.6em;
     font-weight: 500;
     width: 70%;
@@ -96,37 +100,121 @@
     padding-right: 5px;
 }
 
+/* End of Patient List Stuff */
+
+
+/* MRS Demo Stuff */
+
 .mrs-demo-container {
-    padding-top: 12px;
-    padding-right: 12px;
-    padding-left: 12px;
+    padding: 0;
+    min-width: 750px;
+}
+
+/* Demo Header Stuff */
+
+#mrs-demo-header td {
+    /*border: 1px solid black;*/
+}
+
+#mrs-demo-header {
+    width: 100%;
 }
 #mrs-demo-patientHeader {
+    min-height: 80px;
+    width: 100%;
+    color: white;
+    /*background-color: #E0F0FF;*/
+    background: rgb(59,103,158); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(59,103,158,1) 0%, rgba(43,136,217,1) 66%, rgba(43,136,217,1) 66%, rgba(32,124,202,1) 94%, rgba(125,185,232,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,103,158,1)), color-stop(66%,rgba(43,136,217,1)), color-stop(66%,rgba(43,136,217,1)), color-stop(94%,rgba(32,124,202,1)), color-stop(100%,rgba(125,185,232,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 66%,rgba(43,136,217,1) 66%,rgba(32,124,202,1) 94%,rgba(125,185,232,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 66%,rgba(43,136,217,1) 66%,rgba(32,124,202,1) 94%,rgba(125,185,232,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 66%,rgba(43,136,217,1) 66%,rgba(32,124,202,1) 94%,rgba(125,185,232,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 66%,rgba(43,136,217,1) 66%,rgba(32,124,202,1) 94%,rgba(125,185,232,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b679e', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
 
 }
-.mrs-demo-givenName {
+.header-top {
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: bottom;
+}
+.header-bottom {
+    font-style: italic;
+    vertical-align: top;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    opacity: 0.8;
+    font-weight: 300;
+}
+.header-right {
+    text-align: right;
+    padding-right: 10px;
+}
+#header-picture {
+    width: 10%;
+    padding: 5px;
+    text-align: center;
+    vertical-align: bottom;
+    font-size: 3em;
+}
+#header-givenName {
+    width: 20%;
+    font-size: 1.5em;
+    font-weight: 600;
+    
+}
+#header-familyName {
+    width: 25%;
+    font-size: 2em;
+    font-weight: 300;
+}
+#header-identifier {
+    width: 20%;
 
 }
-.mrs-demo-familyName {
+#header-gender {
+    width: 10%;
 
 }
-.mrs-demo-identifier {
+#header-age {
+    width: 5%;
 
 }
-.mrs-demo-gender {
+#header-birthDate {
+    width: 10%;
 
 }
-.mrs-demo-birthDate {
+#header-familyName-label {
 
 }
+#header-givenName-label {
 
-#mrs-demo-dashboardHolder {
-    list-style-type: none;
-    padding: 0;
 }
+#header-birthDate-label {
+
+}
+#header-age-label {
+
+}
+#header-gender-label {
+
+}
+#header-mrn-label {
+
+}
+.header-title {
+    padding-left: 20px;
+}
+
+/* End of Demo Header Stuff */
+
+/* HIMSS Splash Screen */
 
 #himss-dashboard-splash {
-
+    padding: 25px;
 }
 .himss-header-title {
 
@@ -135,11 +223,32 @@
 
 }
 
+/* End of HIMSS Splash Screen */
+
+/* Dashboard Stuff */
+
+#mrs-demo-dashboardHolder {
+    list-style-type: none;
+    padding: 0;
+    margin: 15px;
+}
+.mrs-dashboard {
+
+}
+
+
 /* graph bullshit */
+
 .chartContainer {
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     margin: 35px;
+}
+.chartContainer a {
+    color: #DDD;
+}
+.chartContainer a:hover {
+    color: #FFF;
 }
 .chart {
     position: relative;
@@ -147,8 +256,8 @@
     left: 40px;
 /*    left: 50px;
     width: 1000px;
-    position: absolute;
-*/}
+    position: absolute;*/
+}
 .yAxis {
     position: absolute;
     top: 0;
@@ -161,3 +270,9 @@
     display: inline-block;
     position: relative;
 }
+
+/* End of Graph Bullshit */
+
+/* End of Dashboard Stuff */
+
+/* End of MRS Demo Stuff */
