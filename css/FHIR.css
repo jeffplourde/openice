@@ -237,6 +237,10 @@
     font-size: 4em;
     font-weight: 300;
 }
+.himss-header-diagram {
+    margin: 0 auto 0 auto;
+    width: 100%;
+}
 .himss-header-list {
     list-style-type: none;
     font-size: 2em;

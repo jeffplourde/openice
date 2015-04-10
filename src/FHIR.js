@@ -3,12 +3,10 @@
 var patientData = {};
 var activePatient = {};
 var observationData = {};
-var refreshTimeout = true;
+var refreshTimeout = false;
 
 window.onload = function() {
-  patientData = PopulatePatientData();
-  // PopulatePatientData();
-
+  PopulatePatientData();
 };
 
 function PopulatePatientData () {
@@ -91,22 +89,28 @@ function GetPatientObservations () {
       var pt = Object.keys(patientData)[i];
 
       $.get('https://fhir.openice.info/fhir/Observation?subject=Patient/'+pt+'&_count=10000&_sort:desc=date', function( data ) {
-        // console.log('Data for pt:', pt, data);
+        console.log('Data for pt:', pt, data);
 
         if (data.total) {
           for (var j = 0; j < data.entry.length; j++) {
             var metric = data.entry[j].resource.valueQuantity.code;
             var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);
             var y = data.entry[j].resource.valueQuantity.value;
-            // get status for validated data - preliminary and final
+            // var device = data.entry[j].resource.device.indentifier.value || null;
+            // var status = data.entry[j].resource.status || null; // get validated data - preliminary or final
+            status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
 
             if (metric && t && y) {
-              if (!observationData[pt]) { observationData[pt] = {} };
-              if (!observationData[pt][metric]) { observationData[pt][metric] = [] };
-              // filter dataset down to most recent 12 hours? 
-              observationData[pt][metric].push({'x':t, 'y':y});
+              if ( t > moment().format('X') - 86400) { // Filter out data older than 24 hours
+                if (!observationData[pt]) { observationData[pt] = {} };
+                if (!observationData[pt][metric]) { observationData[pt][metric] = [] };
+                // if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
+                observationData[pt][metric].push({'x':t, 'y':y});
+                // observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
+                // observationData[pt][device + '-' + metric + '-' + status].push({'x':t, 'y':status});
+              };
             };
-          }
+          };
 
           // Sort metric observations by time
           for (var k = 0; k < Object.keys(observationData[pt]).length; k++) {
@@ -127,17 +131,6 @@ function GetPatientObservations () {
     })()
   }
 };
-
-// THIS DOESN'T WORK YET
-// $( window ).resize(function () {
-//   var pt = Object.keys(patientData);
-//   for (var i = 0; i < pt.length; i++) {
-//     if (pt[i].hasData === true) {
-//       ConstructPatientDashboard(pt[i]);
-//       console.log(pt[i]);
-//     }
-//   }
-// });
 
 function ConstructPatientDashboard (pt) {
   var data = observationData[pt];
@@ -170,32 +163,41 @@ function ConstructPatientDashboard (pt) {
       'class': 'chartLegend'
     }).appendTo(chartContainer);
 
-    // var sliderDiv = jQuery('<div/>', {
-    //   id: 'slider-' + pt,
-    //   'class': 'slider'
+    // var timelineDiv = jQuery('<div/>', {
+    //   id: 'timeline-' + pt,
+    //   'class': 'timeline'
     // }).appendTo(chartContainer);
+
+    var sliderDiv = jQuery('<div/>', {
+      id: 'slider-' + pt,
+      'class': 'slider'
+    }).appendTo(chartContainer);
 
     var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
     var graphData = [];
     var metrics = Object.keys(data);
-    for (var i = 0; i < metrics.length; i++) {
-      graphData.push({
-        name: metrics[i],
-        data: data[metrics[i]],
-        color: palette.color()
-      });
-      // var min = Number.POSITIVE_INFINITY;
-      // var max = Number.NEGATIVE_INFINITY;
-      // var tmp;
-      // for (var j = 0; j < graphData[i].data.length; j++) {
-      //   tmp = graphData[i].data[j].y;
-      //   if (tmp < min) { min = tmp };
-      //   if (tmp > max) { max = tmp };
-      // };
-      // graphData[i].ymax = max;
-    };
 
+console.log(metrics);
+
+    for (var i = 0; i < metrics.length; i++) {
+      if (metrics[i].length > 2) {
+        graphData.push({
+          name: metrics[i],
+          data: data[metrics[i]],
+          color: palette.color()
+        });
+        // var min = Number.POSITIVE_INFINITY;
+        // var max = Number.NEGATIVE_INFINITY;
+        // var tmp;
+        // for (var j = 0; j < graphData[i].data.length; j++) {
+        //   tmp = graphData[i].data[j].y;
+        //   if (tmp < min) { min = tmp };
+        //   if (tmp > max) { max = tmp };
+        // };
+        // graphData[i].ymax = max;
+      };
+    };
 
     var graph = new Rickshaw.Graph({
       element: chart[0],
@@ -244,12 +246,23 @@ function ConstructPatientDashboard (pt) {
         legend: legend
     });
 
+    // var annotator = new Rickshaw.Graph.Annotate({
+    //   graph: graph,
+    //   // element: timelineDiv[0]
+    //   element: document.getElementById('timeline-'+pt)
+    // });
+    // // annotator.add(timestamp in epoch seconds, 'hello');
+    // annotator.add(moment('April 9, 2015 11:30PM').format('X'), 'hello');
+    // annotator.update();
+
+
     // var slider = new Rickshaw.Graph.RangeSlider.Preview({
     //   graph: graph,
     //   element: sliderDiv[0]
     // });
 
     graph.render();
+    // graph.update();
   };
 
   if (pt === activePatient) { ChangeActivePatient(pt, true) };
@@ -293,18 +306,14 @@ function ChangeActivePatient (patientID, override) {
   };
 };
 
-function UTCtoEpoch (t) {
-  return moment(t, moment.ISO_8601).format('X');
-};
-
 function RefreshData () {
-  if (refreshTimeout) {
+  if (!refreshTimeout) {
     patientData = {};
     observationData = {};
     PopulatePatientData();
     console.log('resetting page');
-    refreshTimeout = false;
-    setTimeout(function() { refreshTimeout = true }, 3000);
+    refreshTimeout = true;
+    setTimeout(function() { refreshTimeout = false }, 3000);
   };
 };
 
@@ -337,3 +346,18 @@ function DeleteActivePatient () {
     };
   };
 };
+
+function UTCtoEpoch (t) {
+  return moment(t, moment.ISO_8601).format('X');
+};
+
+// THIS DOESN'T WORK YET
+// $( window ).resize(function () {
+//   var pt = Object.keys(patientData);
+//   for (var i = 0; i < pt.length; i++) {
+//     if (pt[i].hasData === true) {
+//       ConstructPatientDashboard(pt[i]);
+//       console.log(pt[i]);
+//     }
+//   }
+// });
