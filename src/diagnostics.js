@@ -413,7 +413,7 @@ window.onload = function() {
       tables[i].changePartition(partition);
     }
   };
-  PartitionBox(openICE, select, DOMAINID, changePartition, "Patricia Smith");
+  PartitionBox(openICE, select, DOMAINID, changePartition, "MRN=14c89b52fb7");
 
   function renderFunction() {
     if(renderers.length > 0) {
