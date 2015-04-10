@@ -69,6 +69,7 @@
 	content: "";
 
 	border: 5px solid transparent;
+	overflow: hidden;
 }
 .rickshaw_graph .detail .item.left:after {
 	top: 1em;

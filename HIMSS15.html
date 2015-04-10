@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
     <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
     <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
@@ -70,6 +70,14 @@
             <div id="mrs-patient-list">
               <p>No Patients to Display</p>
             </div>
+            <div id="mrs-patient-buttons" class="btn-group btn-group-justified" role="group">
+              <div class="btn-group" role="group">
+                <a type="button" class="patient-list-button btn btn-primary" onclick="ShowSplash()">Home</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a type="button" class="patient-list-button btn btn-primary" onclick="RefreshData()">Refresh</a>
+              </div>
+            </div>
           </div>
           <div class="mrs-demo-container col-sm-9 col-sm-offset-3">
             <div id="mrs-demo-header" style="display:none">
@@ -81,7 +89,7 @@
                   <td class="header-top" id="header-birthDate"></td>
                   <td class="header-top" id="header-age"></td>
                   <td class="header-top" id="header-gender"></td>
-                  <td class="header-top header-right" id="header-mrn"></td>
+                  <td class="header-top" id="header-mrn"></td>
                 </tr>
                 <tr>
                   <td class="header-bottom" id="header-familyName-label">Family Name</td>
@@ -89,15 +97,23 @@
                   <td class="header-bottom" id="header-birthDate-label">Birthdate</td>
                   <td class="header-bottom" id="header-age-label">Age</td>
                   <td class="header-bottom" id="header-gender-label">Gender</td>
-                  <td class="header-bottom header-right" id="header-mrn-label">Medical Record Number</td>
+                  <td class="header-bottom" id="header-mrn-label">Medical Record Number</td>
                 </tr>
               </table>
-              <h4 class="header-title">Patient Vital Signs Dashboard</h4>
+              <div class="header-holder">
+                <span class="header-title">Patient Vital Signs Dashboard</span>
+                <a type="button" class="header-button btn btn-danger" onclick="DeleteActivePatient()">Delete Patient</a>
+              </div>
             </div>
             <ul id="mrs-demo-dashboardHolder"></ul>
             <div id="himss-dashboard-splash">
-              <h1 class="himss-header-title">HIMSS15 EMR DEMO</h1>
-              <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p>
+              <h1 class="himss-header-title">OpenICE Vital Sign Auto-Validation System</h1>
+              <ul class="himss-header-list">
+                <li>- No Delays to Clinical Decision Support</li>
+                <li>- No Human Selection Bias</li>
+              </ul>
+              <!-- <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p> -->
+              <p class="himss-header-subtitle">In an effort to eliminate erroneous vital signs data from clinical data repositories, some EMR vendors require that all vital signs data be manually 'validated' by a nurse or clinician before the data enters the EMR. This manual validation process introduces delays in data propagation to clinical decision support systems as well as introduces human selection bias by nurses and clinicians choosing not to validate correct but irregular data points. Our proposed automatic validation algorithm application enables Integrated Clinical Environments (ICEs) to provide EMRs with accurate, pre-validated vital signs data through the use of digital signal processing, statistics, and business rules.</p>
               <!-- insert graphic of demo here -->
             </div>
           </div>

@@ -93,11 +93,21 @@
     text-align: left;
     padding-left: 5px;
 }
-.mrs-pt-birthDate {
+.mrs-pt-age {
     width: 15%;
     vertical-align: bottom;
     text-align: right;
-    padding-right: 5px;
+    padding-right: 0;
+}
+
+#mrs-patient-buttons {
+    position: absolute;
+    bottom: 0;
+    padding: 1px;
+}
+.patient-list-button {
+    font-weight: 300;
+    font-size: 1.2em;
 }
 
 /* End of Patient List Stuff */
@@ -149,10 +159,6 @@
     opacity: 0.8;
     font-weight: 300;
 }
-.header-right {
-    text-align: right;
-    padding-right: 10px;
-}
 #header-picture {
     width: 10%;
     padding: 5px;
@@ -171,9 +177,10 @@
     font-size: 2em;
     font-weight: 300;
 }
-#header-identifier {
+#header-mrn {
     width: 20%;
-
+    font-size: 1.5em;
+    font-weight: 200;
 }
 #header-gender {
     width: 10%;
@@ -205,8 +212,17 @@
 #header-mrn-label {
 
 }
+.header-holder {
+    padding: 15px;
+}
 .header-title {
-    padding-left: 20px;
+    font-weight: 300;
+    font-size: 1.5em;
+}
+.header-button {
+    position: absolute;
+    right: 25px;
+    /*bottom: 0;*/
 }
 
 /* End of Demo Header Stuff */
@@ -214,10 +230,17 @@
 /* HIMSS Splash Screen */
 
 #himss-dashboard-splash {
-    padding: 25px;
+    padding: 0 25px;
 }
 .himss-header-title {
-
+    margin-top: 0;
+    font-size: 4em;
+    font-weight: 300;
+}
+.himss-header-list {
+    list-style-type: none;
+    font-size: 2em;
+    font-weight: 300;
 }
 .himss-header-subtitle {
 
@@ -269,6 +292,13 @@
     bottom: -15px;
     display: inline-block;
     position: relative;
+}
+.detail_swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px 0 0;
+  padding-top: 2px;
 }
 
 /* End of Graph Bullshit */

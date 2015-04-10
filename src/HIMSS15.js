@@ -3,16 +3,17 @@
 var patientData = {};
 var activePatient = {};
 var observationData = {};
+var refreshTimeout = true;
 
 window.onload = function() {
   patientData = PopulatePatientData();
+  // PopulatePatientData();
 
 };
 
 function PopulatePatientData () {
   $.get("https://fhir.openice.info/fhir/Patient?_count=100", function( data ) {
   // $.get("http://fhirtest.uhn.ca/baseDstu2/Patient?active=true&_count=500", function( data ) {
-    console.log(data);
 
     if (data.entry && data.entry.length > 0) {
       patientData = {};
@@ -42,7 +43,7 @@ function PopulatePatientData () {
           console.log('Patient data omitted from list due to missing name value. ID: ', pt.id ? pt.id : '')
         };
       };
-      ConstructPatientList(patientData);
+      ConstructPatientList();
       GetPatientObservations();
     } else {
       alert('No patients to display');
@@ -52,7 +53,9 @@ function PopulatePatientData () {
   return patientData;
 };
 
-function ConstructPatientList (patientData) {
+function ConstructPatientList () {
+  console.log('construct patient list');
+
   document.getElementById('mrs-patient-list').innerHTML = null;
 
   for (var i = 0; i < Object.keys(patientData).length; i++) {
@@ -61,17 +64,17 @@ function ConstructPatientList (patientData) {
 
       var ptContainer = jQuery('<table/>', {
         id: pt.id,
-        'class': 'mrs-ptContainer'
+        'class': 'mrs-ptContainer noData'
       });
 
       var topRow = jQuery('<tr/>').appendTo(ptContainer);
       var bottomRow = jQuery('<tr/>').appendTo(ptContainer);
 
-      jQuery('<td/>', { 'class': 'mrs-pt-familyName' }).html(pt.name[0].family[0]).appendTo(bottomRow);
-      jQuery('<td/>', { 'class': 'mrs-pt-givenName' }).html(pt.name[0].given[0]).appendTo(topRow);
-      jQuery('<td/>', { 'class': 'mrs-pt-birthDate' }).html(pt.age).appendTo(topRow);
-      jQuery('<td/>', { 'class': 'mrs-pt-gender' }).html(pt.genderShort).appendTo(topRow);
-      jQuery('<td/>', { 'class': 'mrs-pt-identifier' }).html(pt.identifier[0].value)
+      jQuery('<td/>', { 'class': 'mrs-pt-familyName' }).html(pt.name[0].family[0] || null).appendTo(bottomRow);
+      jQuery('<td/>', { 'class': 'mrs-pt-givenName' }).html(pt.name[0].given[0] || null).appendTo(topRow);
+      jQuery('<td/>', { 'class': 'mrs-pt-age' }).html(pt.age || null).appendTo(topRow);
+      jQuery('<td/>', { 'class': 'mrs-pt-gender' }).html(pt.genderShort || null).appendTo(topRow);
+      jQuery('<td/>', { 'class': 'mrs-pt-identifier' }).html(pt.identifier[0].value || null)
           .attr('colspan', '2').appendTo(bottomRow);
 
       ptContainer.click(function() { ChangeActivePatient(pt.id, false) }).appendTo('#mrs-patient-list')
@@ -87,7 +90,7 @@ function GetPatientObservations () {
     (function () {
       var pt = Object.keys(patientData)[i];
 
-      $.get('https://fhir.openice.info/fhir/Observation?subject=Patient/'+pt+'&_count=10000', function( data ) {
+      $.get('https://fhir.openice.info/fhir/Observation?subject=Patient/'+pt+'&_count=10000&_sort:desc=date', function( data ) {
         // console.log('Data for pt:', pt, data);
 
         if (data.total) {
@@ -167,7 +170,7 @@ function ConstructPatientDashboard (pt) {
       'class': 'chartLegend'
     }).appendTo(chartContainer);
 
-    // var slider = jQuery('<div/>', {
+    // var sliderDiv = jQuery('<div/>', {
     //   id: 'slider-' + pt,
     //   'class': 'slider'
     // }).appendTo(chartContainer);
@@ -182,14 +185,24 @@ function ConstructPatientDashboard (pt) {
         data: data[metrics[i]],
         color: palette.color()
       });
+      // var min = Number.POSITIVE_INFINITY;
+      // var max = Number.NEGATIVE_INFINITY;
+      // var tmp;
+      // for (var j = 0; j < graphData[i].data.length; j++) {
+      //   tmp = graphData[i].data[j].y;
+      //   if (tmp < min) { min = tmp };
+      //   if (tmp > max) { max = tmp };
+      // };
+      // graphData[i].ymax = max;
     };
+
 
     var graph = new Rickshaw.Graph({
       element: chart[0],
       width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 110,
       height: 400,
       renderer: 'line',
-      max: 150,
+      max: 200,
       series: graphData
     });
 
@@ -201,10 +214,22 @@ function ConstructPatientDashboard (pt) {
       graph: graph,
       orientation: 'left',
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: yAxis[0],
+      element: yAxis[0]
     });
 
-    new Rickshaw.Graph.HoverDetail({ graph: graph });
+    var hoverDetail = new Rickshaw.Graph.HoverDetail({
+      graph: graph,
+      xFormatter: function (x) {
+        return moment.unix(x).format('LTS');
+      },
+      formatter: function(series, x, y) {
+        var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+        var yvalue = '<span class="date">' + series.name + ": " + parseInt(y) + '</span>';
+        var date = '<span class="date">' + moment.unix(x).format('ll LTS') + '</span>';
+        var content = swatch + yvalue + '<br>' + date;
+        return content;
+      }
+    });
 
     var legend = new Rickshaw.Graph.Legend({
         graph: graph,
@@ -219,9 +244,9 @@ function ConstructPatientDashboard (pt) {
         legend: legend
     });
 
-    // var slider = new Rickshaw.Graph.RangeSlider({
+    // var slider = new Rickshaw.Graph.RangeSlider.Preview({
     //   graph: graph,
-    //   element: slider
+    //   element: sliderDiv[0]
     // });
 
     graph.render();
@@ -251,18 +276,13 @@ function ChangeActivePatient (patientID, override) {
     $( '#mrs-demo-header' ).show();
 
     // switch dashboard patient header
-  $( '#header-picture' ).html(patientData[patientID].picture);
-  $( '#header-familyName' ).html(patientData[patientID].name[0].family[0]);
-  $( '#header-givenName' ).html(patientData[patientID].name[0].given[0]);
-  $( '#header-birthDate' ).html(patientData[patientID].birthDate);
-  $( '#header-age' ).html(patientData[patientID].age);
-  $( '#header-gender' ).html(patientData[patientID].gender);
-  $( '#header-mrn' ).html(patientData[patientID].identifier[0].value);
-
-
-    // document.getElementById('mrs-demo-patientHeader').innerHTML = null;
-    // $('#' + patientID).clone().attr('id', 'mrs-header-' + patientID).removeClass().addClass('mrs-header')
-    //     .appendTo('#mrs-demo-patientHeader');
+    // $( '#header-picture' ).html( patientData[patientID].picture || null );
+    $( '#header-familyName' ).html( patientData[patientID].name[0].family[0] || null);
+    $( '#header-givenName' ).html( patientData[patientID].name[0].given[0] || null);
+    $( '#header-birthDate' ).html( patientData[patientID].birthDate || null);
+    $( '#header-age' ).html( patientData[patientID].age || null);
+    $( '#header-gender' ).html( patientData[patientID].gender || null);
+    $( '#header-mrn' ).html( patientData[patientID].identifier[0].value || null);
 
     // switch dashboard visibility
     $( '#mrs-demo-dashboardHolder' ).children().hide();
@@ -273,7 +293,47 @@ function ChangeActivePatient (patientID, override) {
   };
 };
 
-
 function UTCtoEpoch (t) {
   return moment(t, moment.ISO_8601).format('X');
+};
+
+function RefreshData () {
+  if (refreshTimeout) {
+    patientData = {};
+    observationData = {};
+    PopulatePatientData();
+    console.log('resetting page');
+    refreshTimeout = false;
+    setTimeout(function() { refreshTimeout = true }, 3000);
+  };
+};
+
+function ShowSplash () {
+  // hide dashboards
+  $( '#mrs-demo-dashboardHolder' ).children().hide();
+  // hide demo header
+  $( '#mrs-demo-header' ).hide();
+  // show splash screen
+  $( '#himss-dashboard-splash' ).show();
+  // remove active class from patient
+  $(document.getElementById("mrs-patient-list").getElementsByClassName('activePt')).removeClass('activePt');
+};
+
+function DeleteActivePatient () {
+  var r = confirm("Are you sure you would like to DELETE this patient from the FHIR server?");
+  if (r === true) {
+    $.ajax({
+      url: 'https://fhir.openice.info/fhir/Patient/' + activePatient,
+      type: "DELETE"
+    })
+
+    delete patientData[activePatient];
+    delete observationData[activePatient];
+
+    ShowSplash();
+    ConstructPatientList();
+    for (var i = 0; i < Object.keys(observationData).length; i++) {
+      $( '#' + Object.keys(observationData)[i] ).removeClass( 'noData' );
+    };
+  };
 };
