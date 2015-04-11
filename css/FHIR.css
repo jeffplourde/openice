@@ -59,7 +59,7 @@
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b679e', endColorstr='#7db9e8',GradientType=1 );  /* IE6-9 fallback on horizontal gradient */
 }
 .activePt .mrs-pt-identifier {
-    color: #DDDDDD;
+    color: #F0F0F0;
 }
 .noData .mrs-pt-identifier {
     color: #B00;
@@ -271,6 +271,15 @@
     font-family: Arial, Helvetica, sans-serif;
     margin: 35px;
 }
+.chartContainer2 {
+    position: absolute;
+    top: 140px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 35px;
+    border: 1px solid black;
+    z-index: -10;
+    opacity: 0.2;
+}
 .chartContainer a {
     color: #DDD;
 }
@@ -279,17 +288,14 @@
 }
 .chart {
     position: relative;
-    position: inline-block;
-    left: 40px;
-/*    left: 50px;
-    width: 1000px;
-    position: absolute;*/
+    /*left: 40px;*/
 }
 .yAxis {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 40px;
+    left: -40px;
 }
 .chartLegend {
     right: 0;
@@ -298,11 +304,11 @@
     position: relative;
 }
 .detail_swatch {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 4px 0 0;
-  padding-top: 2px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px 0 0;
+    padding-top: 2px;
 }
 
 /* End of Graph Bullshit */

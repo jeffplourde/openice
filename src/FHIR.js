@@ -93,24 +93,28 @@ function GetPatientObservations () {
 
         if (data.total) {
           for (var j = 0; j < data.entry.length; j++) {
-            var metric = data.entry[j].resource.valueQuantity.code;
-            var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);
-            var y = data.entry[j].resource.valueQuantity.value;
-            // var device = data.entry[j].resource.device.indentifier.value || null;
-            // var status = data.entry[j].resource.status || null; // get validated data - preliminary or final
+            var metric = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.code : null;   // get metric
+            var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
+            var y = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.value : null;   // get vital sign measurement
+            var device = data.entry[j].resource.device ? data.entry[j].resource.device.reference : null;   // get source device
+            var status = data.entry[j].resource.status;   // get validated data - preliminary or final
+
+            device = device ? device.slice(7) : null;
             status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
 
-            if (metric && t && y) {
-              if ( t > moment().format('X') - 86400) { // Filter out data older than 24 hours
+            if (metric && t && y && device) {
+              if ( t > moment().format('X') - 43200) { // Filter out data older than 12 hours
                 if (!observationData[pt]) { observationData[pt] = {} };
-                if (!observationData[pt][metric]) { observationData[pt][metric] = [] };
-                // if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
-                observationData[pt][metric].push({'x':t, 'y':y});
-                // observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
-                // observationData[pt][device + '-' + metric + '-' + status].push({'x':t, 'y':status});
+
+                if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
+                observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
+
+                if (!observationData[pt][device + '-' + metric + '-' + 'status']) { observationData[pt][device + '-' + metric + '-' + 'status'] = [] };
+                observationData[pt][device + '-' + metric + '-' + 'status'].push({'x':t, 'y':status});
               };
             };
           };
+          console.log(observationData[pt]);
 
           // Sort metric observations by time
           for (var k = 0; k < Object.keys(observationData[pt]).length; k++) {
@@ -148,6 +152,11 @@ function ConstructPatientDashboard (pt) {
       'class': 'chartContainer'
     }).appendTo(dashboard);
 
+    var chartContainer2 = jQuery('<div/>', {
+      id: 'chartContainer2-' + pt,
+      'class': 'chartContainer2'
+    }).appendTo(dashboard);
+
     var yAxis = jQuery('<div/>', {
       id: 'yAxis-' + pt,
       'class': 'yAxis'
@@ -157,31 +166,36 @@ function ConstructPatientDashboard (pt) {
       id: 'chart-' + pt,
       'class': 'chart'
     }).appendTo(chartContainer);
+
+    var chart2 = jQuery('<div/>', {
+      id: 'chart2-' + pt,
+      'class': 'chart2'
+    }).appendTo(chartContainer2);
+
+    var timelineDiv = jQuery('<div/>', {
+      id: 'timeline-' + pt,
+      'class': 'timeline'
+    }).appendTo(chartContainer);
     
     var legendDiv = jQuery('<div/>', {
       id: 'legend-' + pt,
       'class': 'chartLegend'
     }).appendTo(chartContainer);
 
-    // var timelineDiv = jQuery('<div/>', {
-    //   id: 'timeline-' + pt,
-    //   'class': 'timeline'
+    // var sliderDiv = jQuery('<div/>', {
+    //   id: 'slider-' + pt,
+    //   'class': 'slider'
     // }).appendTo(chartContainer);
-
-    var sliderDiv = jQuery('<div/>', {
-      id: 'slider-' + pt,
-      'class': 'slider'
-    }).appendTo(chartContainer);
 
     var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
     var graphData = [];
+    var graphData2 = [];
     var metrics = Object.keys(data);
 
-console.log(metrics);
-
+  // TODO scale y axis and clamp at 225 or something.
     for (var i = 0; i < metrics.length; i++) {
-      if (metrics[i].length > 2) {
+      if (metrics[i].indexOf('status') < 1) {
         graphData.push({
           name: metrics[i],
           data: data[metrics[i]],
@@ -198,18 +212,53 @@ console.log(metrics);
         // graphData[i].ymax = max;
       };
     };
+    for (var i = 0; i < metrics.length; i++) {
+      if (metrics[i].indexOf('status') > 1) {
+        graphData2.push({
+          // name: metrics[i],
+          data: data[metrics[i]],
+          color: '#0F0',
+          stroke: 'rgba(0,0,0,0.15)'
+        });
+      };
+    };
+    console.log(graphData2);
 
     var graph = new Rickshaw.Graph({
       element: chart[0],
-      width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 110,
+      width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 70,
       height: 400,
       renderer: 'line',
       max: 200,
       series: graphData
     });
 
+    var graph2 = new Rickshaw.Graph({
+      element: chart2[0],
+      width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 70,
+      height: 400,
+      renderer: 'area',
+      stroke: true,
+      series: graphData2
+    });
+    graph2.renderer.unstack = true;
+    graph2.render();
+
     var x_axis = new Rickshaw.Graph.Axis.Time({
-      graph: graph
+      graph: graph,
+      timeUnit: {
+        name: '3 hour',
+        seconds: 3600 * 3,
+        formatter: function(d) { return moment(d).format('LTS') }
+      }
+    });
+    var x_axis2 = new Rickshaw.Graph.Axis.Time({
+      graph: graph2,
+      timeUnit: {
+        name: '3 hour',
+        seconds: 3600 * 3,
+        formatter: function(d) { return moment(d).format('LTS') }
+      }
     });
 
     var y_axis = new Rickshaw.Graph.Axis.Y({
@@ -221,6 +270,19 @@ console.log(metrics);
 
     var hoverDetail = new Rickshaw.Graph.HoverDetail({
       graph: graph,
+      xFormatter: function (x) {
+        return moment.unix(x).format('LTS');
+      },
+      formatter: function(series, x, y) {
+        var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+        var yvalue = '<span class="date">' + series.name + ": " + parseInt(y) + '</span>';
+        var date = '<span class="date">' + moment.unix(x).format('ll LTS') + '</span>';
+        var content = swatch + yvalue + '<br>' + date;
+        return content;
+      }
+    });
+    var hoverDetail2 = new Rickshaw.Graph.HoverDetail({
+      graph: graph2,
       xFormatter: function (x) {
         return moment.unix(x).format('LTS');
       },
@@ -246,15 +308,15 @@ console.log(metrics);
         legend: legend
     });
 
-    // var annotator = new Rickshaw.Graph.Annotate({
-    //   graph: graph,
-    //   // element: timelineDiv[0]
-    //   element: document.getElementById('timeline-'+pt)
-    // });
-    // // annotator.add(timestamp in epoch seconds, 'hello');
-    // annotator.add(moment('April 9, 2015 11:30PM').format('X'), 'hello');
-    // annotator.update();
+    var annotator = new Rickshaw.Graph.Annotate({
+      graph: graph,
+      // element: timelineDiv[0]
+      element: document.getElementById('timeline-'+pt)
+    });
+    // annotator.add(timestamp in epoch seconds, 'hello');
 
+    annotator.add(moment("2015-04-10T12:00:00.000Z").format('X'), 'hello');
+    annotator.update();
 
     // var slider = new Rickshaw.Graph.RangeSlider.Preview({
     //   graph: graph,
@@ -310,6 +372,8 @@ function RefreshData () {
   if (!refreshTimeout) {
     patientData = {};
     observationData = {};
+    activePatient = {};
+    ShowSplash();
     PopulatePatientData();
     console.log('resetting page');
     refreshTimeout = true;

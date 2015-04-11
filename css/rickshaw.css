@@ -131,25 +131,26 @@
 	opacity: 0.85;
 	white-space: nowrap;
 	margin-left: 3px;
-	bottom: 1px;
+	bottom: -20px;
+	left: -5px;
 }
 
 /* annotations */
 
 .rickshaw_annotation_timeline {
 	height: 1px;
-	border-top: 1px solid #e0e0e0;
-	margin-top: 10px;
+	border-top: 1px solid #B0B0B0;
+	margin-top: 30px;
 	position: relative;
 }
 .rickshaw_annotation_timeline .annotation {
 	position: absolute;
-	height: 6px;
-	width: 6px;
+	height: 10px;
+	width: 10px;
 	margin-left: -2px;
-	top: -3px;
+	top: -6px;
 	border-radius: 5px;
-	background-color: rgba(0, 0, 0, 0.25);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 .rickshaw_graph .annotation_line {
 	position: absolute;
@@ -198,6 +199,7 @@
 	content: "\25b2";
 	position: absolute;
 	top: -11px;
+	left: 10px;
 	color: white;
 	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.8);
 }
