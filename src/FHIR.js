@@ -4,6 +4,7 @@ var patientData = {};
 var activePatient = {};
 var observationData = {};
 var refreshTimeout = false;
+var assessments = [];
 
 window.onload = function() {
   PopulatePatientData();
@@ -111,7 +112,34 @@ function GetPatientObservations () {
 
                 // if (!observationData[pt][device + '-' + metric + '-' + 'status']) { observationData[pt][device + '-' + metric + '-' + 'status'] = [] };
                 // observationData[pt][device + '-' + metric + '-' + 'status'].push({'x':t, 'y':status});
+
+                // if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
+                // observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
               };
+            };
+
+
+            if (pt === '1' && data.entry[j].resource.valueString) {
+              var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
+              var label = data.entry[j].resource.identifier[0].value;
+              var message = data.entry[j].resource.valueString;
+
+              console.log(t, label, message);
+
+              if (t && label && message) {
+                if ( t > moment().format('X') - 43200) { // Filter out data older than 12 hours
+                  assessments.push({'t': t, 'ass': label + '-' + message});
+                };
+              };
+            };
+          };
+
+          if (assessments) {
+            // Sort metric observations by time
+            for (var k = 0; k < assessments.length; k++) {
+              assessments.sort(function (a, b) {
+                return a.t - b.t
+              });
             };
           };
           // console.log(observationData[pt]);
@@ -128,7 +156,6 @@ function GetPatientObservations () {
             patientData[pt].hasData = true;
             $( '#'+pt ).removeClass('noData');
           };
-
         } else {
           console.log('No observations found for patient ID', pt);
           patientData[pt].hasData = false;
@@ -155,11 +182,6 @@ function ConstructPatientDashboard (pt) {
       'class': 'chartContainer'
     }).appendTo(dashboard);
 
-    // var chartContainer2 = jQuery('<div/>', {
-    //   id: 'chartContainer2-' + pt,
-    //   'class': 'chartContainer2'
-    // }).appendTo(dashboard);
-
     var yAxis = jQuery('<div/>', {
       id: 'yAxis-' + pt,
       'class': 'yAxis'
@@ -169,11 +191,6 @@ function ConstructPatientDashboard (pt) {
       id: 'chart-' + pt,
       'class': 'chart'
     }).appendTo(chartContainer);
-
-    // var chart2 = jQuery('<div/>', {
-    //   id: 'chart2-' + pt,
-    //   'class': 'chart2'
-    // }).appendTo(chartContainer2);
 
     var timelineDiv = jQuery('<div/>', {
       id: 'timeline-' + pt,
@@ -215,17 +232,6 @@ function ConstructPatientDashboard (pt) {
         // graphData[i].ymax = max;
       };
     };
-    // for (var i = 0; i < metrics.length; i++) {
-    //   if (metrics[i].indexOf('status') > 1) {
-    //     graphData2.push({
-    //       // name: metrics[i],
-    //       data: data[metrics[i]],
-    //       color: '#0F0',
-    //       stroke: 'rgba(0,0,0,0.15)'
-    //     });
-    //   };
-    // };
-    // console.log(graphData2);
 
     var graph = new Rickshaw.Graph({
       element: chart[0],
@@ -236,17 +242,6 @@ function ConstructPatientDashboard (pt) {
       series: graphData
     });
 
-    // var graph2 = new Rickshaw.Graph({
-    //   element: chart2[0],
-    //   width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 70,
-    //   height: 400,
-    //   renderer: 'area',
-    //   stroke: true,
-    //   series: graphData2
-    // });
-    // graph2.renderer.unstack = true;
-    // graph2.render();
-
     var x_axis = new Rickshaw.Graph.Axis.Time({
       graph: graph,
       timeUnit: {
@@ -255,14 +250,6 @@ function ConstructPatientDashboard (pt) {
         formatter: function(d) { return moment(d).format('LTS') }
       }
     });
-    // var x_axis2 = new Rickshaw.Graph.Axis.Time({
-    //   graph: graph2,
-    //   timeUnit: {
-    //     name: '3 hour',
-    //     seconds: 3600 * 3,
-    //     formatter: function(d) { return moment(d).format('LTS') }
-    //   }
-    // });
 
     var y_axis = new Rickshaw.Graph.Axis.Y({
       graph: graph,
@@ -300,13 +287,17 @@ function ConstructPatientDashboard (pt) {
 
     var annotator = new Rickshaw.Graph.Annotate({
       graph: graph,
-      // element: timelineDiv[0]
       element: document.getElementById('timeline-'+pt)
     });
-    // annotator.add(timestamp in epoch seconds, 'hello');
 
-    annotator.add(moment("2015-04-10T12:00:00.000Z").format('X'), 'hello');
-    annotator.update();
+
+    if (assessments) {
+      for (var i = 0; i < assessments.length; i++) {
+        console.log(assessments[i].t, assessments[i].ass);
+        annotator.add(assessments[i].t, assessments[i].ass);
+        annotator.update();
+      };
+    };
 
     // var slider = new Rickshaw.Graph.RangeSlider.Preview({
     //   graph: graph,
@@ -314,7 +305,6 @@ function ConstructPatientDashboard (pt) {
     // });
 
     graph.render();
-    // graph.update();
   };
 
   if (pt === activePatient) { ChangeActivePatient(pt, true) };
