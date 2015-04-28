@@ -85,7 +85,7 @@
 						The OpenICE device-adapter service is the core software that functions as the intermediary between the medical device and the OpenICE DDS network. The device-adapter service is a Java application that can theoretically run on any Java friendly hardware platform, including embedded systems, laptops, servers, Raspberry Pis, Intel Galileos, Beagleboards, etc. This device-adapter is not intended to be a permanent solution. Ideally, the functionality of the device-adapter would be available natively from a medical device.
 					</p>
 					<p>
-						This tutorial uses Beaglebone Black (Revision C) as the hardware platform. BBB is a single board, Linux-driven computing platform. It was chosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
+						This tutorial uses Beaglebone Black (Revision C or B) as the hardware platform. BBB is a single board, Linux-driven computing platform. It was chosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
 					</p>
 
 					<div class="container-fluid">
@@ -125,7 +125,7 @@
 					<h3>Process Overview</h3>
 					<div class="clearfix">
 						<img src="./assets/adapters.png" class="hidden-xs pull-right" style="height:250px; padding:10px" />
-						<p>To create an OpenICE device adapter, we are going to take a stock BBB (revision C) and flash the on-board eMMC memory with a new disk image to replace the current filesystem. The disk image contains the pre-installed software necessary for running the device adapter.</p>
+						<p>To create an OpenICE device adapter, we are going to take a stock BBB (revision C or B) and flash the on-board eMMC memory with a new disk image to replace the current filesystem. The disk image contains the pre-installed software necessary for running the device adapter.</p>
 						<p>We are going to:</p>
 						<ol>
 							<li><a href="#required-hardware">Gather the Required Hardware</a></li>
@@ -142,14 +142,15 @@
 						<dt>5V Power Supply</dt>
 						<dd>Please use a dedicated 5V 1A power supply for your BBB during this process. The flashing process may use more than the 500mA allowed by some USB 2.0 laptop and computer ports. Exceeding this limit could disable the power and corrupt the memory on the BBB.</dd>
 						<dt>MicroSD Card</dt>
-						<dd>At least 4GB of space is required. This process was tested with an 8GB card, formatted as fat16. You will also need some method of connecting the MicroSD card to your computer. A simple USB adapter is recommended.</dd>
+						<dd>At least 4GB of space is required for Revision C (or 2GB for Revision B). This process was tested with an 8GB card. You will also need some method of connecting the MicroSD card to your computer. A simple USB adapter is recommended.</dd>
 						<dt>A Computer</dt>
 						<dd>Needed for preparing the MicroSD card. This process should be possible on any operating system. Windows users will have to ensure that they have the tools needed for decompressing .tar.xz images. This will be easiest on either Linux or OS X.</dd>
 					</dl>
 
 					<h3 id="required-software">Required Software</h3>
 					<dl class="dl-horizontal">
-						<dt><a href="/files/bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.1.img.xz">Disk Image</a></dt>
+						<dt><a href="/files/bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.1.img.xz">Revision C Disk Image</a></dt>
+						<dt><a href="/files/bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.1.img.xz">Revision B Disk Image</a></dt>
 						<dd>Download the MD PnP Beaglebone Black disk image and eMMC flasher. Details about the software installed in disk image can be found below. This image will replace the onboard memory (eMMC) of the BBB.</dd>
 					</dl>
 
@@ -162,14 +163,15 @@
 						<dt>MD PnP OpenICE</dt>
 						<dd>MD PnP provides a <a href="http://mdpnp.sourceforge.net/">demo application</a> for both serving as the medical device adapter and for viewing and interacting with the OpenICE network on a computer. Later in the tutorial, we will configure the installed demo application to function as a device adapter. To view and interact with the data on your personal computer, simply install the software by clicking the big green download button on the linked page.</dd>
 						<dt>NTP Daemon</dt>
-						<dd>The Network Time Protocol daemon (NTPd) package is installed on the disk image. The OpenICE environment requires all nodes to sync to a NTP clock for data accuracy and alignment. The time zone of the BBB image has been set to eastern.</dd>
+						<dd>The Network Time Protocol daemon (NTPd) package is installed on the disk image. The OpenICE environment requires all nodes to sync to a NTP clock for data accuracy and alignment. The time zone of the BBB image has been set to U.S. Eastern.</dd>
 					</dl>
 
 					<h3 id="prepare-sd">Prepare the MicroSD Card</h3>
 					<p>Now we are going to create a MicroSD card that the BBB can use to automatically flash its memory.</p>
 					<ol>
 						<li>Copy the BBB disk image to MicroSD card. On a Linux system with the MicroSD card identified as /dev/sdX the following command can be used:</li>
-						<li><kbd>xz -dc bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.1.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
+						<li>(for Revision C)<kbd>xz -dc bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.1.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
+						<li>(for Revision B)<kbd>xz -dc bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.1.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
 					</ol>
 					<p>That's it. Your MicroSD card is ready.</p>
 
