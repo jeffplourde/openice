@@ -149,9 +149,9 @@
 
 					<h3 id="required-software">Required Software</h3>
 					<dl class="dl-horizontal">
-						<dt><a href="/files/bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.1.img.xz">Revision C Disk Image</a></dt>
-						<dt><a href="/files/bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.1.img.xz">Revision B Disk Image</a></dt>
-						<dd>Download the MD PnP Beaglebone Black disk image and eMMC flasher. Details about the software installed in disk image can be found below. This image will replace the onboard memory (eMMC) of the BBB.</dd>
+						<dt><a href="/files/bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.2.img.xz">Revision C Disk Image</a></dt>
+						<dt><a href="/files/bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.2.img.xz">Revision B Disk Image</a></dt>
+						<dd>Download the MD PnP Beaglebone Black eMMC flasher. Details about the software installed in disk image can be found below. This image will replace the onboard memory (eMMC) of the BBB.</dd>
 					</dl>
 
 					<h5 id="inc-sw" style="padding-top:10px">Software Installed in the Disk Image:</h5>
@@ -170,8 +170,8 @@
 					<p>Now we are going to create a MicroSD card that the BBB can use to automatically flash its memory.</p>
 					<ol>
 						<li>Copy the BBB disk image to MicroSD card. On a Linux system with the MicroSD card identified as /dev/sdX the following command can be used:</li>
-						<li>(for Revision C)<kbd>xz -dc bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.1.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
-						<li>(for Revision B)<kbd>xz -dc bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.1.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
+						<li>(for Revision C)<kbd>xz -dc bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.2.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
+						<li>(for Revision B)<kbd>xz -dc bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.2.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
 					</ol>
 					<p>That's it. Your MicroSD card is ready.</p>
 
@@ -182,16 +182,19 @@
 					<ol>
 						<li>Insert the MicroSD card into the BBB.</li>
 						<li>Plug in the BBB power supply.</li>
+						<div class="alert alert-info">
+							NOTE: If you are using a revision A or B beaglebone not previously flashed with an updated version of u-boot you may need to hold down the "option/boot" button (near the microSD card slot) to boot from the microSD card.
+						</div>
 						<div class="alert alert-warning">
 							WARNING: Do not use the USB power during the flashing process. eLinux reports that this process may exceed 500mA and trigger a PC or laptop to disable USB power. Please use a dedicated 5V 1A power supply as detailed above.
 						</div>
 						<li>When the image starts copying onto the BBB the four LEDs will illuminate successively from end to end.</li>
-						<li>When flashing is complete all the LEDs will illuminate.  After another minute or two the LEDs will extinguish and the beaglebone will power down, remove the power and MicroSD card.</li>
+						<li>When flashing is complete all the LEDs will illuminate and some finalization steps will occur.  After another minute or two the LEDs will extinguish and the beaglebone will power down, remove the power and MicroSD card.</li>
 						<li>Your beagle is now running Debian 7.8 and has the OpenICE device adapter software installed. It can now be configured to run as a device adapter for any of the supported devices. In the next section we will configure the adapter to communicate with a Philips MP70.</li>
 						<li>The default user is "debian". The default password is "debian".</li>
 					</ol>
 					<div class="alert alert-info">
-						NOTE: The BBB with Debian will take up to 3 minutes to boot without a network cable attached.
+						NOTE: The BBB with Debian may take up to 3 minutes to boot without a network cable attached.
 					</div>
 
 
@@ -272,7 +275,7 @@
 						If you are trying to connect to a device that is not a MP70, the previous steps will be different.
 					</p>
 					<ol>
-						<li>To display a list of available options for different device adapters and simulators, enter: <br /><kbd>OpenICE-0.6.1/bin/OpenICE —-help</kbd></li>
+						<li>To display a list of available options for different device adapters and simulators, enter: <br /><kbd>OpenICE-0.6.2/bin/OpenICE —-help</kbd></li>
 						<li>If you wanted to start a simulated electrocardiogram monitor on domain 5, for example, the entry in "device.this" would have "ECG_Simulator" as the device name preceded by "5". The BBB terminal input would be:<br /><kbd>echo -domain 5 -device ECG_Simulator > device.this</kbd>
 						</li>
 					</ol>
