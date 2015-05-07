@@ -139,12 +139,15 @@ tables.push(new TableManager("DeviceIdentity",
       function(tds, keys, row) { tds[0].innerHTML = keys.unique_device_identifier.substring(0,4); tds[1].innerHTML = JSON.stringify(row.pub_partition); },
       "DeviceIdentity allows a device to share identifying information.  A device generally publishes this information only once.  A device with a further connection, perhaps a serial RS-232 link, might publish details like serial number only after they become available."
       ));
-tables.push(new TableManager("AlarmSettings", 
-      ["UDI", "Metric"],
-      ["Lower", "Upper"],
-      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
+tables.push(new TableManager("AlarmLimit", 
+      ["UDI", "Metric", "Type"],
+      ["Units", "Value"],
+      function(tds, data) { tds[0].innerHTML = data.unit_identifier; 
+                            tds[1].innerHTML = data.value; },
+
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); 
-        tds[1].innerHTML = keys.metric_id; },
+                            tds[1].innerHTML = keys.metric_id; 
+                            tds[2].innerHTML = keys.limit_type; },
       "The current alarm thresholds for a particular metric on a particular device."
       ));  
 tables.push(new TableManager("PatientAlert", 
@@ -338,19 +341,20 @@ tables.push(new TableManager("Patient",
       function(tds, keys) { tds[0].innerHTML = keys.mrn; },
       "Speculative patient info topic thus far used only to prove the viability of unicode text sent through DDS and out onto the web."
       ));
-tables.push(new TableManager("GlobalAlarmSettingsObjective", 
-      ["Metric"],
-      ["Lower", "Upper"],
-      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
-      function(tds, keys) { tds[0].innerHTML = keys.metric_id; },
+tables.push(new TableManager("GlobalAlarmLimitObjective", 
+      ["Metric", "Type"],
+      ["Units", "Value"],
+      function(tds, data) { tds[0].innerHTML = data.unit_identifier; tds[1].innerHTML = data.value; },
+      function(tds, keys) { tds[0].innerHTML = keys.metric_id; tds[1].innerHTML = keys.limit_type; },
       "This objective is published by a Supervisory participant to request that all participants use the specified thresholds for alarms on a particular metric."
       ));    
-tables.push(new TableManager("LocalAlarmSettingsObjective", 
-      ["UDI", "Metric"],
-      ["Lower", "Upper"],
-      function(tds, data) { tds[0].innerHTML = data.lower; tds[1].innerHTML = data.upper; },
+tables.push(new TableManager("LocalAlarmLimitObjective", 
+      ["UDI", "Metric", "Type"],
+      ["Units", "Value"],
+      function(tds, data) { tds[0].innerHTML = data.unit_identifier; tds[1].innerHTML = data.value; },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier); 
-        tds[1].innerHTML = keys.metric_id; },
+                            tds[1].innerHTML = keys.metric_id; 
+                            tds[2].innerHTML = keys.limit_type; },
       "This objective is published by a device to acknowledge that it has received the global alarm settings objective for a metric.  Eventually its AlarmSettings should indicate that the change has been made.  So the three AlarmSettingsXXX topics form an objective-state form of command and control.  At any time any participant can see the current state of request, acknowledgment of the request, and implementation of the requested change."
       ));      
 tables.push(new TableManager("DeviceConnectivity",
