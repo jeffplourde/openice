@@ -395,7 +395,7 @@ window.onload = function() {
 
 
   var select = document.getElementById('partitionBox');
-  var wsHost = window.location.protocol == 'file:' ? 'http://dev.openice.info' : window.location.protocol + '//' + window.location.host;
+  var wsHost = window.location.protocol == 'file:' ? 'https://dev.openice.info' : window.location.protocol + '//' + window.location.host;
 
   var openICE = new OpenICE(wsHost);
   openICE.maxSamples = 10000;
