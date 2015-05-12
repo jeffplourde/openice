@@ -80,15 +80,15 @@
 				<h2>Status:&nbsp;<span class="status"></span></h2>
 				<p class="description">"Status" (also in the upper right) indicates whether this page is currently connected to the OpenICE web gateway.  The OpenICE web gateway is a <a href="http://www.nodejs.org">node.js</a> server program that uses an MD PnP DDS add-on for node.js to retrieve DDS information and share it over the web.  It utilizes <a href="http://socket.io">socket.io</a> for connectivity between client and server.</p>
 
-				<h2>Partition:&nbsp;</h2>
+				<h2>Patient:&nbsp;</h2>
 				<form id="partitionForm" role="form" class="form-horizontal">
 					<div class="form-group">
-						<label for="partitionBox" class="col-sm-2 control-label">Select one or more partitions to view:</label>
+						<label for="partitionBox" class="col-sm-2 control-label">Select patients:</label>
 						<div class="col-sm-6"><select class="form-control" id="partitionBox" multiple=""></select></div>
 					</div>
 				</form>
 
-				<p class="description">Partitions are a DDS concept.  A publisher and subscriber must be "in" a common logical partition before the writers and readers they contain will "match" and begin sharing information.  The concept transcends topology.  A portable device accompanying an ambulatory patient connected via a wifi network can still be in the same logical partition as the devices in that patient's room attached to a physical ethernet network.  And a subscriber subscribed in that partition will receive data from both devices.  Thus a singular "ICE environment" defined by partition obviates a lot of issues with patient transport, ambulatory, and room preparation scenarios.  Our first candidate for a partitioning scheme is this one partition per-patient paradigm.  But options abound for other partitions existing in parallel perhaps for device type, assigned unit, etc.  This dropdown box collects all the partitions for all available publications and allows this page to "tune into" one partition in particular.  Currently in the lab several 'environments' are configured with their own partition name.</p>
+				<p class="description">Each 'ICE' represents a logical partition of the greater system.  In this way a patient ICE can transcend physical network topology.  A portable device accompanying an ambulatory patient connected via a wifi network can still be in the same logical partition as the devices in that patient's room attached to a physical ethernet network.  And an app running in that partition will receive data from both devices.  Thus a singular 'ICE' defined by logical partition obviates a lot of issues with patient transport, ambulatory, and room preparation scenarios.  Our first candidate for a partitioning scheme is this one partition per-patient paradigm.  But options abound for other partitions existing in parallel perhaps for device type, assigned unit, etc.  This dropdown box collects all the partitions for all available data and allows this page to "tune into" one patient partition in particular.  Currently in the lab several patient 'environments' are configured with their own name.  The "name" used here is queried from our <a href="https://fhir.openice.info" target="_blank">FHIR Test Server</a></p>
 				<br/><br/>
 
 				<script language="javascript" type="text/javascript">
