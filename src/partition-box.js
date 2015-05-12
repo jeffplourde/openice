@@ -1,5 +1,33 @@
+function fetchPatients() {
+	var url = "https://fhir.openice.info/fhir/Patient";
+
+	var client = new XMLHttpRequest();
+
+	client.onload = function(e) {
+		if (client.readyState === 4) {
+    		if (client.status === 200) {
+      			console.log(client.responseText);
+    		} else {
+      			console.error(client.statusText);
+    		}
+    	}
+	};
+
+	client.onerror = function(e) {
+		console.error(client.statusText);
+	}
+
+	client.open("GET", url, true);
+
+	// client.setRequestHeader("Content-Type", "application");
+
+	client.send();
+
+}
 
 function rebuildSelect(e, select) {
+	//fetchPatients();
+
 	var table = e.table, row = e.row;
 	var names = {};
 	var previouslySelected = {};
@@ -18,6 +46,7 @@ function rebuildSelect(e, select) {
 		var row = table.rows[rowKeys[i]];
 		if(row.samples.length > 0) {
 			var name = row.samples[row.samples.length-1].data.partition.name;
+
 			if(typeof name === 'undefined' || null == name || name.length==0) {
 				names["<default>"] = "";
 			} else {
@@ -25,6 +54,8 @@ function rebuildSelect(e, select) {
 					if(name[j]=="") {
 						names["<default>"] = "";
 					} else {
+						// Only include MRN patient partitions
+						if(0 != name[j].indexOf("MRN=")) { continue; }
 						names[name[j]] = name[j];
 					}
 				}
