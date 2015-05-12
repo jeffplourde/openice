@@ -53,9 +53,12 @@ function populatePatientName(partition, option) {
 function rebuildSelect(e, select) {
 	var table = e.table, row = e.row;
 	var names = {};
+        var previousOptions = {};
 
+        //console.log("rebuild");
 	for(var i = 0; i < select.options.length; i++) {
 		previouslySelected[select.options[i].value] = select.options[i].selected;
+                previousOptions[select.options[i].value] = select.options[i];
 	}
 	select.options.length = 0;
         // No longer allow the default partition
@@ -86,11 +89,17 @@ function rebuildSelect(e, select) {
 	}
 	var partKeys = Object.keys(names);
 	for(var i = 0; i < partKeys.length; i++) {
-		var opt = document.createElement("option");
-                select.add(opt);
+		var opt;
+                if(previousOptions[names[partKeys[i]]]) {
+                   opt = previousOptions[names[partKeys[i]]];
+                   delete previousOptions[names[partKeys[i]]];
+                } else {
+                   opt = document.createElement("option");
+                }
 		opt.text = partKeys[i];
 		opt.value = names[partKeys[i]];
 		opt.selected = previouslySelected[opt.value];
+                select.add(opt);
                 populatePatientName(partKeys[i], opt);
 	}		
 };
@@ -103,10 +112,45 @@ function PartitionBox(openICE, selectElement, domainId, changePartition, default
         
 	var publicationsTable = openICE.createTable({domain:domainId, partition:[], topic:'DCPSPublication'});
 	publicationsTable.on('sample', function(e) {
-		rebuildSelect(e, selectElement, defaultPartition);
+                var publication = e.sample.data; 
+                if(publication.partition && publication.partition.name && publication.partition.name.length) {
+                     var name = publication.partition.name;
+                     for(var j = 0; j < name.length; j++) {
+		         if(0 == name[j].indexOf("MRN=")) {
+                             var nameFound = false;
+                             for(var i = 0; i < selectElement.options.length; i++) {
+                                 if(selectElement.options[i].value == name[j]) {
+                                     nameFound = true;
+                                 }
+                             }
+                             if(!nameFound) {
+                                 console.log("rebuild where " + name[j] + " not found");
+                                 rebuildSelect(e, selectElement, defaultPartition);
+                                 return;
+                             }
+                         }
+                    }
+                }
 	});
 	publicationsTable.on('afterremove', function(e) {
-		rebuildSelect(e, selectElement, defaultPartition);
+                if(e.row.samples.length < 1) {
+                    // console.log("rebuild on afterremove with no sample history");
+                    // If there is no sample history then no samples were reported; do nothing
+                    // rebuildSelect(e, selectElement, defaultPartition);
+                    return;
+                }
+                var publication = e.row.samples[e.row.samples.length-1];
+                if(publication.partition && publication.partition.name && publication.partition.name.length) {
+                    var name = publication.partition.name;
+                    for(var j = 0; j < name.length; j++) {
+                        if(name[j].indexOf("MRN=")) {
+                            console.log("Rebuild on removal of a " + name[j]);
+                            // All we can do is rebuild on delete because we don't have any kind of reference counting
+		            rebuildSelect(e, selectElement, defaultPartition);
+                            return;
+                        }
+                    }
+                }
 	});
 	for(var i = 0; i < selectElement.options.length; i++) {
 		if(""==selectElement.options[i].text) {
@@ -115,10 +159,10 @@ function PartitionBox(openICE, selectElement, domainId, changePartition, default
 	}
 
 	var opt = document.createElement("option");
-        selectElement.add(opt);
 	opt.text = defaultPartition;
 	opt.value = defaultPartition;
 	opt.selected = true;
+        selectElement.add(opt);
         populatePatientName(defaultPartition, opt);
 
 	selectElement.onchange = function(e) {
