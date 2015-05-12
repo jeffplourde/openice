@@ -169,8 +169,11 @@ tables.push(new TableManager("TechnicalAlert",
 
 tables.push(new TableManager("Numeric", 
       ["UDI", "Metric", "Instance", "Units"], 
-      ["Value", "Device Time"],
-      function(tds, data) { tds[0].innerHTML = data.value; tds[1].innerHTML = timeFromTimeT(data.device_time); },
+      ["Value", "Pres. Time", "Device Time"],
+      function(tds, data) { 
+        tds[0].innerHTML = data.value; 
+        tds[1].innerHTML = timeFromTimeT(data.presentation_time);
+        tds[2].innerHTML = timeFromTimeT(data.device_time); },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
         tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id; tds[3].innerHTML = keys.unit_id;
          },
@@ -178,7 +181,7 @@ tables.push(new TableManager("Numeric",
       ));
 tables.push(new TableManager("SampleArray", 
       ["UDI", "Metric", "Instance", "Units", "Frequency"], 
-      ["Values", "Device Time"],
+      ["Values", "Pres. Time", "Device Time"],
       function(tds, data, sample) { 
         if(!sample.row.renderer) {
           var canvas = document.createElement("canvas");
@@ -271,7 +274,8 @@ tables.push(new TableManager("SampleArray",
           renderers.push(sample.row.renderer);
         }
         // sample.row.renderer.render(t1, t2);
-        tds[1].innerHTML = timeFromTimeT(data.device_time); },
+        tds[1].innerHTML = timeFromTimeT(data.presentation_time);
+        tds[2].innerHTML = timeFromTimeT(data.device_time); },
       function(tds, keys) { tds[0].innerHTML = trunc(keys.unique_device_identifier);
         tds[1].innerHTML = keys.metric_id; tds[2].innerHTML = keys.instance_id; tds[3].innerHTML = keys.unit_id;
         tds[4].innerHTML = keys.frequency; },
