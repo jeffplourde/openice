@@ -14,8 +14,8 @@ function start(e) {
 
 		var player = new jsmpeg(client, {canvas:canvas});
 }
-	start('evita');
-	start('ivy');
+//	start('evita');
+//	start('ivy');
 	start('eye');
-	start('eye2');
-	start('eye3');
+//	start('eye2');
+//	start('eye3');
