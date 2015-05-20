@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MD PnP OpenICE</title>
+
+    <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
+      <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
+      <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="assets/favicon.ico" rel="shortcut icon">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+    <script language="javascript" type="text/javascript" src="js/respond.min.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-51695046-1', 'auto');ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <section id="splash">
+      <div id="logo-banner-holder" class="container-fluid">
+        <a href="./index.html">
+          <img id="logo-banner" class="hidden-xs" src="./assets/banner.png" />
+        </a>
+        <img id="logo" class="visible-xs" src="./assets/logo.png" />
+      </div>
+      <nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html" >OpenICE</a>
+          </div>
+          <div id="main-nav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="./demo.html">OpenICE Web Demo</a></li>
+                  <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
+                </ul>
+              </li>
+              <li><a href="http://community.openice.info">Community</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <section id="docs" class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <h1 style="margin-top:25px">OpenICE User Manual</h1>
+
+
+          <br />
+          <h3 id="intro">Introduction</h3>
+
+<!--           <div class="visible-xs">
+            <div class="alert alert-danger">
+              This tutorial contains content that is not displayed on mobile browsers. Please use a desktop/laptop browser to take advantage of all images.
+            </div>
+          </div> -->
+
+          <p>
+            Thanks for using OpenICE! This guide aims to introduce readers to medical device integration using the Open-source Integrated Clinical Environment (OpenICE). OpenICE is a distributed system platform that connects system nodes together - like medical devices found in an OR or ICU, applications for functions like clinical decision support (CDS), and external interfaces to other healthcare IT (HIT) systems like EMRs. OpenICE automates peer-to-peer node discovery, data publishing and subscribing, as well as proprietary medical device protocol translation. Users and developers of the OpenICE platform get the data they need, in a common sensible format, delivered to the destinations they want.
+          </p>
+          <p>
+            OpenICE has been called an open clinical research platform, an abstraction layer for medical devices, a medical Internet of things (MIoT) platform, a cyber-physical system (CPS) test tool, amongst other names. The current version of OpenICE enables users to convert heterogeneous medical device data into a common structure and protocol, and to exchange that data with clinical applications on a different machine (or machines). OpenICE includes several simple but useful applications as well as example code to help users to write their own.
+          </p>
+
+
+          <br />
+          <h3 id="overview">System Overview</h3>
+
+
+          <row>
+            <div class="col-lg-5" style="padding:0;">
+              The OpenICE application is the entry and exit point for medical device data into and out of the network. OpenICE has two operating modes: Supervisor and Device-Adapter. The Device-Adapter software acts as a bridge that will to connect both real and simulated medical devices into the OpenICE network. The Device-Adapter software translates the proprietary device communication protocols into the standard OpenICE data structures (described in <a href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl">ice.idl</a>) and communication protocol. The Supervisor hosts clinical applications and subscribes to all medical devices in the same <a href="#">Domain</a> and <a href="#">Partition</a>.
+            </div>
+            <div class="col-lg-7" style="height:400px;">
+              <img class="img-responsive" src="./assets/openice-diagram-setup-pictures.png" style="position:absolute;">
+              <img class="img-responsive" src="./assets/openice-diagram-setup.png" style="">
+            </div>
+          </row>
+
+
+
+
+
+          <br />
+          <h3 id="application">Running OpenICE from the GUI</h3>
+          <p>
+            Launch OpenICE using your preferred application start method. When opened, the OpenICE application presents a start menu GUI. This menu is used to configure the mode of operation of the OpenICE application.
+          </p>
+
+
+
+
+
+          <row class="clearfix"> 
+            <div class="col-lg-6">
+              <dl class="dl-horizontal">
+                <dt>
+                  Application
+                </dt>
+                <dd>
+                  Choose which software mode to run the application as: ICE Supervisor or ICE Device Interface. The ICE_Supervisor hosts clinical applications. The ICE_Device_Interface connects a medical device to the OpenICE network.
+                </dd>
+                <dt>
+                  Domain ID
+                </dt>
+                <dd>
+                  OpenICE systems on the same network can coexist by using different integer domain identifiers. If there are no other ICE systems on your network then any value may be used. The default value used at MD PnP is 15.
+                </dd>
+                <dt>
+                  FHIR Server
+                </dt>
+                <dd>
+                  This is the base URL of an HL7 FHIR (Fast Healthcare Interoperability Resources) server from which patient information should be received.This field can be left blank to use a local database of patients.
+                </dd>
+              </dl>
+            </div>
+            <div class="col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/openice-start-menu.png">
+            </div>
+          </row>
+
+
+
+          <div class="alert alert-info">NOTE:
+            If you would like to use the GUI run both the Supervisor and a Device-Adapter(s), run the Supervisor first and start Device-Adapters from within the Supervisor.
+          </div>
+
+
+
+
+
+
+
+          <br />
+          <h3>
+          ICE Supervisor 
+          </h3>
+
+
+          <img class="img-responsive" src="./assets/openice-home-marked.png">
+
+
+
+          II.A. Devices
+
+          On the main screen of the ICE Supervisor, there will be a box on the right with the heading “Devices assigned to [insert name or <unassigned>]”. Text will appear in the center of the box if no devices are associated with the patient selected. 
+
+          To connect a device, it must be assigned to a specific patient [to select a different patient see section II.C.1.]. After selecting a patient, then click on the “Create an ICE Device Adapter…” button at the bottom of the page. To read instructions on how to create an ICE Device Adapter see section II.C.2. 
+
+          Once the ICE Device Adapter is created on the ICE Supervisor, an image of the device will appear in the devices box. Click on the image to make a new window appear that will give further device information and may also display waveforms (depending on the device). To disconnect the patient from the device, then select the large red button with an X. 
+
+
+
+          II.B. Page Footer
+
+          1.Select a Patient:  
+          Devices must be assigned to a specific patient. To select a patient, click the drop down button and choose a patient. When the main screen of the ICE Supervisor is first opened, then the patient will be <unassigned>. 
+
+          2. Create an ICE Device Adapter…
+          Click on the Create an ICE Device Adapter… button to connect a patient to a device. This may be done on the main screen of the ICE Supervisor or while using an app. To do this, first select a Device Category.
+          • Serial: allows a device to the OpenICE apps through a serial connection. 
+          • Simulated: devices with simulated data may be used if no other devices are available. You may change the parameters on the simulated devices by using the simulation control app [see Section II.C.10]. 
+          • Network: allows a device to the OpenICE apps through a network connection. 
+
+          Once a device category is selected, then click the down arrow for next to Device Type to populate a list of devices. Select a device and then click the start button to run the ICE Device Adapter. Before running an adapter using a network or serial connection, the IP address must be included. 
+
+          The new device should appear in the main screen of the ICE Supervisor and also in an app. Several devices may be connected to one patient. Devices cannot be disconnected while using an app. When the app is closed the new device will also be shown on the main screen of the ICE Supervisor. 
+
+          3. The current time 
+          This will always run on the bottom of the screen. 
+
+
+
+
+
+
+
+
+
+          <br />
+          <h1 id="setup">Example OpenICE Setups</h1>
+
+          <h3>Simplest OpenICE Setup</h3>
+          <img class="img-responsive" src="./assets/openice-setup-simple.png">
+
+
+          <h3>Consumer-Grade Equipment OpenICE Setup</h3>
+          <img class="img-responsive" src="./assets/openice-setup-medium.png">
+
+
+          <h3>Enterprise-Grade OpenICE Setup</h3>
+          <img class="img-responsive" src="./assets/openice-setup-enterprise.png">
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        <div class="col-md-2">
+          <div class="hidden-xs" data-spy="affix">
+            <div>
+              <h5><a href="#beaglebone-setup">TODO User Docs</a></h5>
+              <ul class="list-unstyled">
+                <li><a href="#required-hardware">Required Hardware</a></li>
+                <li><a href="#required-software">Required Software</a></li>
+                <li><a href="#prepare-sd">MicroSD Card Setup</a></li>
+                <li><a href="#flash-memory">Flashing the Memory</a></li>
+              </ul>
+              <br />
+              <h5><a href="#mp70-adapter">MP70 Adapter Setup</a></h5>
+              <ul class="list-unstyled">
+                <li><a href="#required-hardware-mp70">Required Hardware</a></li>
+                <li><a href="#connect-devices">Connect the Devices</a></li>
+                <li><a href="#network">Setup a Network</a></li>
+                <li><a href="#configure">Configure</a></li>
+                <li><a href="#view-the-data">View the Data</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="footer">
+      <div class="container">
+        <div>
+          <div class="footer-repos">
+            <span><img src="./assets/sourceforge.png" alt="sourceforge" /></span>
+            <a href="https://sourceforge.net/projects/mdpnp/" class="footer-repos-a" style="text-decoration:none;">MD PnP OpenICE</a>
+          </div>
+          <div class="footer-repos">
+            <span><img src="./assets/github.png" alt="github" /></span>
+            <a href="https://github.com/jeffplourde/openice" class="footer-repos-a" style="text-decoration:none;">OpenICE.info</a>
+          </div>
+
+          <span class="footer-span">Copyright (c) 2015, MD PnP Program<br/>
+          All rights reserved.</span>
+
+          <a href="http://www.mdpnp.org"><img src="./assets/logo.png"></a>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

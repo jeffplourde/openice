@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MD PnP OpenICE</title>
+
+		<meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
+  		<meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
+  		<meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href="assets/favicon.ico" rel="shortcut icon">
+
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/custom-style.css" rel="stylesheet">
+		<script language="javascript" type="text/javascript" src="js/respond.min.js"></script>
+		
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/bootstrap.js"></script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-51695046-1', 'auto');ga('send', 'pageview');
+		</script>
+	</head>
+	<body>
+		<section id="splash">
+			<div id="logo-banner-holder" class="container-fluid">
+				<a href="./index.html">
+					<img id="logo-banner" class="hidden-xs" src="./assets/banner.png" />
+				</a>
+				<img id="logo" class="visible-xs" src="./assets/logo.png" />
+			</div>
+			<nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html" >OpenICE</a>
+          </div>
+          <div id="main-nav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="./demo.html">OpenICE Web Demo</a></li>
+                  <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
+                </ul>
+              </li>
+              <li><a href="http://community.openice.info">Community</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+		</section>
+
+		<section id="instructions" class="container">
+			<div class="row">
+				<div class="col-md-10">
+
+
+
+
+
+
+
+
+
+
+
+          II.C. Applications
+          A list of applications “apps” will appear on the left side of the main screen of the ICE Supervisor. To open the app click on the image and to leave the app and go back to the ICE Supervisor then click on the Exit App button. The OpenICE application will close if the app is closed not using this button. In order for the apps to work, you must assign devices to a patient. 
+
+
+
+
+
+
+          1. Alarm History
+          This application will display all of alarms that have gone off from a specific device over a certain amount of time.
+
+          There are five columns that display: 
+          • Type: type of alarm.
+          • UDI:  unique device identifier, this states what device the alarm is coming from.
+          • Time: the time that the alarm went off.
+          • Identifier: ?
+          • Text:  any additional text or information that may come from a device?
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices. 
+
+
+
+
+
+
+
+          2. Auto Validate
+          This application automatically validates  vital sign data. 
+
+          Vital Signs: Oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add. 
+          ● To remove a vital sign from the app, click the red button   to the right of the waveform graph. 
+          ● To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.
+           
+          Data Points: When the app is opened, the Data Points will start on 20, so the app will show us the last 20 data points for each selected vital sign. This can be changed by using the arrows next to the box or by typing a different number in the box. 
+
+          Max%RSD: ?
+
+          Min Kurtosis?:  ?
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+
+          3. Chart
+          This application collects and reviews a comprehensive vital signs dataset over a predetermined amount of time. 
+
+          Vital Signs: Oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add. 
+          ● To remove a vital sign from the app, click the red button   to the right of the waveform graph. 
+          ● To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button. 
+
+          Time Interval: At the bottom of the page there will be a blank box with a down arrow next to “Time Interval”. The following times are available: 10 seconds, 1 minute, 5 minutes, 15 minutes, 1 hour, 2 hours, 3 hours, 4 hours, 5 hours, and 6 hours. 
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+          4. Data Recorder 
+          This application collects and records data. Two boxes will appear once the app is opened. The box on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this application. The box on the right will contain the following five columns:
+          ● Device ID: this will tell you what device the data is coming from.
+          ● Metric ID:  this will tell you what kind of data you are receiving ? for example, heart rate
+          ● Instance ID: not sure what this is? does every data point have a different instance ID?
+          ● Time: the time of this data point. 
+          ● Value: the numeric value of the data point collected. 
+
+          Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. Once the app starts, the boxes will begin to fill with data points. 
+
+          Data Storage:
+          ● Select the “Change” button to change where the data will be stored. 
+          ● Select how much data to save by choosing from 1, 5, 10 or 20 files. You may also choose a maximum file size of 1 MB, 5MB, 50MB, 500MB, 1GB, 5GB, 50GB, 500GB, 1000GB. 
+          ● Store the data in any of the following formats:
+          ○ Xls (csv): this document will save as a comma-separated values (csv) file. This file may be imported and converted into Microsoft Excel (xls).
+          ○ Sql: structured query language, this is used in Microsoft Access.
+          ○ Vcd (ieee-1364): value change dump, defined by the Institute of Electrical and Electronics Engineers (IEEE) in the IEEE Standard-1364-1995 in 1995. 
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+          5. Data Visualization 
+          This application displays a visual method of viewing patients’ vital signs. It will clearly show when one vital sign goes out of the normal range. For example, it is very clear to the user if a vital sign such as, SpO2, goes out of the standard range (above 100 or below 95).
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+          6. HL7 Exporter 
+          This application exports data to Health Level Seven International (HL7). HL7 is an “ANSI  [American National Standards Institute]-accredited standards developing organization dedicated to providing a comprehensive framework and related standards for the exchange, integration, sharing, and retrieval of electronic health information that supports clinical practice and the management, delivery and evaluation of health services”. 1 
+
+          The frequency can be changed from 5, 15, and 30 seconds; 1, 5, 10, 15, 20, and 30 minutes; and 1 hour. 
+
+          O one of the two may be selected: 
+          ● FHIR DSTU2 (Draft Standard for Trial Use2)
+          ● v2.6 ??
+
+          The host is ??
+          The port is ??
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+          7. Infusion Safety
+          When this app is opened four text boxes will appear at the top of the screen. 
+          ● Select Infusion Pump: infusion pump connected from ICE Device Adapter will appear here.
+          ● Interlock Status: an alert will appear if the infusion is stopped. It will say why the pump was stopped (ex: low SpO2) and the time.  
+          ● Infusion Status: states “select an infusion”.
+          ● Informational Messages: will create a notification if a vital sign is low or high. 
+
+          Respiration Rate, Heart Rate, and SpO2 will appear at the bottom of the page with colored bars below each. 
+          ● The green color shows the safe data range.
+          ● The yellow color shows the potentially unsafe data range.
+          ● The red color shows the unsafe data range, which will cause an alarm on the app to sound.
+
+          The “Configuration Mode” is available to make edits to the app [listed below].  
+          ● The number of warnings that become an alarm for a specific vital sign may be edited. 
+          ● Choose to ignore zero for a specific vital sign. 
+          ● A box may be checked off that makes a vital sign required for this app. 
+          ○ If this box is checked and there is no source of that vital sign then message will appear in the Informational Messages Box.
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application: Hospira Symbiq, Simulated Infusion Pump, Simulated Pulse Oximeter, Simulated temperature probe...
+
+
+
+
+
+
+
+
+          8. Patient ID
+          This application helps manage the devices that are connected to the patients. Specifically, you may connect a patient to a device, and then select that patient while using other applications and the devices you chose in this application will be used. You may connect patients to devices by selecting “Create an ICE Device Adapter…” [for further information II.B.2]. Once you add a device it will automatically connect to the first name listed in the dropdown of patients listed at the bottom of the screen. To change the patient, click on the dropdown arrow before selecting the Create an ICE Device Adapter button. To disconnect the patient from the device in the application, click the button in the disconnect column. Once this has been done, the device will move to the box on the bottom right side of the page. To connect this device to another patient, click on a patient in the bottom left box and click on a device (both should be highlighted after you have clicked on them).  Then press the button in between these two boxes. 
+
+          To add a new patient, click the button “Create new MRN entry”. A window will pop up to add a new patient. This window will give the following fields:
+          ● MRN: (medical record number), this app will automatically create one for you. You may change this if you would like.
+          ● First Name: type in a first name.
+          ● Last Name: type in a last name. 
+          ● Gender: this will display a male or female dropdown list. Select one. 
+          ● DOB: enter in a date of birth. 
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. Leaving this app will not change the devices you have connected or disconnected to patients while the app was open. 
+
+
+
+
+
+
+
+
+          9. Respiratory Rate Calc
+          This is a vital signs application. Click on a device on the top left of the screen and a waveform will appear below it. A numeric value may also appear to the right of the waveform.  On the right side of the screen there is a bar with a button you can move to any value in between 0 to 100.  There is also an option to create a device. Check this box to ensure that the app will receive recent data. 
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+          10. Simulation Control
+          This application allows changes to be made on the limits on simulated devices. To adjust the vital sign rate, scroll the button up and down the bar. Then a number will appear that states where the button has stopped on to the right of the bar. The vital sign will not remain on that single value, as jitter can be adjusted. Click the Jitter checkbox to the right of the vital sign, then edit the step% and max%. To have the same jitter for all vital signs click the checkbox on the top of the screen next to “Jitter:Strength:0”. 
+
+          • Jitter:
+          • Step%:
+          • Max%:
+
+          Assert Control: this button is located on the bottom of the page. 
+
+
+
+
+
+
+
+
+          11. System Explorer
+          This application displays all data on one patient. There are several tabs so the data is broken up into the following groups:
+          ● Numerics
+          ● Waveform Traces
+          ● Patient Alerts
+          ● Technical Alerts
+          ● Validations
+          ● Infusions
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application:  all devices.
+
+
+
+
+
+
+
+
+          12. X-Ray Ventilator Sync
+          This application will show an X-Ray Viewer and sources. Moving the button up and down may change the exposure time. 
+
+          Manual or automatic may be chosen for the synchronization strategy, and phase of ventilation may be chosen between end inspiration and end expiration. To take an image, press the image button or the spacebar. To reset, press the reset button or press escape.  
+
+          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
+
+          Recommended devices for this application: 
+
+
+
+
+
+
+
+
+
+          III. References 
+
+          1. Health Level Seven International. Health Level Seven International - Homepage. (n.d.) Web. Retrieved May 4, 2015, from http://www.hl7.org/. 
+
+
+
+
+
+
+
+
+
+
+
+
+				</div>
+				<div class="col-md-2">
+					<div class="hidden-xs" data-spy="affix">
+						<div>
+							<h5><a href="#beaglebone-setup">Beaglebone Setup</a></h5>
+							<ul class="list-unstyled">
+								<li><a href="#required-hardware">Required Hardware</a></li>
+								<li><a href="#required-software">Required Software</a></li>
+								<li><a href="#prepare-sd">MicroSD Card Setup</a></li>
+								<li><a href="#flash-memory">Flashing the Memory</a></li>
+							</ul>
+							<br />
+							<h5><a href="#mp70-adapter">MP70 Adapter Setup</a></h5>
+							<ul class="list-unstyled">
+								<li><a href="#required-hardware-mp70">Required Hardware</a></li>
+								<li><a href="#connect-devices">Connect the Devices</a></li>
+								<li><a href="#network">Setup a Network</a></li>
+								<li><a href="#configure">Configure</a></li>
+								<li><a href="#view-the-data">View the Data</a></li>
+								<li><a href="#troubleshooting">Troubleshooting</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<section id="footer">
+      <div class="container">
+        <div>
+          <div class="footer-repos">
+            <span><img src="./assets/sourceforge.png" alt="sourceforge" /></span>
+            <a href="https://sourceforge.net/projects/mdpnp/" class="footer-repos-a" style="text-decoration:none;">MD PnP OpenICE</a>
+          </div>
+          <div class="footer-repos">
+            <span><img src="./assets/github.png" alt="github" /></span>
+            <a href="https://github.com/jeffplourde/openice" class="footer-repos-a" style="text-decoration:none;">OpenICE.info</a>
+          </div>
+
+          <span class="footer-span">Copyright (c) 2015, MD PnP Program<br/>
+          All rights reserved.</span>
+
+          <a href="http://www.mdpnp.org"><img src="./assets/logo.png"></a>
+        </div>
+      </div>
+    </section>
+	</body>
+</html>
