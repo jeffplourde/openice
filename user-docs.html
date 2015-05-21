@@ -91,8 +91,7 @@
               The OpenICE application is the entry and exit point for medical device data into and out of the network. OpenICE has two operating modes: Supervisor and Device-Adapter. The Device-Adapter software acts as a bridge that will to connect both real and simulated medical devices into the OpenICE network. The Device-Adapter software translates the proprietary device communication protocols into the standard OpenICE data structures (described in <a href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl">ice.idl</a>) and communication protocol. The Supervisor hosts clinical applications and subscribes to all medical devices in the same <a href="#">Domain</a> and <a href="#">Partition</a>.
             </div>
             <div class="col-lg-7">
-              <img class="img-responsive" src="./assets/openice-diagram-setup-pictures.png">
-              <img class="img-responsive" src="./assets/openice-diagram-setup.png" style="">
+              <div id="img-openice-diagram"></div>
             </div>
           </row>
 
@@ -152,42 +151,49 @@
 
           <br />
           <h3>
-          ICE Supervisor 
+          OpenICE Supervisor 
           </h3>
 
-
-          <img class="img-responsive" src="./assets/openice-home-marked.png">
-
+          <div id="img-openice-home"></div>
 
 
-          II.A. Devices
+          <h3>Devices</h3>
+          <p>On the main screen of the ICE Supervisor, there will be a box on the right with the heading “Devices assigned to [insert name or unassigned]”. Text will appear in the center of the box if no devices are associated with the patient selected.</p>
 
-          On the main screen of the ICE Supervisor, there will be a box on the right with the heading “Devices assigned to [insert name or <unassigned>]”. Text will appear in the center of the box if no devices are associated with the patient selected. 
+          <p>To connect a device, it must be assigned to a specific patient [to select a different patient see section II.C.1.]. After selecting a patient, then click on the “Create an ICE Device Adapter…” button at the bottom of the page. To read instructions on how to create an ICE Device Adapter see section II.C.2. </p>
 
-          To connect a device, it must be assigned to a specific patient [to select a different patient see section II.C.1.]. After selecting a patient, then click on the “Create an ICE Device Adapter…” button at the bottom of the page. To read instructions on how to create an ICE Device Adapter see section II.C.2. 
+          <p>Once the ICE Device Adapter is created on the ICE Supervisor, an image of the device will appear in the devices box. Click on the image to make a new window appear that will give further device information and may also display waveforms (depending on the device). To disconnect the patient from the device, then select the large red button with an X. </p>
 
-          Once the ICE Device Adapter is created on the ICE Supervisor, an image of the device will appear in the devices box. Click on the image to make a new window appear that will give further device information and may also display waveforms (depending on the device). To disconnect the patient from the device, then select the large red button with an X. 
+          <h3>Select a Patient</h3>
+          <p>Devices must be assigned to a specific patient. To select a patient, click the drop down button and choose a patient. When the main screen of the ICE Supervisor is first opened, then the patient will be unassigned. </p>
 
+          <h3>Create an ICE Device Adapter:</h3>
+          <p>Click on the Create an ICE Device Adapter button to connect a patient to a device. This may be done on the main screen of the ICE Supervisor or while using an app. To do this, select a Device Category.</p>
+          <row>
+            <div class="col-md-6">
+              <dl class="dl-horizontal">
+                <dt>Serial:</dt>
+                <dd>
+                  Allows a device to the OpenICE apps through a serial connection.
+                </dd>
+                <dt>Simulated:</dt>
+                <dd>
+                  Devices with simulated data may be used if no other devices are available. You may change the parameters on the simulated devices by using the simulation control app [see Section II.C.10].
+                </dd>
+                <dt>Network:</dt>
+                <dd>
+                  Allows a device to the OpenICE apps through a network connection.
+                </dd>
+              </dl>
+            </div>
+            <div class="col-md-6">
+              <img class="img-responsive" src="./assets/openice-device-adapter-start.png">
+            </div>
+          </row>
 
+          <p>Once a device category is selected, then click the down arrow for next to Device Type to populate a list of devices. Select a device and then click the start button to run the ICE Device Adapter. Before running an adapter using a network or serial connection, the IP address must be included. </p>
 
-          II.B. Page Footer
-
-          1.Select a Patient:  
-          Devices must be assigned to a specific patient. To select a patient, click the drop down button and choose a patient. When the main screen of the ICE Supervisor is first opened, then the patient will be <unassigned>. 
-
-          2. Create an ICE Device Adapter…
-          Click on the Create an ICE Device Adapter… button to connect a patient to a device. This may be done on the main screen of the ICE Supervisor or while using an app. To do this, first select a Device Category.
-          • Serial: allows a device to the OpenICE apps through a serial connection. 
-          • Simulated: devices with simulated data may be used if no other devices are available. You may change the parameters on the simulated devices by using the simulation control app [see Section II.C.10]. 
-          • Network: allows a device to the OpenICE apps through a network connection. 
-
-          Once a device category is selected, then click the down arrow for next to Device Type to populate a list of devices. Select a device and then click the start button to run the ICE Device Adapter. Before running an adapter using a network or serial connection, the IP address must be included. 
-
-          The new device should appear in the main screen of the ICE Supervisor and also in an app. Several devices may be connected to one patient. Devices cannot be disconnected while using an app. When the app is closed the new device will also be shown on the main screen of the ICE Supervisor. 
-
-          3. The current time 
-          This will always run on the bottom of the screen. 
-
+          <p>The new device should appear in the main screen of the ICE Supervisor and also in an app. Several devices may be connected to one patient. Devices cannot be disconnected while using an app. When the app is closed the new device will also be shown on the main screen of the ICE Supervisor. </p>
 
 
 

@@ -523,6 +523,31 @@
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 
+/*****     USER DOCS STUFF     *****/
+#img-openice-home {
+  background-image: url('../assets/openice-home.png');
+  background-size: 100%;
+  min-height: 617px;
+}
+#img-openice-home:hover {
+  background-image: url('../assets/openice-home-marked.png');
+  background-size: 100%;
+}
+
+#img-openice-diagram {
+  background-image: url('../assets/openice-diagram-setup.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height: 375px;
+  background-size: 100%;
+}
+#img-openice-diagram:hover {
+  background-image: url('../assets/openice-diagram-setup-pictures.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
 
 
 
