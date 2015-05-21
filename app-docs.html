@@ -65,305 +65,279 @@
 		<section id="instructions" class="container">
 			<div class="row">
 				<div class="col-md-10">
+          <h1 style="margin-top:25px">OpenICE Applications</h1>
 
+          <h3 id="app-setup">Getting Started</h3>
 
+          <div class="visible-xs">
+            <div class="alert alert-danger">
+              This tutorial contains content that is not displayed on mobile browsers. Please use a desktop/laptop browser to take advantage of all images.
+            </div>
+          </div>
 
+          <p>
+              This guide will assist you in using and understanding the OpenICE Applications ("apps"). <a class="text-danger">Currently, all of these apps are experimental and are not used in clinical settings. </a> Once you start the ICE Supervisor, a list of apps will appear on the left side. To open the app, click on the image. To exit the app and go back to the ICE Supervisor, click the Exit App button. The OpenICE application will close you x out of an app. <!-- I know this seems trivial - but it kept happening to me so i think it's good to say something like this...  -->
+          </p>
+          <p>
+              Before running an app, you should assign devices to a patient and select that patient. For instructions on connecting devices, please go to the <a href="./device-adapter-setup.html">Device Adapter Setup</a> page. On the bottom of the ICE Supervisor, click the dropdown to select a patient
+          </p> 
 
+          <h3 id="alarm-history">Alarm History</h3>
+          <p>
+              This app displays all of alarms that have gone off, from a specific device, over a certain amount of time. We believe that an app such as this one may help provide a better understanding of false and nuisance alarms through post hoc analysis.
+          </p>
+          <p>
+              The following five columns display when running this app: <a class="text-danger"> I feel like we should have examples here? </a>
+          <dl class="dl-horizontal">
+            <dt>Type</dt>
+            <dd>Type of alarm.</dd>
+            <dt>UDI</dt>
+            <dd>Unique device identifier, this states what device the alarm is coming from.</dd>
+            <dt>Time</dt>
+            <dd>The time the alarm sounded.</dd>
+            <dt>Identifier</dt>
+            <dd class="text-danger">??.</dd>
+            <dt>Text</dt>
+            <dd class="text-danger">Any additional text or information that may come from a device????</dd>
+          </dl>
+          </p>
+          <p>
+            Recommended devices for this application:  all devices.
+          </p> 
 
+          <h3 id="auto-validate">Auto Validate</h3>
+          <p>
+            This application automatically validates vital sign data from physiological monitors.
+          </p> 
+          <p>
+            <u>Vital Signs:</u> oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add.
+            <ul> 
+              <li>To remove a vital sign from the app, click the red button to the right of the waveform graph. </li> 
+              <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
+            </ul>
+            <u>Data Points:</u> when the app is open, the number next to data points will be 20. This means the app will show the last 20 data points for each selected vital sign. This can be changed by using the up and down arrows next to data points or by typing in a different number.
+          </p>
+          <p class="text-danger"><u>Max%RSD:</u> no idea what this means? </p>
+          <p class="text-danger"><u>Min Kurtosis?:</u> no idea what this means? </p>
+          <p>
+            Recommended devices for this application:  all devices measuring vital signs.
+          </p>
 
+          <h3 id="chart">Chart</h3>
+          <p>
+            This application collects and reviews a comprehensive vital signs dataset over a predetermined amount of time. 
+          </p>
+          <p>
+            <u>Vital Signs:</u> oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add.
+            <ul> 
+            <li>To remove a vital sign from the app, click the red button to the right of the waveform graph.</li> 
+            <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
+            </ul>
+            <u>Time Interval:</u> At the bottom of the app there will be a blank box with a down arrow next to “Time Interval”. The following times are available: 10 seconds, 1 minute, 5 minutes, 15 minutes, 1 hour, 2 hours, 3 hours, 4 hours, 5 hours, and 6 hours. 
+          </p>
+          <p>
+          Recommended devices for this application:  all devices measuring vital signs.
+          </p>
 
+          <h3 id="data-recorder">Data Recorder</h3>
+          <p>
+            This application collects and records data. Two boxes will appear once the app is opened. The box on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this application. The box on the right will contain the following five columns:
+          <dl class="dl-horizontal">
+            <dt>Device ID</dt>
+            <dd>This states what device the data is coming from.</dd>
+            <dt>Metric ID</dt>
+            <dd class="text-danger">This will tell you what kind of data you are receiving ? for example, heart rate</dd>
+            <dt>Instance ID</dt>
+            <dd class="text-danger">not sure what this is? does every data point have a different instance ID?</dd>
+            <dt>Time</dt> 
+            <dd>The time of this data point.</dd>
+            <dt>Value</dt> 
+            <dd>The numeric value of the data point collected.</dd>
+          </dl>
+            Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. Once the app starts, the boxes will begin to fill with data points. 
+          </p>
+          <p>
+            <u>Data Storage:</u>
+          <ul>
+            <li>Select the “Change” button to change where the data will be stored.</li>
+            <li>Select how much data to save by choosing from: 1, 5, 10 or 20 files. A maximum file size may be selected from the following: 1 MB, 5MB, 50MB, 500MB, 1GB, 5GB, 50GB, 500GB, 1000GB.</li> 
+            <li>Store the data in any of the following formats:</li>
+            <ul>
+              <li><u>Xls (csv):</u> this document will save as a comma-separated values (csv) file. This file may be imported and converted into Microsoft Excel (xls).</li>
+              <li><u>Sql:</u> structured query language (used in Microsoft Access).</li>
+              <li><u>Vcd (ieee-1364):</u> value change dump, defined by the Institute of Electrical and Electronics Engineers (IEEE) in the IEEE Standard-1364-1995 in 1995.</li>
+            </ul>
+          </ul>
+            Recommended devices for this application: all devices.
+          </p>
 
+          <h3 id="data-visualization">Data Visualization</h3>
+          <p>
+            This application displays selected vital signs for one patient in the form of a shape. If three vital signs are selected then a triangle will appear, and each leg of the triangle will represent a different vital sign. Each line has markings with numeric values. The ends of the lines contain numbers outside of the "normal" range (for example: SpO2 greater than 100 or less than 95), and the middle of the lines contain numbers within the normal range. The values that are coming from devices/ physiological monitors are then plotted on each line and are connected to one another, ultimately creating a new shape. This shape is colored based on the status of the vital signs (<a class="text-success">green: all vital signs in the normal range,</a> <a class="text-warning">yellow: one vital sign may not be in the normal range,</a> <a class="text-danger">red: more than one vital sign not in the normal range</a>).This allows the user to clearly see all vital signs and whether or not they are in the normal range.  
+          </p>
+          <p>
+            Recommended devices for this application: all devices measuring vital signs.
+          </p>
 
+          <h3 id="hl7-exporter">HL7 Exporter</h3> 
+          <p>
+            This application exports data to Health Level Seven International (HL7). HL7 is an “ANSI  [American National Standards Institute]-accredited standards developing organization dedicated to providing a comprehensive framework and related standards for the exchange, integration, sharing, and retrieval of electronic health information that supports clinical practice and the management, delivery and evaluation of health services”. <a href="#references">(1)</a>
+          </p> 
+          <p>
+            The frequency can be changed from 5, 15, and 30 seconds; 1, 5, 10, 15, 20, and 30 minutes; and 1 hour. 
+          </p>
+          <p>
+            One of the two may be selected: <a class="text-danger"> for what?? I think we should say what the purpose is of choosing one or the other</a>
+          <ul> 
+            <li>FHIR DSTU2 (Draft Standard for Trial Use2)</li>
+            <li class="text-danger">v2.6 what is this??</li>
+          </ul>
+            <a class="text-danger">The <u>host</u> is ??</a>
+          </p>
+          <p class="text-danger">
+            The <u>port</u> is ??
+          </p>
+          <p>
+            Recommended devices for this application:  all devices.
+          </p>
 
+         <h3 id="infusion-safety">Infusion Safety</h3>
+         <p>
+            When this app is opened four text boxes will appear at the top of the screen. 
+         <dl class="dl-horizontal">
+            <dt>Select Infusion Pump</dt>
+            <dd>Infusion pump connected from ICE Device Adapter will appear here.</dd>
+            <dt>Interlock Status</dt>
+            <dd>An alert will appear if the infusion is stopped. It will say why the pump was stopped (ex: low SpO2) and the time.</dd> 
+            <dt>Infusion Status</dt> 
+            <dd>States “select an infusion”.</dd>
+            <dt>Info. Messages</dt>
+            <dd>Will create a notification if a vital sign is low or high.</dd>
+          </dl>
+            Respiration Rate, Heart Rate, and SpO2 will appear at the bottom of the page with colored bars below each.
+          <ul> 
+            <li>The <a class="text-success">green</a> color shows the safe data range.</li>
+            <li>The <a class="text-warning">yellow</a> color shows the potentially unsafe data range.</li>
+            <li>The <a class="text-danger">red</a> color shows the unsafe data range, which will cause an alarm on the app to sound.</li>
+          </ul>
+            The “Configuration Mode” is available to make edits to the app [listed below].
+          <ul>  
+            <li>The number of warnings that become an alarm for a specific vital sign may be edited.</li>
+            <li>Choose to ignore zero for a specific vital sign.</li>
+            <li>A box may be checked off that makes a vital sign required for this app.</li>
+            <ul>
+            <li>If this box is checked and there is no source of that vital sign then message will appear in the Informational Messages Box.</li>
+            </ul>
+          </ul>
+            Recommended devices for this application: Hospira Symbiq, Simulated Infusion Pump, Simulated Pulse Oximeter, Simulated temperature probe...
+          </p>
 
-          II.C. Applications
-          A list of applications “apps” will appear on the left side of the main screen of the ICE Supervisor. To open the app click on the image and to leave the app and go back to the ICE Supervisor then click on the Exit App button. The OpenICE application will close if the app is closed not using this button. In order for the apps to work, you must assign devices to a patient. 
-
-
-
-
-
-
-          1. Alarm History
-          This application will display all of alarms that have gone off from a specific device over a certain amount of time.
-
-          There are five columns that display: 
-          • Type: type of alarm.
-          • UDI:  unique device identifier, this states what device the alarm is coming from.
-          • Time: the time that the alarm went off.
-          • Identifier: ?
-          • Text:  any additional text or information that may come from a device?
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices. 
-
-
-
-
-
-
-
-          2. Auto Validate
-          This application automatically validates  vital sign data. 
-
-          Vital Signs: Oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add. 
-          ● To remove a vital sign from the app, click the red button   to the right of the waveform graph. 
-          ● To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.
+         <h3 id="patient-id">Patient ID</h3>
+          <p>
+            This application helps manage patients, devices and monitors. Specifically, patients may be connected to a device, and that patient may be selected while using other apps (and the devices selected in this app will be used). Patients can be connected to devices by selecting “Create an ICE Device Adapter”. Once a device is added it will automatically connect to the first name listed in the dropdown of patients listed at the bottom of the screen. To change the patient, click on the dropdown arrow before selecting the Create an ICE Device Adapter button. To disconnect the patient from the device in the application, click the button in the disconnect column. Once this has been done, the device will move to the box on the bottom right side of the page. To connect this device to another patient, click on a patient in the bottom left box and click on a device (both should be highlighted after they have been selected).  Then press the button in between these two boxes. 
+          </p>
+          <p>
+            To add a new patient to use in the OpenICE apps, click the button “Create new MRN entry”. A window will pop up to add a new patient. This window will give the following fields:
+          <dl class="dl-horizontal">
+            <dt>MRN</dt>
+            <dd>A medical record number is a unique identifier for each patient. This app will automatically create one. The MRN may be changed if desired.</dd>
+            <dt>First Name</dt>
+            <dd>Type in a first name.</dd>
+            <dt>Last Name</dt>
+            <dd>Type in a last name.</dd>
+            <dt>Gender</dt>
+            <dd>Select male or female dropdown list.</dd>
+            <dt>DOB</dt>
+            <dd>Type in a date of birth or click the icon to select a date from the calendar</dd>
+          </dl>
+            All edits made while the app was running will be saved once the app is closed. 
+          </p>
            
-          Data Points: When the app is opened, the Data Points will start on 20, so the app will show us the last 20 data points for each selected vital sign. This can be changed by using the arrows next to the box or by typing a different number in the box. 
-
-          Max%RSD: ?
-
-          Min Kurtosis?:  ?
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-
-          3. Chart
-          This application collects and reviews a comprehensive vital signs dataset over a predetermined amount of time. 
-
-          Vital Signs: Oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add. 
-          ● To remove a vital sign from the app, click the red button   to the right of the waveform graph. 
-          ● To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button. 
-
-          Time Interval: At the bottom of the page there will be a blank box with a down arrow next to “Time Interval”. The following times are available: 10 seconds, 1 minute, 5 minutes, 15 minutes, 1 hour, 2 hours, 3 hours, 4 hours, 5 hours, and 6 hours. 
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-          4. Data Recorder 
-          This application collects and records data. Two boxes will appear once the app is opened. The box on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this application. The box on the right will contain the following five columns:
-          ● Device ID: this will tell you what device the data is coming from.
-          ● Metric ID:  this will tell you what kind of data you are receiving ? for example, heart rate
-          ● Instance ID: not sure what this is? does every data point have a different instance ID?
-          ● Time: the time of this data point. 
-          ● Value: the numeric value of the data point collected. 
-
-          Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. Once the app starts, the boxes will begin to fill with data points. 
-
-          Data Storage:
-          ● Select the “Change” button to change where the data will be stored. 
-          ● Select how much data to save by choosing from 1, 5, 10 or 20 files. You may also choose a maximum file size of 1 MB, 5MB, 50MB, 500MB, 1GB, 5GB, 50GB, 500GB, 1000GB. 
-          ● Store the data in any of the following formats:
-          ○ Xls (csv): this document will save as a comma-separated values (csv) file. This file may be imported and converted into Microsoft Excel (xls).
-          ○ Sql: structured query language, this is used in Microsoft Access.
-          ○ Vcd (ieee-1364): value change dump, defined by the Institute of Electrical and Electronics Engineers (IEEE) in the IEEE Standard-1364-1995 in 1995. 
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-          5. Data Visualization 
-          This application displays a visual method of viewing patients’ vital signs. It will clearly show when one vital sign goes out of the normal range. For example, it is very clear to the user if a vital sign such as, SpO2, goes out of the standard range (above 100 or below 95).
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-          6. HL7 Exporter 
-          This application exports data to Health Level Seven International (HL7). HL7 is an “ANSI  [American National Standards Institute]-accredited standards developing organization dedicated to providing a comprehensive framework and related standards for the exchange, integration, sharing, and retrieval of electronic health information that supports clinical practice and the management, delivery and evaluation of health services”. 1 
-
-          The frequency can be changed from 5, 15, and 30 seconds; 1, 5, 10, 15, 20, and 30 minutes; and 1 hour. 
-
-          O one of the two may be selected: 
-          ● FHIR DSTU2 (Draft Standard for Trial Use2)
-          ● v2.6 ??
-
-          The host is ??
-          The port is ??
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-          7. Infusion Safety
-          When this app is opened four text boxes will appear at the top of the screen. 
-          ● Select Infusion Pump: infusion pump connected from ICE Device Adapter will appear here.
-          ● Interlock Status: an alert will appear if the infusion is stopped. It will say why the pump was stopped (ex: low SpO2) and the time.  
-          ● Infusion Status: states “select an infusion”.
-          ● Informational Messages: will create a notification if a vital sign is low or high. 
-
-          Respiration Rate, Heart Rate, and SpO2 will appear at the bottom of the page with colored bars below each. 
-          ● The green color shows the safe data range.
-          ● The yellow color shows the potentially unsafe data range.
-          ● The red color shows the unsafe data range, which will cause an alarm on the app to sound.
-
-          The “Configuration Mode” is available to make edits to the app [listed below].  
-          ● The number of warnings that become an alarm for a specific vital sign may be edited. 
-          ● Choose to ignore zero for a specific vital sign. 
-          ● A box may be checked off that makes a vital sign required for this app. 
-          ○ If this box is checked and there is no source of that vital sign then message will appear in the Informational Messages Box.
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application: Hospira Symbiq, Simulated Infusion Pump, Simulated Pulse Oximeter, Simulated temperature probe...
-
-
-
-
-
-
-
-
-          8. Patient ID
-          This application helps manage the devices that are connected to the patients. Specifically, you may connect a patient to a device, and then select that patient while using other applications and the devices you chose in this application will be used. You may connect patients to devices by selecting “Create an ICE Device Adapter…” [for further information II.B.2]. Once you add a device it will automatically connect to the first name listed in the dropdown of patients listed at the bottom of the screen. To change the patient, click on the dropdown arrow before selecting the Create an ICE Device Adapter button. To disconnect the patient from the device in the application, click the button in the disconnect column. Once this has been done, the device will move to the box on the bottom right side of the page. To connect this device to another patient, click on a patient in the bottom left box and click on a device (both should be highlighted after you have clicked on them).  Then press the button in between these two boxes. 
-
-          To add a new patient, click the button “Create new MRN entry”. A window will pop up to add a new patient. This window will give the following fields:
-          ● MRN: (medical record number), this app will automatically create one for you. You may change this if you would like.
-          ● First Name: type in a first name.
-          ● Last Name: type in a last name. 
-          ● Gender: this will display a male or female dropdown list. Select one. 
-          ● DOB: enter in a date of birth. 
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. Leaving this app will not change the devices you have connected or disconnected to patients while the app was open. 
-
-
-
-
-
-
-
-
-          9. Respiratory Rate Calc
-          This is a vital signs application. Click on a device on the top left of the screen and a waveform will appear below it. A numeric value may also appear to the right of the waveform.  On the right side of the screen there is a bar with a button you can move to any value in between 0 to 100.  There is also an option to create a device. Check this box to ensure that the app will receive recent data. 
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-          10. Simulation Control
-          This application allows changes to be made on the limits on simulated devices. To adjust the vital sign rate, scroll the button up and down the bar. Then a number will appear that states where the button has stopped on to the right of the bar. The vital sign will not remain on that single value, as jitter can be adjusted. Click the Jitter checkbox to the right of the vital sign, then edit the step% and max%. To have the same jitter for all vital signs click the checkbox on the top of the screen next to “Jitter:Strength:0”. 
-
-          • Jitter:
-          • Step%:
-          • Max%:
-
-          Assert Control: this button is located on the bottom of the page. 
-
-
-
-
-
-
-
-
-          11. System Explorer
-          This application displays all data on one patient. There are several tabs so the data is broken up into the following groups:
-          ● Numerics
-          ● Waveform Traces
-          ● Patient Alerts
-          ● Technical Alerts
-          ● Validations
-          ● Infusions
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application:  all devices.
-
-
-
-
-
-
-
-
-          12. X-Ray Ventilator Sync
-          This application will show an X-Ray Viewer and sources. Moving the button up and down may change the exposure time. 
-
-          Manual or automatic may be chosen for the synchronization strategy, and phase of ventilation may be chosen between end inspiration and end expiration. To take an image, press the image button or the spacebar. To reset, press the reset button or press escape.  
-
-          Select the “Exit App” button on the bottom left of the page to go back to the ICE Supervisor. 
-
-          Recommended devices for this application: 
-
-
-
-
-
-
-
-
-
-          III. References 
-
-          1. Health Level Seven International. Health Level Seven International - Homepage. (n.d.) Web. Retrieved May 4, 2015, from http://www.hl7.org/. 
-
-
-
-
-
-
-
-
-
-
-
-
-				</div>
+          <h3 id="rr-calc">Respiratory Rate Calculator</h3>
+          <p>
+            This is app creates new values for vital sign using connected devices/ monitors for one specific patient. Click on a device on the top left of the screen and a waveform will appear below it. A numeric value may also appear to the right of the waveform. On the right side of the screen there is a bar with a button. The button can be moved to any value in between 0 to 100.  There is also an option to create a device. Check this box to ensure that the app will receive recent data.
+            </br>
+            <a class="text-danger"><strong>This app confuses the shit out of me.</strong></a> 
+          </p>
+          <p>
+            Recommended devices for this application:  all devices.
+          </p>
+
+          <h3 id="simulation-control">Simulation Control</h3>
+          <p>
+            This app allows changes to be to the vital signs data coming from simulated devices. To adjust the data value for a specific vital sign, scroll the button up and down the bar for the specific vital sign. A number will appear that states where the button has stopped on to the right of the bar. The vital sign will not remain on that single value, as jitter can be adjusted. Click the jitter checkbox to the right of the vital sign, then edit the step% and max%. To have the same jitter for all vital signs click the checkbox on the top of the screen next to “Jitter:Strength:0”. 
+           <dl class="dl-horizontal">
+            <dt>Jitter</dt>
+            <dd class="text-danger">Allows the data point to fluctuate. Editing jitter also allows edits to be made to the step% and max%.</dd>
+            <dt>Step%</dt>
+            <dd class="text-danger">Unfortunately, I have no idea.</dd>
+            <dt>Max%</dt>
+            <dd class="text-danger">Unfortunately, I have no idea.</dd>
+           </dl>
+            <u>Assert Control:</u> this button is located on the bottom of the page. <a class="text-danger">However, I do not understand what this button does. I guess it asserts control on whatever it wants!!?!?! BWa haha ha ha</a> 
+          </p>
+
+          <h3 id="system-explorer">System Explorer</h3>
+          <p>
+            This application displays all data on one patient. There are several tabs so the data is broken up into the following groups:
+          <dl class="dl-horizontal">
+            <dt>Numerics</dt>
+            <dd class="text-danger">Displays the numbers of what you might ask? The alerts? waveforms? I'm not sure.</dd>
+            <dt>Waveform Traces</dt>
+            <dd class="text-danger">Displays the waveforms???.</dd>
+            <dt>Patient Alerts</dt>
+            <dd class="text-danger">Displays the patient alerts that come from the attached devices/ monitors.</dd>
+            <dt>Technical Alerts</dt>
+            <dd class="text-danger">Displays the technical alerts that come from the attached devices/ monitors</dd>
+            <dt>Validations</dt>
+            <dd class="text-danger">Informs the OpenICE user if the data has been validated or not using the same technique in the auto validation app</dd>
+            <dt>Infusions</dt>
+            <dd class="text-danger">Displays the infusions currently running on the patient</dd>
+           </dl>
+              Recommended devices for this application:  all devices.
+          </p>
+
+          <h3 id="xray-ventilator-sync">X-Ray Ventilator Sync</h3>
+          <p>
+            This application shows an X-Ray Viewer and sources. Moving the button up and down may change the exposure time. 
+          </p>
+          <p>
+            Manual or automatic may be chosen for the synchronization strategy, and phase of ventilation may be chosen between end inspiration and end expiration. To take an image, press the image button or the spacebar. To reset, press the reset button or press escape.  
+          </p>
+          <p class="text-danger"> 
+            I'm having a hard time understanding this app... Help me I'm poor.
+          </p>
+          <p>
+            Recommended devices for this application: all devices.
+          </p>
+
+          <h3 id="references">References</h3> 
+          <p>
+            1. Health Level Seven International. Health Level Seven International - Homepage. (n.d.) Web.   Retrieved May 4, 2015, from http://www.hl7.org/. 
+          </p>
+        </div>
+
+
+
+
+				
 				<div class="col-md-2">
 					<div class="hidden-xs" data-spy="affix">
 						<div>
-							<h5><a href="#beaglebone-setup">Beaglebone Setup</a></h5>
+							<h5><a href="#app-setup">OpenICE Apps Introduction</a></h5>
 							<ul class="list-unstyled">
-								<li><a href="#required-hardware">Required Hardware</a></li>
-								<li><a href="#required-software">Required Software</a></li>
-								<li><a href="#prepare-sd">MicroSD Card Setup</a></li>
-								<li><a href="#flash-memory">Flashing the Memory</a></li>
-							</ul>
-							<br />
-							<h5><a href="#mp70-adapter">MP70 Adapter Setup</a></h5>
-							<ul class="list-unstyled">
-								<li><a href="#required-hardware-mp70">Required Hardware</a></li>
-								<li><a href="#connect-devices">Connect the Devices</a></li>
-								<li><a href="#network">Setup a Network</a></li>
-								<li><a href="#configure">Configure</a></li>
-								<li><a href="#view-the-data">View the Data</a></li>
-								<li><a href="#troubleshooting">Troubleshooting</a></li>
+								<li><a href="#alarm-history">Alarm History</a></li>
+								<li><a href="#auto-validate">Auto Validate</a></li>
+								<li><a href="#chart">Chart</a></li>
+								<li><a href="#data-recorder">Data Recorder</a></li>
+								<li><a href="#data-visualization">Data Visualization</a></li>
+								<li><a href="#hl7-exporter">HL7 Exporter</a></li>
+								<li><a href="#infusion-safety">Infusion Safety</a></li>
+								<li><a href="#patient-id">Patient ID</a></li>
+								<li><a href="#rr-calc">Respiratory Rate Calculator</a></li>
+								<li><a href="#simulation-control">Simulation Control</a></li>
+                <li><a href="#system-explorer">System Explorer</a></li>
+                <li><a href="#xray-ventilator-sync">X-Ray Ventilator Sync</a></li>
 							</ul>
 						</div>
 					</div>
