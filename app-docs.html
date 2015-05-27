@@ -79,49 +79,77 @@
               This guide will assist you in using and understanding the OpenICE Applications ("apps"). <a class="text-danger">Currently, all of these apps are experimental and are not used in clinical settings. </a> Once you start the ICE Supervisor, a list of apps will appear on the left side. To open the app, click on the image. To exit the app and go back to the ICE Supervisor, click the Exit App button. The OpenICE application will close you x out of an app. <!-- I know this seems trivial - but it kept happening to me so i think it's good to say something like this...  -->
           </p>
           <p>
-              Before running an app, you should assign devices to a patient and select that patient. For instructions on connecting devices, please go to the <a href="./device-adapter-setup.html">Device Adapter Setup</a> page. On the bottom of the ICE Supervisor, click the dropdown to select a patient
+              Before running an app, you should assign devices to a patient and select that patient. For instructions on connecting devices, please go to the <a href="./device-adapter-setup.html">Device Adapter Setup</a> and <a href="./user-docs.html">User Manual</a> page. On the bottom of the ICE Supervisor, click the dropdown to select a patient
           </p> 
 
           <h3 id="alarm-history">Alarm History</h3>
           <p>
-              This app displays all of alarms that have gone off, from a specific device, over a certain amount of time. We believe that an app such as this one may help provide a better understanding of false and nuisance alarms through post hoc analysis.
+              This app displays all of alarms that have gone off, from a specific device, over a certain amount of time. Once you open the app, two large boxes appear, the table on the left displays patient alarms and the table on the right displays technical alarms. The four column headings listed below are displayed (in both the patient alarms table and the technical alarms table) when running this app. You may sort the alarms by any of the headings by clicking on the heading itself. An arrow next to the heading will appear after clicking the title to show the direction that the data has been sorted (see image below for example). The length of each column may also be made longer or shorter by selecting the line in between each column and dragging it forwards or backwards. We believe that an app such as this one may help provide a better understanding of false and nuisance alarms through post hoc analysis. 
           </p>
           <p>
-              The following five columns display when running this app: <a class="text-danger"> I feel like we should have examples here? </a>
           <dl class="dl-horizontal">
-            <dt>Type</dt>
-            <dd>Type of alarm.</dd>
             <dt>UDI</dt>
-            <dd>Unique device identifier, this states what device the alarm is coming from.</dd>
+            <dd>Unique device identifier. This states what device the alarm is coming from, and the device itself provides the UDI.</dd>
             <dt>Time</dt>
             <dd>The time the alarm sounded.</dd>
             <dt>Identifier</dt>
-            <dd class="text-danger">??.</dd>
+            <dd class="text-danger">This displays the type of alarm. For example, high total respiration rate or low battery.</dd>
             <dt>Text</dt>
-            <dd class="text-danger">Any additional text or information that may come from a device????</dd>
+            <dd class="text-danger">Any additional text or information that may come from a device?? For example: normal, high, or low. I don't know what these really mean?</dd>
           </dl>
           </p>
           <p>
-            Recommended devices for this application:  all devices.
+            Recommended devices for this application:  all devices. To record alarms while using a simulated device, go to the <a href="#simulation-control">Simulation Control</a> app to change the limits on the data emitted from the device. 
           </p> 
+          <div class="col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/alarm-history.png">
+          </div>
+
 
           <h3 id="auto-validate">Auto Validate</h3>
           <p>
-            This application automatically validates vital sign data from physiological monitors.
+            This application displays and automatically validates vital sign data from physiological monitors. The main display of this app contains histograms of vital signs data emitted from various monitors. Within each histogram, the following is displayed:
+            <dl class="dl-horizontal">
+              <dt>Sources</dt>
+              <dd>The number of devices that the data is coming from. The sources are also displayed in a legend below each graph.</dd>
+              <dt>N</dt>
+              <dd class="text-danger">The number of data points used to make the histogram. For example, if the number is 30, then the last 30 data points are used from each source (or is it total?). Is this accurate because in the data points below it says 20 and in each histogram it's more than that? </dd>
+              <dt>μ</dt>
+              <dd class="text-danger">The standard deviation of each data point.</dd>
+              <dt>σ</dt>
+              <dd class="text-danger">I have no idea.</dd>
+              <dt>%RSD</dt>
+              <dd class="text-danger">I have no idea.</dd>
+              <dt>Kurt</dt>
+              <dd class="text-danger">I have no idea.</dd>
+            </dl>
+          </p>
+          <p>
+            The following is displayed at the bottom of the screen:
           </p> 
           <p>
-            <u>Vital Signs:</u> oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add.
-            <ul> 
-              <li>To remove a vital sign from the app, click the red button to the right of the waveform graph. </li> 
-              <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
-            </ul>
-            <u>Data Points:</u> when the app is open, the number next to data points will be 20. This means the app will show the last 20 data points for each selected vital sign. This can be changed by using the up and down arrows next to data points or by typing in a different number.
+          <dl class="dl-horizontal">
+            <dt>Vital Signs</dt>
+            <dd>Histograms of selected vital signs will display in this app. To add vital signs, click the down arrow next to Add a Vital Sign, and select a vital sign.
+              <ul> 
+                <li>To remove a vital sign from the app, click the red button to the right of the waveform graph. </li> 
+                <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
+              </ul> 
+            </dd>
+            <dt>Data Points</dt> 
+            <dd>When the app is open, the number next to data points will be 20. This means the app will show the last 20 data points for each selected vital sign. This can be changed by using the up and down arrows next to data points or by typing in a different number.</dd>
+            <dt class="text-danger">Max%RSD</dt>
+            <dd>no idea what this means? </dd>
+            <dt class="text-danger">Min Kurtosis?:</dt> 
+            <dd>no idea what this means? </dd>
+          </dl>
           </p>
-          <p class="text-danger"><u>Max%RSD:</u> no idea what this means? </p>
-          <p class="text-danger"><u>Min Kurtosis?:</u> no idea what this means? </p>
           <p>
             Recommended devices for this application:  all devices measuring vital signs.
           </p>
+          <div class="col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/auto-validate.png">
+          </div>
 
           <h3 id="chart">Chart</h3>
           <p>
@@ -141,7 +169,7 @@
 
           <h3 id="data-recorder">Data Recorder</h3>
           <p>
-            This application collects and records data. Two boxes will appear once the app is opened. The box on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this application. The box on the right will contain the following five columns:
+            This application collects and records data. Two tables will appear once the app is opened. The table on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this application. The table on the right will contain the following five columns:
           <dl class="dl-horizontal">
             <dt>Device ID</dt>
             <dd>This states what device the data is coming from.</dd>
@@ -154,7 +182,7 @@
             <dt>Value</dt> 
             <dd>The numeric value of the data point collected.</dd>
           </dl>
-            Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. Once the app starts, the boxes will begin to fill with data points. 
+            Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. Once the app starts, the tables will begin to fill with data points. 
           </p>
           <p>
             <u>Data Storage:</u>
