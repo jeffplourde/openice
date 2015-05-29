@@ -89,7 +89,7 @@
           <p>
           <dl class="dl-horizontal">
             <dt>UDI</dt>
-            <dd>Unique device identifier. This states what device the alarm is coming from, and the device itself provides the UDI.</dd>
+            <dd>Unique device identifier. This states what device the alarm is coming from, and is typically a long string of numbers and letters. To find out the device that the UDI represents, click on an image of a device on the ICE Supervisor.</dd>
             <dt>Time</dt>
             <dd>The time the alarm sounded.</dd>
             <dt>Identifier</dt>
@@ -108,7 +108,10 @@
 
           <h3 id="auto-validate">Auto Validate</h3>
           <p>
-            This application displays and automatically validates vital sign data from physiological monitors. The main display of this app contains histograms of vital signs data emitted from various monitors. Within each histogram, the following is displayed:
+            This app displays and automatically validates vital sign data from at least one physiological monitor. The main display of this app contains histograms of vital signs data emitted from various monitors. The purpose of this app is to allow the user to view vital sign data emitted from different monitors and to validate the accuracy of this data.
+          </p>
+          <p>
+            Within each histogram, the following is displayed:
             <dl class="dl-horizontal">
               <dt>Sources</dt>
               <dd>The number of devices that the data is coming from. The sources are also displayed in a legend below each graph.</dd>
@@ -130,7 +133,7 @@
           <p>
           <dl class="dl-horizontal">
             <dt>Vital Signs</dt>
-            <dd>Histograms of selected vital signs will display in this app. To add vital signs, click the down arrow next to Add a Vital Sign, and select a vital sign.
+            <dd>Histograms of selected vital signs will display in this app. 
               <ul> 
                 <li>To remove a vital sign from the app, click the red button to the right of the waveform graph. </li> 
                 <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
@@ -138,10 +141,10 @@
             </dd>
             <dt>Data Points</dt> 
             <dd>When the app is open, the number next to data points will be 20. This means the app will show the last 20 data points for each selected vital sign. This can be changed by using the up and down arrows next to data points or by typing in a different number.</dd>
-            <dt class="text-danger">Max%RSD</dt>
-            <dd>no idea what this means? </dd>
-            <dt class="text-danger">Min Kurtosis?:</dt> 
-            <dd>no idea what this means? </dd>
+            <dt>Max%RSD</dt>
+            <dd class="text-danger">no idea what this means? </dd>
+            <dt>Min Kurtosis:</dt> 
+            <dd class="text-danger">no idea what this means? </dd>
           </dl>
           </p>
           <p>
@@ -153,23 +156,31 @@
 
           <h3 id="chart">Chart</h3>
           <p>
-            This application collects and reviews a comprehensive vital signs dataset over a predetermined amount of time. 
+            This app uses line graphs to display vital signs data from various monitors. Each vital sign has one graph, and each graph may have several data points if the data is emitted from more than one monitor or device. If this is the case, each data point (or line) will be a different color, and a legend below the graph will state where the data is coming from. This data is displayed over a predetermined amount of time. This app allows the user to see the potential variability in vital signs data that comes from different monitors or devices.  
           </p>
           <p>
-            <u>Vital Signs:</u> oxygen saturation (SpO2), respiratory rate, and end-tidal carbon dioxide (etCO2) will automatically appear once the app is open. Heart rate and temperature are also available to add.
-            <ul> 
-            <li>To remove a vital sign from the app, click the red button to the right of the waveform graph.</li> 
-            <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
-            </ul>
-            <u>Time Interval:</u> At the bottom of the app there will be a blank box with a down arrow next to “Time Interval”. The following times are available: 10 seconds, 1 minute, 5 minutes, 15 minutes, 1 hour, 2 hours, 3 hours, 4 hours, 5 hours, and 6 hours. 
+            <dl class="dl-horizontal">
+              <dt>Vital Signs</dt>
+              <dd>Line graphs of selected vital signs will display in this app. 
+                <ul> 
+                  <li>To remove a vital sign from the app, click the red button to the right of the waveform graph. </li> 
+                  <li>To add a vital sign to the app, click the box with a down arrow next to “Add a vital sign”. Then select a vital sign and press the “Add” button.</li>
+                </ul> 
+              </dd>
+              <dt>Time Interval</dt> 
+              <dd>At the bottom of the app there will be a blank box with a down arrow next to “Time Interval”. The following times are available: 10 seconds, 1 minute, 5 minutes, 15 minutes, 1 hour, 2 hours, 3 hours, 4 hours, 5 hours, and 6 hours. </dd>
+            </dl>
           </p>
           <p>
           Recommended devices for this application:  all devices measuring vital signs.
           </p>
+          <div class="col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/chart.png">
+          </div>
 
           <h3 id="data-recorder">Data Recorder</h3>
           <p>
-            This application collects and records data. Two tables will appear once the app is opened. The table on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this application. The table on the right will contain the following five columns:
+            This app records data, and can be used for several reasons such as post hoc data analysis. When the app is opened, two large tables will appear. The table on the left will populate with devices connected via the ICE Device Adapter. Select or unselect the checkbox next to the device to choose the specific device to record data from while using this app. The table on the right will contain the following five columns:
           <dl class="dl-horizontal">
             <dt>Device ID</dt>
             <dd>This states what device the data is coming from.</dd>
@@ -182,30 +193,75 @@
             <dt>Value</dt> 
             <dd>The numeric value of the data point collected.</dd>
           </dl>
-            Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. Once the app starts, the tables will begin to fill with data points. 
+            Select the “Start” button in the bottom right hand corner of the page to begin recording data. Select a location to store the data before clicking the start button. After selecting the start button, the tables will begin to fill with data. The start button will also change to stay "Stop". Select stop when you would like to stop recording and saving the data. 
           </p>
           <p>
-            <u>Data Storage:</u>
-          <ul>
-            <li>Select the “Change” button to change where the data will be stored.</li>
-            <li>Select how much data to save by choosing from: 1, 5, 10 or 20 files. A maximum file size may be selected from the following: 1 MB, 5MB, 50MB, 500MB, 1GB, 5GB, 50GB, 500GB, 1000GB.</li> 
-            <li>Store the data in any of the following formats:</li>
-            <ul>
-              <li><u>Xls (csv):</u> this document will save as a comma-separated values (csv) file. This file may be imported and converted into Microsoft Excel (xls).</li>
-              <li><u>Sql:</u> structured query language (used in Microsoft Access).</li>
-              <li><u>Vcd (ieee-1364):</u> value change dump, defined by the Institute of Electrical and Electronics Engineers (IEEE) in the IEEE Standard-1364-1995 in 1995.</li>
-            </ul>
-          </ul>
+            Before the selecting the start button, the data must be stored. Information on data storage is located at the bottom of the app.
+          <dl class="dl-horizontal">
+            <dt>Logging To</dt>
+            <dd>Select the "Change" button to enter where the data will be stored.</dd>    
+            <dt>Files to Keep Around</dt>
+            <dd>Select the dropdown to choose how much data to save by choosing from: 1, 5, 10 or 20 files.</dd>
+            <dt>Max File Size</dt> 
+            <dd>A maximum file size may be selected from the dropdown from one of the following: 1 MB, 5MB, 50MB, 500MB, 1GB, 5GB, 50GB, 500GB, 1000GB.</dd> 
+            <dt>Data Storage</dt>
+            <dd>Choose how to store the data by selecting the circle next to one of the following:
+            <dl class="dl-horizontal">
+              <dt>Xls (csv)</dt><dd>This document will save as a comma-separated values (csv) file. This file may be imported and converted into Microsoft Excel (xls).</dd>
+              <dt>Sql</dt><dd>Structured query language (used in Microsoft Access).</dd>
+              <dt>Vcd (ieee-1364)</dt><dd>Value change dump, defined by the Institute of Electrical and Electronics Engineers (IEEE) in the IEEE Standard-1364-1995 in 1995.</dd>
+            </dl>
+            </dd>
+          </dl>
+            To review the data, open the file saved in predetermined location. This data will match the data that appeared in the table in the app.
+          </p>
+          <p>
             Recommended devices for this application: all devices.
           </p>
+             <div class="col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/data-recorder.png">
+          </div>
 
           <h3 id="data-visualization">Data Visualization</h3>
           <p>
-            This application displays selected vital signs for one patient in the form of a shape. If three vital signs are selected then a triangle will appear, and each leg of the triangle will represent a different vital sign. Each line has markings with numeric values. The ends of the lines contain numbers outside of the "normal" range (for example: SpO2 greater than 100 or less than 95), and the middle of the lines contain numbers within the normal range. The values that are coming from devices/ physiological monitors are then plotted on each line and are connected to one another, ultimately creating a new shape. This shape is colored based on the status of the vital signs (<a class="text-success">green: all vital signs in the normal range,</a> <a class="text-warning">yellow: one vital sign may not be in the normal range,</a> <a class="text-danger">red: more than one vital sign not in the normal range</a>).This allows the user to clearly see all vital signs and whether or not they are in the normal range.  
+            This app displays selected vital signs for one patient in the form of a shape. This allows the user to clearly see all vital signs and whether or not they are in the predetermined normal range.  If three vital signs are selected (typically the default) then a triangle will appear (see Examples 1-3 below). If four vital signs are selected, then a square will appear (see Example 4). To add or delete a vital sign from the data visualization app, this vital sign must be added or deleted from the <a href="#infusion-safety">Infusion Safety</a> app (see this section for details).
+          </p>
+          <p>
+            Each leg of the triangle will represent a different vital sign, and each line has markings with numeric values. The ends of the lines contain numbers outside of the normal range (for example: SpO2 greater than 100 or less than 95), and the middle of the lines contain numbers within the normal range (for example: SpO2 between 95 and 100).
+          </p>
+          <p>
+            The values that come from devices or physiological monitors are plotted on each line and are connected to one another, creating an inner shape. If there are more than two values for one vital sign, only the highest and the lowest values can be seen. This inner shape is colored based on the status of the vital sign data. To edit the values for when the inner shape will be green, yellow, or red, go to the <a href="#infusion-safety">Infusion Safety</a> app section for more information.
+            <dl class="dl-horizontal">
+              <dt class="text-success">Green</dt>
+              <dd>All vital signs in the normal range (see Examples 1 and 4).</dd> 
+              <dt class="text-warning">Yellow</dt>
+              <dd>At least one vital sign is not in the normal range (see Example 2).</dd> <dt class="text-danger">Red</dt> 
+              <dd>Either one vital sign is severely abnormal, or more than one vital sign not in the normal range (see Example 3).</dd> 
+            </dl>
           </p>
           <p>
             Recommended devices for this application: all devices measuring vital signs.
           </p>
+          <div class="row one">
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/data-visualization-green.png">
+              <p><strong>Example 1</strong></p>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/data-visualization-yellow.png">
+              <p><strong>Example 2</strong></p>
+            </div>
+          </div>
+          <div class="row one">
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/data-visualization-red.png">
+              <p><strong>Example 3</strong></p>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/data-visualization-square.png">
+              <p><strong>Example 4</strong></p>
+            </div>
+          </div>
 
           <h3 id="hl7-exporter">HL7 Exporter</h3> 
           <p>
