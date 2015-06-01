@@ -252,7 +252,7 @@
               <p><strong>Example 2</strong></p>
             </div>
           </div>
-          <div class="row one">
+          <div class="row two">
             <div class="col-md-6 col-lg-6">
               <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/data-visualization-red.png">
               <p><strong>Example 3</strong></p>
@@ -287,38 +287,61 @@
 
          <h3 id="infusion-safety">Infusion Safety</h3>
          <p>
-            When this app is opened four text boxes will appear at the top of the screen. 
+            When this app is opened, four text boxes will appear at the top of the screen. 
          <dl class="dl-horizontal">
             <dt>Select Infusion Pump</dt>
-            <dd>Infusion pump connected from ICE Device Adapter will appear here.</dd>
+            <dd>Infusion pump connected to the patient will appear here.</dd>
             <dt>Interlock Status</dt>
             <dd>An alert will appear if the infusion is stopped. It will say why the pump was stopped (ex: low SpO2) and the time.</dd> 
             <dt>Infusion Status</dt> 
-            <dd>States “select an infusion”.</dd>
+            <dd>States “Select Infusion Pump” until the infusion pump in the left text box is selected. Then it will say "Active".</dd>
             <dt>Info. Messages</dt>
             <dd>Will create a notification if a vital sign is low or high.</dd>
           </dl>
-            Respiration Rate, Heart Rate, and SpO2 will appear at the bottom of the page with colored bars below each.
+            A row for vital signs will appear at the bottom of the app. Respiration Rate, Heart Rate, and SpO2 will automatically appear. Devices and the data value for the specific vital sign will appear on the right of the bar. A colored bar will also appear below the name of the vital sign. The data range for each color can be changed by moving the buttons up and down the colored bar.
           <ul> 
-            <li>The <a class="text-success">green</a> color shows the safe data range.</li>
-            <li>The <a class="text-warning">yellow</a> color shows the potentially unsafe data range.</li>
-            <li>The <a class="text-danger">red</a> color shows the unsafe data range, which will cause an alarm on the app to sound.</li>
+            <li>The <a class="text-success">green</a> color shows the safe data range. See Example 1. </li>
+            <li>The <a class="text-warning">yellow</a> color shows the potentially unsafe data range. If a data point is within the yellow range then an alert will appear. By default, if more than 3 data points are within the yellow range, then a red alarm will sound. See Example 2.</li>
+            <li>The <a class="text-danger">red</a> color shows the unsafe data range, which will cause an alarm on the app to sound. If at least one value goes into the red range, then the alarm will sound. See Example 3.</li>
           </ul>
-            The “Configuration Mode” is available to make edits to the app [listed below].
+            The “Configuration Mode” is available to make edits to the app [listed below]. Check the configuration mode checkbox to view the edits available for this app. See Example 4.
           <ul>  
-            <li>The number of warnings that become an alarm for a specific vital sign may be edited.</li>
-            <li>Choose to ignore zero for a specific vital sign.</li>
-            <li>A box may be checked off that makes a vital sign required for this app.</li>
+            <li>The number of warnings that become an alarm for a specific vital sign may be edited to any number 1 through 11.</li>
+            <li>Select the large dropdown at the bottom of the app to add a new vital sign in this app.</li>
+            <li>Check off the checkbox to ignore zero for a specific vital sign.</li>
+            <li>Select the "Remove" button to remove the vital sign from the app.</li>
+            <li>Select the large red X next to the device if you would like to disconnect the device from the patient.</li>
+            <li>Check off the required checkbox to make that vital sign required to run this app.</li>
             <ul>
             <li>If this box is checked and there is no source of that vital sign then message will appear in the Informational Messages Box.</li>
             </ul>
           </ul>
-            Recommended devices for this application: Hospira Symbiq, Simulated Infusion Pump, Simulated Pulse Oximeter, Simulated temperature probe...
+            Recommended devices for this application: Hospira Symbiq, Simulated Infusion Pump, Simulated Pulse Oximeter, Simulated temperature probe, ect.
           </p>
+          <div class="row one">
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/infusion-safety.png">
+              <p><strong>Example 1</strong></p>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/infusion-safety-yellow.png">
+              <p><strong>Example 2</strong></p>
+            </div>
+          </div>
+          <div class="row two">
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/infusion-safety-red.png">
+              <p><strong>Example 3</strong></p>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/infusion-safety-config.png">
+              <p><strong>Example 4</strong></p>
+            </div>
+          </div>
 
          <h3 id="patient-id">Patient ID</h3>
           <p>
-            This application helps manage patients, devices and monitors. Specifically, patients may be connected to a device, and that patient may be selected while using other apps (and the devices selected in this app will be used). Patients can be connected to devices by selecting “Create an ICE Device Adapter”. Once a device is added it will automatically connect to the first name listed in the dropdown of patients listed at the bottom of the screen. To change the patient, click on the dropdown arrow before selecting the Create an ICE Device Adapter button. To disconnect the patient from the device in the application, click the button in the disconnect column. Once this has been done, the device will move to the box on the bottom right side of the page. To connect this device to another patient, click on a patient in the bottom left box and click on a device (both should be highlighted after they have been selected).  Then press the button in between these two boxes. 
+            This application helps manage patients, devices and monitors. Using this app, patients may be connected and disconnected to devices. This connection will remain when using other apps. To make a connection first select a patient in the bottom left table. Then select a device in the bottom right table. (Each selection will appear highlighted.) To make the connection, select the button in between these two tables. This connection will then show in the top table, which shows the current connections. To disconnect the patient from the device, click the button in the disconnect column. Once this has been done, the device will move to the table on the bottom right side of the page. 
           </p>
           <p>
             To add a new patient to use in the OpenICE apps, click the button “Create new MRN entry”. A window will pop up to add a new patient. This window will give the following fields:
@@ -336,6 +359,9 @@
           </dl>
             All edits made while the app was running will be saved once the app is closed. 
           </p>
+          <div class="col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/patient-id.png">
+          </div>
            
           <h3 id="rr-calc">Respiratory Rate Calculator</h3>
           <p>
@@ -346,40 +372,69 @@
           <p>
             Recommended devices for this application:  all devices.
           </p>
+           <div class="col-md-12 col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/resp-rate-calc.png">
+           </div>
+           <div class="col-md-12 col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/resp-rate-calc-device.png">
+           </div>
 
           <h3 id="simulation-control">Simulation Control</h3>
           <p>
-            This app allows changes to be to the vital signs data coming from simulated devices. To adjust the data value for a specific vital sign, scroll the button up and down the bar for the specific vital sign. A number will appear that states where the button has stopped on to the right of the bar. The vital sign will not remain on that single value, as jitter can be adjusted. Click the jitter checkbox to the right of the vital sign, then edit the step% and max%. To have the same jitter for all vital signs click the checkbox on the top of the screen next to “Jitter:Strength:0”. 
+            This app allows changes to be to the vital signs data coming from simulated devices. To adjust the data value for a specific vital sign, scroll the button up and down the bar for the specific vital sign. To the right of the bar, a number will appear that states where the button has stopped. The vital sign will not remain on that single value, as jitter can be adjusted. Click the jitter checkbox to the right of the vital sign, then edit the step% and max%. To have the same jitter for all vital signs click the checkbox on the top of the screen next to “Jitter:Strength:0”. 
            <dl class="dl-horizontal">
             <dt>Jitter</dt>
-            <dd class="text-danger">Allows the data point to fluctuate. Editing jitter also allows edits to be made to the step% and max%.</dd>
+            <dd class="text-danger">Allows the data point to fluctuate. Editing jitter also allows edits to be made to the step% and max%.
+            <ul>
+              <li><strong>Jitter:Strength: 0</strong> - this means ???</li>
+            </ul>
+            </dd>
             <dt>Step%</dt>
-            <dd class="text-danger">Unfortunately, I have no idea.</dd>
+            <dd class="text-danger">Unfortunately, I have no idea. This can be changed from the following percentages: 0.1, 0.2, 0.5, 0.75, 1.0, 2.0, 5.0, 10.0, and 20.0.</dd>
             <dt>Max%</dt>
-            <dd class="text-danger">Unfortunately, I have no idea.</dd>
+            <dd class="text-danger">Unfortunately, I have no idea. his can be changed from the following percentages: 1, 3, 5, 10, 15, 20, and 50.
+            <ul>
+              <li><strong>Max Strength: -1</strong> - this means ???</li>
+            </ul>
+            </dd>
            </dl>
             <u>Assert Control:</u> this button is located on the bottom of the page. <a class="text-danger">However, I do not understand what this button does. I guess it asserts control on whatever it wants!!?!?! BWa haha ha ha</a> 
           </p>
+          <div class="col-md-12 col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/simulation-control.png">
+           </div>
+           <div class="col-md-12 col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/simulation-control-edit.png">
+           </div>
 
           <h3 id="system-explorer">System Explorer</h3>
           <p>
             This application displays all data on one patient. There are several tabs so the data is broken up into the following groups:
           <dl class="dl-horizontal">
             <dt>Numerics</dt>
-            <dd class="text-danger">Displays the numbers of what you might ask? The alerts? waveforms? I'm not sure.</dd>
+            <dd class="text-danger">Displays the data values numerically?.</dd>
             <dt>Waveform Traces</dt>
-            <dd class="text-danger">Displays the waveforms???.</dd>
+            <dd class="text-danger">Displays the waveforms numerically?</dd>
             <dt>Patient Alerts</dt>
             <dd class="text-danger">Displays the patient alerts that come from the attached devices/ monitors.</dd>
             <dt>Technical Alerts</dt>
-            <dd class="text-danger">Displays the technical alerts that come from the attached devices/ monitors</dd>
+            <dd class="text-danger">Displays the technical alerts that come from the attached devices/ monitors.</dd>
             <dt>Validations</dt>
-            <dd class="text-danger">Informs the OpenICE user if the data has been validated or not using the same technique in the auto validation app</dd>
+            <dd class="text-danger">Informs the OpenICE user if the data has been validated or not using the same technique in the auto validation app.</dd>
             <dt>Infusions</dt>
-            <dd class="text-danger">Displays the infusions currently running on the patient</dd>
+            <dd class="text-danger">Displays the infusions currently running on the patient.</dd>
+            <dt>Alarm Limits</dt>
+            <dd class="text-danger">Displays the alarm limits.</dd>
+            <dt>Global Alarm Obj</dt>
+            <dd class="text-danger">Displays the alarm objectives.</dd>
+            <dt>Local Limit Obj</dt>
+            <dd class="text-danger">Displays the local limit objectives.</dd>
            </dl>
               Recommended devices for this application:  all devices.
           </p>
+          <div class="col-md-12 col-lg-12">
+              <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="./assets/system-explorer.png">
+          </div>
 
           <h3 id="xray-ventilator-sync">X-Ray Ventilator Sync</h3>
           <p>
