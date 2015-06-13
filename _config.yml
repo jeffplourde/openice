@@ -1,0 +1,14 @@
+# Site settings
+title: OpenICE
+email: support@openice.info
+description: > # ">" means to ignore newlines until next key - "baseurl:"
+  OpenICE is an initiative to create a community implementation of the ASTM F-2761
+  standard for the Integrated Clinical Environment.  The initiative encompasses
+  not only software implementation of those functionalities described in the standard
+  but also an architecture for a wider clinical ecosystem that incorporates seamless
+  connectivity to increase patient safety.  OpenICE seeks to provide a framework for
+  the inclusion of healthcare devices and systems into the broader Internet of Things
+  and Industrial Internet efforts.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "https://www.openice.info" # the base hostname & protocol for your site
+github_username:  mdpnp
