@@ -12,3 +12,6 @@ description: > # ">" means to ignore newlines until next key - "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://www.openice.info" # the base hostname & protocol for your site
 github_username:  mdpnp
+collections:
+    docs:
+        output: true

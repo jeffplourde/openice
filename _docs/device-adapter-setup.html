@@ -1,0 +1,156 @@
+---
+layout: docs
+title: Setup a Beaglebone as a Device-Adapter 
+---
+
+<section id="instructions" class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <h1 style="margin-top:25px">Setup a Beaglebone as a Device-Adapter</h1>
+
+      <h3 id="beaglebone-setup">Getting Started</h3>
+
+      <div class="visible-xs">
+        <div class="alert alert-danger">
+          This tutorial contains content that is not displayed on mobile browsers. Please use a desktop/laptop browser to take advantage of all images.
+        </div>
+      </div>
+
+      <p>
+        This guide will assist you in setting up a Beaglebone Black (BBB) as a device adapter for integrating supported medical devices into an OpenICE environment. OpenICE is an open source, prototype implementation of the FDA recognized reference architecture <a href="http://www.astm.org/Standards/F2761.htm">ASTM F2761</a> - the Integrated Clinical Environment. The device adapters function as means of converting the proprietary data output from existing medical devices into the common data fabric used in OpenICE. OpenICE is built on Object Management Group <a href="http://www.omg.org/hot-topics/dds.htm">Data Distribution Service</a> (DDS) and uses the terminology from <a href="http://www.iso.org/iso/catalogue_detail.htm?csnumber=61897">ISO/IEEE 11073-10101</a> as maintained by the <a href="https://rtmms.nist.gov">Rosetta Terminology Mapping Management Service</a>.
+      </p>
+      <p>
+        OpenICE device adapters can be used for acquisition of waveform and numeric medical data, research and prototyping of interoperable environments, and for research and development of a new class of data-aware medical applications.
+      </p> 
+      <p>
+        The OpenICE device-adapter service is the core software that functions as the intermediary between the medical device and the OpenICE DDS network. The device-adapter service is a Java application that can theoretically run on any Java friendly hardware platform, including embedded systems, laptops, servers, Raspberry Pis, Intel Galileos, Beagleboards, etc. This device-adapter is not intended to be a permanent solution. Ideally, the functionality of the device-adapter would be available natively from a medical device.
+      </p>
+      <p>
+        This tutorial uses Beaglebone Black (Revision C or B) as the hardware platform. BBB is a single board, Linux-driven computing platform. It was chosen as the preliminary implementation platform due to the open-hardware, community supported design and the high performance to cost ratio of the device. At the time of writing, a Beaglebone Black can be purchased for $55.
+      </p>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Currently Compatible Devices</h5>
+            <ul>
+              <li>Philips MPxx Intellivue - Ethernet Connection</li>
+              <li>Philips MPxx Intellivue - Serial Connection</li>
+              <li>Masimo Radical 7</li>
+              <li>Dräger Apollo</li>
+              <li>Dräger Evita XL</li>
+              <li>Dräger Evita 4</li>
+              <li>Dräger V500</li>
+              <li>Ivy 450C</li>
+              <li>Nonin</li>
+              <li>Capnostream 20</li>
+              <li>Nellcor N595</li>
+              <li>Bernoulli</li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <h5>Included Device Simulators</h5>
+            <ul>
+              <li>Multi-Parameter Patient Monitor</li>
+              <li>Non-Invasive Blood Pressure</li>
+              <li>Electrocardiogram</li>
+              <li>End Tidal CO2</li>
+              <li>Temperature</li>
+              <li>Infusion Pump</li>
+              <li>Pulse Oximetry</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3>Process Overview</h3>
+      <div class="clearfix">
+        <img src="./assets/adapters.png" class="hidden-xs pull-right" style="height:250px; padding:10px" />
+        <p>To create an OpenICE device adapter, we are going to take a stock BBB (revision C or B) and flash the on-board eMMC memory with a new disk image to replace the current filesystem. The disk image contains the pre-installed software necessary for running the device adapter.</p>
+        <p>We are going to:</p>
+        <ol>
+          <li><a href="#required-hardware">Gather the Required Hardware</a></li>
+          <li><a href="#required-software">Download the Required Software</a></li>
+          <li><a href="#prepare-sd">Prepare the MicroSD Card</a></li>
+          <li><a href="#flash-memory">Flash the Beaglebone Memory</a></li>
+        </ol>
+      </div>
+
+      <h3 id="required-hardware">Required Hardware</h3>
+      <dl class="dl-horizontal">
+        <dt>Beaglebone Black</dt>
+        <dd>This process was created and tested with a BBB revision C board running the stock Debian Linux distribution.</dd>
+        <dt>5V Power Supply</dt>
+        <dd>Please use a dedicated 5V 1A power supply for your BBB during this process. The flashing process may use more than the 500mA allowed by some USB 2.0 laptop and computer ports. Exceeding this limit could disable the power and corrupt the memory on the BBB.</dd>
+        <dt>MicroSD Card</dt>
+        <dd>At least 4GB of space is required for Revision C (or 2GB for Revision B). This process was tested with an 8GB card. You will also need some method of connecting the MicroSD card to your computer. A simple USB adapter is recommended.</dd>
+        <dt>A Computer</dt>
+        <dd>Needed for preparing the MicroSD card. This process should be possible on any operating system. Windows users will have to ensure that they have the tools needed for decompressing .tar.xz images. This will be easiest on either Linux or OS X.</dd>
+      </dl>
+
+      <h3 id="required-software">Required Software</h3>
+      <dl class="dl-horizontal">
+        <dt><a href="/files/bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.2.img.xz">Revision C Disk Image</a></dt>
+        <dt><a href="/files/bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.2.img.xz">Revision B Disk Image</a></dt>
+        <dd>Download the MD PnP Beaglebone Black eMMC flasher. Details about the software installed in disk image can be found below. This image will replace the onboard memory (eMMC) of the BBB.</dd>
+      </dl>
+
+      <h5 id="inc-sw" style="padding-top:10px">Software Installed in the Disk Image:</h5>
+      <dl class="dl-horizontal">
+        <dt>Debian 7.8</dt>
+        <dd>The disk image contains a Debian filesystem from <a href="http://beagleboard.org/latest-images">beagleboard.org</a>. The exact kernel installed is 3.8.13-bone71.</dd>
+        <dt>Oracle SE JDK</dt>
+        <dd>The Java Standard Edition Development Kit is installed for ease of debugging on-board applications. The JDK version is 8u33.</dd>
+        <dt>MD PnP OpenICE</dt>
+        <dd>MD PnP provides a <a href="http://mdpnp.sourceforge.net/">demo application</a> for both serving as the medical device adapter and for viewing and interacting with the OpenICE network on a computer. Later in the tutorial, we will configure the installed demo application to function as a device adapter. To view and interact with the data on your personal computer, simply install the software by clicking the big green download button on the linked page.</dd>
+        <dt>NTP Daemon</dt>
+        <dd>The Network Time Protocol daemon (NTPd) package is installed on the disk image. The OpenICE environment requires all nodes to sync to a NTP clock for data accuracy and alignment. The time zone of the BBB image has been set to U.S. Eastern.</dd>
+      </dl>
+
+      <h3 id="prepare-sd">Prepare the MicroSD Card</h3>
+      <p>Now we are going to create a MicroSD card that the BBB can use to automatically flash its memory.</p>
+      <ol>
+        <li>Copy the BBB disk image to MicroSD card. On a Linux system with the MicroSD card identified as /dev/sdX the following command can be used:</li>
+        <li>(for Revision C)<kbd>xz -dc bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb-openice-0.6.2.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
+        <li>(for Revision B)<kbd>xz -dc bone-debian-7.8-console-armhf-2015-03-01-2gb-openice-0.6.2.img.xz | dd of=/dev/sdX bs=1024K</kbd></li>
+      </ol>
+      <p>That's it. Your MicroSD card is ready.</p>
+
+      <h3 id="flash-memory">Flashing the Memory</h3>
+      <div class="alert alert-info">
+        NOTE: This process will overwrite the contents of your BBB's internal (eMMC) memory. Backup any content you wish to preserve.
+      </div>
+      <ol>
+        <li>Insert the MicroSD card into the BBB.</li>
+        <li>Plug in the BBB power supply.</li>
+        <div class="alert alert-info">
+          NOTE: If you are using a revision A or B beaglebone not previously flashed with an updated version of u-boot you may need to hold down the "option/boot" button (near the microSD card slot) to boot from the microSD card.
+        </div>
+        <div class="alert alert-warning">
+          WARNING: Do not use the USB power during the flashing process. eLinux reports that this process may exceed 500mA and trigger a PC or laptop to disable USB power. Please use a dedicated 5V 1A power supply as detailed above.
+        </div>
+        <li>When the image starts copying onto the BBB the four LEDs will illuminate successively from end to end.</li>
+        <li>When flashing is complete all the LEDs will illuminate and some finalization steps will occur.  After another minute or two the LEDs will extinguish and the beaglebone will power down, remove the power and MicroSD card.</li>
+        <li>Your beagle is now running Debian 7.8 and has the OpenICE device adapter software installed. It can now be configured to run as a device adapter for any of the supported devices. In the next section we will configure the adapter to communicate with a Philips MP70.</li>
+        <li>The default user is "debian". The default password is "debian".</li>
+      </ol>
+      <div class="alert alert-info">
+        NOTE: The BBB with Debian may take up to 3 minutes to boot without a network cable attached.
+      </div>
+
+    </div>
+    <div class="col-md-2">
+      <div class="hidden-xs" data-spy="affix">
+        <div>
+          <h5><a href="#beaglebone-setup">Beaglebone Setup</a></h5>
+          <ul class="list-unstyled">
+            <li><a href="#required-hardware">Required Hardware</a></li>
+            <li><a href="#required-software">Required Software</a></li>
+            <li><a href="#prepare-sd">MicroSD Card Setup</a></li>
+            <li><a href="#flash-memory">Flashing the Memory</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
