@@ -10,7 +10,8 @@ description: > # ">" means to ignore newlines until next key - "baseurl:"
   the inclusion of healthcare devices and systems into the broader Internet of Things
   and Industrial Internet efforts.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://www.openice.info" # the base hostname & protocol for your site
+# url: "https://www.openice.info" # the base hostname & protocol for your production site
+url: "" # null URL forces the jekyll to resolve variable links (ie {{site.url}}/assets/picture.img) to the local machine in the _site dir
 github_username:  mdpnp
 collections:
     docs:

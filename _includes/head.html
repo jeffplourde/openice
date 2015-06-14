@@ -3,20 +3,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
   <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
+  <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
   <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
 
   <title>{% if page.title %}{{ page.title }}{% else %}MD PnP OpenICE{% endif %}</title>
 
   <link href="assets/favicon.ico" rel="shortcut icon">
+  <!-- <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}"> -->
+  
   <link rel="stylesheet" href="{{site.url}}/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{site.url}}/css/custom-style.css">
-  <!-- <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}"> -->
 
-  <script language="javascript" type="text/javascript" src="js/respond.min.js"></script>
-  <script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
-  <script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script language="javascript" type="text/javascript" src="{{site.url}}/js/respond.min.js"></script>
+  <script language="javascript" type="text/javascript" src="{{site.url}}/js/jquery.min.js"></script>
+  <script language="javascript" type="text/javascript" src="{{site.url}}/js/bootstrap.min.js"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
