@@ -1,14 +1,17 @@
----
-layout: default
----
-<div class="docs">
+<!DOCTYPE html>
+<html>
 
-<!--   <header class="docs-header">
-    <h1 class="docs-title">{{ page.title }}</h1>
-  </header> -->
+  {% include head.html %}
 
-  <article class="docs-content">
+  <body>
+
+    {% include banner.html %}
+    {% include navbar.html %}
+
     {{ content }}
-  </article>
 
-</div>
+    {% include footer.html %}
+
+  </body>
+
+</html>
