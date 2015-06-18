@@ -36,6 +36,7 @@ title: OpenICE
   </div>
 </section>
 
+
 <section class="section-landing-text">
   <div id="landing-text-container" class="landing-container">
     <div id="landing-text-chevron">
@@ -104,6 +105,7 @@ title: OpenICE
   </div>
 </section>
 
+
 <section class="section-whatis">
   <div class="landing-container">
     <h1>What is OpenICE?</h1>
@@ -114,6 +116,7 @@ title: OpenICE
     </div>
   </div>
 </section>
+
 
 <section class="section-community">
   <div class="section-community-back"></div>
@@ -131,9 +134,11 @@ title: OpenICE
   </div>
 </section>
 
+
 <section class="section-software">
   <div class="page-container">
     <table class="table table-hover">
+
       <tr><th><h3>OpenICE Web Apps</h3></th></tr>
       <tr>
         <td>
@@ -159,6 +164,8 @@ title: OpenICE
           </div>
         </td>
       </tr>
+
+
 
       <tr><th><h3>Downloads</h3></th></tr>
       <tr>
@@ -186,92 +193,28 @@ title: OpenICE
         </td>
       </tr>
 
+
+
       <tr><th id="docs"><h3>Getting Started</h3></th></tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/1_overview.html">OpenICE Overview</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/2_supervisor.html">OpenICE Supervisor</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/1_overview.html">Demo Applications</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/1_overview.html">Device-Adapter Setup</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/5_device-adapter-config.html">Device-Adapter Config</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p>Interested in connecting a compatible device into your own OpenICE network? Follow this tutorial to learn how to install device-adapter software onto a Beaglebone Black. The process shown here can be used to connect any supported device onto any Java compatible computer, including your laptop.</p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/5_device-adapter-config.html">Device Adapter Setup</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p>This tutorial will show you how to configure a device-adapter to communicate with a Philips MP70.</p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" href="{{site.url}}/docs/6_example-setups.html">Example System Setups</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p></p>
-          </div>
-        </td>
-      </tr>
-      
+      {% for doc in site.docs %}
+        {% if doc.title-sm %}
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>{{ doc.description }}</p>
+              </div>
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+
+
+
       <tr><th id="dev"><h3>For Developers</h3></th></tr>
       <tr>
         <td>
@@ -282,18 +225,6 @@ title: OpenICE
           </div>
           <div class="col-md-8 col-sm-6 col-xs-12">
             <p></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="software-link">
-              <a class="btn btn-lg btn-primary btn-block" role="button" target="_blank" href="https://sourceforge.net/p/mdpnp/wiki/Medical%20Device%20Plug-and-Play%20Interoperability%20Lab/">Sourceforge Wiki</a>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p>For additional information about the OpenICE Demo Apps Software, visit the sourceforge wiki. The wiki contains high level documentation how to install and run the software on all three platforms, platform prerequisites, source code building instructions and third party tools and resources.</p>
           </div>
         </td>
       </tr>
@@ -333,6 +264,23 @@ title: OpenICE
           </div>
         </td>
       </tr>
+      {% for doc in site.devdocs %}
+        {% if doc.title-sm %}
+          <tr>
+            <td>
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="software-link">
+                  <a class="btn btn-lg btn-primary btn-block" role="button" href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <p>{{ doc.description }}</p>
+              </div>
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+
 
 
       <tr><th id="videos"><h3>Videos</h3></th></tr>
@@ -385,6 +333,8 @@ title: OpenICE
         </td>
       </tr>
 
+
+
       <tr><th id="helpful"><h3>Helpful information</h3></th></tr>
       <tr>
         <td>
@@ -410,8 +360,10 @@ title: OpenICE
           </div>
         </td>
       </tr>
+
     </table>
 </section>
+
 
 <section class="section-landing-slogan">
   <div id="landing-info" class="page-container">
@@ -423,6 +375,7 @@ title: OpenICE
     <h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
   </div>
 </section>
+
 
 <script type='text/javascript'>
   var _ues = {

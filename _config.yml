@@ -18,3 +18,5 @@ exclude: ["src", "Gruntfile.js", "package.json", "node_modules"]
 collections:
     docs:
         output: true
+    devdocs:
+        output: true

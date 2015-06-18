@@ -8,7 +8,46 @@
     {% include banner.html %}
     {% include navbar.html %}
 
-    {{ content }}
+    <section id="doc" class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <h1 class="doc-title">{{page.title}}</h1>
+
+          {{ content }}
+
+        </div>
+
+        <div class="col-md-2 hidden-xs docnav">
+          <div data-spy="affix">
+
+            <h5 class="docnav-title">Getting Started</h5>
+            <ul class="list-unstyled">
+
+              {% for doc in site.docs %}
+                {% if doc.title-sm %}
+                  <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
+                {% endif %}
+              {% endfor %}
+
+            </ul>
+
+            <h5 class="docnav-title">For Developers</h5>
+            <ul class="list-unstyled">
+              <li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw/edit" target="_blank">App Architecture</a></li>
+              <li><a href="https://github.com/mdpnp/hello-openice" target="_blank">Hello, OpenICE!</a></li>
+
+              {% for doc in site.devdocs %}
+                {% if doc.title-sm %}
+                  <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
+                {% endif %}
+              {% endfor %}
+
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </section>
 
     {% include footer.html %}
 
