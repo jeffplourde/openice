@@ -1,0 +1,132 @@
+---
+layout: docs
+title: OpenICE User Introduction
+---
+
+<section id="docs" class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <h1 style="margin-top:25px">{{page.title}}</h1>
+      <h3 id="intro">Introduction</h3>
+
+      <p>
+        Thanks for trying OpenICE! This guide aims to introduce readers to medical device integration using the Open-source Integrated Clinical Environment (OpenICE). OpenICE is a distributed system platform that connects nodes together - like medical devices found in an OR or ICU, applications for clinical decision support (CDS) or data logging, and external interfaces to other healthcare IT (HIT) systems like EMR flowsheets. OpenICE automates peer-to-peer node discovery, data publishing and subscribing between nodes, as well as proprietary medical device protocol translation. Users and developers of the OpenICE platform get the data they need, in a common sensible format, seemlessly delivered to the destinations they want.
+      </p>
+      <p>
+        OpenICE has been called an open clinical research platform, an abstraction layer for medical devices, a medical Internet of things (MIoT) platform, a cyber-physical system (CPS) test tool, an app hosting environment, amongst other names. The current version of OpenICE enables users to convert heterogeneous medical device data into a common structure and protocol, and to exchange that data with clinical applications on a different machine (or machines). OpenICE includes several simple but useful sample applications as well as example code to help users to write their own.
+      </p>
+
+
+      <br />
+      <h3 id="overview">System Component Overview</h3>
+
+
+      <row>
+        <div class="col-lg-5" style="padding:0;">
+          <p>
+            The OpenICE application is the entry and exit point for medical device data into and out of the network. OpenICE has two operating modes: <b>Supervisor</b> and <b>Device-Adapter</b>.
+          </p>
+          <p>
+            The <b>Device-Adapter</b> software acts as a bridge that will to connect both real and simulated medical devices into the OpenICE network. The Device-Adapter software translates the proprietary device communication protocols into the standard OpenICE data structures (described in <a href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl">ice.idl</a>) and communication protocol.
+          </p>
+          <p>
+            The <b>Supervisor</b> runs clinical applications and subscribes to all medical devices in the same <a href="#">Domain</a> and <a href="#">Patient Context</a>.
+          </p>
+        </div>
+        <div class="col-lg-7">
+          <div id="img-openice-diagram"></div>
+        </div>
+      </row>
+
+
+      <h3 id="application">Downloading and Installing</h3>
+      <p>
+        The OpenICE device-adapter and supervisor are distributed as one JAR for your convenience. You can download the software from <a href="http://mdpnp.sourceforge.net">mdpnp.sourceforge.net</a>.
+      </p>
+
+      <div class="btn-container-center">
+        <a href="https://sourceforge.net/projects/mdpnp/files/latest/download" target="_blank">
+          <button class="btn btn-info btn-download">
+            <span class="btn-title">Quick Download</span>
+            <br />
+            <span class="btn-subtitle">Latest Release</span>
+          </button>
+        </a>
+      </div>
+      
+Windows
+Double-click the executable to install. (OpenICE-0.6.2-x86.exe)
+Follow the prompts to install and run the program
+Linux
+For linux platforms a redistributable JRE is not included. Please download a Java 8 runtime environment from Oracle
+Unzip the archive. It will create a directory called OpenICE-0.6.2
+Within the OpenICE-0.6.2 directory find a directory called bin
+Within the bin directory run a script called OpenICE
+Macintosh
+Double-click the installer package
+Follow the prompts to install the software
+In Applications find an application called OpenICE
+All Platforms
+Click Start ICE_Supervisor
+Click Create a local ICE Device Adapter...
+Select PO Simulator for a self-contained pulse oximeter simulator. The device will appear on the right side of the ICE Supervisor screen.
+Click on the device to monitor its data.
+
+      <br />
+
+
+      <h3 id="application">Running OpenICE Software from the GUI</h3>
+      <p>
+        Launch OpenICE. When open, the OpenICE application presents a start menu GUI. This menu is used to configure the mode of operation of the OpenICE application.
+      </p>
+
+
+      <row class="clearfix"> 
+        <div class="col-lg-6">
+          <dl class="dl-horizontal">
+            <dt>
+              Application
+            </dt>
+            <dd>
+              Choose which software mode to run the application as: <b>ICE Supervisor</b> or <b>ICE Device Interface</b> (same as device-adapter). The ICE_Supervisor hosts clinical applications. The ICE_Device_Interface connects a medical device to the OpenICE network.
+            </dd>
+            <dt>
+              Domain ID
+            </dt>
+            <dd>
+              OpenICE systems on the same network can coexist by using different integer domain identifiers. If there are no other ICE systems on your network then any value may be used. The default value used at MD PnP is 15.
+            </dd>
+            <dt>
+              FHIR Server
+            </dt>
+            <dd>
+              This is the base URL of an HL7 FHIR (Fast Healthcare Interoperability Resources) server from which patient information should be received.This field can be left blank to use a local database of patients.
+            </dd>
+          </dl>
+        </div>
+        <div class="col-lg-6">
+          <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="{{site.url}}/assets/openice-start-menu.png">
+        </div>
+      </row>
+      <div class="alert alert-info">NOTE:
+        If you would like to use the GUI to start both the Supervisor and a Device-Adapter(s), run the Supervisor first and start Device-Adapters from within the Supervisor.
+      </div>
+
+
+    </div>
+
+    <div class="col-md-2">
+      <div class="hidden-xs" data-spy="affix">
+        <div>
+          <h5><a href="#beaglebone-setup">TODO: Table of Contents</a></h5>
+          <ul class="list-unstyled">
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

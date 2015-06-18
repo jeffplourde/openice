@@ -123,6 +123,11 @@
 
 /*****     SITE-WIDE STUFF    *****/
 
+body {
+  font-smooth:always;
+  -webkit-font-smoothing: antialiased;
+}
+
 #logo-banner-holder {
   padding-left: 0px;
   padding-right: 0px;
@@ -139,6 +144,7 @@
 }
 
 #footer {
+  margin-top: 100px;
   border-top: 1px solid #DDD;
   padding-top: 75px;
   padding-bottom: 50px;
@@ -179,6 +185,21 @@
     width: 920px;
   }
 }
+
+.btn-download {
+  padding: 5px 25px;
+}
+.btn-container-center {
+  margin: 25px auto;
+  text-align: center;
+}
+.btn-title {
+  font-size: 1.75em;
+}
+.btn-subtitle {
+  font-weight: 350;
+}
+
 /*****     END SITE-WIDE STUFF     *****/
 
 /******     LANDING PAGE     ******/
