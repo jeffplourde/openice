@@ -596,18 +596,12 @@ body {
   background-size: 100%;
 }
 
-#img-openice-diagram {
-  background-image: url('../assets/openice-diagram-setup.png');
-  background-position: center center;
-  background-repeat: no-repeat;
-  min-height: 375px;
-  background-size: 100%;
+.modal-xl {
+  width: 90%;
 }
-#img-openice-diagram:hover {
-  background-image: url('../assets/openice-diagram-setup-pictures.png');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 100%;
+.diagram-sm {
+  height:350px;
+  margin:5px auto;
 }
 
 /* bootstrap description list */

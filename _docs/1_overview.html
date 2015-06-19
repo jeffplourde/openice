@@ -2,42 +2,80 @@
 layout: docs
 title: OpenICE User Introduction
 title-sm: OpenICE Introduction
-description:
+description: Looking for where to start with OpenICE? Check out this page for the basic information you'll need to get off the ground with OpenICE.
 ---
 
 <h3 id="intro">Introduction</h3>
 <p>
-  Thanks for trying OpenICE! This guide aims to introduce readers to medical device integration using the Open-source Integrated Clinical Environment (OpenICE). OpenICE is a distributed system platform that connects nodes together - like medical devices found in an OR or ICU, applications for clinical decision support (CDS) or data logging, and external interfaces to other healthcare IT (HIT) systems like EMR flowsheets. OpenICE automates peer-to-peer node discovery, data publishing and subscribing between nodes, as well as proprietary medical device protocol translation. Users and developers of the OpenICE platform get the data they need, in a common sensible format, seemlessly delivered to the destinations they want.
+  Thanks for trying OpenICE!
 </p>
 <p>
-  OpenICE has been called an open clinical research platform, an abstraction layer for medical devices, a medical Internet of things (MIoT) platform, a cyber-physical system (CPS) test tool, an app hosting environment, amongst other names. The current version of OpenICE enables users to convert heterogeneous medical device data into a common structure and protocol, and to exchange that data with clinical applications on a different machine (or machines). OpenICE includes several simple but useful sample applications as well as example code to help users to write their own.
+  This guide aims to introduce readers to medical device integration using the Open-source Integrated Clinical Environment (OpenICE). OpenICE is a distributed system platform for connecting network nodes together - e.g.:
+  <ul>
+    <li>medical devices found in an OR or ICU,</li>
+    <li>blackbox recording applications (i.e. data logging),</li>
+    <li>applications for clinical decision support (CDS),</li>
+    <li>and external interfaces to other healthcare IT (HIT) systems like EMR flowsheets. </li>
+  </ul>
+  OpenICE automates peer-to-peer node discovery, data publishing and subscribing between nodes, as well as proprietary medical device protocol translation. Users and developers of the OpenICE platform get the data they need, in a common sensible format, seamlessly delivered to the destinations they want.
 </p>
+<p>
+  OpenICE has been called an open clinical research platform, an abstraction layer for medical devices, a medical Internet of things (MIoT) platform, a cyber-physical system (CPS) test tool, an app hosting environment, amongst other names. The current version of OpenICE enables users to convert heterogeneous medical device data from supported devices into a common structure and protocol, and to exchange that data with demonstration clinical applications on a different machine (or machines). OpenICE includes several simple but useful sample applications as well as example code to help users to write their own.
+</p>
+<div class="text-center">
+  <!-- Button trigger modal -->
+  <div type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#view-diagram">
+    <img class="img-responsive diagram-sm" src="{{ site.url }}/assets/openice-diagram-setup-pictures.png">
+    <p class="text-center">
+      An example OpenICE implementation for collecting data from an MP70, a PB840, and a simulator. Click to view larger.
+    </p>
+  </div>
+</div>
+<!-- View larger modal -->
+<div class="modal fade" id="view-diagram" tabindex="-1">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myModalLabel">Sample OpenICE Setup</h4>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" src="{{ site.url }}/assets/openice-diagram-setup-pictures.png">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 <br />
 <h3 id="overview">System Component Overview</h3>
-
-
-<row>
+<row class="clearfix">
   <div class="col-lg-5" style="padding:0;">
     <p>
-      The OpenICE application is the entry and exit point for medical device data into and out of the network. OpenICE has two operating modes: <b>Supervisor</b> and <b>Device-Adapter</b>.
+      The OpenICE application is the entry and exit point for medical device data into and out of the network. OpenICE has two operating modes: <b><a href="{{ site.url }}/docs/2_supervisor.html">Supervisor</a></b> and <b><a href="{{ site.url }}/docs/4_device-adapter-setup.html">Device-Adapter</a></b>.
     </p>
     <p>
       The <b>Device-Adapter</b> software acts as a bridge that will to connect both real and simulated medical devices into the OpenICE network. The Device-Adapter software translates the proprietary device communication protocols into the standard OpenICE data structures (described in <a href="https://sourceforge.net/p/mdpnp/code/ci/master/tree/data-types/x73-idl/src/main/idl/ice/ice.idl">ice.idl</a>) and communication protocol.
     </p>
     <p>
-      The <b>Supervisor</b> runs clinical applications and subscribes to all medical devices in the same <a href="#">Domain</a> and <a href="#">Patient Context</a>.
+      The <b>Supervisor</b> runs clinical applications and subscribes to all medical devices in the same <a href="#run">Domain</a> and <a href="{{ site.url }}/docs/2_supervisor.html">Patient Context</a>.
     </p>
   </div>
   <div class="col-lg-7">
-    <div id="img-openice-diagram"></div>
+    <img class="img-responsive" src="{{ site.url }}/assets/openice-diagram-setup.png">
   </div>
 </row>
 
-<h3 id="application">Downloading and Installing</h3>
+
+<br />
+<h3 id="download">Downloading and Installing</h3>
 <p>
-  The OpenICE device-adapter and supervisor are distributed as one JAR for your convenience. You can download the software from <a href="http://mdpnp.sourceforge.net">mdpnp.sourceforge.net</a>.
+  The OpenICE device-adapter and supervisor are distributed as one JAR for your convenience. You can download the software from <a href="http://mdpnp.sourceforge.net">mdpnp.sourceforge.net</a>. To view the different releases available, check the <a href="https://sourceforge.net/projects/mdpnp/files/Interoperability%20Lab/" target="_blank">files</a> section of sourceforge.
 </p>
 
 <div class="btn-container-center">
@@ -55,16 +93,16 @@ description:
     <dt>Linux</dt>
     <dd>
       <ol>
-        <li>Unzip the archive. It will create a directory called OpenICE-0.6.3.</li>
+        <li>Unzip the archive OpenICE-0.6.3.tar.gz. It will create a directory called OpenICE-0.6.3.</li>
         <li>Within the OpenICE-0.6.3 directory, navigate to the bin directory.</li>
         <li>Within the bin directory, run the OpenICE script.</li>
       </ol>
-        <div class="alert alert-info">NOTE: For linux platforms, a Java 8 runtime environment is not included. Please download a JRE from Oracle.</div>
+        <div class="alert alert-info">NOTE: For Linux platforms, a Java 8 runtime environment is not included. Please download a JRE from Oracle.</div>
     </dd>
     <dt>Macintosh</dt>
     <dd>
       <ol>
-        <li>Double-click the installer package.</li>
+        <li>Double-click the installer package. (OpenICE-0.6.3.pkg)</li>
         <li>Follow the prompts to install the software.</li>
         <li>In the Applications menu, run OpenICE.</li>
       </ol>
@@ -73,7 +111,8 @@ description:
     <dd>
       <ol>
       <li>Double-click the executable to install. (OpenICE-0.6.3-x86.exe)</li>
-      <li>Follow the prompts to install and run the program.</li>
+      <li>Follow the prompts to install the software.</li>
+      <li>In the Start menu, run OpenICE.</li>
       </ol>
     </dd>
   </dl>
@@ -83,11 +122,13 @@ description:
 <br />
 
 
-<h3 id="application">Running OpenICE Software from the GUI</h3>
+<h3 id="run">Running OpenICE Software from the GUI</h3>
 <p>
   Launch OpenICE. When open, the OpenICE application presents a start menu GUI. This menu is used to configure the mode of operation of the OpenICE application.
 </p>
-
+<div class="alert alert-info">NOTE:
+  If you would like to use the GUI to start both the Supervisor and a Device-Adapter(s), run the Supervisor first and start Device-Adapters from within the Supervisor.
+</div>
 
 <row class="clearfix"> 
   <div class="col-lg-6">
@@ -112,10 +153,16 @@ description:
       </dd>
     </dl>
   </div>
+
   <div class="col-lg-6">
     <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="{{site.url}}/assets/openice-start-menu.png">
   </div>
 </row>
-<div class="alert alert-info">NOTE:
-  If you would like to use the GUI to start both the Supervisor and a Device-Adapter(s), run the Supervisor first and start Device-Adapters from within the Supervisor.
-</div>
+
+<h3>What's next?</h3>
+{% for doc in site.docs %}
+  {% if doc.title-sm %}
+  <a class="" role="button" href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
+  <p>{{ doc.description }}</p>
+  {% endif %}
+{% endfor %}
