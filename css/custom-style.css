@@ -144,6 +144,7 @@ body {
 }
 
 #footer {
+  max-height: 385px;
   margin-top: 100px;
   border-top: 1px solid #DDD;
   padding-top: 75px;
@@ -551,6 +552,12 @@ body {
   margin-top: 25px;
 }
 
+#docnav-affix.affix {
+  top: 0;
+}
+#docnav-affix.affix-bottom {
+  position: absolute;
+}
 .docnav-title {
   font-size: 1.75em;
   font-weight: 300;

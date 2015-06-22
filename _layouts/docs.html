@@ -18,7 +18,7 @@
         </div>
 
         <div class="col-md-2 hidden-xs docnav">
-          <div data-spy="affix">
+          <div id="docnav-affix">
 
             <h5 class="docnav-title">Getting Started</h5>
             <ul class="list-unstyled">
@@ -50,6 +50,19 @@
     </section>
 
     {% include footer.html %}
+
+    <script type="text/javascript">
+      $('#docnav-affix').affix({
+        offset: {
+          top: function () {
+            return (this.top = $('#logo-banner-holder').outerHeight(true) + $('#main-navbar').outerHeight(true))
+          },
+          bottom: function () {
+            return (this.bottom = $('#footer').outerHeight(true))
+          }
+        }
+      })
+    </script>
 
   </body>
 
