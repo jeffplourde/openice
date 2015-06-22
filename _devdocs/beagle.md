@@ -5,6 +5,8 @@ title-sm: Beaglebone Notes
 description: This page lists the alterations we make to the default Beaglebone Black Debian disk image while creating the 'device-adapter' disk image.
 ---
 
+When creating the downloadable disk image for the Beaglebone Black 'device-adapter', we make several alterations to the default Debian Beaglebone disk image. This page summarizes those changes.
+
 ### Setting up on embedded devices
 The OpenICE software has been tested on BeagleBone Black and Raspberry Pi.  But *should* run on any ARM device running a recent linux based on kernel 3.x and compiled for the ARM hard-float ABI.  (This in addition to Intel x86 and x86_64 on mac/linux/windows).  These instructions are specific to Debian 7 running on BeagleBone Black hardware; but they could be adapted for virtually any platform with JVM support.
 

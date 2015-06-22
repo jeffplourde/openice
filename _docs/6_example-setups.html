@@ -1,17 +1,135 @@
 ---
 layout: docs
-title: Example System Setups
-title-sm: System Setup
+title: Example OpenICE System Setups
+title-sm: OpenICE System Setup
 description: OpenICE is a highly flexible system that leaves users with many options for using the tech. This tutorial illustrates three sample OpenICE configurations - single device, consumer, and enterprise.
 ---
 
-<h3>Simplest OpenICE Setup</h3>
-<img class="img-responsive" src="{{site.url}}/assets/openice-setup-simple.png">
+{{ page.description }}
+
+<h3 id="simple">Simple OpenICE Setup</h3>
+<row class="clearfix">
+  <div class="col-lg-5" style="padding:0;">
+    <p>
+      Using OpenICE to connect to a single device is as simple as plugging it in! For a OpenICE compatible medical device with serial data export capabilities, all that is needed is the medical device like a Philips MP70, a computer running the OpenICE software and a serial to USB device. In the case of the MP70, you will also need a RJ45 to DB9 converter. A list of supported devices can be found on the <a href="{{ site.url }}/docs/4_device-adapter-setup.html">device-adapter setup</a> page.
+    </p>
+    <p>
+      In this setup, run both the MP70 device-adapter software and the Supervisor on the same host computer. The device-adapter and supervisor will communicate via the local loopback adapter. This is only an example of what connection configurations are possible with OpenICE. This setup can be extended by running other device-adapters on a network that the host computer is connected to as seen in the next example.
+    </p>
+  </div>
+  <div class="col-lg-7 text-center">
+    <!-- Simple modal button -->
+    <div type="button" class="btn btn-default btn-system-modal" data-toggle="modal" data-target="#modal-simple">
+      <img class="img-responsive" src="{{ site.url }}/assets/openice-setup-simple.png">
+      <p class="text-center">
+        Click to view larger
+      </p>
+    </div>
+  </div>
+</row>
+<!-- Simple modal -->
+<div class="modal fade" id="modal-simple" tabindex="-1">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">Simple OpenICE Setup</h4>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" src="{{ site.url }}/assets/openice-setup-simple.png">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
 
 
-<h3>Consumer-Grade Equipment OpenICE Setup</h3>
-<img class="img-responsive" src="{{site.url}}/assets/openice-setup-medium.png">
+<h3 id="comsumer">Consumer-Grade Equipment OpenICE Setup</h3>
+<row class="clearfix">
+  <div class="col-lg-5" style="padding:0;">
+    <p>
+      Using only consumer-grade electronics, it is possible to setup a full-featured OpenICE implementation. In this example, the following hardware is used:
+      <ul>
+        <li>Beaglebone Black running device-adapter software</li>
+        <li>Desktop computer running device-adapter software</li>
+        <li>Laptop computer running the OpenICE Supervisor</li>
+        <li>COTS WiFi router connecting every device</li>
+      </ul>
+      The OpenICE system's discovery mechanisms and pub/sub functionality allow the user to run a device simulator anywhere on the network, either the Beaglebone Black, a desktop computer, or a laptop. This simulator will be visible to any supervisor on the same local network segment.
+    </p>
+    <p>
+      This setup is great for demonstration or experimentation but the hardware presented is not common in a hospital setting. The same OpenICE functionality can be acheived using more robust hardware such as in the final sample setup.
+    </p>
+  </div>
+  <div class="col-lg-7 text-center">
+    <!-- Consumer modal button -->
+    <div type="button" class="btn btn-default btn-system-modal" data-toggle="modal" data-target="#modal-consumer">
+      <img class="img-responsive" src="{{ site.url }}/assets/openice-setup-medium.png">
+      <p class="text-center">
+        Click to view larger
+      </p>
+    </div>
+  </div>
+</row>
+<!-- Consumer modal -->
+<div class="modal fade" id="modal-consumer" tabindex="-1">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">Consumer-Grade OpenICE Setup</h4>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" src="{{ site.url }}/assets/openice-setup-medium.png">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
 
 
-<h3>Enterprise-Grade OpenICE Setup</h3>
-<img class="img-responsive" src="{{site.url}}/assets/openice-setup-enterprise.png">
+<h3 id="simple">Enterprise-Grade OpenICE Setup</h3>
+<row class="clearfix">
+  <div class="col-lg-5" style="padding:0;">
+    <p>
+      In an environment where there are cost constraints around price of retrofitting each medical device with a computer, the Beaglebone Black is a very low cost option for running the device-adapter software. The device-adapters can be connected to existing enterprise-grade infrastructure present in a hospital facility. Creating a virtual local area network (VLAN) is recommended to segregate OpenICE network traffic from other systems.
+    </p>
+    <p>
+      The pub/sub nature of OpenICE allows multiple subscribers to be painlessly spooled up. In this example, three subscribers are implemented serving as desintations for the medical device data: an HL7 export app, a data recorder app, and a Supervisor. These applications will be able to discover any device-adapter connected to the same network segment.
+    </p>
+  </div>
+  <div class="col-lg-7 text-center">
+    <!-- Enterprise modal button -->
+    <div type="button" class="btn btn-default btn-system-modal" data-toggle="modal" data-target="#modal-enterprise">
+      <img class="img-responsive" src="{{ site.url }}/assets/openice-setup-enterprise.png">
+      <p class="text-center">
+        Click to view larger
+      </p>
+    </div>
+  </div>
+</row>
+<!-- Enterprise modal -->
+<div class="modal fade" id="modal-enterprise" tabindex="-1">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myModalLabel">Enterprise-Grade OpenICE Setup</h4>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" src="{{ site.url }}/assets/openice-setup-enterprise.png">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+

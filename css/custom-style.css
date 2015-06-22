@@ -593,22 +593,15 @@ body {
   color: #333;
 }
 
-#img-openice-home {
-  background-image: url('../assets/openice-home.png');
-  background-size: 100%;
-  min-height: 617px;
-}
-#img-openice-home:hover {
-  background-image: url('../assets/openice-home-marked.png');
-  background-size: 100%;
-}
-
 .modal-xl {
   width: 90%;
 }
 .diagram-sm {
   height:350px;
   margin:5px auto;
+}
+.btn-system-modal{
+  min-height: 115px;
 }
 
 /* bootstrap description list */

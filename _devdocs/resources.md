@@ -2,8 +2,10 @@
 layout: docs
 title: Developer Tools and Resources
 title-sm: Tools and Resources
-description: In the lab, we use a variety of external tools in our research and development of OpenICE. This page lists some stuff we probably would hate to live without. 
+description: In the lab, we use a variety of external tools in our research and development of OpenICE. This page lists tools and resources we  would hate to live without. 
 ---
+
+{{ page.description }}
 
 Tools
 ================
