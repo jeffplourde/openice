@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Beaglebone Image Notes
+title: Beaglebone Disk Image Notes
 title-sm: Beaglebone Notes
 description: This page lists the alterations we make to the default Beaglebone Black Debian disk image while creating the 'device-adapter' disk image.
 ---

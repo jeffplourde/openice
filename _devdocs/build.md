@@ -2,7 +2,7 @@
 layout: docs
 title: Building OpenICE from Source
 title-sm: Build from Source
-description: Self explanatory. Helpful information for building the OpenICE project from source.
+description: Self explanatory. Helpful information for building the OpenICE project from source. These instructions are aimed at experienced software developers looking to work with the source code of the OpenICE project.
 ---
 
 These instructions are aimed at experienced software developers looking to work with the source code of the OpenICE project. Please post on our [community support page](http://community.openice.info) for additional help, clarification or reporting bugs.
