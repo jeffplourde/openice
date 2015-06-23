@@ -1,0 +1,72 @@
+---
+layout: docs
+title: OpenICE Supervisor Overview
+title-sm: Supervisor Overview
+description: This page is intended to help users become familiar with operating the OpenICE Supervisor. The Supervisor is used for running demonstration applications to interact with connected devices and simulators.
+---
+
+<p>
+  {{ page.description }}
+</p>
+
+<img class="img-responsive" src="{{ site.url }}/assets/openice-home.png">
+
+
+<h3>Applications</h3>
+<p>
+  On the left half of the Supervisor main screen are the app icons. Click on an icon to run one of the various demonstration applications. Check out the <a href="{{ site.url }}/docs/3_apps.html">application documentation</a> for more information about how the apps work.
+</p>
+
+
+
+<h3>Devices</h3>
+<p>
+  On the right half of the main screen of the ICE Supervisor, the connected devices will appear in the box with the heading 'Devices assigned to &#x3008;Anybody&#x3009;'. Text will appear in the center of the box if no devices are associated with the selected patient context. These device icons represent all connected device-adapters in the network that match the select patient context. Click on an icon to view further device information and device data including waveforms where available. 
+</p>
+
+
+
+<h3>Select a Patient:</h3>
+<p>
+  Devices are typically assigned to a specific patient. This assignment creates a virtual partition in the data that will aid data discovery and privacy in future versions of OpenICE. To select a patient context to view, click the drop down button 'Select a patient:' choose a patient. When the main screen of the ICE Supervisor is first opened, the default setting is to view devices that are not assigned to a specific patient. To assign a device to a patient context, use the 'Patient ID' application described in the <a href="{{ site.url }}/docs/3_apps.html">apps section</a> of the documentation. The 
+</p>
+<p>
+  There are two 'wildcard' patient contexts that may be used to view data from multiple partitions at one time. The '&#x3008;Anybody&#x3009;' context will display all devices the Supervisor has been able to connect to while the '&#x3008;Unassigned&#x3009;' context will display all unassigned devices.
+</p>
+<p>
+  Currently, OpenICE Supervisor looks to a FHIR server as a stand in for the integration point of a Enterprise Master Patient Index (EMPI). The address of this server is entered when the Supervisor is started. In the lab we have a FHIR server running at <a href="https://fhir.openice.info">fhir.openice.info</a>. If no address is entered, fake patient names will populate the Supervisor.
+</p>
+
+
+
+<h3 id="device-adapter">Create an ICE Device Adapter...</h3>
+<p>
+  Click on the 'Create an ICE Device Adapter' button to integrate (connect) a device into OpenICE. Use the drop-downs to select a device. The 'Device Category' drop-down is used to choose which type of device you would like to start:
+</p>
+
+<row>
+  <div class="col-md-6">
+    <dl class="dl-horizontal">
+      <dt>Serial:</dt>
+      <dd>
+         Connect a device to OpenICE through a serial connection. This is the most common method of connecting medical devices. 
+      </dd>
+      <dt>Simulated:</dt>
+      <dd>
+        For convenience, medical device simulators have been included to aid development and testing. The simulated device's parameters are controlled by the 'Simulation Control' app.
+      </dd>
+      <dt>Network:</dt>
+      <dd>
+        Connect a device to OpenICE through an Ethernet network connection.
+      </dd>
+    </dl>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive" src="{{site.url}}/assets/openice-device-adapter-start.png">
+  </div>
+</row>
+
+<p>
+  After selecting a device category, click on the Device Type drop-down to choose a device type from the list. If you are using a serial or network device, choose the proper interface by either entering the IP address or serial device. Click the start button to run the ICE Device Adapter. Once the device-adapter is created, the device icon will appear in the connected devices section. To stop the device-adapter, click the large red X on the icon.
+</p>
+

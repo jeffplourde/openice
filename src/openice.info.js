@@ -148,13 +148,13 @@ window.onload = function(e) {
 
   // If running from the local filesystem then communicate with MD PnP lab server named 'arvi'
   // Otherwise communicate with whatever server is hosting this page
-  var port = window.location.port;
+  //var port = window.location.port;
   // Internet Explorer does not populate port for default port 80
-  port = port == '' ? '' : (':'+port);
+  //port = port == '' ? '' : (':'+port);
   // Pages served over https can only utilize wss protocol
-  var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  var wsHost = window.location.protocol == 'file:' ? 'dev.openice.info' : window.location.host;
-  var baseURL = wsProtocol + wsHost;
+  //var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
+  //var wsHost = window.location.protocol == 'file:' ? 'dev.openice.info' : window.location.host;
+  var baseURL = "wss://www.openice.info"; //wsProtocol + wsHost;
 
   startCam('videoCanvas-evita', 'webcam-evita', baseURL+'/evita');
   startCam('videoCanvas-ivy', 'webcam-ivy', baseURL+'/ivy');

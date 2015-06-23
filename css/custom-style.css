@@ -123,6 +123,11 @@
 
 /*****     SITE-WIDE STUFF    *****/
 
+body {
+  font-smooth:always;
+  -webkit-font-smoothing: antialiased;
+}
+
 #logo-banner-holder {
   padding-left: 0px;
   padding-right: 0px;
@@ -139,6 +144,8 @@
 }
 
 #footer {
+  max-height: 385px;
+  margin-top: 100px;
   border-top: 1px solid #DDD;
   padding-top: 75px;
   padding-bottom: 50px;
@@ -179,6 +186,21 @@
     width: 920px;
   }
 }
+
+.btn-download {
+  padding: 5px 25px;
+}
+.btn-container-center {
+  margin: 25px auto;
+  text-align: center;
+}
+.btn-title {
+  font-size: 1.75em;
+}
+.btn-subtitle {
+  font-weight: 350;
+}
+
 /*****     END SITE-WIDE STUFF     *****/
 
 /******     LANDING PAGE     ******/
@@ -489,6 +511,7 @@
 
 
 /******     DIAGNOSTICS PAGE     *****/
+
 .description {
 	margin-left: 10%;
 	font-size: 10pt;
@@ -523,12 +546,68 @@
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 
+/*****     USER DOCS STUFF     *****/
 
+.doc-title {
+  margin-top: 25px;
+}
 
+#docnav-affix.affix {
+  top: 0;
+}
+#docnav-affix.affix-bottom {
+  position: absolute;
+}
+.docnav-title {
+  font-size: 1.75em;
+  font-weight: 300;
+}
+.docnav a {
+  text-decoration: none;
+}
+.docnav li {
+  padding-bottom: 5px;
+  transition-property: padding-left;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+  padding-left: 15px;
+}
+.docnav li:hover {
+  transition-property: padding-left;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  padding-left: 0;
+}
+.docnav li:hover a {
+  transition-property: color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  padding-left: 0;
+  color: #428bca;
+}
+.docnav li:hover a {
+  transition-property: color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  padding-left: 0;
+  color: #333;
+}
 
-/* Don't know what these are for... */
+.modal-xl {
+  width: 90%;
+}
+.diagram-sm {
+  height:350px;
+  margin:5px auto;
+}
+.btn-system-modal{
+  min-height: 115px;
+}
 
+/* bootstrap description list */
 dt, dd {
   padding-top: 8px;
 }
+
+/***** END OF USER DOCS STUFF *****/
 
