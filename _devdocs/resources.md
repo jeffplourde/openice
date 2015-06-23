@@ -25,7 +25,7 @@ Builds are automated with the [gradle](http://www.gradle.org) build tool.
 __Eclipse IDE__
 <http://www.eclipse.org>
 
-Eclipse is not required but is used by many contributors.  [Gradle Integration for Eclipse](http://marketplace.eclipse.org/content/gradle-integration-eclipse?mpc=true&mpc_state=) is a great tool for working with Gradle projects in Eclipse.  [Importing mdpnp projects](EclipseGradleImport) into Eclipse is recommended.
+Eclipse is not required but is used by many contributors.
 
 __Artifact Repository__
 <http://www.artifactory.org>

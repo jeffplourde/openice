@@ -140,9 +140,6 @@ Great source of Ubuntu builds
 Ubuntu Precise
 <http://www.armhf.com/index.php/boards/beaglebone-black/#precise>
 
-Related helpful instructions 
-<http://www.armhf.com/index.php/getting-started-with-ubuntu-img-file/>
-
 DIY instructions for building
 <http://elinux.org/BeagleBoardUbuntu>
 
