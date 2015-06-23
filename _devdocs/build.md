@@ -13,7 +13,7 @@ The OpenICE project is currently using version 5.1 of DDS provided to our infras
 
 _Clone the repo with git_ 
  
-* Use the sourceforge GUI to clone the git repo from the "git" tab or enter `git clone ssh://<sfusername>@git.code.sf.net/p/mdpnp/code mdpnp-code` replacing `<sfusername>` with your sourceforge username.
+* Use the GitHub GUI to clone the git repo from the toolbar on the right or type `git clone https://github.com/mdpnp/mdpnp.git`.
 
 _Get Java 8 JDK_ 
  

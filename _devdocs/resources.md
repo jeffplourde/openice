@@ -15,7 +15,7 @@ We use these tools in developing our software.
 __Source Control__
 <http://git-scm.com>
 
-Source control is maintained [here on Sourceforge](http://sourceforge.net/p/mdpnp/code/) using [git](http://git-scm.com).
+Source control is maintained [here on GitHub](https://github.com/mdpnp/mdpnp).
 
 __Build Automation__
 <http://www.gradle.org>
