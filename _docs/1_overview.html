@@ -86,7 +86,7 @@ description: Looking for where to start with OpenICE? Check out this page for th
     <button class="btn btn-info btn-download">
       <span class="btn-title">Quick Download</span>
       <br />
-      <span class="btn-subtitle">Latest Release</span>
+      <span class="btn-subtitle">Latest Release v{{ site.openice-version }}</span>
     </button>
   </a>
 </div>
@@ -96,8 +96,8 @@ description: Looking for where to start with OpenICE? Check out this page for th
     <dt>Linux</dt>
     <dd>
       <ol>
-        <li>Unzip the archive OpenICE-0.6.3.tar.gz. It will create a directory called OpenICE-0.6.3.</li>
-        <li>Within the OpenICE-0.6.3 directory, navigate to the bin directory.</li>
+        <li>Unzip the archive OpenICE-{{ site.openice-version }}.tar.gz. It will create a directory called OpenICE-{{ site.openice-version }}.</li>
+        <li>Within the OpenICE-{{ site.openice-version }} directory, navigate to the bin directory.</li>
         <li>Within the bin directory, run the OpenICE script.</li>
       </ol>
         <div class="alert alert-info">NOTE: For Linux platforms, a Java 8 runtime environment is not included. Please download a JRE from Oracle.</div>
@@ -105,7 +105,7 @@ description: Looking for where to start with OpenICE? Check out this page for th
     <dt>Macintosh</dt>
     <dd>
       <ol>
-        <li>Double-click the installer package. (OpenICE-0.6.3.pkg)</li>
+        <li>Double-click the installer package. (OpenICE-{{ site.openice-version }}.pkg)</li>
         <li>Follow the prompts to install the software.</li>
         <li>In the Applications menu, run OpenICE.</li>
       </ol>
@@ -113,7 +113,7 @@ description: Looking for where to start with OpenICE? Check out this page for th
     <dt>Windows</dt>
     <dd>
       <ol>
-      <li>Double-click the executable to install. (OpenICE-0.6.3-x86.exe)</li>
+      <li>Double-click the executable to install. (OpenICE-{{ site.openice-version }}-x86.exe)</li>
       <li>Follow the prompts to install the software.</li>
       <li>In the Start menu, run OpenICE.</li>
       </ol>

@@ -78,7 +78,7 @@ description: This tutorial will show you how to configure a device-adapter to co
   If you are trying to connect to a device that is not a MP70, the previous steps will be different.
 </p>
 <ol>
-  <li>To display a list of available options for different device adapters and simulators, enter: <br /><kbd>OpenICE-0.6.3/bin/OpenICE —-help</kbd></li>
+  <li>To display a list of available options for different device adapters and simulators, enter: <br /><kbd>OpenICE-{{ site.openice-version }}/bin/OpenICE —-help</kbd></li>
   <li>If you wanted to start a simulated electrocardiogram monitor on domain 5, for example, the entry in "device.this" would have "ECG_Simulator" as the device name preceded by "5". The BBB terminal input would be:<br /><kbd>echo -domain 5 -device ECG_Simulator > device.this</kbd>
   </li>
 </ol>
