@@ -14,7 +14,7 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://www.openice.info" # the base hostname & protocol for your production site
 #url: "" # null URL forces the jekyll to resolve variable links (ie {{site.url}}/assets/picture.img) to the local machine in the _site directory. should try to never commit this line; only the line above.
 github_username:  mdpnp
-exclude: ["src", "Gruntfile.js", "package.json", "node_modules", "files"]
+exclude: ["src", "Gruntfile.js", "package.json", "node_modules", "files", "dds"]
 collections:
     docs:
         output: true
