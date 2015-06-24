@@ -13,7 +13,7 @@ description: >
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://www.openice.info" # the base hostname & protocol for your production site
 github_username:  mdpnp
-exclude: ["src", "Gruntfile.js", "package.json", "node_modules", "files", "dds"]
+exclude: ["src", "Gruntfile.js", "package.json", "node_modules", "files", "dds", "bower_components"]
 openice-version: "0.6.3"
 collections:
     docs:
