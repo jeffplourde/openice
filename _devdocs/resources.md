@@ -30,7 +30,7 @@ Eclipse is not required but is used by many contributors.
 __Artifact Repository__
 <http://www.artifactory.org>
 
-Artifacts are maintained in [our repository](https://build.openice.info/artifactory).
+Artifacts are maintained in [our repository](https://build.openice.info/artifactory/webapp/home.html?0).
 
 __Continuous Integration__
 <http://jenkins-ci.org>
