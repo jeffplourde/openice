@@ -51,6 +51,9 @@ module.exports = function(grunt) {
       options: {
         config: "_config.yml,_config.local.yml"
       },
+      dist: {
+
+      },
       serve: {
         options: {
           serve: true,
@@ -72,7 +75,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jekyll');
 
   // Default task(s).
-  grunt.registerTask('default', ['bower', 'browserify', 'uglify', 'jekyll']);
   grunt.registerTask('serve', ['bower', 'browserify', 'uglify', 'jekyll:serve']);
+  grunt.registerTask('default', ['bower', 'browserify', 'uglify', 'jekyll:dist']);
 
 };
