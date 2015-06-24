@@ -134,14 +134,8 @@ Extract driver, make, make install
 ###Useful Links
 
 
-Great source of Ubuntu builds
-<http://www.armhf.com/index.php/download/>
-
-Ubuntu Precise
-<http://www.armhf.com/index.php/boards/beaglebone-black/#precise>
-
-DIY instructions for building
-<http://elinux.org/BeagleBoardUbuntu>
+Latest BeagleBone Linux builds
+<http://beagleboard.org/latest-images>
 
 beagleboard.org getting started
 <http://beagleboard.org/Getting%20Started>
@@ -172,7 +166,6 @@ In informal testing a beaglebone black using ethernet had an observed maximum cu
 
 ###RS-232 ttyO1 (if necessary)
 
-<http://www.armhf.com/index.php/beaglebone-black-serial-uart-device-tree-overlays-for-ubuntu-and-debian-wheezy-tty01-tty02-tty04-tty05-dtbo-files/>
 
 ###Realtime Clock
 

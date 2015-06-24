@@ -18,9 +18,9 @@ __Source Control__
 Source control is maintained [here on GitHub](https://github.com/mdpnp/mdpnp).
 
 __Build Automation__
-<http://www.gradle.org>
+<http://gradle.org>
 
-Builds are automated with the [gradle](http://www.gradle.org) build tool.
+Builds are automated with the [gradle](http://gradle.org) build tool.
 
 __Eclipse IDE__
 <http://www.eclipse.org>
@@ -30,15 +30,15 @@ Eclipse is not required but is used by many contributors.
 __Artifact Repository__
 <http://www.artifactory.org>
 
-Artifacts are maintained in [our repository](http://arvi.mgh.harvard.edu:8080/artifactory).
+Artifacts are maintained in [our repository](https://build.openice.info/artifactory).
 
 __Continuous Integration__
 <http://jenkins-ci.org>
 
-Code is built continuously using [our jenkins instance](http://arvi.mgh.harvard.edu:8080/jenkins).
+Code is built continuously using [our jenkins instance](https://jenkins.openice.info/).
 
 __Unit Testing__
-<http://www.junit.org>
+<http://junit.org>
 
 Unit tests are written using junit.
 
@@ -52,7 +52,7 @@ __Middleware__
 
 Some code depends on [DDS](http://www.omg.org/dds/) components from Real-Time Innovations.  To access these components please [register for membership](http://www.rti.com/downloads/rti-dds.html) in our infrastructure community with identifier ICE_IC01.
 
-The [DDS](http://www.omg.org/dds/) open standard for publish/subscribe middleware has many implementations (including [OCI OpenDDS](http://www.opendds.org), [Prismtech OpenSplice](http://www.prismtech.com/opensplice), [Twin Oaks Core DX](http://www.twinoakscomputing.com), and [BeeDDS](http://www.beedds.com).  In our research we are currently using the community edition of [RTI](http://www.rti.com/products/licensing/infrastructure-community.html) DDS for prototyping.
+The [DDS](http://www.omg.org/dds/) open standard for publish/subscribe middleware has many implementations (including [OCI OpenDDS](http://www.opendds.org), [Prismtech Vortex](http://www.prismtech.com/vortex), [Twin Oaks Core DX](http://www.twinoakscomputing.com), and [BeeDDS](http://www.beedds.com).  In our research we are currently using the community edition of [RTI](http://www.rti.com/downloads/rti-dds.html) DDS for prototyping.
 
 
 Resources
@@ -76,7 +76,7 @@ Resources
 
 [Healthcare Services Specification Program](http://hssp.wikispaces.com)
 
-[Integrating the Healthcare Enterprise - Technical Framework for Patient Care Device](http://www.ihe.net/Technical_Framework/index.cfm#pcd)
+[Integrating the Healthcare Enterprise - Technical Framework for Patient Care Device](http://www.ihe.net/Technical_Frameworks#pcd)
 
 [NIST - Rosetta Terminology Mapping Management Service](http://rtmms.nist.gov)
 

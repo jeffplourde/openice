@@ -22,7 +22,7 @@ _Get Java 8 JDK_
 **Building the project**
 
 
-**Option A**: _Do you use [Eclipse](http://www.eclipse.org)?_ [Gradle](http://www.gradle.org/), our project automation tool of choice, has an [Eclipse plugin](http://gradle.org/docs/current/userguide/eclipse_plugin.html).
+**Option A**: _Do you use [Eclipse](http://www.eclipse.org)?_ [Gradle](http://gradle.org/), our project automation tool of choice, has an [Eclipse plugin](https://docs.gradle.org/current/userguide/eclipse_plugin.html).
 
 * Navigate to the root directory of the mdpnp-code you just downloaded
 * Type <code> gradle eclipse </code> on your command line. This will convert the project into an Eclipse project.
