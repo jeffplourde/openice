@@ -38,6 +38,26 @@ module.exports = function(grunt) {
         dest: 'build/FHIR.js'
       }
     },
+    bower: {
+      install: {
+        options: {
+          targetDir: './lib',
+          cleanTargetDir: true,
+          layout: 'byComponent'
+        }
+      }
+    },
+    jekyll: {
+      options: {
+        config: "_config.yml,_config.local.yml"
+      },
+      serve: {
+        options: {
+          serve: true,
+          watch: true
+        }
+      }
+    },
     watch: {
         files: ["src/**/*.js"],
         tasks: ['browserify']
@@ -48,7 +68,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-bower-task');
+  grunt.loadNpmTasks('grunt-jekyll');
+
   // Default task(s).
-  grunt.registerTask('default', ['browserify', 'uglify']);
+  grunt.registerTask('default', ['bower', 'browserify', 'uglify', 'jekyll']);
+  grunt.registerTask('serve', ['bower', 'browserify', 'uglify', 'jekyll:serve']);
 
 };
