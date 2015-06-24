@@ -7,7 +7,7 @@ title: OpenICE Web Demo
 <script language="javascript" type="text/javascript" src="build/demo-ie8.js"></script>
 <![endif]-->
 <!--[if !IE]><!-->
-<script language="javascript" type="text/javascript" src="build/openice.info.js"></script>
+<script type="text/javascript" src="build/openice.info.js"></script>
 <!--<![endif]-->
 
 <section id="web-demo">
@@ -25,7 +25,7 @@ title: OpenICE Web Demo
   <div class="text-center container">
     <button class="btn btn-info" data-toggle="modal" data-target="#data-flow-modal">Where is this data coming from?</button>
     <br><br>
-    <div id="data-flow-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dataFlowModal" aria-hidden="true">
+    <div id="data-flow-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -123,12 +123,12 @@ title: OpenICE Web Demo
   </div>
 </section>
 
-<div id="websocket-support-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="websocket-support-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="modalLabel">Your Browser is Not Supported</h4>
+        <h4 class="modal-title">Your Browser is Not Supported</h4>
       </div>
       <div class="modal-body">
         <div class="container">
@@ -163,9 +163,9 @@ title: OpenICE Web Demo
 
 <div class="footer">
   <img alt="" src="https://build.openice.info/ht/?SMARTAMERICADEMO" width="1" height="1" />
-  <small><p>
+  <p><small>
     Trouble viewing the site? <a href="https://vimeo.com/99546813">Watch a screen capture on Vimeo</a><br />
     <a href="http://caniuse.com/websockets">Is your browser compatible?</a><br />
     Thanks to the <a href="https://github.com/phoboslab/jsmpeg">jsmpeg</a> project for mpeg decoding.
-  </p></small>
+  </small></p>
 </div>
