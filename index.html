@@ -19,6 +19,7 @@ title: OpenICE
                       {{site.url}}/assets/many-screens-small.jpeg  1125w,
                       {{site.url}}/assets/many-screens-verysmall.jpeg  563w"
             src="{{site.url}}/assets/many-screens-large.jpeg" 
+            sizes="100vw"
             alt="many-screens">
             <div class="carousel-caption">
               <h1 class="hidden-xs">Click to View Streaming<br/>Medical Device Data</h1>
@@ -85,26 +86,26 @@ title: OpenICE
     <h1 class="landing-link-heading">Innovation Through Cooperation</h1>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
       <a href="./demo.html">
-        <img class="landing-link-image" width="350" height="500" src="{{site.url}}/assets/tile-demo.jpg" />
+        <img class="landing-link-image" width="350" height="500" alt="OpenICE Web Demo" src="{{site.url}}/assets/tile-demo.jpg" />
         <h1 class="landing-link-title">OpenICE Web Demo</h1>
       </a>
     </div>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
       <a href="https://github.com/mdpnp/mdpnp" target="_blank">
-        <img class="landing-link-image" width="350" height="500" src="{{site.url}}/assets/tile-software.jpg" />
+        <img class="landing-link-image" width="350" height="500" alt="OpenICE Source Code" src="{{site.url}}/assets/tile-software.jpg" />
         <h1 class="landing-link-title">OpenICE Source Code</h1>
       </a>
     </div>
     <div class="landing-link-light col-xs-12 col-sm-6 col-lg-3">
       <div class="landing-link-light-back"></div>
       <a href="{{site.url}}/docs/1_overview.html">
-        <img class="landing-link-image" width="350" height="500" src="{{site.url}}/assets/tile-interop.jpg" />
+        <img class="landing-link-image" width="350" height="500" alt="OpenICE Overview" src="{{site.url}}/assets/tile-interop.jpg" />
         <h1 class="landing-link-title-light">OpenICE Overview</h1>
       </a>
     </div>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
       <a href="http://community.openice.info">
-        <img class="landing-link-image" width="350" height="500" src="{{site.url}}/assets/tile-learn.jpg" />
+        <img class="landing-link-image" width="350" height="500" alt="OpenICE Community" src="{{site.url}}/assets/tile-learn.jpg" />
         <h1 class="landing-link-title">OpenICE Community</h1>
       </a>
     </div>
@@ -122,7 +123,9 @@ title: OpenICE
             srcset="{{site.url}}/assets/OpenICE-data-flow-small.png 810w,
                     {{site.url}}/assets/OpenICE-data-flow-medium.png 1080w,
                     {{site.url}}/assets/OpenICE-data-flow-large.png 1440w"
+            sizes="80vw"
             src="{{site.url}}/assets/OpenICE-data-flow-large.png" />
+
     </div>
   </div>
 </section>
@@ -149,7 +152,7 @@ title: OpenICE
   <div class="page-container">
     <table class="table table-hover">
 
-      <tr><th><h3>OpenICE Web Apps</h3></th></tr>
+      <tr><th>OpenICE Web Apps</th></tr>
       <tr>
         <td>
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -177,7 +180,7 @@ title: OpenICE
 
 
 
-      <tr><th><h3>Downloads</h3></th></tr>
+      <tr><th>Downloads</th></tr>
       <tr>
         <td>
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -205,7 +208,7 @@ title: OpenICE
 
 
 
-      <tr><th id="docs"><h3>Getting Started</h3></th></tr>
+      <tr><th id="docs">Getting Started</th></tr>
       {% for doc in site.docs %}
         {% if doc.title-sm %}
           <tr>
@@ -225,7 +228,7 @@ title: OpenICE
 
 
 
-      <tr><th id="dev"><h3>For Developers</h3></th></tr>
+      <tr><th id="dev">For Developers</th></tr>
       <tr>
         <td>
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -293,7 +296,7 @@ title: OpenICE
 
 
 
-      <tr><th id="videos"><h3>Videos</h3></th></tr>
+      <tr><th id="videos">Videos</th></tr>
       <tr>
         <td>
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -345,7 +348,7 @@ title: OpenICE
 
 
 
-      <tr><th id="helpful"><h3>Helpful information</h3></th></tr>
+      <tr><th id="helpful">Helpful information</th></tr>
       <tr>
         <td>
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -372,6 +375,7 @@ title: OpenICE
       </tr>
 
     </table>
+  </div>
 </section>
 
 
