@@ -36,6 +36,10 @@ module.exports = function(grunt) {
       fhir: {
         src: ['src/FHIR.js'],
         dest: 'build/FHIR.js'
+      },
+      demoie8: {
+        src: ['src/demo-ie8.js'],
+        dest: 'build/demo-ie8.js'
       }
     },
     bower: {
