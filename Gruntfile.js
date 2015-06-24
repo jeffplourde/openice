@@ -32,6 +32,10 @@ module.exports = function(grunt) {
       vitals: {
         src: ['src/vitals.js','src/main.js'],
         dest: 'build/vitals.js'
+      },
+      fhir: {
+        src: ['src/FHIR.js'],
+        dest: 'build/FHIR.js'
       }
     },
     watch: {
