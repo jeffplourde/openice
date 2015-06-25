@@ -37,7 +37,7 @@ title: OpenICE Diagnostics
     <p class="description">Each 'ICE' represents a logical partition of the greater system.  In this way a patient ICE can transcend physical network topology.  A portable device accompanying an ambulatory patient connected via a wifi network can still be in the same logical partition as the devices in that patient's room attached to a physical ethernet network.  And an app running in that partition will receive data from both devices.  Thus a singular 'ICE' defined by logical partition obviates a lot of issues with patient transport, ambulatory, and room preparation scenarios.  Our first candidate for a partitioning scheme is this one partition per-patient paradigm.  But options abound for other partitions existing in parallel perhaps for device type, assigned unit, etc.  This dropdown box collects all the partitions for all available data and allows this page to "tune into" one patient partition in particular.  Currently in the lab several patient 'environments' are configured with their own name.  The "name" used here is queried from our <a href="https://fhir.openice.info" target="_blank">FHIR Test Server</a></p>
     <br/><br/>
 
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
       for(var i = 0; i < tables.length; i++) {
         tables[i].write(document);
       }

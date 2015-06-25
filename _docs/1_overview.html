@@ -59,8 +59,8 @@ description: Looking for where to start with OpenICE? Check out this page for th
 
 <br />
 <h3 id="overview">System Component Overview</h3>
-<row class="clearfix">
-  <div class="col-lg-5" style="padding:0;">
+<div class="clearfix row">
+  <div class="col-lg-5">
     <p>
       The OpenICE application is the entry and exit point for medical device data into and out of the network. OpenICE has two operating modes: <strong><a href="{{ site.url }}/docs/2_supervisor.html">Supervisor</a></strong> and <strong><a href="{{ site.url }}/docs/4_device-adapter-setup.html">Device-Adapter</a></strong>.
     </p>
@@ -74,7 +74,7 @@ description: Looking for where to start with OpenICE? Check out this page for th
   <div class="col-lg-7">
     <img class="img-responsive" src="{{ site.url }}/assets/openice-diagram-setup.png" alt="openice setup">
   </div>
-</row>
+</div>
 
 
 <br />
@@ -93,35 +93,33 @@ description: Looking for where to start with OpenICE? Check out this page for th
   </a>
 </div>
 
-<div>
-  <dl class="dl-horizontal">
-    <dt>Linux</dt>
-    <dd>
-      <ol>
-        <li>Unzip the archive OpenICE-{{ site.openice-version }}.tar.gz. It will create a directory called OpenICE-{{ site.openice-version }}.</li>
-        <li>Within the OpenICE-{{ site.openice-version }} directory, navigate to the bin directory.</li>
-        <li>Within the bin directory, run the OpenICE script.</li>
-      </ol>
-        <div class="alert alert-info">NOTE: For Linux platforms, a Java 8 runtime environment is not included. Please download a JRE from Oracle.</div>
-    </dd>
-    <dt>Macintosh</dt>
-    <dd>
-      <ol>
-        <li>Double-click the installer package. (OpenICE-{{ site.openice-version }}.pkg)</li>
-        <li>Follow the prompts to install the software.</li>
-        <li>In the Applications menu, run OpenICE.</li>
-      </ol>
-    </dd>
-    <dt>Windows</dt>
-    <dd>
-      <ol>
-      <li>Double-click the executable to install. (OpenICE-{{ site.openice-version }}-x86.exe)</li>
+<dl class="dl-horizontal">
+  <dt>Linux</dt>
+  <dd>
+    <ol>
+      <li>Unzip the archive OpenICE-{{ site.openice-version }}.tar.gz. It will create a directory called OpenICE-{{ site.openice-version }}.</li>
+      <li>Within the OpenICE-{{ site.openice-version }} directory, navigate to the bin directory.</li>
+      <li>Within the bin directory, run the OpenICE script.</li>
+    </ol>
+      <div class="alert alert-info">NOTE: For Linux platforms, a Java 8 runtime environment is not included. Please download a JRE from Oracle.</div>
+  </dd>
+  <dt>Macintosh</dt>
+  <dd>
+    <ol>
+      <li>Double-click the installer package. (OpenICE-{{ site.openice-version }}.pkg)</li>
       <li>Follow the prompts to install the software.</li>
-      <li>In the Start menu, run OpenICE.</li>
-      </ol>
-    </dd>
-  </dl>
-</div>
+      <li>In the Applications menu, run OpenICE.</li>
+    </ol>
+  </dd>
+  <dt>Windows</dt>
+  <dd>
+    <ol>
+    <li>Double-click the executable to install. (OpenICE-{{ site.openice-version }}-x86.exe)</li>
+    <li>Follow the prompts to install the software.</li>
+    <li>In the Start menu, run OpenICE.</li>
+    </ol>
+  </dd>
+</dl>
 
 
 <br />
@@ -135,7 +133,7 @@ description: Looking for where to start with OpenICE? Check out this page for th
   If you would like to use the GUI to start both the Supervisor and a Device-Adapter(s), run the Supervisor first and start Device-Adapters from within the Supervisor.
 </div>
 
-<row class="clearfix"> 
+<div class="clearfix row"> 
   <div class="col-lg-6">
     <dl class="dl-horizontal">
       <dt>
@@ -162,7 +160,7 @@ description: Looking for where to start with OpenICE? Check out this page for th
   <div class="col-lg-6">
     <img class="img-responsive" style="margin-left: auto; margin-right: auto;" src="{{site.url}}/assets/openice-start-menu.png" alt="openice start menu">
   </div>
-</row>
+</div>
 
 <h3>What's next?</h3>
 {% for doc in site.docs %}
