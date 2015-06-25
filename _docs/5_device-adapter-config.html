@@ -6,7 +6,7 @@ description: This tutorial will show you how to configure a device-adapter to co
 ---
 
 <div class="clearfix">
-  <img src="{{site.url}}/assets/adapter-case.jpg" class="hidden-xs pull-right" style="height:250px; padding:10px" />
+  <img src="{{ site.url }}/assets/adapter-case.jpg" class="hidden-xs pull-right" style="height:250px; padding:10px" alt="adapter case">
   <p>
     In this section we will configure a newly imaged Beaglebone from the <a href="{{site.url}}/docs/4_device-adapter-setup.html">device-adapter setup tutorial</a> section to communicate with a Philips MP70. We'll also setup the OpenICE demo application on a computer and use it to view the MP70 data on the OpenICE network. This same process can be used to connect to any supported device.
   </p>
@@ -33,7 +33,7 @@ description: This tutorial will show you how to configure a device-adapter to co
   <dd>To connect the Beaglebone and the MP70, we will use a Beaglebone Black serial cape and a special cable described below.</dd>
   <dt>RJ45 to DB-9</dt>
   <dd>To connect the RJ45 port on the MP70 (labeled as either RS232, MIB or an arrow pointing out from a circle) to the DB-9 port on the RS232 cape, a custom RJ45 to DB-9 cable is needed. A simple solder-less solution is to purchase a "DB-9 to RJ45 modular adapter". The image below shows the appropriate pinout for the cable. Feel free to change the gender of the DB9 connector to fit the client computer you are connecting to.
-    <img src="{{site.url}}/assets/philips-MIB-pinout_RJ45-to-DB9.png" class="img-responsive" style="margin-left: auto; margin-right: auto; max-height: 300px;" />
+    <img src="{{ site.url }}/assets/philips-MIB-pinout_RJ45-to-DB9.png" class="img-responsive" style="margin-left: auto; margin-right: auto; max-height: 300px;" alt="philips pinout">
   </dd>
   <dt>Computer w/ OpenICE</dt>
   <dd>A computer running the MD PnP OpenICE demo application. This will allow us to view the MP70 data in the OpenICE network. The software can be downloaded from <a href="https://github.com/mdpnp/mdpnp/releases/latest">GitHub</a>. This is the same MD PnP OpenICE application included on the Beaglebone disk image as described above.</dd>
@@ -45,7 +45,7 @@ description: This tutorial will show you how to configure a device-adapter to co
 
 <h3 id="connect-devices">Connect the Devices</h3>
 <div class="clearfix">
-  <img src="{{site.url}}/assets/mp70connect.png" class="hidden-xs pull-right" style="height:250px; padding:10px" />
+  <img src="{{ site.url }}/assets/mp70connect.png" class="hidden-xs pull-right" style="height:250px; padding:10px" alt="mp70 connect">
   <ol>
     <li>Attach the RS232 serial cape to the Beaglebone expansion headers. Ensure the serial cape is configured correctly - the jumpers should be set to UART1.</li>
     <li>Plug the RJ45 - DB-9 cable into the Beaglebone.</li>
@@ -89,9 +89,9 @@ On your computer:
 <ol>
   <li>Open the OpenICE Demo Application you download from <a href="https://github.com/mdpnp/mdpnp/releases/latest">GitHub</a>.</li>
   <li>Start an ICE_Supervisor on Domain 15.</li>
-  <img src="{{site.url}}/assets/openice-start-menu.png" class="hidden-xs" style="height:300px;padding:10px;" />
+  <img src="{{site.url}}/assets/openice-start-menu.png" class="hidden-xs" style="height:300px;padding:10px;" alt="openice start menu">
   <li>Once the device has finished negotiating, click on the MP70 icon to view the waveform and numeric data in the OpenICE network. You have now integrated an MP70 into the OpenICE!</li>
-  <img src="{{site.url}}/assets/openice-mp70.png" class="hidden-xs" style="height:350px; padding:10px" />
+  <img src="{{site.url}}/assets/openice-mp70.png" class="hidden-xs" style="height:350px; padding:10px" alt="openice mp70">
 </ol>
 
 <h3 id="troubleshooting">Troubleshooting</h3>
