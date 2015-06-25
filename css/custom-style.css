@@ -143,27 +143,30 @@ body {
 }
 
 #footer {
-  max-height: 385px;
   margin-top: 100px;
-  border-top: 1px solid #DDD;
-  padding-top: 75px;
-  padding-bottom: 50px;
+  border-top: 1px solid #DDF;
   background-color: #F7FCFF;
   color: #333;
   text-align: center;
 }
-.footer-repos {
-  display: inline-block;
-  padding-right: 10px;
-  margin: 10px 10px 25px 10px;
-
+.footer-icons {
+  margin-top: 75px;
 }
-.footer-repos-a {
-  color: #333;
+.footer-icons div {
+  padding: 0;
 }
-.footer-span {
+.footer-icons a {
+  color: #444;
+  text-decoration: none;
+}
+.footer-copyright {
+  margin-top: 25px;
   display: block;
-  margin: 15px 1px 25px 1px;
+}
+.footer-logo {
+  margin-top: 25px;
+  margin-bottom: 35px;
+  margin-left: 25px;
 }
 
 .page-container {

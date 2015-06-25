@@ -20,7 +20,8 @@
     "moment": "~2.10.3",
     "jquery-ui": "~1.11.4",
     "rickshaw": "~1.5.1",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "fontawesome": "~4.3.0"
   },
   "exportsOverride": {
     "bootstrap": {
@@ -30,6 +31,10 @@
     },
     "jquery": {
       "js": "dist/jquery.min.js"
+    },
+    "fontawesome": {
+      "css": "css/font-awesome.min.css",
+      "fonts": "fonts/*"
     },
     "jquery-ui": {
       "js": "jquery-ui.min.js",
