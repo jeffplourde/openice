@@ -535,6 +535,15 @@ body {
     opacity: 0.5;
     top: 0px;
 }
+.status {
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+  font-family: inherit;
+}
 .table-diagnostic {
   border-collapse: collapse;
 }
