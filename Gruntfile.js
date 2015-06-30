@@ -40,6 +40,10 @@ module.exports = function(grunt) {
       demoie8: {
         src: ['src/demo-ie8.js'],
         dest: 'build/demo-ie8.js'
+      },
+      GAevents: {
+        src: ['src/GA-event-listeners.js'],
+        dest: 'build/GA-event-listeners.js'
       }
     },
     bower: {

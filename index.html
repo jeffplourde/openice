@@ -12,7 +12,7 @@ title: OpenICE
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <a href="./demo.html">
+          <a id="jumbotron-demo-link" href="./demo.html">
             <img class="img-responsive" src="{{site.url}}/assets/many-screens-large.jpeg" alt="many-screens"/>
             <div class="carousel-caption">
               <h1 class="hidden-xs">Click to View Streaming<br/>Medical Device Data</h1>
@@ -52,7 +52,7 @@ title: OpenICE
     </div>
   </div>
   <div class="download-btn__container">
-    <a class="btn btn-primary download-btn" href="https://github.com/mdpnp/mdpnp/releases/latest" target="_blank">
+    <a id="landing-download-btn" class="btn btn-primary download-btn" href="https://github.com/mdpnp/mdpnp/releases/latest" target="_blank">
       <span class="download-btn__title">Download OpenICE</span>
       <br />
       <span class="download-btn__subtitle">Latest Release v{{ site.openice-version }}</span>
@@ -71,26 +71,26 @@ title: OpenICE
   <div class="landing-container">
     <h1 class="landing-link-heading">Innovation Through Cooperation</h1>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
-      <a href="./demo.html">
+      <a id="landing-link-demo" href="./demo.html">
         <img class="landing-link-image" width="350" height="500" alt="OpenICE Web Demo" src="{{site.url}}/assets/tile-demo.jpg" />
         <h1 class="landing-link-title">OpenICE Web Demo</h1>
       </a>
     </div>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
-      <a href="https://github.com/mdpnp/mdpnp" target="_blank">
+      <a id="landing-link-github" href="https://github.com/mdpnp/mdpnp" target="_blank">
         <img class="landing-link-image" width="350" height="500" alt="OpenICE Source Code" src="{{site.url}}/assets/tile-software.jpg" />
         <h1 class="landing-link-title">OpenICE Source Code</h1>
       </a>
     </div>
     <div class="landing-link-light col-xs-12 col-sm-6 col-lg-3">
       <div class="landing-link-light-back"></div>
-      <a href="{{site.url}}/docs/1_overview.html">
+      <a id="landing-link-docs" href="{{site.url}}/docs/1_overview.html">
         <img class="landing-link-image" width="350" height="500" alt="OpenICE Overview" src="{{site.url}}/assets/tile-interop.jpg" />
         <h1 class="landing-link-title-light">OpenICE Overview</h1>
       </a>
     </div>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
-      <a href="http://community.openice.info">
+      <a id="landing-link-community" href="http://community.openice.info">
         <img class="landing-link-image" width="350" height="500" alt="OpenICE Community" src="{{site.url}}/assets/tile-learn.jpg" />
         <h1 class="landing-link-title">OpenICE Community</h1>
       </a>
@@ -120,7 +120,7 @@ title: OpenICE
       <span class="glyphicon glyphicon-user section-community-glyphicon2"></span>
       <span class="glyphicon glyphicon-user section-community-glyphicon3"></span>
     </div>
-    <a href="http://community.openice.info" style="text-decoration:none;">
+    <a id="section-community" href="http://community.openice.info" style="text-decoration:none;">
       <h3 class="section-community-caption">Ask&nbsp;questions, share&nbsp;knowledge, find&nbsp;answers.</h3>
       <h3 class="section-community-caption">community.openice.info</h3>
     </a>
@@ -334,3 +334,5 @@ title: OpenICE
     <h3>The Medical Device "Plug-and-Play" (MD PnP) Interoperability Program is promoting innovation in patient safety and clinical care by leading the adoption of patient-centric integration of medical devices and IT systems in clinical environments.</h3>
   </div>
 </section>
+
+<script type="text/javascript" src="{{site.url}}/build/GA-event-listeners.js" defer ></script>
