@@ -6,16 +6,9 @@ var PartitionBox = require('./partition-box.js');
 var DOMAINID = 15;
 
 window.onload = function(e) {
-  	var port = window.location.port;
-  	// Internet Explorer does not populate port for default port 80
-  	port = port == '' ? '' : (':'+port);
-  	// Pages served over https can only utilize wss protocol
-  	var wsProtocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
-  	var wsHost = window.location.protocol == 'file:' ? 'openice.info' : window.location.host;
-  	var baseURL = wsProtocol + wsHost;
+  	// The host to connect to; specifying port because otherwise it will use the port from the window location
+  	var baseURL = 'wss://www.openice.info:443';
 	var openICE = new OpenICE(baseURL);
-
-	
 
 	vitalSigns = new VitalSigns(openICE, DOMAINID, [], 'Numeric');
 	vitalSigns.addVital({label:'Heart Rate', units:'bpm', metricIds:['MDC_PULS_OXIM_PULS_RATE','MDC_ECG_HEART_RATE'],
