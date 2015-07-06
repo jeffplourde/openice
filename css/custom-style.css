@@ -577,6 +577,15 @@ body {
 /*****     END OF DIAGNOSTICS PAGE     *****/
 
 
+
+/*****     VITALS APP PAGE     *****/
+.vitals__status {
+  min-height:57px;
+}
+/*****     END OF VITALS APP PAGE     *****/
+
+
+
 /*****     USER DOCS STUFF     *****/
 
 .doc-title {
