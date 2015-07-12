@@ -27,9 +27,9 @@ var demopreferences;
 // We primarily use domain 15 for physiological data in the lab
 var targetDomain = 15;
 
+// Most devices batch their data
 var expectedDelay = 2000;
 var timeDomain = 10000;
-var acceptableOutOfSync = 2000;
 var PLOT_INTERVAL = 125;
 
 var cssIllegal = /[^_a-zA-Z0-9-]/g;
@@ -39,8 +39,14 @@ var renderers = [];
 function renderFunction() {
   if(renderers.length > 0) {
     var now = Date.now();
+
     var t1 = now - timeDomain - expectedDelay;
     var t2 = now - expectedDelay;
+
+    if(openICE && openICE.clockDiff) {
+      t1 += openICE.clockDiff;
+      t2 += openICE.clockDiff;
+    }
     
     var s1 = moment(t1).format('HH:mm:ss');
     var s2 = moment(t2).format('HH:mm:ss');
@@ -53,45 +59,6 @@ function renderFunction() {
         // Locked down time interval
         renderers[i].render(canvas.startTime, canvas.endTime, canvas.startTimeString, canvas.endTimeString);
       } else {
-        // Adjustment factor in the case where data time is wildly out of sync with
-        // the local clock
-        var adjustTime = 0;
-
-        var mostRecentData = row.latest_sample;
-        if(mostRecentData) {
-          adjustTime = mostRecentData - now;
-
-          // Gross tolerance for latency / bad clock sync is +/- 2 seconds
-          // When in excess of that adjust
-          if(adjustTime >= acceptableOutOfSync) {
-            adjustTime -= acceptableOutOfSync;
-          } else if(adjustTime <= -acceptableOutOfSync) {
-            adjustTime += acceptableOutOfSync;
-          } else {
-            adjustTime = 0;
-          }
-
-          // This adjustment needs some hysteresis or else it makes continuous adjustments
-          // as data ages between samples
-          // If there's a previous adjustment time and it's within 2s of the newly computed
-          // adjustment then keep the previous
-          if(row.adjustTime && Math.abs(adjustTime-row.adjustTime)<2000) {
-            adjustTime = row.adjustTime;
-          }
-        }
-
-        row.adjustTime = adjustTime;
-
-        // TODO something slick with this information
-        if(row.adjustTime < 0) {
-        // local clock is in the future
-        //row.messageIt.innerHTML = "Consider moving your clock back ~" + Math.round(-row.adjustTime/1000.0) + "s";
-        } else if(row.adjustTime > 0) {
-        // local clock is in the past
-        //row.messageIt.innerHTML = "Consider moving your clock forward ~" + Math.round(row.adjustTime/1000.0) + "s";
-        } else {
-        //row.messageIt.innerHTML = "";
-        }
         // TODO Poor clock sync might also be expiring samples
         renderers[i].render(t1, t2, s1, s2);
       }
