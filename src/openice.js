@@ -346,6 +346,35 @@ function OpenICE(url) {
 
 	var self = this;
 
+	var ping = function() {
+		self.connection.emit('ping', {ping_time: Date.now()});
+	};
+
+	this.connection.on('pong', function(data) {
+		var now = Date.now();
+		// What has been the round-trip latency time from when we pinged?
+		var rtLatency = now - data.ping_time;
+		// Assume inbound/outbound latency are fairly equal
+		var latency   = rtLatency / 2;
+
+		// The remote clock is expected to (roughly) be this far ahead of the local clock
+		var newClockDiff = data.pong_time - (now - latency);
+
+		if(self.clockDiff) {
+			if(Math.abs(newClockDiff-self.clockDiff)>1000) {
+				// Something has changed drastically, jump to a new expected difference
+				self.clockDiff = newClockDiff;
+			} else {
+				// Smooth the movement of clock diff with a quick and dirty EMA
+				self.clockDiff = 0.90 * self.clockDiff + 0.10 * newClockDiff;
+			}
+		} else {
+			self.clockDiff = newClockDiff;
+		}
+		
+		// console.log("latency %d newClockDiff %d clockDiff", latency, newClockDiff, self.clockDiff);
+	});	
+
 	this.connection.on('dds', function(data) {
 		// Find the appropriate reader
 		var tableKey = calcTableKey(data);
@@ -384,12 +413,22 @@ function OpenICE(url) {
 		self.unsubscribeAll();
 		self.subscribeAllTables();
 		self.connected = true;
+		if(self.pingInterval) {
+			clearInterval(self.pingInterval);
+			delete self.pingInterval;
+		}
+		self.pingInterval = setInterval(ping, 2000);
 	});
 	this.connection.on('reconnect', function(attemptNumber) {
 		self.emit('open', {'openICE':self});
 		self.unsubscribeAll();
 		self.subscribeAllTables();
 		self.connected = true;
+		if(self.pingInterval) {
+			clearInterval(self.pingInterval);
+			delete self.pingInterval;
+		}
+		self.pingInterval = setInterval(ping, 2000);		
 	});
 	this.connection.on('reconnect_attempt', function() {
 	});
@@ -410,6 +449,10 @@ function OpenICE(url) {
 		self.emit('error', {'openICE':self, 'err':err});
 		self.removeAllRows();
 		self.connected = false;
+		if(self.pingInterval) {
+			clearInterval(self.pingInterval);
+			delete self.pingInterval;
+		}		
 	});
 	this.connection.on('disconnect', function() {
 		/**
@@ -421,6 +464,10 @@ function OpenICE(url) {
 		self.emit('close', {'openICE':self});
 		self.removeAllRows();
 		self.connected = false;
+		if(self.pingInterval) {
+			clearInterval(self.pingInterval);
+			delete self.pingInterval;
+		}
 	});
 };
 
