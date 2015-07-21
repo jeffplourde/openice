@@ -1,8 +1,9 @@
 ---
-layout: generic-page
+layout: blog
 title: First Three Days with Intel Edison
 title-sm: 
-description: 
+author: Jeff Plourde
+excerpt: Recently the OpenICE lab had the opportunity to begin exploration with Intel's latest platform offering- Edison.
 ---
 
 {{ page.title }}

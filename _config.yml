@@ -20,3 +20,6 @@ collections:
         output: true
     devdocs:
         output: true
+highlighter: pygments
+paginate: 3
+paginate_path: "/blog/page:num/"
