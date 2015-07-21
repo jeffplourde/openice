@@ -2,8 +2,12 @@
 <html>
 
   <head>
+
     {% include head.html %}
-    <link rel="stylesheet" href="{{site.url}}/css/syntaxhighlighting.css">
+
+    <link rel="stylesheet" href="{{ site.url }}/css/syntaxhighlighting.css">
+    <link rel="stylesheet" href="{{ site.url }}/css/blog.css">
+
   </head>
 
   <body>
@@ -11,47 +15,19 @@
     {% include banner.html %}
     {% include navbar.html %}
 
-    <section id="doc" class="container">
-      <div class="row">
-        <div class="col-md-9">
+    <section id="blog" class="container blog">
 
-          {{ content }}
+      {% if page.title %}
+        <h1 class="blog-title">{{ page.title }}</h1>
+        <span class="blog-author">{{ page.author }}</span>
+        <span class="blog-date">{{ page.date | date_to_string }}</span>
+      {% endif %}
 
-        </div>
+      {{ content }}
 
-        <div class="col-md-3 hidden-xs docnav">
-          <div id="docnav-affix">
-
-            <h5 class="docnav-title">Previous Posts</h5>
-            <ul class="list-unstyled">
-
-              {% for post in site.posts %}
-                {% if post.title-sm %}
-                  <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title-sm }}</a></li>
-                {% endif %}
-              {% endfor %}
-
-            </ul>
-
-          </div>
-        </div>
-      </div>
     </section>
 
     {% include footer.html %}
-
-    <script type="text/javascript">
-      $('#docnav-affix').affix({
-        offset: {
-          top: function () {
-            return (this.top = $('#logo-banner-holder').outerHeight(true) + $('#main-navbar').outerHeight(true))
-          },
-          bottom: function () {
-            return (this.bottom = $('#footer').outerHeight(true))
-          }
-        }
-      })
-    </script>
 
   </body>
 

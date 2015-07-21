@@ -1,55 +1,82 @@
 ---
-layout: generic-page
-title: My Blog
+layout: blog
 ---
 
-<section id="doc" class="container">
+<div class="row">
+  <div class="col-md-9">
 
-  <h1>OpenICE Blog</h1>
-  <p>We are the technical team building OpenICE. Occassionally we do or find interesting things we want to share. These are our ramblings.</p>
+    <h1 class="blog-header">OpenICE Developer Blog</h1>
+    <p class="blog-tagline">We are the technical team building OpenICE. Occassionally we do or find interesting things we want to share. These are our ramblings.</p>
 
-  {% for post in paginator.posts %}
+    {% for post in paginator.posts %}
+      <div class="blog-post-list">
 
-    <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
-    
-    <div class="author">
-      {{ post.author }}
+        <a href="{{ post.url }}"><span class="blog-list-title">{{ post.title }}</span></a>
+        <span class="blog-author">{{ post.author }}</span>
+        <span class="blog-date">{{ post.date | date_to_long_string }}</span>
+
+        <div class="blog-excerpt">
+          {{ post.excerpt }}
+        </div>
+
+        <a href="{{ post.url }}"><span class="blog-continue">Continue reading...</span></a>
+
+      </div>
+    {% endfor %}
+
+
+    <nav class="blog-paginator">
+      <ul class="pager">
+
+        {% if paginator.previous_page %}
+          <li ><a href="{{ paginator.previous_page_path }}">&larr; Previous</a></li>
+        {% else %}
+          <li class="disabled"><a href="#">&larr; Previous</a></li>
+        {% endif %}
+
+        {% if paginator.next_page %}
+          <li><a href="{{ paginator.next_page_path }}">Next &rarr;</a></li>
+        {% else %}
+          <li class="disabled"><a href="#">Next &rarr;</a></li>
+        {% endif %}
+
+      </ul>
+    </nav>
+
+    <div class="text-center blog-page-number">
+      <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
     </div>
-    
-    <div class="date">
-      {{ post.date | date_to_long_string }}
-    </div>
 
-    <div class="excerpt">
-      {{ post.excerpt }}
-    </div>
-
-  {% endfor %}
-
-  <!-- paginator -->
-  <nav class="paginator">
-
-    <ul class="pager">
-
-      {% if paginator.previous_page %}
-        <li ><a href="{{ paginator.previous_page_path }}">&larr; Previous</a></li>
-      {% else %}
-        <li class="disabled"><a href="#">&larr; Previous</a></li>
-      {% endif %}
-
-      {% if paginator.next_page %}
-        <li><a href="{{ paginator.next_page_path }}">Next &rarr;</a></li>
-      {% else %}
-        <li class="disabled"><a href="#">Next &rarr;</a></li>
-      {% endif %}
-
-    </ul>
-
-  </nav>
-
-  <div class="text-center">
-    <span class="page_number">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
   </div>
 
-</section>
 
+  <div class="col-md-3 hidden-xs blognav">
+    <div id="blognav-affix">
+      <h5 class="blognav-title">Previous Posts</h5>
+      <ul class="list-unstyled">
+
+        {% for post in site.posts %}
+          {% if post.title-sm %}
+            <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title-sm }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  $('#blognav-affix').affix({
+    offset: {
+      top: function () {
+        return (this.top = $('#logo-banner-holder').outerHeight(true) + $('#main-navbar').outerHeight(true))
+      },
+      bottom: function () {
+        return (this.bottom = $('#footer').outerHeight(true))
+      }
+    }
+  })
+</script>

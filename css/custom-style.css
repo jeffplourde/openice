@@ -623,13 +623,6 @@ body {
   transition-duration: 0.25s;
   transition-timing-function: ease-out;
   padding-left: 0;
-  color: #428bca;
-}
-.docnav li:hover a {
-  transition-property: color;
-  transition-duration: 0.25s;
-  transition-timing-function: ease-out;
-  padding-left: 0;
   color: #333;
 }
 

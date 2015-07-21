@@ -4,11 +4,9 @@ title: First Three Days with Intel Edison
 title-sm: First Days with Edison
 author: Jeff Plourde
 tags: space separated string
-excerpt: Recently the OpenICE lab had the opportunity to begin exploration with Intel's latest platform offering- Edison.
 ---
 
-{{ page.title }}
-================
+<img src="{{ site.url }}/assets/edison-cover.jpg" style="max-width:100%;">
 
 __Background__
 
@@ -19,6 +17,7 @@ __Performance__
 David Hunt has performed some interesting benchmark tests [comparing Intel Edison performance](http://www.davidhunt.ie/raspberry-pi-beaglebone-black-intel-edison-benchmarked/) with BeagleBone Black and Raspberry Pi.  Initial indications are that the Edison is an outstanding performer among the set of remarkably small general purpose computers.  The Edison lacks a GPU so it won't be replacing your laptop anytime soon but it does have WiFi and Bluetooth aboard; making it almost shocking that BeagleBone and Raspberry Pi do not.  TODO POWER CONSUMPTION?
 
 __Future__
+<!--endExcerpt-->
 
 Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.
 
@@ -28,7 +27,6 @@ Technical Detail
 The primary landing page for Intel Edison can be found [here](https://software.intel.com/en-us/iot/hardware/edison).
 
 __Installing the latest Yocto Linux Image__
-
 1.  Our first stop was the [Downloads](https://software.intel.com/en-us/iot/hardware/edison/downloads) page where we downloaded the latest Yocto complete image (Release 2.1 at the time) and the "Flash Tool Lite" for Mac OS X. 
 1.  Next week followed the [setup guide](https://software.intel.com/en-us/articles/flash-tool-lite-user-manual) instructions.  Scroll far enough down the page and you'll find a section devoted to Mac OS X.
 1.  In our experience we found it more reliable to first extract the zip file container of the Yocto image and select the FlashEdison.json configuration directly from the extracted contents.

@@ -1,0 +1,84 @@
+.blog-header {
+  font-weight: 300;
+}
+.blog-tagline {
+  font-style: italic;
+  margin-bottom: 35px;
+}
+.blog-post-list {
+  margin-bottom: 75px;
+}
+.blog-list-title {
+  text-decoration: none;
+  font-size: 2em;
+  font-weight: 300;
+  color: #333;
+}
+.blog-title {
+  font-weight: 300;
+}
+.blog-author {
+  font-size: 1.25em;
+  display: block;
+}
+.blog-date {
+  display: block;
+}
+.blog-excerpt {
+  margin-top: 10px;
+}
+.blog-excerpt img {
+  max-height: 250px;
+}
+.blog-excerpt h1 {
+  font-size: 20px;
+}
+.blog-excerpt h2 {
+  font-size: 16px;
+}
+.blog-excerpt h3 {
+  font-size: 12px;
+}
+.blog-continue {
+  font-size: 1.25em;
+}
+.blog-paginator {
+  margin-top: 50px;
+}
+.blog-page-number{
+
+}
+
+#blognav-affix.affix {
+  top: 0;
+}
+#blognav-affix.affix-bottom {
+  position: absolute;
+}
+.blognav-title {
+  font-size: 1.75em;
+  font-weight: 300;
+}
+.blognav a {
+  text-decoration: none;
+}
+.blognav li {
+  padding-bottom: 5px;
+  transition-property: padding-left;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+  padding-left: 15px;
+}
+.blognav li:hover {
+  transition-property: padding-left;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  padding-left: 0;
+}
+.blognav li:hover a {
+  transition-property: color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  padding-left: 0;
+  color: #333;
+}
