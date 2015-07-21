@@ -21,5 +21,5 @@ collections:
     devdocs:
         output: true
 highlighter: pygments
-paginate: 3
+paginate: 4
 paginate_path: "/blog/page:num/"

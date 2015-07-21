@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 
-  {% include head.html %}
+  <head>
+    {% include head.html %}
+    <link rel="stylesheet" href="{{site.url}}/css/syntaxhighlighting.css">
+  </head>
 
   <body>
 
@@ -11,7 +14,6 @@
     <section id="doc" class="container">
       <div class="row">
         <div class="col-md-9">
-          <h1 class="doc-title">layout title {{ page.title }}</h1>
 
           {{ content }}
 
@@ -24,8 +26,8 @@
             <ul class="list-unstyled">
 
               {% for post in site.posts %}
-                {% if post.title %}
-                  <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>
+                {% if post.title-sm %}
+                  <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title-sm }}</a></li>
                 {% endif %}
               {% endfor %}
 

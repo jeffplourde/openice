@@ -5,6 +5,9 @@ title: My Blog
 
 <section id="doc" class="container">
 
+  <h1>OpenICE Blog</h1>
+  <p>We are the technical team building OpenICE. Occassionally we do or find interesting things we want to share. These are our ramblings.</p>
+
   {% for post in paginator.posts %}
 
     <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
@@ -31,13 +34,13 @@ title: My Blog
       {% if paginator.previous_page %}
         <li ><a href="{{ paginator.previous_page_path }}">&larr; Previous</a></li>
       {% else %}
-        <li class=" disabled"><a href="#">&larr; Previous</a></li>
+        <li class="disabled"><a href="#">&larr; Previous</a></li>
       {% endif %}
 
       {% if paginator.next_page %}
         <li><a href="{{ paginator.next_page_path }}">Next &rarr;</a></li>
       {% else %}
-        <li class=" disabled"><a href="#">Next &rarr;</a></li>
+        <li class="disabled"><a href="#">Next &rarr;</a></li>
       {% endif %}
 
     </ul>
