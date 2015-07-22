@@ -1,0 +1,57 @@
+[
+	{
+		"name": "Idle w/ssh connection",
+		"edison": {
+			"min":56.7,
+			"max":88.3,
+			"avg":61.6,
+			"sd":7.5
+		},
+		"bbb": {
+			"min":251.0,
+			"max":262.0,
+			"avg":252.2,
+			"sd":1.8
+		}
+	},
+	{
+		"name":"Downloading File",
+		"edison": {
+			"min":93.7,
+			"max":176.0,
+			"avg":136.3,
+			"sd":14.7
+		},
+		"bbb": {
+			"min":271.6,
+			"max":515.5,
+			"avg":405.1,
+			"sd": 62.0
+		}
+	},
+	{
+		"name":"Multiparameter Simulation",
+		"edison": {
+			"min":82.8,
+			"max":145.4,
+			"avg":92.8,
+			"sd":6.8,
+			"cpu": {
+				"min":1.0,
+				"max":2.0
+			},
+			"temp": 37
+		},
+		"bbb": {
+			"min":251.6,
+			"max":261.4,
+			"avg":253.8,
+			"sd": 2.3,
+			"cpu": {
+				"min": 6.0,
+				"max": 9.0
+			},
+			"temp": 38.3
+		}
+	}
+]

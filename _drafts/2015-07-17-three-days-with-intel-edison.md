@@ -6,27 +6,36 @@ author: Jeff Plourde
 tags: space separated string
 ---
 
-<img src="{{ site.url }}/assets/edison-cover.jpg" style="max-width:100%;">
 
-__Background__
+<img alt="Intel Edison" src="{{ site.url }}/assets/inteledison.jpg" style="max-width:100%;">
 
-Recently the [OpenICE](https://www.openice.info) lab had the opportunity to begin exploration with Intel's latest platform offering: [Edison](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/edison.html).  Our experience in the lab with prototyping platforms like [BeagleBone Black](http://beagleboard.org/black) and [Raspberry Pi](https://www.raspberrypi.org) has raised our expectations for ease-of-use for a new platform.  Our previous experimentation with the [Intel Galileo](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/galileo-maker-quark-board.html) left us skeptical.  Things like a 3.5mm stereo connector for serial console access were merely peculiar.  But what halted that experimentation was a lack of SIMD instructions in the [Quark microcontroller](https://en.wikipedia.org/wiki/Intel_Quark) (which would have required a recompile of a number of key libraries we use).  The experience with the Edison couldn't have been any more different.  Within a few hours we were up and running our Java software with a variety of libraries compiled for x86 Linux.  A few hours after that we had connected a number of medical devices, with interfaces ranging from RS-232 to Bluetooth EDR, to OpenICE using the Intel Edison as an adapter.
+(To jump ahead to the incantations we used to configure Edison click [here](#details))
 
-__Performance__
+Recently the [OpenICE](https://www.openice.info) lab had the opportunity to begin exploration with Intel's latest platform offering: [Edison](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/edison.html).  Our experience in the lab with prototyping platforms like [BeagleBone Black](http://beagleboard.org/black) and [Raspberry Pi](https://www.raspberrypi.org) has raised our expectations for ease-of-use for a new platform.  Our previous experimentation with the [Intel Galileo](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/galileo-maker-quark-board.html) left us skeptical.  Things like a 3.5mm stereo connector for serial console access were merely peculiar.  But what halted that experimentation was a lack of SIMD instructions in the [Quark microcontroller](https://en.wikipedia.org/wiki/Intel_Quark) (which would have required a recompile of a number of key libraries we use).  The experience with the Edison couldn't have been any more different.  <!--endExcerpt-->Within a few hours we were up and running our Java software with a variety of libraries compiled for x86 Linux.  A few hours after that we had connected a number of medical devices, with interfaces ranging from RS-232 to Bluetooth EDR, to OpenICE using the Intel Edison as an adapter.
 
-David Hunt has performed some interesting benchmark tests [comparing Intel Edison performance](http://www.davidhunt.ie/raspberry-pi-beaglebone-black-intel-edison-benchmarked/) with BeagleBone Black and Raspberry Pi.  Initial indications are that the Edison is an outstanding performer among the set of remarkably small general purpose computers.  The Edison lacks a GPU so it won't be replacing your laptop anytime soon but it does have WiFi and Bluetooth aboard; making it almost shocking that BeagleBone and Raspberry Pi do not.  TODO POWER CONSUMPTION?
+<img alt="Intel Edison Wearable Platform" src="{{ site.url }}/assets/edison-cover.jpg" style="max-width:100%;">
 
-__Future__
-<!--endExcerpt-->
 
-Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.
+David Hunt has performed some interesting benchmark tests [comparing Intel Edison performance](http://www.davidhunt.ie/raspberry-pi-beaglebone-black-intel-edison-benchmarked/) with BeagleBone Black and Raspberry Pi.  Initial indications are that the Edison is an outstanding performer among the set of remarkably small general purpose computers.  The Edison won't be replacing your laptop anytime soon but it does have WiFi and Bluetooth aboard; making it almost shocking that the latest BeagleBone Black and Raspberry Pi do not.  Empirical measurements of the power consumption of Edison are still hard to come by so we did some measurements on our own.  
+<img alt="Inline Ammeter" src="{{ site.url }}/assets/testing-inline.jpg" style="max-width:100%;">
 
-Technical Detail
-----------------
+We also measured consumption under similar load for a BeagleBone Black C.  The comparison is a little unfair because we used the BeagleBone's built-in ethernet connectivity (vs. WiFi on the Edison) and the BeagleBone is driving a lot more ICs in addition to a more robust default software suite.  
+
+<img alt="Intel Edison with ammeter" src="{{ site.url }}/assets/edison-ammeter.jpg" style="max-width:100%;">
+
+That said the results were dramatic enough to warrant sharing.  The Edison sipped power even with the WiFi radio continuously active.  With a maximum observed draw of 176 mA the unit we tested never exceed 1 Watt.  The implications for battery life could really be remarkable and we look forward to doing some empirical "real world" run-down tests in the lab in the future.
+
+<div id="charts">
+</div>
+
+Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.  One goal of our work in the lab is to connect data from the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) to the OpenICE system as an exemplar for the integration of other devices.  This will allow us to better understand the implications of Edison as part of the OpenICE architecture.
+
+<span id="details">__Technical Details__</span>
 
 The primary landing page for Intel Edison can be found [here](https://software.intel.com/en-us/iot/hardware/edison).
 
 __Installing the latest Yocto Linux Image__
+
 1.  Our first stop was the [Downloads](https://software.intel.com/en-us/iot/hardware/edison/downloads) page where we downloaded the latest Yocto complete image (Release 2.1 at the time) and the "Flash Tool Lite" for Mac OS X. 
 1.  Next week followed the [setup guide](https://software.intel.com/en-us/articles/flash-tool-lite-user-manual) instructions.  Scroll far enough down the page and you'll find a section devoted to Mac OS X.
 1.  In our experience we found it more reliable to first extract the zip file container of the Yocto image and select the FlashEdison.json configuration directly from the extracted contents.
@@ -72,8 +81,145 @@ __Installing OpenICE software__
         cd OpenICE-0.6.3
         bin/OpenICE -app ICE_Device_Interface -device Multiparameter -domain 15
 
+__Connecting RS-232 devices__
 
- TODO RS-232 via FTDI
- TODO Bluetooth (Nonin)
- TODO MRAA https://github.com/jeffplourde/9dofBlockJava
+<img alt="Intel Edison with USB/RS-232 adapter" src="{{ site.url }}/assets/edison-serial.jpg" style="max-width:100%;">
+
+1.  Connect a USB "on the go" cable that provides a USB Type A host port to the OTG port on the SparkFun Base Block.
+1.  Connect a USB-to-Serial adapter to that cable.  We tested with an FTDI-based adapter.  Specifically the StarTech ICUSB232D.
+1.  Run the OpenICE software specifying the correct device type and serial-over-USB port.  We tested with the Capnostream20 device.
+
+        bin/OpenICE -app ICE_Device_Interface -device Capnostream20 -domain 15 -address ttyUSB0
+
+__Connecting Bluetooth devices__
+
+Basic instructions from Intel can be found [here]()
+
+1.  Activate a Bluetooth device in discoverable mode.  We tested with a Nonin Onyx II pulse oximeter which powers on and becomes discoverable when a finger is present.
+1.  Unblock bluetooth capabilities. `rfkill unblock bluetooth`
+1.  Start an interactive bluetooth control console and issue the following commands. `bluetoothctl`
+    1.  `agent KeyboardDisplay`
+    1.  `default-agent`
+    1.  `scan on`
+    1.  What until the device is discovered and note the address of the device
+    1.  `scan off`
+    1.  `remove <device id>` (in case the device had been previously discovered)
+    1.  `pair <device id>`
+    1.  When prompted enter pairing code
+    1.  `trust <device id>` (trust this device for future connections)
+    1.  `exit` (leave bluetoothctl)
+1.  `rfcomm bind /dev/rfcomm0 <device id>` will set up a serial port through which the bluetooth device can be accessed.
+1. Launch an OpenICE Device Interface
+
+        bin/OpenICE -app ICE_Device_Interface -device Nonin -domain 15 -address rfcomm0
+
+
+__libmraa__
+
+Intel's Low Level Skeleton Library for IO Communication on GNU/Linux platforms can be found [here](https://github.com/intel-iot-devkit/mraa).
+
+An example Python application that interacts with the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) can be found [here](https://github.com/smoyerman/9dofBlock).  You can monitor our progress on a Java equivalent to that example [here](https://github.com/jeffplourde/9dofBlockJava).
+
+
+<style>
+
+.chart {
+    
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.chart rect {
+    fill: steelblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+#charts {
+    /*height: 500px;*/
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+
+
+
+
+<script>
+var barWidth = 40,
+    height = 300;
+
+
+d3.json('{{ site.url }}/assets/intel-edison-power-consumption.json', function(err, data) {
+    if(err) {
+        console.warn(err);
+    } else {
+        for(var i = 0; i < data.length; i++) {
+            var y = d3.scale.linear().range([height,0]);
+            var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+            y.domain([0, 500]);
+            var chart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            chart.setAttribute('class', "chart");
+            chart.setAttribute('id', "chart"+i);
+            document.getElementById("charts")
+                .appendChild(chart);
+            chart = d3.select("#chart"+i).attr("height", height);    
+            chart.attr("width", barWidth * data.length);
+            chart.append("text")
+              .attr("x", 0 /*(barWidth * data.length / 2)*/)
+              .attr("y", 6)
+              .attr("dy", ".71em")
+              .style("text-anchor", "start")
+              .style("fill", "black")
+              .text(data[i].name);
+
+            var bar = d3.select("#chart"+i)
+                .selectAll("g")
+                .data([data[i].bbb.avg, data[i].edison.avg])
+                .enter().append("g")
+                    .attr('transform', function(d, i) { 
+                        var s = "translate(" + i * barWidth + ",0)";
+                        return s; 
+
+                    });
+
+            bar.append("rect")
+                .attr("y", function(d) { return y(d); })
+                .attr("width", barWidth-1)
+                .attr("height", function(d) { return height - y(d);});
+
+            bar.append("text")
+                .style("text-anchor", "middle")
+                .attr("x", barWidth / 2)
+                .attr("y", function(d) { return y(d) + 3;})
+                .attr("dy", ".75em")
+                .text(function(d) { return ""+d; });              
+        }
+
+        
+
+        // chart.append("g")
+        //     .attr("class", "y axis")
+        //     .call(yAxis);
+
+
+    }
+});
+
+</script>
 
