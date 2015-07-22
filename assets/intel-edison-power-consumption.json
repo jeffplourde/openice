@@ -15,7 +15,7 @@
 		}
 	},
 	{
-		"name":"Downloading File",
+		"name":"Downloading File (wget)",
 		"edison": {
 			"min":93.7,
 			"max":176.0,
@@ -30,7 +30,7 @@
 		}
 	},
 	{
-		"name":"Multiparameter Simulation",
+		"name":"Multiparameter Device Simulation",
 		"edison": {
 			"min":82.8,
 			"max":145.4,

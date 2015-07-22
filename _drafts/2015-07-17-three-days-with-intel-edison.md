@@ -9,7 +9,7 @@ tags: space separated string
 
 <img alt="Intel Edison" src="{{ site.url }}/assets/inteledison.jpg" style="max-width:100%;">
 
-(To jump ahead to the incantations we used to configure Edison click [here](#details))
+([Jump ahead](#details) to configure OpenICE on Intel Edison)
 
 Recently the [OpenICE](https://www.openice.info) lab had the opportunity to begin exploration with Intel's latest platform offering: [Edison](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/edison.html).  Our experience in the lab with prototyping platforms like [BeagleBone Black](http://beagleboard.org/black) and [Raspberry Pi](https://www.raspberrypi.org) has raised our expectations for ease-of-use for a new platform.  Our previous experimentation with the [Intel Galileo](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/galileo-maker-quark-board.html) left us skeptical.  Things like a 3.5mm stereo connector for serial console access were merely peculiar.  But what halted that experimentation was a lack of SIMD instructions in the [Quark microcontroller](https://en.wikipedia.org/wiki/Intel_Quark) (which would have required a recompile of a number of key libraries we use).  The experience with the Edison couldn't have been any more different.  <!--endExcerpt-->Within a few hours we were up and running our Java software with a variety of libraries compiled for x86 Linux.  A few hours after that we had connected a number of medical devices, with interfaces ranging from RS-232 to Bluetooth EDR, to OpenICE using the Intel Edison as an adapter.
 
@@ -27,6 +27,7 @@ That said the results were dramatic enough to warrant sharing.  The Edison sippe
 
 <div id="charts">
 </div>
+** NOTE:100 samples in 20 seconds, bar represents mean with whiskers at min and max
 
 Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.  One goal of our work in the lab is to connect data from the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) to the OpenICE system as an exemplar for the integration of other devices.  This will allow us to better understand the implications of Edison as part of the OpenICE architecture.
 
@@ -134,16 +135,21 @@ An example Python application that interacts with the [SparkFun 9 Degrees of Fre
 
 .chart text {
   fill: white;
-  font: 10px sans-serif;
+  /*font: 10px sans-serif;*/
   text-anchor: middle;
 }
 
 .chart rect {
     fill: steelblue;
+    stroke: none;
 }
 
-.axis text {
-  font: 10px sans-serif;
+rect text {
+    font: 10px sans-serif;
+}
+
+.axis {
+  /*font: 10px sans-serif;*/
 }
 
 #charts {
@@ -157,6 +163,10 @@ An example Python application that interacts with the [SparkFun 9 Degrees of Fre
   shape-rendering: crispEdges;
 }
 
+.axis text {
+    fill: black;
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 
@@ -164,8 +174,10 @@ An example Python application that interacts with the [SparkFun 9 Degrees of Fre
 
 
 <script>
-var barWidth = 40,
-    height = 300;
+var margin = {top: 30, right: 30, bottom: 70, left: 50};
+var barWidth = 100,
+    height = 400 - margin.top - margin.bottom;
+
 
 
 d3.json('{{ site.url }}/assets/intel-edison-power-consumption.json', function(err, data) {
@@ -173,56 +185,91 @@ d3.json('{{ site.url }}/assets/intel-edison-power-consumption.json', function(er
         console.warn(err);
     } else {
         for(var i = 0; i < data.length; i++) {
-            var y = d3.scale.linear().range([height,0]);
+
+            var y = d3.scale.linear().domain([0,550]).range([height+margin.top,0+margin.top]);
             var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left");
-            y.domain([0, 500]);
-            var chart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            chart.setAttribute('class', "chart");
-            chart.setAttribute('id', "chart"+i);
-            document.getElementById("charts")
-                .appendChild(chart);
-            chart = d3.select("#chart"+i).attr("height", height);    
-            chart.attr("width", barWidth * data.length);
-            chart.append("text")
-              .attr("x", 0 /*(barWidth * data.length / 2)*/)
+
+            var svg = d3.select("#charts").append("svg")
+                .attr("width", barWidth * 2 + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .attr("class", "chart")
+                .attr("id", "chart"+i)
+                .append("g")
+                .attr("transform", "translate("+margin.left+","+margin.top+")");
+
+            svg.append("text")
+              .attr("x", 0)
               .attr("y", 6)
               .attr("dy", ".71em")
               .style("text-anchor", "start")
               .style("fill", "black")
               .text(data[i].name);
 
-            var bar = d3.select("#chart"+i)
+            var bar = svg
                 .selectAll("g")
-                .data([data[i].bbb.avg, data[i].edison.avg])
+                .data([data[i].bbb, data[i].edison])
                 .enter().append("g")
                     .attr('transform', function(d, i) { 
-                        var s = "translate(" + i * barWidth + ",0)";
+                        var s = "translate(" + (2+ i * barWidth) + ","+margin.top+")";
                         return s; 
 
                     });
 
             bar.append("rect")
-                .attr("y", function(d) { return y(d); })
-                .attr("width", barWidth-1)
-                .attr("height", function(d) { return height - y(d);});
+                .attr("y", function(d) { return y(d.avg) - margin.top; })
+                .attr("x", barWidth/4)
+                .attr("width", barWidth/2)
+                .attr("height", function(d) { return margin.top+height - y(d.avg);});
+            bar.append("line")
+                .style("stroke", "black")
+                .attr("y1", function(d) { return y(d.max) - margin.top; })
+                .attr("x1", barWidth/4)
+                .attr("y2", function(d) { return y(d.max) - margin.top; })
+                .attr("x2", barWidth/4+barWidth/2);
 
+            bar.append("line")
+                .style("stroke", "black")
+                .attr("y1", function(d) { return y(d.min) - margin.top; })
+                .attr("x1", barWidth/4)
+                .attr("y2", function(d) { return y(d.min) - margin.top; })
+                .attr("x2", barWidth/4+barWidth/2);                
+
+            bar.append("line")
+                .style("stroke", "black")
+                .attr("y1", function(d) { return y(d.min) - margin.top; })
+                .attr("x1", barWidth/2)
+                .attr("y2", function(d) { return y(d.max) - margin.top; })
+                .attr("x2", barWidth/2);                     
+        
             bar.append("text")
                 .style("text-anchor", "middle")
+                .style("fill", "black")
                 .attr("x", barWidth / 2)
-                .attr("y", function(d) { return y(d) + 3;})
+                .attr("y", height + 4)
                 .attr("dy", ".75em")
-                .text(function(d) { return ""+d; });              
+                .text(function(d,i) {
+                    if(i == 0) { 
+                        return "Beaglebone";
+                    } else {
+                        return "Edison";
+                    }
+                });
+
+            svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                .append("text")
+                    .attr("x", -height/2-margin.top)
+                    .attr("y", -50)
+                    .attr("dy", ".71em")
+                    .attr("transform", "rotate(-90)")
+                    .style("text-anchor", "middle")
+                    .style("font-size", "16px")
+                    .style("fill", "black")
+                    .text("mA");
         }
-
-        
-
-        // chart.append("g")
-        //     .attr("class", "y axis")
-        //     .call(yAxis);
-
-
     }
 });
 
