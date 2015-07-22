@@ -30,19 +30,20 @@ That said the results were dramatic enough to warrant sharing.  The Edison sippe
 
 Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.  One goal of our work in the lab is to connect data from the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) to the OpenICE system as an exemplar for the integration of other devices.  This will allow us to better understand the implications of Edison as part of the OpenICE architecture.
 
-<span id="details">__Technical Details__</span>
+### <span id="details">__Technical Details for Configuring an Edison__</span> ###
 
 The primary landing page for Intel Edison can be found [here](https://software.intel.com/en-us/iot/hardware/edison).
 
 __Installing the latest Yocto Linux Image__
 
 1.  Our first stop was the [Downloads](https://software.intel.com/en-us/iot/hardware/edison/downloads) page where we downloaded the latest Yocto complete image (Release 2.1 at the time) and the "Flash Tool Lite" for Mac OS X. 
-1.  Next week followed the [setup guide](https://software.intel.com/en-us/articles/flash-tool-lite-user-manual) instructions.  Scroll far enough down the page and you'll find a section devoted to Mac OS X.
-1.  In our experience we found it more reliable to first extract the zip file container of the Yocto image and select the FlashEdison.json configuration directly from the extracted contents.
-1.  It was also important to set the "Configuration" dropdown to "CDC" for Linux or OS X.
-1.  Counter-intuitively the instructions also asked us to click "Start to flash" before connecting the device.
-1.  The [SparkFun Base Block](https://www.sparkfun.com/products/13045) we used required connection to the "OTG" port.
-1.  Also since our Base Block did not have an information LED we waited 2 minutes after flashing before disconnecting to reboot the Edison.
+1.  Next week followed the [setup guide](https://software.intel.com/en-us/articles/flash-tool-lite-user-manual) instructions.  Scroll far enough down the page and you'll find a section devoted to Mac OS X. Please read all of the following tips before following the instructions on the Intel setup guide:
+    *  In our experience we found it more reliable to first extract the zip file container of the Yocto image and select the FlashEdison.json configuration directly from the extracted contents.
+    *  In the Flash Tool Lite, it was also important to set the "Configuration" dropdown to "CDC" for Linux or OS X.
+    *  Counter-intuitively, the instructions also asked us to click "Start to flash" before connecting the device.
+    *  The [SparkFun Base Block](https://www.sparkfun.com/products/13045) we used required the USB connection to the "OTG" port.
+    *  Also since our Base Block did not have an information LED we waited 2 minutes after flashing was complete before disconnecting to reboot the Edison.
+1.  When Flash Tool Lite has finished flashing and an additional two minutes has passed, unplug the Edison, move the USB to the console port and continue to the next step.
 
 __Access the Edison console__
 
@@ -53,16 +54,19 @@ __Access the Edison console__
 
 __Change device name, change password, and connect wifi__
 
-1. `configure_edison --setup` launches an interactive setup 
+1. Enter `configure_edison --setup` on the console to launch an interactive setup. Follow the prompts to set a password, hostname, WiFi SSID and password.
 
 __Installing the latest Java JRE__
 
-1.  As the Edison houses a full Atom processor any standard JRE for x86 Linux can be used.  We used the latest from [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).  We downloaded locally to our mac then used secure copy to move the file to the edison.  The previous interactive setup revealed the IP assigned the edison by DHCP. `scp ~/Downloads/jre-8u51-linux-i586.tar.gz root@192.168.1.10:`
+1.  As the Edison houses a full Atom processor any standard JRE for x86 Linux can be used.  We used the latest from [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).  We downloaded locally to our mac then used secure copy to move the file to the edison.  The previous interactive setup revealed the IP assigned the edison by DHCP - be sure to use it in the following command.
+
+    `scp ~/Downloads/jre-8u51-linux-i586.tar.gz root@192.168.1.10:`
+
 2.  For convenience we extracted the JRE to /usr/local, set JAVA_HOME, and linked the java executable to /usr/local/bin
 
         mkdir -p /usr/local
         cd /usr/local
-        tar xzf jre-8u51-linux-i586.tar.gz
+        tar xzf ~/jre-8u51-linux-i586.tar.gz
         export JAVA_HOME=/usr/local/jre1.8.0_51
         mkdir -p /usr/local/bin
         cd /usr/local/bin
@@ -71,19 +75,20 @@ __Installing the latest Java JRE__
 __Installing OpenICE software__
 
 1.  Visit the latest OpenICE release [on GitHub](https://github.com/mdpnp/mdpnp/releases/latest)
-1.  At this time 0.6.3 is the latest release; we downloaded the zipped version of the release to the Edison board with wget
+1.  The current version of OpenICE is {{ site.openice-version }}; we downloaded the zipped version of the release to the Edison board with wget
 
-        wget https://github.com/mdpnp/mdpnp/releases/download/0.6.3/OpenICE-0.6.3.zip
+        wget https://github.com/mdpnp/mdpnp/releases/download/{{ site.openice-version }}/OpenICE-{{ site.openice-version }}.zip
 
 1.  We extracted the OpenICE software and ran a software simulator as follows.
 
-        unzip OpenICE-0.6.3.zip
-        cd OpenICE-0.6.3
+        unzip OpenICE-{{ site.openice-version }}.zip
+        cd OpenICE-{{ site.openice-version }}
+        chmod a+x bin/OpenICE
         bin/OpenICE -app ICE_Device_Interface -device Multiparameter -domain 15
 
 __Connecting RS-232 devices__
 
-<img alt="Intel Edison with USB/RS-232 adapter" src="{{ site.url }}/assets/edison-serial.jpg" style="max-width:100%;">
+<ul><img alt="Intel Edison with USB/RS-232 adapter" src="{{ site.url }}/assets/edison-serial.jpg" style="max-width:100%;"></ul>
 
 1.  Connect a USB "on the go" cable that provides a USB Type A host port to the OTG port on the SparkFun Base Block.
 1.  Connect a USB-to-Serial adapter to that cable.  We tested with an FTDI-based adapter.  Specifically the StarTech ICUSB232D.
@@ -93,17 +98,18 @@ __Connecting RS-232 devices__
 
 __Connecting Bluetooth devices__
 
-Basic instructions from Intel can be found [here]()
+Basic instructions from Intel can be found [here](https://software.intel.com/en-us/articles/intel-edison-board-getting-started-with-bluetooth). Unfortunately, it appears that this pairing process has to be repeated each time the device is restarted.
 
-1.  Activate a Bluetooth device in discoverable mode.  We tested with a Nonin Onyx II pulse oximeter which powers on and becomes discoverable when a finger is present.
+1.  Activate a Bluetooth device in discoverable mode.  We tested with a Nonin Onyx II pulse oximeter which uses legacy Bluetooth pairing. The Nonin pulse oximeter powers on and becomes discoverable when a finger is inserted.
 1.  Unblock bluetooth capabilities. `rfkill unblock bluetooth`
 1.  Start an interactive bluetooth control console and issue the following commands. `bluetoothctl`
+    1.  `devices` (check to see if the device you are attempting to connect was previously paired, if so remove)
+    1.  `remove <device id>` (in case the device had been previously discovered)
     1.  `agent KeyboardDisplay`
     1.  `default-agent`
     1.  `scan on`
     1.  What until the device is discovered and note the address of the device
     1.  `scan off`
-    1.  `remove <device id>` (in case the device had been previously discovered)
     1.  `pair <device id>`
     1.  When prompted enter pairing code
     1.  `trust <device id>` (trust this device for future connections)
@@ -113,8 +119,7 @@ Basic instructions from Intel can be found [here]()
 
         bin/OpenICE -app ICE_Device_Interface -device Nonin -domain 15 -address rfcomm0
 
-
-__libmraa__
+__libmraa__ ??? should we move this or elaborate more?
 
 Intel's Low Level Skeleton Library for IO Communication on GNU/Linux platforms can be found [here](https://github.com/intel-iot-devkit/mraa).
 
