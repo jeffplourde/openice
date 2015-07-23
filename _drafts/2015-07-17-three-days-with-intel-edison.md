@@ -17,11 +17,11 @@ When the [OpenICE](https://www.openice.info) lab recently had a chance to begin 
 
 
 David Hunt has performed some interesting benchmark tests [comparing Intel Edison performance](http://www.davidhunt.ie/raspberry-pi-beaglebone-black-intel-edison-benchmarked/) with BeagleBone Black and Raspberry Pi.  Initial indications are that the Edison is an outstanding performer among the set of remarkably small general purpose computers.  The Edison won't be replacing your laptop anytime soon but it does have WiFi and Bluetooth aboard; making it almost shocking that the latest BeagleBone Black and Raspberry Pi do not.  Empirical measurements of the power consumption of Edison are still hard to come by so we did some measurements on our own.  
-<img alt="Inline Ammeter" src="{{ site.url }}/assets/testing-inline.jpg" style="max-width:100%;">
+
 
 We also measured consumption under similar load for a BeagleBone Black C.  The comparison is a little unfair because we used the BeagleBone's built-in ethernet connectivity (vs. WiFi on the Edison) and the BeagleBone is driving a lot more ICs in addition to a more robust default software suite.  
 
-<img alt="Intel Edison with ammeter" src="{{ site.url }}/assets/edison-ammeter.jpg" style="max-width:100%;">
+<img alt="Intel Edison with ammeter" src="{{ site.url }}/assets/edison-ammeter-inline.jpg" style="max-width:100%;">
 
 That said the results were dramatic enough to warrant sharing.  The Edison sipped power even with the WiFi radio continuously active.  With a maximum observed draw of 176 mA the unit we tested never exceed 1 Watt.  The implications for battery life are really be remarkable as well. The current measurement results convinced us to also conduct an empirical "real world" run-down test of the Edison on battery. The results are below.
 

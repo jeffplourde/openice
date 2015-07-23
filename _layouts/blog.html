@@ -15,7 +15,7 @@
     {% include banner.html %}
     {% include navbar.html %}
 
-    <section id="blog" class="container blog">
+    <section class="container">
 
       {% if page.title %}
         <h1 class="blog-title">{{ page.title }}</h1>
@@ -23,7 +23,9 @@
         <span class="blog-date">{{ page.date | date_to_string }}</span>
       {% endif %}
 
-      {{ content }}
+      <div class="blog">
+        {{ content }}
+      </div>
 
     </section>
 

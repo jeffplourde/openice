@@ -1,3 +1,9 @@
+.blog {
+  line-height: 1.6em;
+}
+.blog p {
+  margin-bottom: 1.6em;
+}
 .blog-header {
   font-weight: 300;
 }
