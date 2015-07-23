@@ -2,7 +2,7 @@
 layout: blog
 title: First Three Days with Intel Edison
 title-sm: First Days with Edison
-author: Jeff Plourde
+author: Jeff Plourde, Jeff Peterson
 tags: space separated string
 ---
 
