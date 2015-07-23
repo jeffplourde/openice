@@ -11,7 +11,7 @@ tags: space separated string
 
 ([Jump ahead](#details) to configure OpenICE on Intel Edison)
 
-Recently the [OpenICE](https://www.openice.info) lab had the opportunity to begin exploration with Intel's latest platform offering: [Edison](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/edison.html).  Our experience in the lab with prototyping platforms like [BeagleBone Black](http://beagleboard.org/black) and [Raspberry Pi](https://www.raspberrypi.org) has raised our expectations for ease-of-use for a new platform.  Our previous experimentation with the [Intel Galileo](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/galileo-maker-quark-board.html) left us skeptical.  Things like a 3.5mm stereo connector for serial console access were merely peculiar.  But what halted that experimentation was a lack of SIMD instructions in the [Quark microcontroller](https://en.wikipedia.org/wiki/Intel_Quark) (which would have required a recompile of a number of key libraries we use).  The experience with the Edison couldn't have been any more different.  <!--endExcerpt-->Within a few hours we were up and running our Java software with a variety of libraries compiled for x86 Linux.  A few hours after that we had connected a number of medical devices, with interfaces ranging from RS-232 to Bluetooth EDR, to OpenICE using the Intel Edison as an adapter.
+When the [OpenICE](https://www.openice.info) lab recently had a chance to begin exploration with [Edison](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/edison.html) we didn't know what to expect.  Originally designed to fit within the housing of an SD card, the new generation of Edison takes a more traditional form factor.  Our experiences in the lab with other platforms like [BeagleBone Black](http://beagleboard.org/black) and [Raspberry Pi](https://www.raspberrypi.org) have raised our expectations for ease-of-use for a new platform.  Our previous experimentation with the [Intel Galileo](https://www-ssl.intel.com/content/www/us/en/do-it-yourself/galileo-maker-quark-board.html) left us wanting a whole lot more from the world's dominant chip maker.  Things like a 3.5mm stereo connector for serial console access were merely peculiar but what halted that experimentation was a lack of SIMD instructions in the [Quark microcontroller](https://en.wikipedia.org/wiki/Intel_Quark) (which would have required a recompile of a number of key libraries we use).  The experience with the Edison couldn't have been any more different.  <!--endExcerpt-->Within a few hours we were up and running our Java software with a variety of libraries compiled for x86 Linux.  A few hours after that we had connected a number of medical devices, with interfaces ranging from RS-232 to Bluetooth EDR, to OpenICE using the Intel Edison as an adapter.
 
 <img alt="Intel Edison Wearable Platform" src="{{ site.url }}/assets/edison-cover.jpg" style="max-width:100%;">
 
@@ -25,9 +25,13 @@ We also measured consumption under similar load for a BeagleBone Black C.  The c
 
 That said the results were dramatic enough to warrant sharing.  The Edison sipped power even with the WiFi radio continuously active.  With a maximum observed draw of 176 mA the unit we tested never exceed 1 Watt.  The implications for battery life could really be remarkable and we look forward to doing some empirical "real world" run-down tests in the lab in the future.
 
+We measured current drawn by BeagleBone Black and Edison in 100 samples over the course of 20 seconds in three scenarios.  First we conducted a baseline test merely connected to each device with an ssh session.  Next we downloaded a large file from the internet with wget.  And last we ran an OpenICE software simulator of a multiparameter phsyiological monitor.
+
 <div id="charts">
 </div>
 ** NOTE:100 samples in 20 seconds, bar represents mean with whiskers at min and max
+
+One would expect the Edison to be at a power consumption disadvantage using wireless connectivity but that was definitely not the case.  In every scenario the Edison performed the expected task with facility and drawing a fraction of the power of the BeagleBone Black.
 
 Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.  One goal of our work in the lab is to connect data from the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) to the OpenICE system as an exemplar for the integration of other devices.  This will allow us to better understand the implications of Edison as part of the OpenICE architecture.
 
@@ -35,7 +39,7 @@ Platforms like Edison demonstrate a bright future not only for wearable and perv
 
 The primary landing page for Intel Edison can be found [here](https://software.intel.com/en-us/iot/hardware/edison).
 
-__Installing the latest Yocto Linux Image__
+__Installing the latest Yocto Linux Image using a Mac__
 
 1.  Our first stop was the [Downloads](https://software.intel.com/en-us/iot/hardware/edison/downloads) page where we downloaded the latest Yocto complete image (Release 2.1 at the time) and the "Flash Tool Lite" for Mac OS X. 
 1.  Next week followed the [setup guide](https://software.intel.com/en-us/articles/flash-tool-lite-user-manual) instructions.  Scroll far enough down the page and you'll find a section devoted to Mac OS X. Please read all of the following tips before following the instructions on the Intel setup guide:
@@ -120,22 +124,17 @@ Basic instructions from Intel can be found [here](https://software.intel.com/en-
 
         bin/OpenICE -app ICE_Device_Interface -device Nonin -domain 15 -address rfcomm0
 
-__libmraa__ ??? should we move this or elaborate more?
+<!--
+__libmraa__
 
-Intel's Low Level Skeleton Library for IO Communication on GNU/Linux platforms can be found [here](https://github.com/intel-iot-devkit/mraa).
+Intel's Low Level Skeleton Library for IO Communication on GNU/Linux platforms can be found [here](https://github.com/intel-iot-devkit/mraa).  
 
 An example Python application that interacts with the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) can be found [here](https://github.com/smoyerman/9dofBlock).  You can monitor our progress on a Java equivalent to that example [here](https://github.com/jeffplourde/9dofBlockJava).
-
+-->
 
 <style>
-
-.chart {
-    
-}
-
 .chart text {
   fill: white;
-  /*font: 10px sans-serif;*/
   text-anchor: middle;
 }
 
@@ -146,14 +145,6 @@ An example Python application that interacts with the [SparkFun 9 Degrees of Fre
 
 rect text {
     font: 10px sans-serif;
-}
-
-.axis {
-  /*font: 10px sans-serif;*/
-}
-
-#charts {
-    /*height: 500px;*/
 }
 
 .axis path,
@@ -169,9 +160,6 @@ rect text {
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-
-
-
 
 <script>
 var margin = {top: 30, right: 30, bottom: 70, left: 50};
