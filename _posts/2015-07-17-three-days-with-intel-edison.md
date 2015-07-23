@@ -151,13 +151,8 @@ Basic instructions from Intel can be found [here](https://software.intel.com/en-
 
         bin/OpenICE -app ICE_Device_Interface -device Nonin -domain 15 -address rfcomm0
 
-<!--
-__libmraa__
-
-Intel's Low Level Skeleton Library for IO Communication on GNU/Linux platforms can be found [here](https://github.com/intel-iot-devkit/mraa).  
-
-An example Python application that interacts with the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) can be found [here](https://github.com/smoyerman/9dofBlock).  You can monitor our progress on a Java equivalent to that example [here](https://github.com/jeffplourde/9dofBlockJava).
--->
+<br>
+Edison is a promising platform we're excited develop on and use with OpenICE. To learn more about OpenICE, check out our [intro docs]({{ site.url}}/docs/1_overview.html).
 
 <style>
 .chart text {
