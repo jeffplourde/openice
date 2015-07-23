@@ -23,7 +23,7 @@ We also measured consumption under similar load for a BeagleBone Black C.  The c
 
 <img alt="Intel Edison with ammeter" src="{{ site.url }}/assets/edison-ammeter.jpg" style="max-width:100%;">
 
-That said the results were dramatic enough to warrant sharing.  The Edison sipped power even with the WiFi radio continuously active.  With a maximum observed draw of 176 mA the unit we tested never exceed 1 Watt.  The implications for battery life could really be remarkable and we look forward to doing some empirical "real world" run-down tests in the lab in the future.
+That said the results were dramatic enough to warrant sharing.  The Edison sipped power even with the WiFi radio continuously active.  With a maximum observed draw of 176 mA the unit we tested never exceed 1 Watt.  The implications for battery life are really be remarkable as well. The current measurement results convinced us to also conduct an empirical "real world" run-down test of the Edison on battery. The results are below.
 
 We measured current drawn by BeagleBone Black and Edison in 100 samples over the course of 20 seconds in three scenarios.  First we conducted a baseline test merely connected to each device with an ssh session.  Next we downloaded a large file from the internet with wget.  And last we ran an OpenICE software simulator of a multiparameter phsyiological monitor.
 
@@ -32,6 +32,33 @@ We measured current drawn by BeagleBone Black and Edison in 100 samples over the
 ** NOTE:100 samples in 20 seconds, bar represents mean with whiskers at min and max
 
 One would expect the Edison to be at a power consumption disadvantage using wireless connectivity but that was definitely not the case.  In every scenario the Edison performed the expected task with facility and drawing a fraction of the power of the BeagleBone Black.
+
+To test the Edison battery life, we attached it to the modular [battery block](https://www.sparkfun.com/products/13037) from SparkFun. The block provides power to the Edison from a small, 400mAh single cell LiPo battery. The Edison was setup using the detailed instructions below. During the test, the Edison was running an OpenICE simulated multiparameter patient monitor [Device-Adapter](https://www.openice.info/docs/4_device-adapter-setup.html). The simulated patient monitor sent simulated real-time vital signs data and waveforms to the lab's OpenICE network via WiFi. For those following along at home, enter `root@edison:~# ./OpenICE-0.6.3/bin/OpenICE -app ICE_Device_Interface -device Multiparameter -domain 15 &`.
+
+The Edison was also running a script to log power levels and timestamps. The Edison Poky image comes with a neat command line utility called `battery-voltage` which outputs the following:
+
+    root@edison:~# battery-voltage
+    Battery Voltage = 4200 mV
+    Battery level = 100%
+
+The following bash script was used to log the battery info and a time stamp every 10 seconds producing a CSV with the format `Battery Voltage = 4200 mV,Battery level = 100%,Wed Jul 22 16:11:50 UTC 2015`. `sed` was used to clean the csv for easy graphing.
+
+{% highlight bash linenos%}
+#!/bin/bash
+while true
+do
+        v=$(battery-voltage | tr "\n" ",")
+        d=$(date)
+        echo $v$d >> powerTest.log
+        sleep 10
+done
+{% endhighlight %}
+
+The Edison - with it's x86 architecture, WiFi, 400mAh battery, Linux file system, logging script and OpenICE simulated patient monitor - ran for 3:45:14 before failing.
+
+<img alt="Intel Edison Battery Run-Down" src="{{ site.url }}/assets/edison-battery-graph.png" style="max-width:100%;max-height:500px;">
+
+This test shows huge promise for the platform. It is impressive that the relatively small battery (it's small enough to hide in the watch cases above) still provides 3.75 hours of power to the system running a full patient monitor interface via WiFi. Using a beefier battery and configuring a more conservative software setup, the battery figures could be extended dramatically - not to mention Intel's potential future optimization of the young Edison platform.
 
 Platforms like Edison demonstrate a bright future not only for wearable and pervasive sensing technologies but also demonstrate the ease with which Medical Device Manufacturers can (and should) adapt next-generation sensor data emission to help create a robust data ecosystem around each patient.  One goal of our work in the lab is to connect data from the [SparkFun 9 Degrees of Freedom Block for Edison](https://www.sparkfun.com/products/13033) to the OpenICE system as an exemplar for the integration of other devices.  This will allow us to better understand the implications of Edison as part of the OpenICE architecture.
 
