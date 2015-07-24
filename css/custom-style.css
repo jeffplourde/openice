@@ -588,6 +588,9 @@ body {
 
 /*****     USER DOCS STUFF     *****/
 
+#doc {
+  overflow-wrap: break-word;
+}
 .doc-title {
   margin-top: 25px;
 }
@@ -629,12 +632,24 @@ body {
 .modal-xl {
   width: 90%;
 }
-.diagram-sm {
-  height:350px;
-  margin:5px auto;
-}
 .btn-system-modal{
   min-height: 115px;
+}
+.view-larger {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.view-larger:hover {
+  background-color: #e6e6e6;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+.view-larger-image {
+  max-height:500px;
+  margin: auto;
+}
+.view-larger-caption {
+  font-size: 0.8em;
 }
 
 /* bootstrap description list */
