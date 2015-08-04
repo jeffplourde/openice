@@ -161,10 +161,48 @@ description: Looking for where to start with OpenICE? Check out this page for th
   </div>
 </div>
 
-<h3>What's next?</h3>
-{% for doc in site.docs %}
-  {% if doc.title-sm %}
-  <a class="" role="button" href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
-  <p>{{ doc.description }}</p>
-  {% endif %}
-{% endfor %}
+<h1>What's next?</h3>
+
+<h3>User Docs</h3>
+<dl class="dl-horizontal">
+  {% for doc in site.docs %}
+    {% if doc.title-sm %}
+      <dt>
+        <a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
+      </dt>
+      <dd>
+        <p>{{ doc.description }}</p>
+      </dd>
+    {% endif %}
+  {% endfor %}
+</dl>
+
+<h3>For Developers</h3>
+<dl class="dl-horizontal">
+
+  <dt style="overflow:visible;">
+    <a target="_blank" href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw">Architecture Description</a>
+  </dt>
+  <dd>
+    <p>The Infusion Safety Application Architecture Description provides a high-level survey of key architectural components of the current implementation of an Integrated Clinical Environment (ICE) devised at the MD PnP Interoperability Lab in Cambridge, MA. This document offers readers a targeted glimpse of key design features of that implementation that pertain specifically to the PCA Infusion Safety application.</p>
+  </dd>
+
+  <dt>
+    <a target="_blank" href="https://github.com/mdpnp/hello-openice">Hello, OpenICE!</a>
+  </dt>
+  <dd>
+    <p>Want to use the OpenICE platform for something new? Write your own OpenICE app! The code repo hello-openice will help you tackle basic device subscription, vital signs collection, and more.</p>
+  </dd>
+
+  {% for doc in site.devdocs %}
+    {% if doc.title-sm %}
+      <dt>
+        <a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
+      </dt>
+      <dd>
+        <p>{{ doc.description }}</p>
+      </dd>
+    {% endif %}
+  {% endfor %}
+
+</dl>
