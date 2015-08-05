@@ -185,6 +185,11 @@ body {
 
 /******     LANDING PAGE     ******/
 
+.section-heading {
+  font-weight: 300;
+  font-size: 3em;
+}
+
 .splash-screen {
   position: relative;
   overflow: hidden;
@@ -374,8 +379,6 @@ body {
   color: #FFF;
   margin-top: 0;
   margin-bottom: 45px;
-  font-weight: 300;
-  font-size: 3em;
 }
 .landing-link {
   padding: 10px 5px 5px 5px;
@@ -451,6 +454,9 @@ body {
 .docs-toc {
   margin-top: 50px;
   margin-bottom: 75px;
+}
+.docs-toc h3 {
+  font-weight: 300;
 }
 .docs-toc dl {
   margin: 0;

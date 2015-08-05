@@ -49,9 +49,9 @@ title: OpenICE
   <div class="container">
     <div class="row">
       <div class="col-md-5">
-        <h1 class="whatis__title">What is OpenICE?</h1>
+        <h1 class="whatis__title section-heading">What is OpenICE?</h1>
         <p class="whatis__p">OpenICE is an initiative to create a community implementation of an Integrated Clinical Environment. The initiative encompasses not only software implementation but also an architecture for a wider clinical ecosystem to enable new avenues of clinical research. OpenICE seeks to integrate an inclusive framework of healthcare devices and clinical applications to existing Healthcare IT ecosystems.</p>
-        <p class="whatis__p">To learn more about OpenICE, check out our <a href="{{ site.url }}/docs/1_overview.html" class="">documentation</a>.</p>
+        <p class="whatis__p">To learn more about OpenICE, check out our <a href="{{ site.url }}/docs/1_overview.html">documentation</a>.</p>
       </div>
 
       <div class="col-md-7">
@@ -67,7 +67,7 @@ title: OpenICE
 <section class="section-landing-link">
   <div class="section-landing-link-back"></div>
   <div class="landing-container">
-    <h1 class="landing-link-heading">Innovation Through Cooperation</h1>
+    <h1 class="landing-link-heading section-heading">Explore Further</h1>
     <div class="landing-link col-xs-12 col-sm-6 col-lg-3">
       <a id="landing-link-demo" href="./demo.html">
         <img class="landing-link-image" width="350" height="500" alt="OpenICE Web Demo" src="{{site.url}}/assets/tile-demo.jpg" />
@@ -100,50 +100,38 @@ title: OpenICE
 
 
 <section class="docs-toc container">
-  <h1>Documentation</h1>
+  <h1 class="section-heading">Documentation</h1>
 
   <div class="col-md-6">
-    <h3 id="docs" class="">User Docs</h3>
+    <h3 id="docs">User Docs</h3>
     <dl class="dl-horizontal">
       {% for doc in site.docs %}
         {% if doc.title-sm %}
-          <dt class="">
-            <a class="" href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
-          </dt>
-          <dd class="">
-            <p class="">{{ doc.description }}</p>
-          </dd>
+          <dt><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></dt>
+          <dd><p>{{ doc.description }}</p></dd>
         {% endif %}
       {% endfor %}
     </dl>
   </div>
 
   <div class="col-md-6">
-    <h3 id="dev" class="">For Developers</h3>
+    <h3 id="dev">For Developers</h3>
     <dl class="dl-horizontal">
 
-      <dt class="" style="overflow:visible;">
-        <a class="" target="_blank" href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw">Architecture Description</a>
-      </dt>
-      <dd class="">
-        <p class="">The Infusion Safety Application Architecture Description provides a high-level survey of key architectural components of the current implementation of an Integrated Clinical Environment (ICE) devised at the MD PnP Interoperability Lab in Cambridge, MA. This document offers readers a targeted glimpse of key design features of that implementation that pertain specifically to the PCA Infusion Safety application.</p>
+      <dt style="overflow:visible;"><a target="_blank" href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw">Architecture Description</a></dt>
+      <dd>
+        <p>The Infusion Safety Application Architecture Description provides a high-level survey of key architectural components of the current implementation of an Integrated Clinical Environment (ICE) devised at the MD PnP Interoperability Lab in Cambridge, MA. This document offers readers a targeted glimpse of key design features of that implementation that pertain specifically to the PCA Infusion Safety application.</p>
       </dd>
 
-      <dt class="">
-        <a class="" target="_blank" href="https://github.com/mdpnp/hello-openice">Hello, OpenICE!</a>
-      </dt>
-      <dd class="">
-        <p class="">Want to use the OpenICE platform for something new? Write your own OpenICE app! The code repo hello-openice will help you tackle basic device subscription, vital signs collection, and more.</p>
+      <dt><a target="_blank" href="https://github.com/mdpnp/hello-openice">Hello, OpenICE!</a></dt>
+      <dd>
+        <p>Want to use the OpenICE platform for something new? Write your own OpenICE app! The code repo hello-openice will help you tackle basic device subscription, vital signs collection, and more.</p>
       </dd>
 
       {% for doc in site.devdocs %}
         {% if doc.title-sm %}
-          <dt class="">
-            <a class="" href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a>
-          </dt>
-          <dd class="">
-            <p class="">{{ doc.description }}</p>
-          </dd>
+          <dt><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></dt>
+          <dd><p>{{ doc.description }}</p></dd>
         {% endif %}
       {% endfor %}
 
@@ -174,38 +162,38 @@ title: OpenICE
 
 
 <section class="videos container">
-  <h1>Videos</h1>
+  <h1 class="section-heading">Videos</h1>
 
   <div class="col-md-6 video-tile">
     <div class="embed-responsive embed-responsive-16by9">
       <iframe src="https://player.vimeo.com/video/116693950" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
-    <a class="" href="https://vimeo.com/116693950" target="_blank">MD PnP Lab Tour</a>
-    <p class="">The lab here at MD PnP is constantly expanding it's capabilities and collaborations. Check out our current capabilities, equipment and infrastructure.</p>
+    <a href="https://vimeo.com/116693950" target="_blank">MD PnP Lab Tour</a>
+    <p>The lab here at MD PnP is constantly expanding it's capabilities and collaborations. Check out our current capabilities, equipment and infrastructure.</p>
   </div>
 
   <div class="col-md-6 video-tile">
     <div class="embed-responsive embed-responsive-16by9">
       <iframe src="https://player.vimeo.com/video/116917809" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
-    <a class="" href="https://vimeo.com/116917809" target="_blank">OpenICE Technical Intro</a>
-    <p class="">Take an in depth look at OpenICE in this technical presentation. Lead developer Jeff Plourde explains the fundamentals of our distributed system and our use of the DDS middleware. After viewing this webinar, you will understand the basic operating principles of OpenICE.</p>
+    <a href="https://vimeo.com/116917809" target="_blank">OpenICE Technical Intro</a>
+    <p>Take an in depth look at OpenICE in this technical presentation. Lead developer Jeff Plourde explains the fundamentals of our distributed system and our use of the DDS middleware. After viewing this webinar, you will understand the basic operating principles of OpenICE.</p>
   </div>
 
   <div class="col-md-6 video-tile">
     <div class="embed-responsive embed-responsive-16by9">
       <iframe src="https://player.vimeo.com/video/116916484"webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
-    <a class="" href="https://vimeo.com/116916484" target="_blank">OpenICE Overview</a>
-    <p class="">Learn more about the OpenICE platform and where to find the software from this quick webinar!</p>
+    <a href="https://vimeo.com/116916484" target="_blank">OpenICE Overview</a>
+    <p>Learn more about the OpenICE platform and where to find the software from this quick webinar!</p>
   </div>
 
   <div class="col-md-6 video-tile">
     <video controls preload="none" poster="{{ site.url }}/assets/webinar-poster.png">
       <source src="http://webcasts.prismtech.com/files/webcasts/DDS-MD-PnP-Healthcare-WebcastNov2014.mp4" type="video/mp4">
     </video>
-    <a class="" href="http://webcasts.prismtech.com/files/webcasts/DDS-MD-PnP-Healthcare-WebcastNov2014.mp4" target="_blank">MDPnP/PrismTech Webinar</a>
-    <p class="">Checkout the members of the MD PnP team presenting in PrismTech's webinar "Harnessing DDS in Next Generation Healthcare Systems Webcast." Learn about DDS and it's use in the OpenICE prototype.</p>
+    <a href="http://webcasts.prismtech.com/files/webcasts/DDS-MD-PnP-Healthcare-WebcastNov2014.mp4" target="_blank">MDPnP/PrismTech Webinar</a>
+    <p>Checkout the members of the MD PnP team presenting in PrismTech's webinar "Harnessing DDS in Next Generation Healthcare Systems Webcast." Learn about DDS and it's use in the OpenICE prototype.</p>
   </div>
 </section>
 
