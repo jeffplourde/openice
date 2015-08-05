@@ -3,7 +3,10 @@ layout: blog
 title: First Three Days with Intel Edison
 title-sm: First Days with Edison
 author: Jeff Plourde, Jeff Peterson
-tags: Edison OpenICE 
+description: When the OpenICE team recently had an opportunity to begin exploration with Edison we weren't sure what to expect. Edison met our expectations and did so in a remarkably small form factor.
+tags: Edison OpenICE
+twitter-card-type: summary_large_image
+twitter-card-image: /assets/blog/edison-cover.jpg
 ---
 <img alt="Intel Edison" src="{{ site.url }}/assets/blog/inteledison.jpg" style="max-width:100%;">
 

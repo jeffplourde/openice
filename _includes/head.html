@@ -5,11 +5,19 @@
 <meta name="description" content="OpenICE is a community implementation of the Integrated Clinical Environment.  The initiative seeks seamless connectivity to increase patient safety."/>
 <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
 
-<title>{% if page.title %}{{ page.title }}{% else %}OpenICE | MD PnP{% endif %}</title>
+<title>{% if page.title %}{{ page.title }}{% else %}OpenICE{% endif %}</title>
 <meta name="author" content="Jeff Peterson,Jeff Plourde" />
 
-<link href="{{site.url}}/assets/favicon.ico" rel="shortcut icon">
-<!-- <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}"> -->
+<link href="{{ site.url }}/assets/favicon.ico" rel="shortcut icon">
+<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+
+{% if page.twitter-card-type %}
+  <meta name="twitter:card" content="{{ page.twitter-card-type }}" />
+  <meta name="twitter:site" content="@RandallJonesSim" />
+  <meta name="twitter:title" content="{{ page.title }}" />
+  <meta name="twitter:description" content="{{ page.description }}" />
+  <meta name="twitter:image" content="{{ page.twitter-card-image | prepend: site.url }}" />
+{% endif %}
 
 <link rel="stylesheet" href="{{site.url}}/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{site.url}}/lib/fontawesome/css/font-awesome.min.css">
