@@ -13,6 +13,7 @@
 }
 .blog-post-list {
   margin-bottom: 75px;
+  overflow: hidden;
 }
 .blog-list-title {
   text-decoration: none;
@@ -45,6 +46,17 @@
 .blog-excerpt h3 {
   font-size: 12px;
 }
+.blog-excerpt img {
+  float: left;
+  max-width: 250px;
+  margin-right: 50px;
+}
+@media (max-width: 480px) {
+  .blog-excerpt p {
+    clear: both;
+  }
+}
+
 .blog-continue {
   font-size: 1.25em;
 }
@@ -87,4 +99,13 @@
   transition-timing-function: ease-out;
   padding-left: 0;
   color: #333;
+}
+.blog-paginator__button--disabled {
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  color: #777;
+  cursor: not-allowed;
 }

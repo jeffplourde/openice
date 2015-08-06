@@ -15,7 +15,8 @@ The OpenICE software has been tested on BeagleBone Black and Raspberry Pi.  But 
 [latest images](http://beagleboard.org/latest-images)
 
 Configure a microsd card with debian on another ubuntu computer
-xzcat bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb.img.xz | pv | dd of=/dev/sdX bs=1024K
+
+`xzcat bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb.img.xz | pv | dd of=/dev/sdX bs=1024K`
 
 Insert the microsd card into the BBB. Power up and this will boot Debian from the microsd card.
 
@@ -25,9 +26,7 @@ Insert the microsd card into the BBB. Power up and this will boot Debian from th
 
 ###Change debian user password
 
-sudo passwd debian
-debian
-debian
+`sudo passwd debian`
 
 for consistency you might like to change the helpful hint in /etc/issue and /etc/issue.net
 
@@ -35,26 +34,27 @@ for consistency you might like to change the helpful hint in /etc/issue and /etc
 
 A lot of wifi adapters are supported out the box.  The ones we use become interface ra1
 so this block is helpful to add to 
-/etc/network/interfaces
+`/etc/network/interfaces`
 
-auto ra0
-iface ra0 inet dhcp
-        wpa-ssid "MDPNP-JSN"
-        wpa-psk "********"
+	auto ra0
+	iface ra0 inet dhcp
+	        wpa-ssid "MDPNP-JSN"
+	        wpa-psk "********"
 
 ###Set a hostname
 
-echo HOSTNAME > /etc/hostname
+`echo HOSTNAME > /etc/hostname`
 
-save some aggravation and make sure the host name resolves by adding to /etc/hosts
- 127.0.0.1    localhost.localdomain localhost
- 127.0.1.1    my-machine
+save some aggravation and make sure the host name resolves by adding to `/etc/hosts`
+
+	127.0.0.1    localhost.localdomain localhost
+	127.0.1.1    my-machine
 
 REBOOT
 
 ###Update package information
 
-sudo apt-get update
+`sudo apt-get update`
 
 ###Install java
 
@@ -63,65 +63,79 @@ sudo apt-get update
 ###ACPI (power button)
 
 ensure that the ACPId package is installed
-sudo apt-get install acpid
+
+`sudo apt-get install acpid`
 
 ###unzip
 
 now is a good time to install zip
-sudo apt-get install unzip
+
+`sudo apt-get install unzip`
 
 ###TimeZone
 
 To interpret data from devices that do not emit their timezone (most) one should configure the timezone on the ARM device.  
-dpkg-reconfigure tzdata
+
+`dpkg-reconfigure tzdata`
 
 ###serial port permissions
 
 For some reason ttyOx get root/dialout (like an external modem?) Until I figure out how to change default ownership/permissions I've been adding the debian user to the permissioned groups.
-sudo usermod -a -G tty debian
-sudo usermod -a -G dialout debian
+
+`sudo usermod -a -G tty debian`
+
+`sudo usermod -a -G dialout debian`
 
 ###device-adapter service
 
 Add the new device to the targets file in the repo
-execute buildAndDeploy.sh
-Create a device.this file with domain and device information
-create /home/debian/log for log files
+
+- execute `./buildAndDeploy.sh`
+- create a device.this file with domain and device information on the new device
+- create /home/debian/log for log files
 
 ###Time Synchronization
 
 Synchronizing time between devices enables a lot of powerful capabilities combined with things like DesinationOrder QoS and Lifespan QoS.
-sudo apt-get install ntp
-to install ntpd and keep the device in sync.  servers can then be specified in /etc/ntp.conf
+
+`sudo apt-get install ntp` to install ntpd and keep the device in sync.  servers can then be specified in /etc/ntp.conf
+
 we also specify a local NTP server on our lab network with DHCP option 42
 
 ###enable private key ssh authentication
 
-Copy public key to ~/.ssh/authorized_keys on the beaglebone
-Ensure no read/write except for user on ~/.ssh/authorized_keys
-On source computer with private key ID_RSA to access beaglebone at BEAGLEADDRESS create an entry in ~/.ssh/config
-Host BEAGLEADDRESS
-    IdentityFile ~/.ssh/ID_RSA
+Copy public key to `~/.ssh/authorized_keys` on the beaglebone
+
+Ensure no read/write except for user on `~/.ssh/authorized_keys`
+
+On source computer with private key ID_RSA to access beaglebone at BEAGLEADDRESS create an entry in `~/.ssh/config`
+
+	Host BEAGLEADDRESS
+	    IdentityFile ~/.ssh/ID_RSA
 
 ###Disable serial console (getty) on ttyO0
 
-Comment out this line in /etc/inittab
-T0:23:respawn:/sbin/getty -L ttyO0 115200 vt102
+Comment out this line in `/etc/inittab`
 
-Comment out this line in /boot/SOC.sh
-serial_tty=ttyO0
+	T0:23:respawn:/sbin/getty -L ttyO0 115200 vt102
+
+Comment out this line in `/boot/SOC.sh`
+
+	serial_tty=ttyO0
 
 Ok those were great but this actually does it because it's launched by systemd
-sudo systemctl stop serial-getty@ttyO0.service
-sudo systemctl mask serial-getty@ttyO0.service
+
+`sudo systemctl stop serial-getty@ttyO0.service`
+
+`sudo systemctl mask serial-getty@ttyO0.service`
 
 ###Startech USB31000SPTW support
 
-Download the driver for AX88179
-<http://www.asix.com.tw/download.php?sub=downloadsearch&PSNoID=112>
+Download the driver for [AX88179](http://www.asix.com.tw/download.php?sub=downloadsearch&PSNoID=112)
 
 Install headers for most recent kernel
-sudo apt-get install linux-headers-3.8.13-bone71
+
+`sudo apt-get install linux-headers-3.8.13-bone71`
 
 Extract driver, make, make install
 
@@ -146,19 +160,26 @@ beagleboard.org getting started
 ###cpu governor
 
 Under heavy load (stress testing) I've observed hangups due to CPU throttling.  Enabling the 'performance' governor profile helps mitigate the problem.
-sudo apt-get install cpufrequtils
-sudo cpufreq-set -g performance
+
+`sudo apt-get install cpufrequtils`
+
+`sudo cpufreq-set -g performance`
 
 That's not a permanent change.  One way to ensure sysfs gets updated every time:
-sudo apt-get install sysfsutils
-sudo vi /etc/sysfs.conf
-Add a line at the end "devices/system/cpu/cpu0/cpufreq/scaling_governor = performance"
+
+`sudo apt-get install sysfsutils`
+
+Add a line at the end `sudo vi /etc/sysfs.conf`
+
+	devices/system/cpu/cpu0/cpufreq/scaling_governor = performance
+
 move the ondemand script
-sudo mv /etc/init.d/ondemand /etc/init.d/ondemand.bak
+
+`sudo mv /etc/init.d/ondemand /etc/init.d/ondemand.bak`
 
 ###wifi
 
-The latest 12.04.3 build from armhf.com supports the realtek rtl8192cu chipset "out of the box".  we've had success using such adapters with beaglebone black via usb. Ensure the adapter is connected at power-on.  Uncomment relevant wlan0 lines in /etc/network/interfaces.  Execute sudo ifup wlan0 and wait a loong time.  Eventually the adapter will come up!
+The latest 12.04.3 build from armhf.com supports the realtek rtl8192cu chipset "out of the box".  we've had success using such adapters with beaglebone black via usb. Ensure the adapter is connected at power-on.  Uncomment relevant wlan0 lines in `/etc/network/`interfaces.  Execute `sudo ifup wlan0` and wait a loong time.  Eventually the adapter will come up!
 
 ###Empirical power draw
 
@@ -188,7 +209,9 @@ This is a super useful little image that will copy MMC to an sdcard and then can
 ###enable sudo without entering password
 
 <http://jeromejaglale.com/doc/unix/ubuntu_sudo_without_password>
+
 sudo visudo
 
 Add this line at the end (change “jerome” to your username):
-jerome ALL=(ALL) NOPASSWD: ALL
+
+	jerome ALL=(ALL) NOPASSWD: ALL

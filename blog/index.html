@@ -31,13 +31,13 @@ layout: blog
         {% if paginator.previous_page %}
           <li ><a href="{{ paginator.previous_page_path }}">&larr; Previous</a></li>
         {% else %}
-          <li class="disabled"><a href="#">&larr; Previous</a></li>
+          <li><span class="blog-paginator__button--disabled">&larr; Previous</span></li>
         {% endif %}
 
         {% if paginator.next_page %}
           <li><a href="{{ paginator.next_page_path }}">Next &rarr;</a></li>
         {% else %}
-          <li class="disabled"><a href="#">Next &rarr;</a></li>
+          <li><span class="blog-paginator__button--disabled">Next &rarr;</span></li>
         {% endif %}
 
       </ul>
@@ -50,7 +50,7 @@ layout: blog
   </div>
 
 
-  <div class="col-md-3 hidden-xs blognav">
+  <div class="col-md-3 hidden-xs hidden-sm blognav">
     <div id="blognav-affix">
       <h5 class="blognav-title">Previous Posts</h5>
       <ul class="list-unstyled">
