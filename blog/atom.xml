@@ -6,7 +6,7 @@
   <link type="application/atom+xml" href="{{ site.url }}/blog/atom.xml" rel="self"/>
   <link type="text/html" href="{{ site.url }}/blog/" rel="alternate"/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ site.url }}</id>
+  <id>{{ site.url }}/</id>
   <author>
     <name>Jeff Peterson</name>
   </author>
@@ -18,7 +18,7 @@
   {% for post in site.posts limit:20 %}
     <entry>
       <title>{{ post.title }}</title>
-      <link href="{{ post.url }}"/>
+      <link href="{{ post.url | prepend: site.url}}"/>
       <updated>{{ post.date | date_to_xmlschema }}</updated>
       <id>{{ post.url }}</id>
       {% for author in post.author %}
@@ -27,7 +27,10 @@
         </author>
       {% endfor %}
       <published>{{ post.date | date_to_xmlschema }}</published>
-      <content type="html">{{ post.content | xml_escape }}</content>
+      <content type="html">
+        &lt;p&gt;{{ post.excerpt | xml_escape }}&lt;/p&gt;
+        &lt;a href="{{ post.url }}"&gt;Read the full article&lt;/a&gt;
+      </content>
     </entry>
   {% endfor %}
 </feed>
