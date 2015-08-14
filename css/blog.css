@@ -4,6 +4,9 @@
 .blog p {
   margin-bottom: 1.6em;
 }
+.blog img {
+  max-width:100%;
+}
 .blog-header {
   font-weight: 300;
 }

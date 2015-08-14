@@ -20,7 +20,7 @@
       <title>{{ post.title }}</title>
       <link href="{{ post.url | prepend: site.url}}"/>
       <updated>{{ post.date | date_to_xmlschema }}</updated>
-      <id>{{ post.url }}</id>
+      <id>{{ post.url | prepend: site.url}}}}</id>
       {% for author in post.author %}
         <author>
           <name>{{ author }}</name>
