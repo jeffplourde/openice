@@ -12,7 +12,18 @@ layout: blog
       <div class="blog-post-list">
 
         <a href="{{ post.url }}"><span class="blog-list-title">{{ post.title }}</span></a>
-        <span class="blog-author">{{ post.author }}</span>
+        <span class="blog-author">
+          {% assign authorCount = post.author | size %}
+          {% if authorCount == 0 %}
+            No author
+          {% elsif authorCount == 1 %}
+            {{ post.author | first }}
+          {% elsif authorCount == 2 %}
+            {% for author in post.author %}{% if forloop.first %}{{ author }}{% else %} and {{ author }}{% endif %}{% endfor %}
+          {% else %}
+            {% for author in post.author %}{% if forloop.last %} and {{ author }}{% else %}{{ author }}, {% endif %}{% endfor %}
+          {% endif %}
+        </span>
         <span class="blog-date">{{ post.date | date_to_long_string }}</span>
 
         <div class="blog-excerpt">

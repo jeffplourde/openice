@@ -2,7 +2,7 @@
 layout: blog
 title: Serial Interfaces or&#58; How to Not Make an OpenICE Programmer's Life Miserable
 title-sm: Serial Interfaces
-author: Jeff Plourde, Jeff Peterson
+author: [Jeff Plourde, Jeff Peterson]
 description:
 tags: OpenICE serial Device-Adapters
 twitter-card-type: summary

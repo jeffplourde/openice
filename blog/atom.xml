@@ -1,0 +1,33 @@
+---
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text" xml:lang="en">OpenICE Dev Blog - Atom</title>
+  <link type="application/atom+xml" href="{{ site.url }}/blog/atom.xml" rel="self"/>
+  <link type="text/html" href="{{ site.url }}/blog/" rel="alternate"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>{{ site.url }}</id>
+  <author>
+    <name>Jeff Peterson</name>
+  </author>
+  <author>
+    <name>Jeff Plourde</name>
+  </author>
+  <rights>copyright_details</rights>
+
+  {% for post in site.posts limit:20 %}
+    <entry>
+      <title>{{ post.title }}</title>
+      <link href="{{ post.url }}"/>
+      <updated>{{ post.date | date_to_xmlschema }}</updated>
+      <id>{{ post.url }}</id>
+      {% for author in post.author %}
+        <author>
+          <name>{{ author }}</name>
+        </author>
+      {% endfor %}
+      <published>{{ post.date | date_to_xmlschema }}</published>
+      <content type="html">{{ post.content | xml_escape }}</content>
+    </entry>
+  {% endfor %}
+</feed>
