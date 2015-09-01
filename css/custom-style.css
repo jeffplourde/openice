@@ -242,6 +242,7 @@ body {
 }
 .splash-screen__link-demo {
   margin-top: 12px;
+  font-size: 1.5em;
 }
 @media (max-width: 768px) {
   .splash-screen {
