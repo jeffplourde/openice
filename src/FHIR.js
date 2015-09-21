@@ -242,18 +242,18 @@ function ConstructPatientDashboard (pt) {
       element: chart[0],
       width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 70,
       height: 400,
-      renderer: 'line',
+      renderer: 'scatterplot',
       max: 200,
       series: graphData
     });
 
     var x_axis = new Rickshaw.Graph.Axis.Time({
       graph: graph,
-      timeUnit: {
-        name: '1 hour',
-        seconds: 3600 * 1,
-        formatter: function(d) { return moment(d).format('LTS') }
-      }
+      // timeUnit: {
+      //   name: '1 hour',
+      //   seconds: 3600 * 1,
+      //   formatter: function(d) { return moment(d).format('LTS') }
+      // }
     });
 
     var y_axis = new Rickshaw.Graph.Axis.Y({
