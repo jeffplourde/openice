@@ -6,9 +6,9 @@ var observationData = {};
 var refreshTimeout = false;
 var assessments = [];
 
-window.onload = function() {
+$( window ).load(function() {
   PopulatePatientData();
-};
+});
 
 function PopulatePatientData () {
   $.get("https://fhir.openice.info/fhir/Patient?_count=100", function( data ) {
@@ -77,10 +77,13 @@ function ConstructPatientList () {
           .attr('colspan', '2').appendTo(bottomRow);
 
       ptContainer.click(function() { ChangeActivePatient(pt.id, false) }).appendTo('#mrs-patient-list')
-
     })()
-  };
-};
+  }
+
+  // Set patient-list height to itself plus 100px to allow scrolling past the bottom patient on list
+  $('#mrs-patient-list').height($('#mrs-patient-list').height() + 100);
+
+}
 
 function GetPatientObservations () {
   console.log('Getting observations for all patients');
@@ -104,19 +107,21 @@ function GetPatientObservations () {
             status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
 
             if (metric && t && y && device && status) {
-              if ( t > moment().format('X') - 43200 && status === 1) { // Filter out data older than 12 hours
+//              if ( t > moment().format('X') - 43200 && status === 1) { // Filter out data older than 12 hours
                 if (!observationData[pt]) { observationData[pt] = {} };
 
                 if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
                 observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
 
-                // if (!observationData[pt][device + '-' + metric + '-' + 'status']) { observationData[pt][device + '-' + metric + '-' + 'status'] = [] };
+                // if (!observationData[pt][device + '-' + metric + '-' + 'status']) {
+                  // observationData[pt][device + '-' + metric + '-' + 'status'] = []
+                // };
                 // observationData[pt][device + '-' + metric + '-' + 'status'].push({'x':t, 'y':status});
 
                 // if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
                 // observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
-              };
-            };
+//              }
+            }
 
 
             if (pt === '1' && data.entry[j].resource.valueString) {
@@ -348,20 +353,47 @@ function ChangeActivePatient (patientID, override) {
   };
 };
 
-function RefreshData () {
-  if (!refreshTimeout) {
-    patientData = {};
-    observationData = {};
-    activePatient = {};
+// Attach button event listeners
+$( window ).load(function() {
+  $('#button-RefreshData').click(function () {
+    if (!refreshTimeout) {
+      patientData = {};
+      observationData = {};
+      activePatient = {};
+      ShowSplash();
+      PopulatePatientData();
+      console.log('resetting page');
+      refreshTimeout = true;
+      setTimeout(function() { refreshTimeout = false }, 3000);
+    }
+  });
+
+  $('#button-ShowSplash').click(function () {
     ShowSplash();
-    PopulatePatientData();
-    console.log('resetting page');
-    refreshTimeout = true;
-    setTimeout(function() { refreshTimeout = false }, 3000);
-  };
-};
+  });
+
+  $('#button-DeleteActivePatient').click(function () {
+    var r = confirm("Are you sure you would like to DELETE this patient from the FHIR server?");
+    if (r === true) {
+      $.ajax({
+        url: 'https://fhir.openice.info/fhir/Patient/' + activePatient,
+        type: "DELETE"
+      });
+
+      delete patientData[activePatient];
+      delete observationData[activePatient];
+
+      ShowSplash();
+      ConstructPatientList();
+      for (var i = 0; i < Object.keys(observationData).length; i++) {
+        $( '#' + Object.keys(observationData)[i] ).removeClass( 'noData' );
+      }
+    }
+  });
+});
 
 function ShowSplash () {
+  console.log('showing home screen');
   // hide dashboards
   $( '#mrs-demo-dashboardHolder' ).children().hide();
   // hide demo header
@@ -370,30 +402,11 @@ function ShowSplash () {
   $( '#himss-dashboard-splash' ).show();
   // remove active class from patient
   $(document.getElementById("mrs-patient-list").getElementsByClassName('activePt')).removeClass('activePt');
-};
-
-function DeleteActivePatient () {
-  var r = confirm("Are you sure you would like to DELETE this patient from the FHIR server?");
-  if (r === true) {
-    $.ajax({
-      url: 'https://fhir.openice.info/fhir/Patient/' + activePatient,
-      type: "DELETE"
-    })
-
-    delete patientData[activePatient];
-    delete observationData[activePatient];
-
-    ShowSplash();
-    ConstructPatientList();
-    for (var i = 0; i < Object.keys(observationData).length; i++) {
-      $( '#' + Object.keys(observationData)[i] ).removeClass( 'noData' );
-    };
-  };
-};
+}
 
 function UTCtoEpoch (t) {
   return moment(t, moment.ISO_8601).format('X');
-};
+}
 
 // THIS DOESN'T WORK YET
 // $( window ).resize(function () {

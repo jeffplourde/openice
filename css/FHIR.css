@@ -32,6 +32,11 @@
 
 #mrs-patient-list {
     width: 100%;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
 }
 .mrs-ptContainer {
     cursor: pointer;
@@ -101,8 +106,10 @@
 }
 
 #mrs-patient-buttons {
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    left: 0;
+    width: 25%;
     padding: 1px;
 }
 .patient-list-button {

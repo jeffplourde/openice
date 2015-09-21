@@ -44,25 +44,59 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
               <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="./index.html" >OpenICE</a>
+            <a id="navbar-home" class="navbar-brand" href="{{site.url}}/index.html" >OpenICE</a>
           </div>
+
           <div id="main-nav-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="./demo.html">OpenICE Web Demo</a></li>
-                  <li><a href="./diagnostics.html">OpenICE System Diagnostics</a></li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<strong class="caret"></strong></a>
+                <ul id="navbar-software" class="dropdown-menu">
+                  <li><a href="https://github.com/mdpnp/mdpnp/releases/latest" target="_blank">Download OpenICE</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="{{site.url}}/demo.html">Web Monitor Demo</a></li>
+                  <li><a href="{{site.url}}/vitals.html">Visualization App</a></li>
+                  <li><a href="{{site.url}}/diagnostics.html">System Diagnostics</a></li>
                 </ul>
               </li>
-              <li><a href="http://community.openice.info">Community</a></li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs<strong class="caret"></strong></a>
+                <ul id="navbar-docs" class="dropdown-menu">
+                  {% for doc in site.docs %}
+                    {% if doc.title-sm %}
+                      <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                  <li role="separator" class="divider"></li>
+
+                  <li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw/edit" target="_blank">App Architecture</a></li>
+                  <li><a href="https://github.com/mdpnp/hello-openice" target="_blank">Hello, OpenICE!</a></li>
+
+                  {% for doc in site.devdocs %}
+                    {% if doc.title-sm %}
+                      <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                </ul>
+              </li>
+
+              <li><a id="navbar-community" href="http://community.openice.info">Community</a></li>
+              <li><a id="navbar-blog" href="{{ site.url }}/blog">Blog</a></li>
+
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
+              <li><a id="navbar-mdpnp" href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
             </ul>
+
           </div>
         </div>
       </nav>
+
     </section>
     <section id="mrs-demo">
       <div class="mrs-container">
@@ -73,10 +107,10 @@
             </div>
             <div id="mrs-patient-buttons" class="btn-group btn-group-justified" role="group">
               <div class="btn-group" role="group">
-                <a type="button" class="patient-list-button btn btn-primary" onclick="ShowSplash()">Home</a>
+                <div type="button" id="button-ShowSplash" class="patient-list-button btn btn-primary">Home</div>
               </div>
               <div class="btn-group" role="group">
-                <a type="button" class="patient-list-button btn btn-primary" onclick="RefreshData()">Refresh</a>
+                <a type="button" id="button-RefreshData" class="patient-list-button btn btn-primary">Refresh</a>
               </div>
             </div>
           </div>
@@ -103,7 +137,7 @@
               </table>
               <div class="header-holder">
                 <span class="header-title">Patient Vital Signs Dashboard</span>
-                <a type="button" class="header-button btn btn-danger" onclick="DeleteActivePatient()">Delete Patient</a>
+                <a type="button" id="button-DeleteActivePatient" class="header-button btn btn-danger">Delete Patient</a>
               </div>
             </div>
             <ul id="mrs-demo-dashboardHolder"></ul>
@@ -128,7 +162,6 @@
               <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" id="chevdown"></span>
               <!-- <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p> -->
               <div id="bottom">
-                <hr class=featurette divider> <!-- katharine add -->
                 <span class="fa fa-heartbeat" aria-hidden="true" id="heartbeat"></span> <!-- katharine add -->
                 <p class="himss-header-subtitle">In an effort to eliminate erroneous vital signs data from clinical data repositories, some EMR vendors require that all vital signs data be manually 'validated' by a nurse or clinician before the data enters the EMR. This manual validation process introduces delays in data propagation to clinical decision support systems as well as introduces human selection bias by nurses and clinicians choosing not to validate correct but irregular data points.</p>
                 <p class="himss-header-subtitle">Our proposed automatic validation algorithm application enables Integrated Clinical Environments (ICEs) to provide EMRs with accurate, pre-validated vital signs data through the use of digital signal processing, statistics, and business rules.</p>
