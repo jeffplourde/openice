@@ -16,6 +16,7 @@ function PopulatePatientData () {
 
     if (data.entry && data.entry.length > 0) {
       patientData = {};
+
       for(var i = 0; i < data.entry.length; i++) {
         var pt = data.entry[i].resource;
         // Require given and family name
@@ -25,7 +26,8 @@ function PopulatePatientData () {
 
           if (pt.birthDate) {
             patientData[data.entry[i].resource.id].age = moment().diff(pt.birthDate, 'years');
-          };
+          }
+
           if (pt.gender) {
             switch (patientData[data.entry[i].resource.id].gender) {
               case 'male' || 'Male' || 'MALE' || 'M' || 'm' :
@@ -37,23 +39,28 @@ function PopulatePatientData () {
               default:
                 console.log('Invalid gender format on pt', pt.id);
             }
-          };
+          }
         } else {
-          console.log('Patient data omitted from list due to missing name value. ID: ', pt.id ? pt.id : '')
-        };
-      };
+          console.log('Patient data omitted from list due to missing name value. PID: ', pt.id ? pt.id : '')
+        }
+      }
+
       ConstructPatientList();
       GetPatientObservations();
+
     } else {
       alert('No patients to display');
       console.log('FHIR query to fhir.openice.info/Patient returned no data.entry');
-    };
+    }
+  }).fail(function () {
+    jQuery('<p/>', { 'class': 'mrs-patient-list-none' }).html('Sorry, something has gone wrong with our FHIR server.').appendTo('#mrs-patient-list');
   });
+
   return patientData;
-};
+}
 
 function ConstructPatientList () {
-  console.log('construct patient list');
+  console.log('constructing patient list');
 
   document.getElementById('mrs-patient-list').innerHTML = null;
 
@@ -82,7 +89,6 @@ function ConstructPatientList () {
 
   // Set patient-list height to itself plus 100px to allow scrolling past the bottom patient on list
   $('#mrs-patient-list').height($('#mrs-patient-list').height() + 100);
-
 }
 
 function GetPatientObservations () {
@@ -107,7 +113,7 @@ function GetPatientObservations () {
             status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
 
             if (metric && t && y && device && status) {
-//              if ( t > moment().format('X') - 43200 && status === 1) { // Filter out data older than 12 hours
+             // if ( t > moment().format('X') - 43200 && status === 1) {   // Filter out data older than 12 hours
                 if (!observationData[pt]) { observationData[pt] = {} };
 
                 if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
@@ -120,9 +126,8 @@ function GetPatientObservations () {
 
                 // if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
                 // observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
-//              }
+             // }
             }
-
 
             if (pt === '1' && data.entry[j].resource.valueString) {
               var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
@@ -132,12 +137,12 @@ function GetPatientObservations () {
               console.log(t, label, message);
 
               if (t && label && message) {
-                if ( t > moment().format('X') - 43200) { // Filter out data older than 12 hours
+                // if ( t > moment().format('X') - 43200) {   // Filter out data older than 12 hours
                   assessments.push({'t': t, 'ass': label + '-' + message});
-                };
-              };
-            };
-          };
+                // }
+              }
+            }
+          }
 
           if (assessments) {
             // Sort metric observations by time
@@ -145,8 +150,8 @@ function GetPatientObservations () {
               assessments.sort(function (a, b) {
                 return a.t - b.t
               });
-            };
-          };
+            }
+          }
           // console.log(observationData[pt]);
 
           if (observationData[pt]) {
@@ -155,21 +160,22 @@ function GetPatientObservations () {
               observationData[pt][Object.keys(observationData[pt])[k]].sort(function (a, b) {
                 return a.x - b.x
               });
-            };
+            }
 
             ConstructPatientDashboard(pt);
             patientData[pt].hasData = true;
             $( '#'+pt ).removeClass('noData');
-          };
+
+          }
         } else {
           console.log('No observations found for patient ID', pt);
           patientData[pt].hasData = false;
           $( '#'+pt ).addClass('noData');
         }
-      })
+      });
     })()
   }
-};
+}
 
 function ConstructPatientDashboard (pt) {
   var data = observationData[pt];
@@ -240,7 +246,7 @@ function ConstructPatientDashboard (pt) {
 
     var graph = new Rickshaw.Graph({
       element: chart[0],
-      width: $( '#mrs-demo-dashboardHolder' ).innerWidth() - 70,
+      width: $( '.mrs-demo-container' ).innerWidth() - 70,
       height: 400,
       renderer: 'scatterplot',
       max: 200,
@@ -310,14 +316,13 @@ function ConstructPatientDashboard (pt) {
     // });
 
     graph.render();
-  };
-
+  }
   if (pt === activePatient) { ChangeActivePatient(pt, true) };
-};
+}
 
 function ChangeActivePatient (patientID, override) {
   activePatient = patientID;
-  override = override === null ? false : override;
+  override = override === null ? false : override;   // I don't know why this is here but I'm afraid of deleting it
 
   var selectedPtContainer = document.getElementById(patientID);
 
@@ -330,10 +335,11 @@ function ChangeActivePatient (patientID, override) {
     $(selectedPtContainer).addClass('activePt');
 
     // remove splash screen
-    $( '#himss-dashboard-splash' ).hide();
+    $( '#dashboard-splash' ).hide();
 
-    // show demo header
+    // show demo header and dashboardHolder
     $( '#mrs-demo-header' ).show();
+    $( '#mrs-demo-dashboardHolder' ).show();
 
     // switch dashboard patient header
     // $( '#header-picture' ).html( patientData[patientID].picture || null );
@@ -350,8 +356,25 @@ function ChangeActivePatient (patientID, override) {
   
   } else {
     console.log('Patient selected is already active. PID', patientID);
-  };
-};
+  }
+}
+
+function ShowSplash () {
+  console.log('showing home screen');
+  // hide dashboards
+  $( '#mrs-demo-dashboardHolder' ).children().hide();
+  $( '#mrs-demo-dashboardHolder' ).hide();
+  // hide demo header
+  $( '#mrs-demo-header' ).hide();
+  // show splash screen
+  $( '#dashboard-splash' ).show();
+  // remove active class from patient
+  $(document.getElementById("mrs-patient-list").getElementsByClassName('activePt')).removeClass('activePt');
+}
+
+function UTCtoEpoch (t) {
+  return moment(t, moment.ISO_8601).format('X');
+}
 
 // Attach button event listeners
 $( window ).load(function() {
@@ -391,30 +414,3 @@ $( window ).load(function() {
     }
   });
 });
-
-function ShowSplash () {
-  console.log('showing home screen');
-  // hide dashboards
-  $( '#mrs-demo-dashboardHolder' ).children().hide();
-  // hide demo header
-  $( '#mrs-demo-header' ).hide();
-  // show splash screen
-  $( '#himss-dashboard-splash' ).show();
-  // remove active class from patient
-  $(document.getElementById("mrs-patient-list").getElementsByClassName('activePt')).removeClass('activePt');
-}
-
-function UTCtoEpoch (t) {
-  return moment(t, moment.ISO_8601).format('X');
-}
-
-// THIS DOESN'T WORK YET
-// $( window ).resize(function () {
-//   var pt = Object.keys(patientData);
-//   for (var i = 0; i < pt.length; i++) {
-//     if (pt[i].hasData === true) {
-//       ConstructPatientDashboard(pt[i]);
-//       console.log(pt[i]);
-//     }
-//   }
-// });

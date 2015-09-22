@@ -1,33 +1,40 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+    <meta name="description" content="OpenICE is a community implementation of the Integrated Clinical Environment.  The initiative seeks seamless connectivity to increase patient safety."/>
     <meta name="keywords" content="patient safety, md pnp, mdpnp, ICE, OpenICE, medical device, interoperability, healthcare, integrated clinical environment"/>
-    <meta name="description" content="OpenICE is an initiative to create a community implementation of the ASTM F-2761 standard for the Integrated Clinical Environment.  The initiative encompasses not only software implementation of those functionalities described in the standard but also an architecture for a wider clinical ecosystem that incorporates seamless connectivity to increase patient safety.  OpenICE seeks to provide a framework for the inclusion of healthcare devices and systems into the broader Internet of Things and Industrial Internet efforts."/>
-    <meta name="title" content="MD PnP | OpenICE | Community for the Integrated Clinical Environment"/>
-    
-    <title>FHIR OpenICE Demo</title>
-    
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/custom-style.css">
-    <link rel="stylesheet" href="lib/rickshaw/css/rickshaw.min.css">
-    <link rel="stylesheet" href="css/FHIR.css">
-    
-    <!-- <link rel="stylesheet" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css"> -->
 
-    <link type="text/css" rel="stylesheet" href="lib/jquery-ui/css/jquery-ui.min.css">
+    <title>OpenICE on FHIR</title>
+    <meta name="title" content="OpenICE on FHIR"/>
+    <meta name="author" content="Jeff Peterson" />    
+    
+    <link href="{{ site.url }}/assets/favicon.ico" rel="shortcut icon">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
 
-    <script language="javascript" type="text/javascript" src="lib/jquery/js/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript" src="lib/jquery-ui/js/jquery-ui.min.js"></script>
-    <script language="javascript" type="text/javascript" src="lib/d3/js/d3.min.js"></script>
-    <script language="javascript" type="text/javascript" src="lib/rickshaw/js/rickshaw.min.js"></script>
-    <script language="javascript" type="text/javascript" src="lib/moment/js/moment.min.js"></script>
-    <script language="javascript" type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{site.url}}/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{site.url}}/lib/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{site.url}}/css/custom-style.css">
 
-    <script language="javascript" type="text/javascript" src="build/FHIR.js"></script>
+    <link rel="stylesheet" href="{{site.url}}/css/FHIR.css">
+    <link rel="stylesheet" href="{{site.url}}/lib/rickshaw/css/rickshaw.min.css">
+    <link rel="stylesheet" href="{{site.url}}/lib/jquery-ui/css/jquery-ui.min.css">
+
+    <script type="text/javascript" src="{{site.url}}/lib/respond/js/respond.min.js"></script>
+    <script type="text/javascript" src="{{site.url}}/lib/jquery/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{site.url}}/lib/jquery-ui/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{site.url}}/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{site.url}}/lib/d3/js/d3.min.js"></script>
+    <script type="text/javascript" src="{{site.url}}/lib/rickshaw/js/rickshaw.min.js"></script>
+    <script type="text/javascript" src="{{site.url}}/lib/moment/js/moment.min.js"></script>
+
+    <script type="text/javascript" src="{{site.url}}/build/FHIR.js"></script>
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -37,140 +44,131 @@
     </script>
   </head>
   <body>
-    <section id="splash">
-      <nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
-              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-            </button>
-            <a id="navbar-home" class="navbar-brand" href="{{site.url}}/index.html" >OpenICE</a>
-          </div>
-
-          <div id="main-nav-collapse" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<strong class="caret"></strong></a>
-                <ul id="navbar-software" class="dropdown-menu">
-                  <li><a href="https://github.com/mdpnp/mdpnp/releases/latest" target="_blank">Download OpenICE</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="{{site.url}}/demo.html">Web Monitor Demo</a></li>
-                  <li><a href="{{site.url}}/vitals.html">Visualization App</a></li>
-                  <li><a href="{{site.url}}/diagnostics.html">System Diagnostics</a></li>
-                </ul>
-              </li>
-
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs<strong class="caret"></strong></a>
-                <ul id="navbar-docs" class="dropdown-menu">
-                  {% for doc in site.docs %}
-                    {% if doc.title-sm %}
-                      <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
-                    {% endif %}
-                  {% endfor %}
-
-                  <li role="separator" class="divider"></li>
-
-                  <li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw/edit" target="_blank">App Architecture</a></li>
-                  <li><a href="https://github.com/mdpnp/hello-openice" target="_blank">Hello, OpenICE!</a></li>
-
-                  {% for doc in site.devdocs %}
-                    {% if doc.title-sm %}
-                      <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
-                    {% endif %}
-                  {% endfor %}
-
-                </ul>
-              </li>
-
-              <li><a id="navbar-community" href="http://community.openice.info">Community</a></li>
-              <li><a id="navbar-blog" href="{{ site.url }}/blog">Blog</a></li>
-
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-              <li><a id="navbar-mdpnp" href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
-            </ul>
-
-          </div>
+    <nav id="main-navbar" class="navbar navbar-default lead" role="navigation" style="margin-bottom:0px">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </button>
+          <a id="navbar-home" class="navbar-brand" href="{{site.url}}/index.html" >OpenICE</a>
         </div>
-      </nav>
 
-    </section>
-    <section id="mrs-demo">
-      <div class="mrs-container">
-        <div class="row">
-          <div class="mrs-patient-listHolder col-sm-3">
-            <div id="mrs-patient-list">
-              <p>No Patients to Display</p>
-            </div>
-            <div id="mrs-patient-buttons" class="btn-group btn-group-justified" role="group">
-              <div class="btn-group" role="group">
-                <div type="button" id="button-ShowSplash" class="patient-list-button btn btn-primary">Home</div>
-              </div>
-              <div class="btn-group" role="group">
-                <a type="button" id="button-RefreshData" class="patient-list-button btn btn-primary">Refresh</a>
-              </div>
-            </div>
+        <div id="main-nav-collapse" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Software<strong class="caret"></strong></a>
+              <ul id="navbar-software" class="dropdown-menu">
+                <li><a href="https://github.com/mdpnp/mdpnp/releases/latest" target="_blank">Download OpenICE</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{site.url}}/demo.html">Web Monitor Demo</a></li>
+                <li><a href="{{site.url}}/vitals.html">Visualization App</a></li>
+                <li><a href="{{site.url}}/diagnostics.html">System Diagnostics</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs<strong class="caret"></strong></a>
+              <ul id="navbar-docs" class="dropdown-menu">
+                {% for doc in site.docs %}
+                  {% if doc.title-sm %}
+                    <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
+                  {% endif %}
+                {% endfor %}
+
+                <li role="separator" class="divider"></li>
+
+                <li><a href="https://docs.google.com/document/d/1g1zYd3kdxk8tL3zzkTJM38ied9Mi-prGTvvsf9LkDJw/edit" target="_blank">App Architecture</a></li>
+                <li><a href="https://github.com/mdpnp/hello-openice" target="_blank">Hello, OpenICE!</a></li>
+
+                {% for doc in site.devdocs %}
+                  {% if doc.title-sm %}
+                    <li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title-sm }}</a></li>
+                  {% endif %}
+                {% endfor %}
+
+              </ul>
+            </li>
+
+            <li><a id="navbar-community" href="http://community.openice.info">Community</a></li>
+            <li><a id="navbar-blog" href="{{ site.url }}/blog">Blog</a></li>
+
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a id="navbar-mdpnp" href="http://www.mdpnp.org" target="_blank">MDPnP.org</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <div class="mrs-container">
+
+      <div class="mrs-patient-listHolder">
+        <div id="mrs-patient-list">
+          <p class="mrs-patient-list-none">No Patients to Display</p>
+        </div>
+        <div id="mrs-patient-buttons" class="btn-group btn-group-justified" role="group">
+          <div class="btn-group" role="group">
+            <div type="button" id="button-ShowSplash" class="patient-list-button btn btn-primary">Home</div>
           </div>
-          <div class="mrs-demo-container col-sm-9 col-sm-offset-3">
-            <div id="mrs-demo-header" style="display:none">
-              <table id="mrs-demo-patientHeader">
-                <tr>
-                  <td id="header-picture" rowspan="2"><span class="glyphicon glyphicon-user"></span></td>
-                  <td class="header-top" id="header-familyName"></td>
-                  <td class="header-top" id="header-givenName"></td>
-                  <td class="header-top" id="header-birthDate"></td>
-                  <td class="header-top" id="header-age"></td>
-                  <td class="header-top" id="header-gender"></td>
-                  <td class="header-top" id="header-mrn"></td>
-                </tr>
-                <tr>
-                  <td class="header-bottom" id="header-familyName-label">Family Name</td>
-                  <td class="header-bottom" id="header-givenName-label">Given Name</td>
-                  <td class="header-bottom" id="header-birthDate-label">Birthdate</td>
-                  <td class="header-bottom" id="header-age-label">Age</td>
-                  <td class="header-bottom" id="header-gender-label">Gender</td>
-                  <td class="header-bottom" id="header-mrn-label">Medical Record Number</td>
-                </tr>
-              </table>
-              <div class="header-holder">
-                <span class="header-title">Patient Vital Signs Dashboard</span>
-                <a type="button" id="button-DeleteActivePatient" class="header-button btn btn-danger">Delete Patient</a>
-              </div>
-            </div>
-            <ul id="mrs-demo-dashboardHolder"></ul>
-            <div id="himss-dashboard-splash">
-              <div class="container-title"> <!-- katharine add -->
-                <h1 class="himss-header-title">OpenICE Validation App</h1>
-              </div> <!-- katharine add -->
-              <h1 class="himss-header-subtitle">Auto-Validation of Medical Device for EMR Data Entry</h1>
-              <div class="col-md-6">
-                <ul class="himss-header-list">
-                  <li>- No Delays to Clinical Decision Support</li>
-                  <li>- No Human Selection Bias</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <ul class="himss-header-list">
-                  <li>+ Comprehensive accurate dataset</li>
-                  <li>+ Real time data</li>
-                </ul>
-              </div>
-              <img src="./assets/himss-diagram.png" class="himss-header-diagram fadeIn">
-              <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" id="chevdown"></span>
-              <!-- <p class="himss-header-subtitle">Interoperable medical devices enable Integrated Clinical Environments (ICE) to provide EMRs with accurate vital signs data through the use of digital signal processing, statistics, and business rules.</p> -->
-              <div id="bottom">
-                <span class="fa fa-heartbeat" aria-hidden="true" id="heartbeat"></span> <!-- katharine add -->
-                <p class="himss-header-subtitle">In an effort to eliminate erroneous vital signs data from clinical data repositories, some EMR vendors require that all vital signs data be manually 'validated' by a nurse or clinician before the data enters the EMR. This manual validation process introduces delays in data propagation to clinical decision support systems as well as introduces human selection bias by nurses and clinicians choosing not to validate correct but irregular data points.</p>
-                <p class="himss-header-subtitle">Our proposed automatic validation algorithm application enables Integrated Clinical Environments (ICEs) to provide EMRs with accurate, pre-validated vital signs data through the use of digital signal processing, statistics, and business rules.</p>
-              </div>
-              
-            </div>
+          <div class="btn-group" role="group">
+            <a type="button" id="button-RefreshData" class="patient-list-button btn btn-primary">Refresh</a>
           </div>
         </div>
       </div>
-    </section>
+
+      <div class="mrs-demo-container">
+        <div id="mrs-demo-header" style="display:none">
+          <table id="mrs-demo-patientHeader">
+            <tr>
+              <td id="header-picture" rowspan="2"><span class="glyphicon glyphicon-user"></span></td>
+              <td class="header-top" id="header-familyName"></td>
+              <td class="header-top" id="header-givenName"></td>
+              <td class="header-top" id="header-birthDate"></td>
+              <td class="header-top" id="header-age"></td>
+              <td class="header-top" id="header-gender"></td>
+              <td class="header-top" id="header-mrn"></td>
+            </tr>
+            <tr>
+              <td class="header-bottom" id="header-familyName-label">Family Name</td>
+              <td class="header-bottom" id="header-givenName-label">Given Name</td>
+              <td class="header-bottom" id="header-birthDate-label">Birthdate</td>
+              <td class="header-bottom" id="header-age-label">Age</td>
+              <td class="header-bottom" id="header-gender-label">Gender</td>
+              <td class="header-bottom" id="header-mrn-label">Medical Record Number</td>
+            </tr>
+          </table>
+          <div class="header-holder">
+            <span class="header-title">Patient Vital Signs Dashboard</span>
+            <a type="button" id="button-DeleteActivePatient" class="header-button btn btn-danger">Delete Patient</a>
+          </div>
+        </div>
+
+        <ul id="mrs-demo-dashboardHolder" style="display:none"></ul>
+
+        <div id="dashboard-splash">
+          <div class="dashboard-splash__background"></div>
+
+          <div class="dashboard-splash__title-container fadeIn">
+            <div class="dashboard-splash__title">OpenICE on FHIR</div>
+            
+            <span class="dashboard-splash__heartbeat fa fa-heartbeat" aria-hidden="true"></span>
+
+            <p class="dashboard-splash__subtitle">
+              A prototype application for viewing FHIR exported OpenICE data
+            </p>
+
+            <p class="dashboard-splash__p">
+              In an effort to enable key data integration functionality, OpenICE has prototyped a medical device data export app with HL7 FHIR. This functionality enables clinical applications like EMR flowsheets to recieve OpenICE data from a standard FHIR interface. This web application retrieves and visualizes patient and observation resource data stored on the HAPI FHIR valadation server at fhir.openice.info. The data in this server was exported by an OpenICE Supervisor running the HL7 Exporter app.
+            </p>
+          </div>
+
+          <!-- <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" id="chevdown"></span> -->
+
+        </div>
+      </div>
+    </div>
   </body>
 </html>

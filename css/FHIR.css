@@ -1,3 +1,6 @@
+html, body {
+    height: 100%;
+}
 #main-navbar {
     position: fixed;
     z-index: 1000;
@@ -6,18 +9,34 @@
     bottom: 50;
 }
 .mrs-container {
+    height: -moz-calc(100% - 52px);
+    height: -webkit-calc(100% - 52px);
+    height: -o-calc(100% - 52px);
+    height: calc(100% - 52px);
     margin-right: auto;
     margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px;
+    position: absolute;
+    top: 52px;
+    bottom: 0;
+    width: 100%;
+}
+.mrs-demo-container {
+    height: 100%;
     position: relative;
-    top: 50px;
+    float: left;
+    width: 78%;
+    min-width: 750px;
+    min-height: 1px;
+    margin-left: 22%;
+    padding: 0;
 }
 
 /* Patient List Stuff */
 
 .mrs-patient-listHolder {
     position: fixed;
+    width: 22%;
+    float: left;
     top: 52px;
     bottom: 0;
     left: 0;
@@ -28,6 +47,7 @@
     padding: 0px;
     background-color: #e5e5e5;
     border-right: 3px solid #ddd;
+    min-height: 1px;
 }
 
 #mrs-patient-list {
@@ -37,6 +57,12 @@
     -moz-user-select: -moz-none;
     -o-user-select: none;
     user-select: none;
+}
+.mrs-patient-list-none {
+    margin: 10px 15px;
+    font-weight: 300;
+    font-size: 1.25em;
+    font-style: italic;
 }
 .mrs-ptContainer {
     cursor: pointer;
@@ -109,7 +135,7 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 25%;
+    width: 22%;
     padding: 1px;
 }
 .patient-list-button {
@@ -120,12 +146,6 @@
 /* End of Patient List Stuff */
 
 
-/* MRS Demo Stuff */
-
-.mrs-demo-container {
-    padding: 0;
-    min-width: 750px;
-}
 
 /* Demo Header Stuff */
 
@@ -191,33 +211,24 @@
 }
 #header-gender {
     width: 10%;
-
 }
 #header-age {
     width: 5%;
-
 }
 #header-birthDate {
     width: 10%;
-
 }
 #header-familyName-label {
-
 }
 #header-givenName-label {
-
 }
 #header-birthDate-label {
-
 }
 #header-age-label {
-
 }
 #header-gender-label {
-
 }
 #header-mrn-label {
-
 }
 .header-holder {
     padding: 15px;
@@ -234,115 +245,62 @@
 
 /* End of Demo Header Stuff */
 
-/* HIMSS Splash Screen */
 
+/* Splash Screen */
 
-
-
-
-
-
-
-
-#himss-dashboard-splash {
+#dashboard-splash {
 
 }
-/*.himss-header-title {
-    margin-top: 0;
-    font-size: 4em;
-    font-weight: 300;
-}*/
-
-.himss-header-title {
-    margin-top: 20px;
-    font-size: 4em;
-    font-weight: 200;
-    text-align: center; /*katharine add*/
-    padding: 50px; /*katharine add*/
-    color: white;
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(179,179,179,0) 70%,rgba(255,255,255,0) 100%);
- /*katharine add*/
+.dashboard-splash__background {
+    background: rgb(59,103,158); /* Old browsers */
+    background: -moz-linear-gradient(-15deg,  rgba(59,103,158,1) 0%, rgba(43,136,217,1) 60%, rgba(125,185,232,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(59,103,158,1)), color-stop(60%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-15deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(125,185,232,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-15deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(125,185,232,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-15deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(125,185,232,1) 100%); /* IE10+ */
+    background: linear-gradient(165deg,  rgba(59,103,158,1) 0%,rgba(43,136,217,1) 60%,rgba(125,185,232,1) 100%); /* W3C */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
 }
-
-.himss-header-diagram {
-    margin: 0 auto 0 auto;
-    width: 100%;
-    display: block;
-}
-.himss-header-list {
-    list-style-type: none;
-    font-size: 2em;
-    font-weight: 300;
-    padding: 0 0 0 10px;
-}
-.himss-header-subtitle {
-    padding: 5px 25px;
-}
-
-
-.container-title {
-    background-image: url(../assets/himss-banner.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-} /*katharine add*/
-
-#chevdown {
-    font-size: 40px;
+.dashboard-splash__title-container {
     text-align: center;
+    color: #FFF;
+}
+.dashboard-splash__title {
+    font-size: 6em;
+    font-weight: 100;
+    margin-top: 125px;
+    margin-bottom: 75px;
+}
+.dashboard-splash__heartbeat {
     display: block;
-    background: -webkit-linear-gradient(rgba(59,103,158,1), rgba(32,124,202,1));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 3em;
     margin-bottom: 30px;
-} /*katharine add*/
-
-#bottom {
-    background-color: rgba(59,103,158,1);
-} /*Katharine add*/
-
-#bottom p {
-    padding: 0px 20px 20px 20px;
-    color: white;
-    font-size: 20px;
-    font-weight: 200;
-    margin-bottom: 0px;
-}/*katharine add*/
-#heartbeat {
-    text-align: center;
-    display: block;
-    font-size: 35px;
-    padding-top: 30px;
-    margin-bottom: 15px;
-    color: white;
-} 
-@media screen and (max-width: 1025px) {
-    .himss-header-subtitle {
-        margin-top: 50px;
-    }
-    .himss-header-diagram {
-        margin-top: 140px;
-        margin-bottom: 40px;
-    }
-    #chevdown {
-        margin-top: 20px;
-        font-size: 50px;
-    }
+    color: #F00;
 }
-    /*katharine add*/
-
-
-
-
-
-
-
-
-
-
-
+.dashboard-splash__subtitle {
+    font-size: 2em;
+    font-weight: 500;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+.dashboard-splash__p {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2em;
+}
 
 
 /* End of HIMSS Splash Screen */
+
 
 /* Dashboard Stuff */
 
@@ -406,5 +364,3 @@
 /* End of Graph Bullshit */
 
 /* End of Dashboard Stuff */
-
-/* End of MRS Demo Stuff */
