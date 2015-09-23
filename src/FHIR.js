@@ -49,8 +49,7 @@ function PopulatePatientData () {
       GetPatientObservations();
 
     } else {
-      alert('No patients to display');
-      console.log('FHIR query to fhir.openice.info/Patient returned no data.entry');
+      console.log('FHIR query to fhir.openice.info/Patient returned no data.');
     }
   }).fail(function () {
     jQuery('<p/>', { 'class': 'mrs-patient-list-none' }).html('Sorry, something has gone wrong with our FHIR server.').appendTo('#mrs-patient-list');
@@ -107,12 +106,13 @@ function GetPatientObservations () {
             var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
             var y = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.value : null;   // get vital sign measurement
             var device = data.entry[j].resource.device ? data.entry[j].resource.device.reference : null;   // get source device
-            var status = data.entry[j].resource.status;   // get validated data - preliminary or final
+//            var status = data.entry[j].resource.status;   // get validated data - preliminary or final
 
             device = device ? device.slice(7) : null;
-            status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
+//            status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
 
-            if (metric && t && y && device && status) {
+//            if (metric && t && y && device && status) {
+            if (metric && t && y && device) {
              // if ( t > moment().format('X') - 43200 && status === 1) {   // Filter out data older than 12 hours
                 if (!observationData[pt]) { observationData[pt] = {} };
 
@@ -226,7 +226,7 @@ function ConstructPatientDashboard (pt) {
 
   // TODO scale y axis and clamp at 225 or something.
     for (var i = 0; i < metrics.length; i++) {
-      if (metrics[i].indexOf('status') < 1) {
+//      if (metrics[i].indexOf('status') < 1) {
         graphData.push({
           name: metrics[i],
           data: data[metrics[i]],
@@ -241,7 +241,7 @@ function ConstructPatientDashboard (pt) {
         //   if (tmp > max) { max = tmp };
         // };
         // graphData[i].ymax = max;
-      };
+//      };
     };
 
     var graph = new Rickshaw.Graph({
