@@ -312,14 +312,19 @@ html, body {
 .mrs-dashboard {
 
 }
-
+.dashboard-no-data {
+    font-weight: 300;
+    font-size: 1.25em;
+    font-style: italic;
+}
 
 /* graph bullshit */
 
 .chartContainer {
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
-    margin: 35px;
+    margin-left: 35px;
+    margin-right: 35px;
 }
 .chartContainer2 {
     position: absolute;

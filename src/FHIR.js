@@ -106,12 +106,12 @@ function GetPatientObservations () {
             var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
             var y = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.value : null;   // get vital sign measurement
             var device = data.entry[j].resource.device ? data.entry[j].resource.device.reference : null;   // get source device
-//            var status = data.entry[j].resource.status;   // get validated data - preliminary or final
+            //            var status = data.entry[j].resource.status;   // get validated data - preliminary or final
 
             device = device ? device.slice(7) : null;
-//            status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
+            //            status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
 
-//            if (metric && t && y && device && status) {
+            //            if (metric && t && y && device && status) {
             if (metric && t && y && device) {
              // if ( t > moment().format('X') - 43200 && status === 1) {   // Filter out data older than 12 hours
                 if (!observationData[pt]) { observationData[pt] = {} };
@@ -158,7 +158,7 @@ function GetPatientObservations () {
             // Sort metric observations by time
             for (var k = 0; k < Object.keys(observationData[pt]).length; k++) {
               observationData[pt][Object.keys(observationData[pt])[k]].sort(function (a, b) {
-                return a.x - b.x
+                return a.x - b.x;
               });
             }
 
@@ -169,8 +169,20 @@ function GetPatientObservations () {
           }
         } else {
           console.log('No observations found for patient ID', pt);
+          
           patientData[pt].hasData = false;
+          
           $( '#'+pt ).addClass('noData');
+          
+          var dashboard = jQuery('<li/>', {
+            id: 'dashboard-' + pt,
+            'class': 'mrs-dashboard'
+          }).hide().appendTo('#mrs-demo-dashboardHolder');
+          
+          jQuery('<div/>', {
+            'class': 'dashboard-no-data'
+          }).html('No FHIR Observation resource data found for this patient.').appendTo(dashboard);
+
         }
       });
     })()
@@ -180,143 +192,142 @@ function GetPatientObservations () {
 function ConstructPatientDashboard (pt) {
   var data = observationData[pt];
 
-  if (data) {
-    console.log('creating dashboard for pt', pt);
+  console.log('creating dashboard for pt', pt);
 
-    var dashboard = jQuery('<li/>', {
-      id: 'dashboard-' + pt,
-      'class': 'mrs-dashboard'
-    }).hide().appendTo('#mrs-demo-dashboardHolder');
+  var dashboard = jQuery('<li/>', {
+    id: 'dashboard-' + pt,
+    'class': 'mrs-dashboard'
+  }).hide().appendTo('#mrs-demo-dashboardHolder');
 
-    var chartContainer = jQuery('<div/>', {
-      id: 'chartContainer-' + pt,
-      'class': 'chartContainer'
-    }).appendTo(dashboard);
+  var chartContainer = jQuery('<div/>', {
+    id: 'chartContainer-' + pt,
+    'class': 'chartContainer'
+  }).appendTo(dashboard);
 
-    var yAxis = jQuery('<div/>', {
-      id: 'yAxis-' + pt,
-      'class': 'yAxis'
-    }).appendTo(chartContainer);
+  var yAxis = jQuery('<div/>', {
+    id: 'yAxis-' + pt,
+    'class': 'yAxis'
+  }).appendTo(chartContainer);
 
-    var chart = jQuery('<div/>', {
-      id: 'chart-' + pt,
-      'class': 'chart'
-    }).appendTo(chartContainer);
+  var chart = jQuery('<div/>', {
+    id: 'chart-' + pt,
+    'class': 'chart'
+  }).appendTo(chartContainer);
 
-    var timelineDiv = jQuery('<div/>', {
-      id: 'timeline-' + pt,
-      'class': 'timeline'
-    }).appendTo(chartContainer);
-    
-    var legendDiv = jQuery('<div/>', {
-      id: 'legend-' + pt,
-      'class': 'chartLegend'
-    }).appendTo(chartContainer);
+  var timelineDiv = jQuery('<div/>', {
+    id: 'timeline-' + pt,
+    'class': 'timeline'
+  }).appendTo(chartContainer);
+  
+  var legendDiv = jQuery('<div/>', {
+    id: 'legend-' + pt,
+    'class': 'chartLegend'
+  }).appendTo(chartContainer);
 
-    // var sliderDiv = jQuery('<div/>', {
-    //   id: 'slider-' + pt,
-    //   'class': 'slider'
-    // }).appendTo(chartContainer);
+  // var sliderDiv = jQuery('<div/>', {
+  //   id: 'slider-' + pt,
+  //   'class': 'slider'
+  // }).appendTo(chartContainer);
 
-    var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
+  var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
-    var graphData = [];
-    var graphData2 = [];
-    var metrics = Object.keys(data);
+  var graphData = [];
+  var graphData2 = [];
+  var metrics = Object.keys(data);
 
-  // TODO scale y axis and clamp at 225 or something.
-    for (var i = 0; i < metrics.length; i++) {
-//      if (metrics[i].indexOf('status') < 1) {
-        graphData.push({
-          name: metrics[i],
-          data: data[metrics[i]],
-          color: palette.color()
-        });
-        // var min = Number.POSITIVE_INFINITY;
-        // var max = Number.NEGATIVE_INFINITY;
-        // var tmp;
-        // for (var j = 0; j < graphData[i].data.length; j++) {
-        //   tmp = graphData[i].data[j].y;
-        //   if (tmp < min) { min = tmp };
-        //   if (tmp > max) { max = tmp };
-        // };
-        // graphData[i].ymax = max;
-//      };
+// TODO scale y axis and clamp at 225 or something.
+  for (var i = 0; i < metrics.length; i++) {
+      //      if (metrics[i].indexOf('status') < 1) {
+      graphData.push({
+        name: metrics[i],
+        data: data[metrics[i]],
+        color: palette.color()
+      });
+      // var min = Number.POSITIVE_INFINITY;
+      // var max = Number.NEGATIVE_INFINITY;
+      // var tmp;
+      // for (var j = 0; j < graphData[i].data.length; j++) {
+      //   tmp = graphData[i].data[j].y;
+      //   if (tmp < min) { min = tmp };
+      //   if (tmp > max) { max = tmp };
+      // };
+      // graphData[i].ymax = max;
+      //      };
+  };
+
+  var graph = new Rickshaw.Graph({
+    element: chart[0],
+    width: $( '.mrs-demo-container' ).innerWidth() - 70,
+    height: 400,
+    renderer: 'scatterplot',
+    max: 200,
+    series: graphData
+  });
+
+  var x_axis = new Rickshaw.Graph.Axis.Time({
+    graph: graph,
+    // timeUnit: {
+    //   name: '1 hour',
+    //   seconds: 3600 * 1,
+    //   formatter: function(d) { return moment(d).format('LTS') }
+    // }
+  });
+
+  var y_axis = new Rickshaw.Graph.Axis.Y({
+    graph: graph,
+    orientation: 'left',
+    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+    element: yAxis[0]
+  });
+
+  var hoverDetail = new Rickshaw.Graph.HoverDetail({
+    graph: graph,
+    xFormatter: function (x) {
+      return moment.unix(x).format('LTS');
+    },
+    formatter: function(series, x, y) {
+      var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+      var yvalue = '<span class="date">' + series.name + ": " + parseInt(y) + '</span>';
+      var date = '<span class="date">' + moment.unix(x).format('ll LTS') + '</span>';
+      var content = swatch + yvalue + '<br>' + date;
+      return content;
+    }
+  });
+
+  var legend = new Rickshaw.Graph.Legend({
+      graph: graph,
+      element: legendDiv[0]
+  });
+  var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+      graph: graph,
+      legend: legend
+  });
+  var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+      graph: graph,
+      legend: legend
+  });
+
+  var annotator = new Rickshaw.Graph.Annotate({
+    graph: graph,
+    element: document.getElementById('timeline-'+pt)
+  });
+
+
+  if (assessments) {
+    for (var i = 0; i < assessments.length; i++) {
+      console.log(assessments[i].t, assessments[i].ass);
+      annotator.add(assessments[i].t, assessments[i].ass);
+      annotator.update();
     };
+  };
 
-    var graph = new Rickshaw.Graph({
-      element: chart[0],
-      width: $( '.mrs-demo-container' ).innerWidth() - 70,
-      height: 400,
-      renderer: 'scatterplot',
-      max: 200,
-      series: graphData
-    });
+  // var slider = new Rickshaw.Graph.RangeSlider.Preview({
+  //   graph: graph,
+  //   element: sliderDiv[0]
+  // });
 
-    var x_axis = new Rickshaw.Graph.Axis.Time({
-      graph: graph,
-      // timeUnit: {
-      //   name: '1 hour',
-      //   seconds: 3600 * 1,
-      //   formatter: function(d) { return moment(d).format('LTS') }
-      // }
-    });
+  graph.render();
 
-    var y_axis = new Rickshaw.Graph.Axis.Y({
-      graph: graph,
-      orientation: 'left',
-      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: yAxis[0]
-    });
-
-    var hoverDetail = new Rickshaw.Graph.HoverDetail({
-      graph: graph,
-      xFormatter: function (x) {
-        return moment.unix(x).format('LTS');
-      },
-      formatter: function(series, x, y) {
-        var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-        var yvalue = '<span class="date">' + series.name + ": " + parseInt(y) + '</span>';
-        var date = '<span class="date">' + moment.unix(x).format('ll LTS') + '</span>';
-        var content = swatch + yvalue + '<br>' + date;
-        return content;
-      }
-    });
-
-    var legend = new Rickshaw.Graph.Legend({
-        graph: graph,
-        element: legendDiv[0]
-    });
-    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-        graph: graph,
-        legend: legend
-    });
-    var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-        graph: graph,
-        legend: legend
-    });
-
-    var annotator = new Rickshaw.Graph.Annotate({
-      graph: graph,
-      element: document.getElementById('timeline-'+pt)
-    });
-
-
-    if (assessments) {
-      for (var i = 0; i < assessments.length; i++) {
-        console.log(assessments[i].t, assessments[i].ass);
-        annotator.add(assessments[i].t, assessments[i].ass);
-        annotator.update();
-      };
-    };
-
-    // var slider = new Rickshaw.Graph.RangeSlider.Preview({
-    //   graph: graph,
-    //   element: sliderDiv[0]
-    // });
-
-    graph.render();
-  }
   if (pt === activePatient) { ChangeActivePatient(pt, true) };
 }
 
