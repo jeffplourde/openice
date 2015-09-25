@@ -21,12 +21,11 @@ html, body {
     width: 100%;
 }
 .mrs-demo-container {
-    height: 100%;
     position: relative;
     float: left;
+    min-height: 100%;
     width: 78%;
     min-width: 750px;
-    min-height: 1px;
     margin-left: 22%;
     padding: 0;
 }
@@ -282,6 +281,34 @@ html, body {
     margin-bottom: 30px;
     color: #F00;
 }
+.dashboard-splash__heartbeat--pulse {
+    animation-name: pulse;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+}
+@keyframes pulse {
+    from {
+        transform: scale3D(1, 1, 1);
+    }
+    5% {
+        transform: scale3D(1.1, 1.1, 1.1);
+    }
+    10% {
+        transform: scale3D(0.95, 0.95, 0.95);
+    }
+    15% {
+        transform: scale3D(1.05, 1.05, 1.05);
+    }
+    25% {
+        transform: scale3D(1, 1, 1);
+    }
+    to {
+        transform: scale3D(1, 1, 1);
+    }
+}
+
 .dashboard-splash__subtitle {
     font-size: 2em;
     font-weight: 500;
@@ -291,13 +318,24 @@ html, body {
     margin-bottom: 20px;
     line-height: 1.1;
 }
+.dashboard-splash__hr {
+    width: 75%;
+    border: none;
+    margin-top: -1px;
+    height: 1px;
+    background: rgba(255,255,255,1);
+    background: -webkit-linear-gradient(0deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
+    background: -moz-linear-gradient(0deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
+    background: -o-linear-gradient(0deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
+    background: -ms-linear-gradient(0deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
+}
 .dashboard-splash__p {
     width: 75%;
     margin-left: auto;
     margin-right: auto;
     font-size: 1.2em;
 }
-
 
 /* End of HIMSS Splash Screen */
 
