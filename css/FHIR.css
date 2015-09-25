@@ -293,13 +293,13 @@ html, body {
         transform: scale3D(1, 1, 1);
     }
     5% {
-        transform: scale3D(1.1, 1.1, 1.1);
+        transform: scale3D(1.15, 1.15, 1.15);
     }
     10% {
         transform: scale3D(0.95, 0.95, 0.95);
     }
     15% {
-        transform: scale3D(1.05, 1.05, 1.05);
+        transform: scale3D(1.10, 1.10, 1.10);
     }
     25% {
         transform: scale3D(1, 1, 1);
