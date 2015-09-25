@@ -144,38 +144,39 @@ function GetPatientObservations () {
     (function () {
       var pt = Object.keys(patientData)[i];
 
-      $.get('https://fhir.openice.info/fhir/Observation?subject=Patient/'+pt+'&_count=10000&_sort:desc=date', function( data ) {
-        console.log('Data for pt:', pt, data);
+      if(pt !== '987654321') {   // ignore the fake patient id... yes this is ugly
+        $.get('https://fhir.openice.info/fhir/Observation?subject=Patient/'+pt+'&_count=10000&_sort:desc=date', function( data ) {
+          console.log('Data for pt:', pt, data);
 
-        if (data.total) {
+          if (data.total) {
 
-          CleanObservationData(data, pt);
+            CleanObservationData(data, pt);
 
-        } else {
-          console.log('No observations found for patient ID', pt);
-          
-          patientData[pt].hasData = false;
-          
-          $( '#'+pt ).addClass('noData');
-          
-          var dashboard = jQuery('<li/>', {
-            id: 'dashboard-' + pt,
-            'class': 'mrs-dashboard'
-          }).hide().appendTo('#mrs-demo-dashboardHolder');
-          
-          jQuery('<div/>', {
-            'class': 'dashboard-no-data'
-          }).html('No FHIR Observation resource data found for this patient.').appendTo(dashboard);
+          } else {
+            console.log('No observations found for patient ID', pt);
+            
+            patientData[pt].hasData = false;
+            
+            $( '#'+pt ).addClass('noData');
+            
+            var dashboard = jQuery('<li/>', {
+              id: 'dashboard-' + pt,
+              'class': 'mrs-dashboard'
+            }).hide().appendTo('#mrs-demo-dashboardHolder');
+            
+            jQuery('<div/>', {
+              'class': 'dashboard-no-data'
+            }).html('No FHIR Observation resource data found for this patient.').appendTo(dashboard);
 
-        }
-      });
+          }
+        });
+      }
     })()
   }
 
   // get fake observations
   $.get('https://www.openice.info/files/fhir-data.json', function (data) {
-    console.log('fake observations',patientData['987654321']);
-    // CleanObservationData(data, patientData['987654321']);
+    CleanObservationData(data, '987654321');
   });
 }
 
