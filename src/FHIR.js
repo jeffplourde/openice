@@ -133,8 +133,6 @@ function GetPatientObservations () {
       }
 
       ConstructPatientDashboard(pt);
-      patientData[pt].hasData = true;
-      $( '#'+pt ).removeClass('noData');
 
     }
   }
@@ -146,17 +144,18 @@ function GetPatientObservations () {
 
       if(pt !== '987654321') {   // ignore the fake patient id... yes this is ugly
         $.get('https://fhir.openice.info/fhir/Observation?subject=Patient/'+pt+'&_count=10000&_sort:desc=date', function( data ) {
-          console.log('Data for pt:', pt, data);
-
           if (data.total) {
+            console.log('Data found for pt:', pt, data);
 
             CleanObservationData(data, pt);
 
+            patientData[pt].hasData = true;
+            $( '#'+pt ).removeClass('noData');
+
           } else {
-            console.log('No observations found for patient ID', pt);
+            console.log('No observations found for patient ID', pt, data);
             
             patientData[pt].hasData = false;
-            
             $( '#'+pt ).addClass('noData');
             
             var dashboard = jQuery('<li/>', {
@@ -177,6 +176,8 @@ function GetPatientObservations () {
   // get fake observations
   $.get('https://www.openice.info/files/fhir-data.json', function (data) {
     CleanObservationData(data, '987654321');
+    patientData['987654321'].hasData = true;
+    $( '#987654321' ).removeClass('noData');
   });
 }
 
@@ -184,6 +185,9 @@ function ConstructPatientDashboard (pt) {
   var data = observationData[pt];
 
   console.log('creating dashboard for pt', pt);
+
+  // Delete old dashboard on refresh
+  $( '#dashboard-' + pt ).remove();
 
   var dashboard = jQuery('<li/>', {
     id: 'dashboard-' + pt,
@@ -382,12 +386,12 @@ function UTCtoEpoch (t) {
 $( window ).load(function() {
   $('#button-RefreshData').click(function () {
     if (!refreshTimeout) {
+      console.log('refreshing page');
       patientData = {};
       observationData = {};
       activePatient = {};
       ShowSplash();
       PopulatePatientData();
-      console.log('resetting page');
       refreshTimeout = true;
       setTimeout(function() { refreshTimeout = false }, 3000);
     }
@@ -399,17 +403,23 @@ $( window ).load(function() {
 
   $('#button-DeleteActivePatient').click(function () {
     var r = confirm("Are you sure you would like to DELETE this patient from the FHIR server?");
+
     if (r === true) {
+      console.log('Deleting patient ', activePatient);
       $.ajax({
         url: 'https://fhir.openice.info/fhir/Patient/' + activePatient,
-        type: "DELETE"
+        type: 'DELETE'
       });
 
       delete patientData[activePatient];
       delete observationData[activePatient];
 
+      // remove the daashboard of the activePatient
+      $( '#dashboard-' + activePatient ).remove();
+      activePatient = {};
       ShowSplash();
       ConstructPatientList();
+
       for (var i = 0; i < Object.keys(observationData).length; i++) {
         $( '#' + Object.keys(observationData)[i] ).removeClass( 'noData' );
       }
