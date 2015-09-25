@@ -276,7 +276,6 @@ html, body {
     margin-bottom: 75px;
 }
 .dashboard-splash__heartbeat {
-    display: block;
     font-size: 3em;
     margin-bottom: 30px;
     color: #F00;
