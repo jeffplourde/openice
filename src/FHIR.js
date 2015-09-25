@@ -4,7 +4,7 @@ var patientData = {};
 var activePatient = {};
 var observationData = {};
 var refreshTimeout = false;
-var assessments = [];
+// var assessments = [];
 
 $( window ).load(function() {
   PopulatePatientData();
@@ -15,8 +15,6 @@ function PopulatePatientData () {
   // $.get("http://fhirtest.uhn.ca/baseDstu2/Patient?active=true&_count=500", function( data ) {
 
     if (data.entry && data.entry.length > 0) {
-      patientData = {};
-
       for(var i = 0; i < data.entry.length; i++) {
         var pt = data.entry[i].resource;
         // Require given and family name
@@ -44,18 +42,29 @@ function PopulatePatientData () {
           console.log('Patient data omitted from list due to missing name value. PID: ', pt.id ? pt.id : '')
         }
       }
-
-      ConstructPatientList();
-      GetPatientObservations();
-
     } else {
       console.log('FHIR query to fhir.openice.info/Patient returned no data.');
     }
   }).fail(function () {
     jQuery('<p/>', { 'class': 'mrs-patient-list-none' }).html('Sorry, something has gone wrong with our FHIR server.').appendTo('#mrs-patient-list');
-  });
+  }).always(function() {
 
-  return patientData;
+    // Get fake patients
+    $.get("https://www.openice.info/files/fhir-patients.json", function( d ) {
+      console.log('getting fake patients');
+      for(var i = 0; i < d.entry.length; i++) {
+        patientData[d.entry[i].resource.id] = d.entry[i].resource;
+        patientData[d.entry[i].resource.id].age = moment().diff(d.entry[i].resource.birthDate, 'years');
+        patientData[d.entry[i].resource.id].genderShort = 'M';
+      }
+      
+      // GET observation resource data for proper patients
+      GetPatientObservations();
+      // construct after second stage of GETs for patient info
+      ConstructPatientList();
+      // these are coupled so the stupid UI works - specifically removing noData calss
+    });
+  });
 }
 
 function ConstructPatientList () {
@@ -91,8 +100,46 @@ function ConstructPatientList () {
 }
 
 function GetPatientObservations () {
-  console.log('Getting observations for all patients');
+  console.log('GETting observations for fhir patients');
 
+  function CleanObservationData (data, pt) {
+    for (var j = 0; j < data.entry.length; j++) {
+      var metric = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.code : null;   // get metric
+      var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
+      var y = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.value : null;   // get vital sign measurement
+      var device = data.entry[j].resource.device ? data.entry[j].resource.device.reference : null;   // get source device
+
+      device = device ? device.slice(7) : null;
+
+      if (metric && t && y && device) {
+        if (!observationData[pt]) {
+          observationData[pt] = {}
+        }
+
+        if (!observationData[pt][device + '-' + metric]) {
+          observationData[pt][device + '-' + metric] = []
+        }
+
+        observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
+      }
+    }
+
+    if (observationData[pt]) {
+      // Sort metric observations by time
+      for (var k = 0; k < Object.keys(observationData[pt]).length; k++) {
+        observationData[pt][Object.keys(observationData[pt])[k]].sort(function (a, b) {
+          return a.x - b.x;
+        });
+      }
+
+      ConstructPatientDashboard(pt);
+      patientData[pt].hasData = true;
+      $( '#'+pt ).removeClass('noData');
+
+    }
+  }
+
+  // get fhir observations
   for (var i = 0; i < Object.keys(patientData).length; i++) {
     (function () {
       var pt = Object.keys(patientData)[i];
@@ -101,72 +148,9 @@ function GetPatientObservations () {
         console.log('Data for pt:', pt, data);
 
         if (data.total) {
-          for (var j = 0; j < data.entry.length; j++) {
-            var metric = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.code : null;   // get metric
-            var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
-            var y = data.entry[j].resource.valueQuantity ? data.entry[j].resource.valueQuantity.value : null;   // get vital sign measurement
-            var device = data.entry[j].resource.device ? data.entry[j].resource.device.reference : null;   // get source device
-            //            var status = data.entry[j].resource.status;   // get validated data - preliminary or final
 
-            device = device ? device.slice(7) : null;
-            //            status = status === 'final' ? 1 : status === 'preliminary' ? 0 : null;
+          CleanObservationData(data, pt);
 
-            //            if (metric && t && y && device && status) {
-            if (metric && t && y && device) {
-             // if ( t > moment().format('X') - 43200 && status === 1) {   // Filter out data older than 12 hours
-                if (!observationData[pt]) { observationData[pt] = {} };
-
-                if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
-                observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
-
-                // if (!observationData[pt][device + '-' + metric + '-' + 'status']) {
-                  // observationData[pt][device + '-' + metric + '-' + 'status'] = []
-                // };
-                // observationData[pt][device + '-' + metric + '-' + 'status'].push({'x':t, 'y':status});
-
-                // if (!observationData[pt][device + '-' + metric]) { observationData[pt][device + '-' + metric] = [] };
-                // observationData[pt][device + '-' + metric].push({'x':t, 'y':y});
-             // }
-            }
-
-            if (pt === '1' && data.entry[j].resource.valueString) {
-              var t = +UTCtoEpoch(data.entry[j].resource.appliesDateTime);   // get time of measurement
-              var label = data.entry[j].resource.identifier[0].value;
-              var message = data.entry[j].resource.valueString;
-
-              console.log(t, label, message);
-
-              if (t && label && message) {
-                // if ( t > moment().format('X') - 43200) {   // Filter out data older than 12 hours
-                  assessments.push({'t': t, 'ass': label + '-' + message});
-                // }
-              }
-            }
-          }
-
-          if (assessments) {
-            // Sort metric observations by time
-            for (var k = 0; k < assessments.length; k++) {
-              assessments.sort(function (a, b) {
-                return a.t - b.t
-              });
-            }
-          }
-          // console.log(observationData[pt]);
-
-          if (observationData[pt]) {
-            // Sort metric observations by time
-            for (var k = 0; k < Object.keys(observationData[pt]).length; k++) {
-              observationData[pt][Object.keys(observationData[pt])[k]].sort(function (a, b) {
-                return a.x - b.x;
-              });
-            }
-
-            ConstructPatientDashboard(pt);
-            patientData[pt].hasData = true;
-            $( '#'+pt ).removeClass('noData');
-
-          }
         } else {
           console.log('No observations found for patient ID', pt);
           
@@ -187,6 +171,12 @@ function GetPatientObservations () {
       });
     })()
   }
+
+  // get fake observations
+  $.get('https://www.openice.info/files/fhir-data.json', function (data) {
+    console.log('fake observations',patientData['987654321']);
+    // CleanObservationData(data, patientData['987654321']);
+  });
 }
 
 function ConstructPatientDashboard (pt) {
@@ -235,7 +225,7 @@ function ConstructPatientDashboard (pt) {
   var graphData2 = [];
   var metrics = Object.keys(data);
 
-// TODO scale y axis and clamp at 225 or something.
+  // TODO scale y axis and clamp at 225 or something.
   for (var i = 0; i < metrics.length; i++) {
       //      if (metrics[i].indexOf('status') < 1) {
       graphData.push({
@@ -313,13 +303,13 @@ function ConstructPatientDashboard (pt) {
   });
 
 
-  if (assessments) {
-    for (var i = 0; i < assessments.length; i++) {
-      console.log(assessments[i].t, assessments[i].ass);
-      annotator.add(assessments[i].t, assessments[i].ass);
-      annotator.update();
-    };
-  };
+  // if (assessments) {
+  //   for (var i = 0; i < assessments.length; i++) {
+  //     console.log(assessments[i].t, assessments[i].ass);
+  //     annotator.add(assessments[i].t, assessments[i].ass);
+  //     annotator.update();
+  //   };
+  // };
 
   // var slider = new Rickshaw.Graph.RangeSlider.Preview({
   //   graph: graph,
