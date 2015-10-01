@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Documentation for Building an App from Hello, OpenICE! 
+title: Documentation for Building an App from Hello, OpenICE!
 title-sm: Hello, OpenICE! Docs
 description: Documentation for Building an App from "Hello, OpenICE!"
 ---
@@ -12,6 +12,8 @@ This documentation contains instructions for the following topics to assist deve
 1. [Getting Started with Git Revision Control](#getting-started-with-git-revision-control)
 1. [How to Build Hello OpenICE](#how-to-build-hello-openice)
 1. [How to Build a Skeleton OpenICE Application](#how-to-build-a-skeleton-openice-application)
+
+Instructions on this page are written for Windows users. Be sure to convert syntax of all `code` to your preferred OS.
 
 
 
