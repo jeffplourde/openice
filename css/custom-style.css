@@ -92,11 +92,11 @@
 .videowrapper {
     position: relative;
     padding-bottom: 56.25%;
-    padding-top: 30px; 
-    height: 0; 
+    padding-top: 30px;
+    height: 0;
     overflow: hidden;
 }
-.videowrapper iframe, 
+.videowrapper iframe,
 .videowrapper object,
 .videowrapper embed {
     position: absolute;
@@ -245,6 +245,7 @@ body {
 }
 .splash-screen__link-demo>a {
   font-size: 3em;
+  text-decoration: underline;
 }
 @media (max-width: 768px) {
   .splash-screen {
@@ -280,7 +281,7 @@ body {
   .splash-screen__list li {
     font-size: 1.75em;
   }
-  .splash-screen__background {   
+  .splash-screen__background {
     z-index: -10;
     /*background: url({{ site.url }}/assets/many-screens-editted.jpeg);*/
     /*background: url({{ site.url }}/assets/waveforms.png);*/
